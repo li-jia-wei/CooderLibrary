@@ -1,12 +1,10 @@
 package com.cooder.cooder.ui.tab.bottom
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.AbsListView
 import android.widget.FrameLayout
 import android.widget.ScrollView
@@ -15,8 +13,11 @@ import androidx.core.view.iterator
 import androidx.recyclerview.widget.RecyclerView
 import com.cooder.cooder.library.util.CooderDisplayUtil
 import com.cooder.cooder.library.util.CooderViewUtil
+import com.cooder.cooder.library.util.dp
 import com.cooder.cooder.ui.R
+import com.cooder.cooder.ui.tab.bottom.CooderTabBottomLayout.DistanceType.*
 import com.cooder.cooder.ui.tab.common.ICooderTabLayout
+import kotlin.math.abs
 
 /**
  * 项目名称：CooderLibrary
@@ -37,28 +38,66 @@ class CooderTabBottomLayout @JvmOverloads constructor(
 	private var selectedInfo: CooderTabBottomInfo<*>? = null
 	private lateinit var infoList: MutableList<CooderTabBottomInfo<*>>
 	private var bottomAlpha = 1F
-	private var tabBottomHeight = 50F
-	private var bottomLineHeight = 0.5F
+	private var tabBottomHeight = 52F
+	private var bottomLineHeight = 0.8F
 	private var bottomLineColor = "#DFE0E1"
+	private var enableSliding = true
+	private var params = SlidingPageParams(-1F, -1F, -1F, -1F, -1F, DISTANCE_MEDIUM)
 	
 	companion object {
 		private const val TAG_TAB_BOTTOM = "TAG_TAB_BOTTOM"
+		
+		private val DISTANCE_SHORT = 30.dp
+		private val DISTANCE_MEDIUM = 60.dp
+		private val DISTANCE_LONG = 90.dp
 	}
+	
+	enum class DistanceType {
+		SHORT, MEDIUM, LONG
+	}
+	
+	/**
+	 * 设置滑动最小距离
+	 */
+	fun setSlidingMinDistance(type: DistanceType) {
+		when (type) {
+			SHORT -> params.minDistance = DISTANCE_SHORT
+			MEDIUM -> params.minDistance = DISTANCE_MEDIUM
+			LONG -> params.minDistance = DISTANCE_LONG
+		}
+	}
+	
 	
 	fun setTabAlpha(@FloatRange(from = 0.0, to = 1.0) alpha: Float) {
 		this.bottomAlpha = alpha
 	}
 	
+	/**
+	 * 设置底部Tab的高度
+	 */
 	fun setTabHeight(tabHeight: Float) {
 		this.tabBottomHeight = tabHeight
 	}
 	
+	/**
+	 * 设置底部Tab线的粗细
+	 */
 	fun setBottomLineHeight(lineHeight: Float) {
 		this.bottomLineHeight = lineHeight
 	}
 	
+	/**
+	 * 设置底部Tab线的颜色
+	 */
 	fun setBottomLineColor(color: String) {
 		this.bottomLineColor = color
+	}
+	
+	/**
+	 * 设置是否开启滑动切换页面
+	 */
+	fun setEnableSliding(enable: Boolean) {
+		this.enableSliding = enable
 	}
 	
 	/**
@@ -97,8 +136,7 @@ class CooderTabBottomLayout @JvmOverloads constructor(
 		// 清除之前添加的CooderTabBottom listener, Tip: Java foreach remove问题
 		val iterator = tabSelectedChangeListeners.iterator()
 		while (iterator.hasNext()) {
-			if (iterator.next() is CooderTabBottom)
-				iterator.remove()
+			if (iterator.next() is CooderTabBottom) iterator.remove()
 		}
 		
 		val tabBottomLayout = FrameLayout(context)
@@ -197,4 +235,69 @@ class CooderTabBottomLayout @JvmOverloads constructor(
 			this.clipToPadding = false
 		}
 	}
+	
+	override fun dispatchTouchEvent(event: MotionEvent?): Boolean {
+		event?.also {
+			if (enableSliding) slidingPageEvent(it)
+		}
+		return super.dispatchTouchEvent(event)
+	}
+	
+	@SuppressLint("ClickableViewAccessibility")
+	override fun onTouchEvent(event: MotionEvent?): Boolean {
+		return true
+	}
+	
+	/**
+	 * 触碰水平滑动切换页面
+	 */
+	private fun slidingPageEvent(event: MotionEvent) {
+		when (event.action) {
+			MotionEvent.ACTION_DOWN -> {
+				params.firstX = event.x
+				params.firstY = event.y
+			}
+			MotionEvent.ACTION_MOVE -> {
+				if (params.secondX == -1F && abs(params.firstX - event.x) > 5.dp) {
+					params.secondX = event.x
+					params.secondY = event.y
+				}
+				// 判断用户有没有在屏幕乱滑动防止勿触发切换页面
+				if (params.secondX != -1F && params.secondY != -1F && params.prevX != -1F) {
+					if ((params.firstX - params.secondX > 0 && params.prevX - event.x < 0) || (params.firstX - params.secondX < 0 && params.prevX - event.x > 0)) {
+						params.onlyDirection = false
+					}
+				}
+				// fix: 修复因上个点和下个点过近导致的勿触发乱点
+				if (params.prevX == -1F || abs(params.prevX - event.x) > 5.dp) {
+					params.prevX = event.x
+				}
+			}
+			MotionEvent.ACTION_UP -> {
+				if (params.onlyDirection && abs(params.firstX - event.x) >= params.minDistance) {
+					if (abs(params.firstY - event.y) * 3 <= abs(params.firstX - event.x)) {
+						if (params.firstX - event.x < 0) {          // prev
+							onSelectedPrev()
+						} else if (params.firstX - event.x > 0) {   // next
+							onSelectedNext()
+						}
+					}
+				}
+				params = SlidingPageParams(-1F, -1F, -1F, -1F, -1F, params.minDistance)
+			}
+		}
+	}
+	
+	/**
+	 * 滑动页面切换所需要的参数
+	 */
+	private data class SlidingPageParams(
+		var firstX: Float,
+		var firstY: Float,
+		var secondX: Float,
+		var secondY: Float,
+		var prevX: Float,
+		var minDistance: Float,
+		var onlyDirection: Boolean = true
+	)
 }

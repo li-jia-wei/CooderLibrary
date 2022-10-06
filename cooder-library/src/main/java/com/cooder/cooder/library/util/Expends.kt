@@ -4,19 +4,19 @@ import android.content.res.Resources
 import android.util.TypedValue
 
 /**
- * dp2px
+ * 单位：px，将转化为px
  */
-val Number.px: Int
-	get() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, toFloat(), Resources.getSystem().displayMetrics).toInt()
+val Number.px: Float
+	get() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, toFloat(), Resources.getSystem().displayMetrics)
 
 /**
- * px2dp
+ * 单位：dp，将转化为px
  */
-val Number.dp: Int
-	get() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, toFloat(), Resources.getSystem().displayMetrics).toInt()
+val Number.dp: Float
+	get() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, toFloat(), Resources.getSystem().displayMetrics)
 
 /**
- * px2sp
+ * 单位：sp，将转化为px
  */
-val Number.sp: Int
-	get() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, toFloat(), Resources.getSystem().displayMetrics).toInt()
+val Number.sp: Float
+	get() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, toFloat(), Resources.getSystem().displayMetrics)
