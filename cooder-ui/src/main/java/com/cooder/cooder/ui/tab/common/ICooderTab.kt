@@ -11,9 +11,9 @@ import androidx.annotation.Px
  *
  * 文件介绍：ICooderTab
  */
-interface ICooderTab<D> : ICooderTabLayout.OnTabSelectedListener<D> {
+interface ICooderTab<Info> : ICooderTabLayout.OnTabSelectedListener<Info> {
 	
-	fun setTabInfo(data: D)
+	fun setTabInfo(info: Info)
 	
 	/**
 	 * 动态修改某个Item的大小

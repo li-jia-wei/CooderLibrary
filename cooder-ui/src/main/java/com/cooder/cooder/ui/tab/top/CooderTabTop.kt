@@ -1,4 +1,4 @@
-package com.cooder.cooder.ui.tab.bottom
+package com.cooder.cooder.ui.tab.top
 
 import android.content.Context
 import android.graphics.Color
@@ -6,43 +6,46 @@ import android.graphics.Typeface
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import com.cooder.cooder.ui.R
-import com.cooder.cooder.ui.tab.bottom.CooderTabBottomInfo.TabType.*
 import com.cooder.cooder.ui.tab.common.ICooderTab
+import com.cooder.cooder.ui.tab.top.CooderTabTopInfo.TabType.*
 
 /**
- * 项目名称：CooderLibrary
+ * 项目名称：CooderProject
  *
  * 作者姓名：李佳伟
  *
- * 创建时间：2022/9/27 19:58
+ * 创建时间：2022/10/7 20:06
  *
- * 文件介绍：底部导航组件
+ * 文件介绍：顶部导航组件
  */
-class CooderTabBottom @JvmOverloads constructor(
+class CooderTabTop @JvmOverloads constructor(
 	context: Context,
 	attributeSet: AttributeSet? = null,
 	defStyleAttr: Int = 0,
-) : LinearLayout(context, attributeSet, defStyleAttr), ICooderTab<CooderTabBottomInfo<*>> {
+) : LinearLayout(context, attributeSet, defStyleAttr), ICooderTab<CooderTabTopInfo<*>> {
 	
-	private lateinit var tabInfo: CooderTabBottomInfo<*>
+	private lateinit var tabInfo: CooderTabTopInfo<*>
 	private val tabImageView: ImageView
 	private val tabIconView: TextView
 	private val tabNameView: TextView
+	private val indicator: View
 	
 	init {
-		LayoutInflater.from(context).inflate(R.layout.cooder_tab_bottom, this)
-		tabImageView = findViewById(R.id.iv_image)
-		tabIconView = findViewById(R.id.tv_icon)
-		tabNameView = findViewById(R.id.tv_name)
+		LayoutInflater.from(context).inflate(R.layout.cooder_tab_top, this)
+		this.tabImageView = findViewById(R.id.iv_image)
+		this.tabIconView = findViewById(R.id.tv_icon)
+		this.tabNameView = findViewById(R.id.tv_name)
+		this.indicator = findViewById(R.id.indicator)
 	}
 	
-	fun getTabInfo(): CooderTabBottomInfo<*> {
+	fun getTabInfo(): CooderTabTopInfo<*> {
 		return tabInfo
 	}
 	
@@ -58,35 +61,67 @@ class CooderTabBottom @JvmOverloads constructor(
 		return tabNameView
 	}
 	
-	/**
-	 * 设置数据
-	 */
-	override fun setTabInfo(info: CooderTabBottomInfo<*>) {
+	fun getIndicator(): View {
+		return indicator
+	}
+	
+	override fun setTabInfo(info: CooderTabTopInfo<*>) {
 		this.tabInfo = info
 		inflateInfo(selected = false, init = true)
 	}
 	
-	/**
-	 * 填充视图
-	 */
+	override fun resetHeight(height: Int) {
+		val params = layoutParams
+		params.height = height
+		layoutParams = params
+		tabNameView.visibility = GONE
+	}
+	
+	override fun onTabSelectedChange(index: Int, prevInfo: CooderTabTopInfo<*>?, nextInfo: CooderTabTopInfo<*>) {
+		if (prevInfo != tabInfo && nextInfo != tabInfo || prevInfo == nextInfo) {
+			return
+		}
+		inflateInfo(selected = prevInfo != tabInfo, init = false)
+	}
+	
 	private fun inflateInfo(selected: Boolean, init: Boolean) {
 		tabInfo.tabType?.also {
 			when (it) {
+				TEXT -> {
+					if (init) {
+						tabImageView.visibility = GONE
+						tabIconView.visibility = GONE
+						if (!TextUtils.isEmpty(tabInfo.name)) {
+							tabNameView.visibility = VISIBLE
+							tabNameView.text = tabInfo.name
+						}
+					}
+					if (selected) {
+						indicator.visibility = VISIBLE
+						tabNameView.setTextColor(getTextColor(tabInfo.tintColor))
+					} else {
+						indicator.visibility = GONE
+						tabNameView.setTextColor(getTextColor(tabInfo.defaultColor))
+					}
+				}
 				BITMAP -> {
 					if (init) {
 						tabImageView.visibility = VISIBLE
 						tabIconView.visibility = GONE
 						if (!TextUtils.isEmpty(tabInfo.name)) {
+							tabNameView.visibility = VISIBLE
 							tabNameView.text = tabInfo.name
 						} else {
 							tabNameView.visibility = GONE
 						}
 					}
 					if (selected) {
+						indicator.visibility = VISIBLE
 						tabImageView.setImageBitmap(tabInfo.selectedBitmap)
 						if (tabNameView.visibility == VISIBLE)
 							tabNameView.setTextColor(getTextColor(tabInfo.tintColor))
 					} else {
+						indicator.visibility = GONE
 						tabImageView.setImageBitmap(tabInfo.defaultBitmap)
 						if (tabNameView.visibility == VISIBLE)
 							tabNameView.setTextColor(getTextColor(tabInfo.defaultColor))
@@ -99,17 +134,20 @@ class CooderTabBottom @JvmOverloads constructor(
 						val typeface = Typeface.createFromAsset(context.assets, tabInfo.iconFont)
 						tabIconView.typeface = typeface
 						if (!TextUtils.isEmpty(tabInfo.name)) {
+							tabNameView.visibility = VISIBLE
 							tabNameView.text = tabInfo.name
 						} else {
 							tabNameView.visibility = GONE
 						}
 					}
 					if (selected) {
+						indicator.visibility = VISIBLE
 						tabIconView.text = tabInfo.selectedIconName
 						val tintColor = getTextColor(tabInfo.tintColor)
 						tabIconView.setTextColor(tintColor)
 						tabNameView.setTextColor(tintColor)
 					} else {
+						indicator.visibility = GONE
 						tabIconView.text = tabInfo.defaultIconName
 						val defaultColor = getTextColor(tabInfo.defaultColor)
 						tabIconView.setTextColor(defaultColor)
@@ -123,17 +161,20 @@ class CooderTabBottom @JvmOverloads constructor(
 						val typeface = Typeface.createFromAsset(context.assets, tabInfo.iconFont)
 						tabIconView.typeface = typeface
 						if (tabInfo.nameId != -1) {
+							tabNameView.visibility = VISIBLE
 							tabNameView.setText(tabInfo.nameId)
 						} else {
 							tabNameView.visibility = GONE
 						}
 					}
 					if (selected) {
+						indicator.visibility = VISIBLE
 						tabIconView.setText(tabInfo.selectedIconId)
 						val tintColor = ContextCompat.getColor(context, tabInfo.tintColorId)
 						tabNameView.setTextColor(tintColor)
 						tabIconView.setTextColor(tintColor)
 					} else {
+						indicator.visibility = GONE
 						tabIconView.setText(tabInfo.defaultIconId)
 						val defaultColor = ContextCompat.getColor(context, tabInfo.defaultColorId)
 						tabNameView.setTextColor(defaultColor)
@@ -142,20 +183,6 @@ class CooderTabBottom @JvmOverloads constructor(
 				}
 			}
 		}
-	}
-	
-	override fun resetHeight(height: Int) {
-		val params = layoutParams
-		params.height = height
-		layoutParams = params
-		tabNameView.visibility = GONE
-	}
-	
-	override fun onTabSelectedChange(index: Int, prevInfo: CooderTabBottomInfo<*>?, nextInfo: CooderTabBottomInfo<*>) {
-		if (prevInfo != tabInfo && nextInfo != tabInfo || prevInfo == nextInfo) {
-			return
-		}
-		inflateInfo(selected = prevInfo != tabInfo, init = false)
 	}
 	
 	/**

@@ -1,4 +1,4 @@
-package com.cooder.cooder.ui.tab.bottom
+package com.cooder.cooder.ui.tab.top
 
 import android.graphics.Bitmap
 import androidx.annotation.ColorRes
@@ -6,114 +6,82 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 
 /**
- * 项目名称：CooderLibrary
+ * 项目名称：CooderProject
  *
  * 作者姓名：李佳伟
  *
- * 创建时间：2022/9/27 19:45
+ * 创建时间：2022/10/7 18:38
  *
- * 文件介绍：CooderTabBottomInfo
+ * 文件介绍：CooderTabTopInfo
  */
-class CooderTabBottomInfo<Color : Comparable<Color>> {
+class CooderTabTopInfo<Color : Comparable<Color>> {
 	
 	enum class TabType {
-		BITMAP, ICON, VALUE_RES
+		TEXT, BITMAP, ICON, VALUE_RES
 	}
 	
-	/**
-	 * tab类型
-	 */
 	var tabType: TabType? = null
 		private set
 	
-	/**
-	 * 对应Fragment
-	 */
 	var fragment: Class<out Fragment>? = null
 		private set
 	
-	/**
-	 * 名称
-	 */
 	var name: String? = null
 		private set
 	
-	/**
-	 * 默认Bitmap
-	 */
 	var defaultBitmap: Bitmap? = null
 		private set
 	
-	/**
-	 * 选中Bitmap
-	 */
 	var selectedBitmap: Bitmap? = null
 		private set
 	
-	/**
-	 * 图标路径
-	 */
 	var iconFont: String? = null
 		private set
 	
-	/**
-	 * 默认的图标Unicode值
-	 */
 	var defaultIconName: String? = null
 		private set
 	
-	/**
-	 * 选中的图标Unicode值
-	 */
 	var selectedIconName: String? = null
 		private set
 	
-	/**
-	 * 默认的颜色，支持Int和String
-	 */
 	var defaultColor: Color? = null
 		private set
 	
-	/**
-	 * 选中的颜色，支持Int和String
-	 */
 	var tintColor: Color? = null
 		private set
 	
-	/**
-	 * 名称 - 资源ID
-	 */
 	@StringRes
 	var nameId: Int = -1
 		private set
 	
-	/**
-	 * 默认图标 - 资源ID
-	 */
 	@StringRes
 	var defaultIconId: Int = -1
 		private set
 	
-	/**
-	 * 选中图标 - 资源ID
-	 */
 	@StringRes
 	var selectedIconId: Int = -1
 		private set
 	
-	/**
-	 * 默认颜色 - 资源ID
-	 */
 	@ColorRes
 	var defaultColorId: Int = -1
 		private set
 	
-	/**
-	 * 选中颜色 - 资源ID
-	 */
 	@ColorRes
 	var tintColorId: Int = -1
 		private set
+	
+	/**
+	 * Text
+	 * @param name 名称
+	 * @param fragment 对应的Fragment的Class
+	 */
+	constructor(name: String, defaultColor: Color, tintColor: Color, fragment: Class<out Fragment>) {
+		this.name = name
+		this.defaultColor = defaultColor
+		this.tintColor = tintColor
+		this.fragment = fragment
+		this.tabType = TabType.TEXT
+	}
 	
 	/**
 	 * Bitmap - 无名称
@@ -121,12 +89,9 @@ class CooderTabBottomInfo<Color : Comparable<Color>> {
 	 * @param selectedBitmap 选中的Bitmap
 	 * @param fragment 对应的Fragment的Class
 	 */
-	@JvmOverloads
-	constructor(defaultBitmap: Bitmap, selectedBitmap: Bitmap, fragment: Class<out Fragment>? = null) {
+	constructor(defaultBitmap: Bitmap, selectedBitmap: Bitmap, fragment: Class<out Fragment>) {
 		this.defaultBitmap = defaultBitmap
 		this.selectedBitmap = selectedBitmap
-		this.defaultColor = defaultColor
-		this.tintColor = tintColor
 		this.fragment = fragment
 		this.tabType = TabType.BITMAP
 	}
@@ -136,12 +101,9 @@ class CooderTabBottomInfo<Color : Comparable<Color>> {
 	 * @param name 名称
 	 * @param defaultBitmap 默认的Bitmap
 	 * @param selectedBitmap 选中的Bitmap
-	 * @param defaultColor 默认的颜色
-	 * @param tintColor 选中的颜色
 	 * @param fragment 对应的Fragment的Class
 	 */
-	@JvmOverloads
-	constructor(name: String, defaultBitmap: Bitmap, selectedBitmap: Bitmap, defaultColor: Color, tintColor: Color, fragment: Class<out Fragment>? = null) {
+	constructor(name: String, defaultBitmap: Bitmap, selectedBitmap: Bitmap, defaultColor: Color, tintColor: Color, fragment: Class<out Fragment>) {
 		this.name = name
 		this.defaultBitmap = defaultBitmap
 		this.selectedBitmap = selectedBitmap
@@ -158,8 +120,7 @@ class CooderTabBottomInfo<Color : Comparable<Color>> {
 	 * @param selectedIconName 选中字体名称
 	 * @param fragment 对应的Fragment的Class
 	 */
-	@JvmOverloads
-	constructor(iconFont: String, defaultIconName: String, selectedIconName: String, defaultColor: Color, tintColor: Color, fragment: Class<out Fragment>? = null) {
+	constructor(iconFont: String, defaultIconName: String, selectedIconName: String, defaultColor: Color, tintColor: Color, fragment: Class<out Fragment>) {
 		this.iconFont = iconFont
 		this.defaultIconName = defaultIconName
 		this.selectedIconName = selectedIconName
@@ -175,13 +136,9 @@ class CooderTabBottomInfo<Color : Comparable<Color>> {
 	 * @param iconFont 图标字体库路径
 	 * @param defaultIconName 默认字体名称
 	 * @param selectedIconName 选中字体名称
-	 * @param defaultColor 默认的颜色
-	 * @param tintColor 选中的颜色
 	 * @param fragment 对应的Fragment的Class
 	 */
-	@JvmOverloads
-	constructor(name: String, iconFont: String, defaultIconName: String, selectedIconName: String, defaultColor: Color, tintColor: Color, fragment: Class<out Fragment>? = null) {
-		this.name = name
+	constructor(name: String, iconFont: String, defaultIconName: String, selectedIconName: String, defaultColor: Color, tintColor: Color, fragment: Class<out Fragment>) {
 		this.iconFont = iconFont
 		this.defaultIconName = defaultIconName
 		this.selectedIconName = selectedIconName
@@ -200,16 +157,14 @@ class CooderTabBottomInfo<Color : Comparable<Color>> {
 	 * @param tintColorId 选中的颜色资源Id
 	 * @param fragment 对应的Fragment的Class
 	 */
-	@JvmOverloads
 	constructor(
 		iconFont: String,
 		@StringRes defaultIconId: Int,
 		@StringRes selectedIconId: Int,
 		@ColorRes defaultColorId: Int,
 		@ColorRes tintColorId: Int,
-		fragment: Class<out Fragment>? = null,
+		fragment: Class<out Fragment>,
 	) {
-		this.nameId = nameId
 		this.iconFont = iconFont
 		this.defaultIconId = defaultIconId
 		this.selectedIconId = selectedIconId
@@ -220,29 +175,28 @@ class CooderTabBottomInfo<Color : Comparable<Color>> {
 	}
 	
 	/**
-	 * ValueRes - 有名称
-	 * @param nameId 名称的资源Id
+	 * ValueRes  - 有名称
+	 * @param nameId 名称Id
 	 * @param iconFont 图标字符库路径
 	 * @param defaultIconId 默认字符名称资源Id
-	 * @param selectIconId 选中字符名称资源Id
+	 * @param selectedIconId 选中字符名称资源Id
 	 * @param defaultColorId 默认的颜色资源Id
 	 * @param tintColorId 选中的颜色资源Id
 	 * @param fragment 对应的Fragment的Class
 	 */
-	@JvmOverloads
 	constructor(
 		@StringRes nameId: Int,
 		iconFont: String,
 		@StringRes defaultIconId: Int,
-		@StringRes selectIconId: Int,
+		@StringRes selectedIconId: Int,
 		@ColorRes defaultColorId: Int,
 		@ColorRes tintColorId: Int,
-		fragment: Class<out Fragment>? = null,
+		fragment: Class<out Fragment>,
 	) {
 		this.nameId = nameId
 		this.iconFont = iconFont
 		this.defaultIconId = defaultIconId
-		this.selectedIconId = selectIconId
+		this.selectedIconId = selectedIconId
 		this.defaultColorId = defaultColorId
 		this.tintColorId = tintColorId
 		this.fragment = fragment

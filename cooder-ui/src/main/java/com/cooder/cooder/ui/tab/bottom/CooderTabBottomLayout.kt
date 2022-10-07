@@ -11,6 +11,7 @@ import android.widget.ScrollView
 import androidx.annotation.FloatRange
 import androidx.core.view.iterator
 import androidx.recyclerview.widget.RecyclerView
+import com.cooder.cooder.library.log.CooderLog
 import com.cooder.cooder.library.util.CooderDisplayUtil
 import com.cooder.cooder.library.util.CooderViewUtil
 import com.cooder.cooder.library.util.dp
@@ -37,15 +38,22 @@ class CooderTabBottomLayout @JvmOverloads constructor(
 	private val tabSelectedChangeListeners = mutableListOf<ICooderTabLayout.OnTabSelectedListener<CooderTabBottomInfo<*>>>()
 	private var selectedInfo: CooderTabBottomInfo<*>? = null
 	private lateinit var infoList: MutableList<CooderTabBottomInfo<*>>
-	private var bottomAlpha = 1F
-	private var tabBottomHeight = 52F
-	private var bottomLineHeight = 0.8F
-	private var bottomLineColor = "#DFE0E1"
+	
+	private var bottomAlpha = DEFAULT_BOTTOM_ALPHA
+	private var tabBottomHeight = DEFAULT_TAB_BOTTOM_HEIGHT
+	private var bottomLineHeight = DEFAULT_BOTTOM_LINE_HEIGHT
+	private var bottomLineColor = DEFAULT_BOTTOM_LINE_COLOR
+	
 	private var enableSliding = true
 	private var params = SlidingPageParams(-1F, -1F, -1F, -1F, -1F, DISTANCE_MEDIUM)
 	
 	companion object {
 		private const val TAG_TAB_BOTTOM = "TAG_TAB_BOTTOM"
+		
+		const val DEFAULT_BOTTOM_ALPHA = 1F
+		const val DEFAULT_TAB_BOTTOM_HEIGHT = 52F
+		const val DEFAULT_BOTTOM_LINE_HEIGHT = 0.8F
+		const val DEFAULT_BOTTOM_LINE_COLOR = "#DFE0E1"
 		
 		private val DISTANCE_SHORT = 30.dp
 		private val DISTANCE_MEDIUM = 60.dp
@@ -108,7 +116,7 @@ class CooderTabBottomLayout @JvmOverloads constructor(
 		val iterator = tabBottomLayout.iterator()
 		while (iterator.hasNext()) {
 			val child = iterator.next()
-			if (child is CooderTabBottom && child.getCooderTabInfo() == data) {
+			if (child is CooderTabBottom && child.getTabInfo() == data) {
 				return child
 			}
 		}
@@ -167,7 +175,7 @@ class CooderTabBottomLayout @JvmOverloads constructor(
 	/**
 	 * 选中下一个导航项
 	 */
-	fun onSelectedNext() {
+	private fun onSelectedNext() {
 		val nextIndex = infoList.indexOf(selectedInfo) + 1
 		if (nextIndex < infoList.size) {
 			onSelected(infoList[nextIndex])
@@ -177,7 +185,7 @@ class CooderTabBottomLayout @JvmOverloads constructor(
 	/**
 	 * 选中上一个导航项
 	 */
-	fun onSelectedPrev() {
+	private fun onSelectedPrev() {
 		val prevIndex = infoList.indexOf(selectedInfo) - 1
 		if (prevIndex >= 0) {
 			onSelected(infoList[prevIndex])
@@ -221,7 +229,9 @@ class CooderTabBottomLayout @JvmOverloads constructor(
 	 * 修复内容区域的底部Padding
 	 */
 	private fun fixContentView() {
+		CooderLog.i("FIX1")
 		if (getChildAt(0) !is ViewGroup) return
+		CooderLog.i("FIX2")
 		val rootView = getChildAt(0) as ViewGroup
 		var targetView: ViewGroup? = CooderViewUtil.findTypeView(rootView, RecyclerView::class.java)
 		if (targetView == null) {

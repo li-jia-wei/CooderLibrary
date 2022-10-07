@@ -2,4 +2,5 @@
 <resources>
 	<color name="cooder_tab_bottom_icon">#666666</color>
 	<color name="cooder_tab_bottom_name">#999999</color>
+	<color name="cooder_tab_top_indicator">#40A9FE</color>
 </resources>
