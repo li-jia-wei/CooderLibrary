@@ -1,13 +1,13 @@
 package com.cooder.cooder.library.log.format
 
 /**
- * 项目名称：CooderLibrary
+ * 项目：CooderLibrary
  *
- * 作者姓名：李佳伟
+ * 作者：李佳伟
  *
- * 创建时间：2022/9/24 13:52
+ * 创建：2022/9/24 13:52
  *
- * 文件介绍：CooderLogFormatter
+ * 介绍：CooderLogFormatter
  */
 internal interface CooderLogFormatter<T> {
 	

@@ -17,13 +17,13 @@ import com.cooder.cooder.ui.tab.common.ICooderTab
 import com.cooder.cooder.ui.tab.top.CooderTabTopInfo.TabType.*
 
 /**
- * 项目名称：CooderProject
+ * 项目：CooderProject
  *
- * 作者姓名：李佳伟
+ * 作者：李佳伟
  *
- * 创建时间：2022/10/7 20:06
+ * 创建：2022/10/7 20:06
  *
- * 文件介绍：顶部导航组件
+ * 介绍：顶部导航组件
  */
 class CooderTabTop @JvmOverloads constructor(
 	context: Context,

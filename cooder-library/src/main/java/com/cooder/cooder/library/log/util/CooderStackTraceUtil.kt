@@ -3,13 +3,13 @@ package com.cooder.cooder.library.log.util
 import kotlin.math.min
 
 /**
- * 项目名称：CooderLibrary
+ * 项目：CooderLibrary
  *
- * 作者姓名：李佳伟
+ * 作者：李佳伟
  *
- * 创建时间：2022/9/25 21:39
+ * 创建：2022/9/25 21:39
  *
- * 文件介绍：堆栈信息工具类
+ * 介绍：堆栈信息工具类
  */
 internal object CooderStackTraceUtil {
 	

@@ -16,13 +16,13 @@ import com.cooder.cooder.ui.tab.bottom.CooderTabBottomInfo.TabType.*
 import com.cooder.cooder.ui.tab.common.ICooderTab
 
 /**
- * 项目名称：CooderLibrary
+ * 项目：CooderLibrary
  *
- * 作者姓名：李佳伟
+ * 作者：李佳伟
  *
- * 创建时间：2022/9/27 19:58
+ * 创建：2022/9/27 19:58
  *
- * 文件介绍：底部导航组件
+ * 介绍：底部导航组件
  */
 class CooderTabBottom @JvmOverloads constructor(
 	context: Context,

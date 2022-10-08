@@ -3,23 +3,23 @@ package com.cooder.cooder.ui.tab.common
 import android.view.ViewGroup
 
 /**
- * 项目名称：CooderLibrary
+ * 项目：CooderLibrary
  *
- * 作者姓名：李佳伟
+ * 作者：李佳伟
  *
- * 创建时间：2022/9/27 19:32
+ * 创建：2022/9/27 19:32
  *
- * 文件介绍：ICooderTabLayout
+ * 介绍：ICooderTabLayout
  */
-interface ICooderTabLayout<Tab : ViewGroup, D> {
+interface ICooderTabLayout<Tab : ViewGroup, Info> {
 	
-	fun findTab(data: D): Tab?
+	fun findTab(info: Info): Tab?
 	
-	fun addTabSelectedChangeListener(listener: OnTabSelectedListener<D>)
+	fun addTabSelectedChangeListener(listener: OnTabSelectedListener<Info>)
 	
-	fun defaultSelected(defaultInfo: D)
+	fun defaultSelected(defaultInfo: Info)
 	
-	fun inflateInfo(infoList: List<D>)
+	fun inflateInfo(infoList: List<Info>)
 	
 	interface OnTabSelectedListener<D> {
 		fun onTabSelectedChange(index: Int, prevInfo: D?, nextInfo: D)

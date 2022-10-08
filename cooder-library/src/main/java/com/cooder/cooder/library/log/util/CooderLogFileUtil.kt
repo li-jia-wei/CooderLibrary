@@ -7,13 +7,13 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 /**
- * 项目名称：CooderLibrary
+ * 项目：CooderLibrary
  *
- * 作者姓名：李佳伟
+ * 作者：李佳伟
  *
- * 创建时间：2022/9/27 17:32
+ * 创建：2022/9/27 17:32
  *
- * 文件介绍：日志文件工具类
+ * 介绍：日志文件工具类
  */
 object CooderLogFileUtil {
 	

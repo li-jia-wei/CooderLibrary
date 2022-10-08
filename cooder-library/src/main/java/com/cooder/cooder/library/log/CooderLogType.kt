@@ -4,13 +4,13 @@ import android.util.Log
 import androidx.annotation.IntDef
 
 /**
- * 项目名称：CooderLibrary
+ * 项目：CooderLibrary
  *
- * 作者姓名：李佳伟
+ * 作者：李佳伟
  *
- * 创建时间：2022/9/23 23:32
+ * 创建：2022/9/23 23:32
  *
- * 文件介绍：日志类型
+ * 介绍：日志类型
  */
 object CooderLogType {
 	

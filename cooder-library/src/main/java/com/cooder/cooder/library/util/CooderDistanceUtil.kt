@@ -4,13 +4,13 @@ import kotlin.math.pow
 import kotlin.math.sqrt
 
 /**
- * 项目名称：CooderProject
+ * 项目：CooderProject
  *
- * 作者姓名：李佳伟
+ * 作者：李佳伟
  *
- * 创建时间：2022/10/5 23:45
+ * 创建：2022/10/5 23:45
  *
- * 文件介绍：CooderDistanceUtil
+ * 介绍：CooderDistanceUtil
  */
 object CooderDistanceUtil {
 	

@@ -6,13 +6,13 @@ import androidx.core.view.iterator
 import java.util.*
 
 /**
- * 项目名称：CooderLibrary
+ * 项目：CooderLibrary
  *
- * 作者姓名：李佳伟
+ * 作者：李佳伟
  *
- * 创建时间：2022/9/29 13:03
+ * 创建：2022/9/29 13:03
  *
- * 文件介绍：CooderViewUtil
+ * 介绍：CooderViewUtil
  */
 object CooderViewUtil {
 	

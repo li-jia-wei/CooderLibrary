@@ -1,13 +1,13 @@
 package com.cooder.cooder.library.log.format
 
 /**
- * 项目名称：CooderLibrary
+ * 项目：CooderLibrary
  *
- * 作者姓名：李佳伟
+ * 作者：李佳伟
  *
- * 创建时间：2022/9/24 14:05
+ * 创建：2022/9/24 14:05
  *
- * 文件介绍：堆栈追踪的格式化器
+ * 介绍：堆栈追踪的格式化器
  */
 class CooderStackTraceFormatter : CooderLogFormatter<Array<StackTraceElement>> {
 	

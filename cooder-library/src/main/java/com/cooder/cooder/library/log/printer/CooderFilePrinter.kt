@@ -7,13 +7,13 @@ import java.io.FileOutputStream
 import java.util.concurrent.Executors
 
 /**
- * 项目名称：CooderLibrary
+ * 项目：CooderLibrary
  *
- * 作者姓名：李佳伟
+ * 作者：李佳伟
  *
- * 创建时间：2022/9/26 19:01
+ * 创建：2022/9/26 19:01
  *
- * 文件介绍：CooderFilePrinter
+ * 介绍：CooderFilePrinter
  */
 class CooderFilePrinter(private val context: Context) : CooderLogPrinter {
 	

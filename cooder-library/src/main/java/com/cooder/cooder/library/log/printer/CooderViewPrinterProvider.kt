@@ -10,13 +10,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cooder.cooder.library.util.CooderDisplayUtil
 
 /**
- * 项目名称：CooderLibrary
+ * 项目：CooderLibrary
  *
- * 作者姓名：李佳伟
+ * 作者：李佳伟
  *
- * 创建时间：2022/9/26 11:55
+ * 创建：2022/9/26 11:55
  *
- * 文件介绍：CooderViewPrinterProvider
+ * 介绍：CooderViewPrinterProvider
  */
 class CooderViewPrinterProvider(
 	private val rootView: FrameLayout,

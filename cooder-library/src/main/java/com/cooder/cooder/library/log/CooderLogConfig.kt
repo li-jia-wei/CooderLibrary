@@ -5,13 +5,13 @@ import com.cooder.cooder.library.log.format.CooderThreadFormatter
 import com.cooder.cooder.library.log.printer.CooderLogPrinter
 
 /**
- * 项目名称：CooderLibrary
+ * 项目：CooderLibrary
  *
- * 作者姓名：李佳伟
+ * 作者：李佳伟
  *
- * 创建时间：2022/9/23 23:48
+ * 创建：2022/9/23 23:48
  *
- * 文件介绍：日志配置
+ * 介绍：日志配置
  */
 abstract class CooderLogConfig {
 	

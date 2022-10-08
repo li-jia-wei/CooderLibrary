@@ -6,13 +6,13 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 
 /**
- * 项目名称：CooderProject
+ * 项目：CooderProject
  *
- * 作者姓名：李佳伟
+ * 作者：李佳伟
  *
- * 创建时间：2022/10/7 18:38
+ * 创建：2022/10/7 18:38
  *
- * 文件介绍：CooderTabTopInfo
+ * 介绍：CooderTabTopInfo
  */
 class CooderTabTopInfo<Color : Comparable<Color>> {
 	
@@ -73,9 +73,12 @@ class CooderTabTopInfo<Color : Comparable<Color>> {
 	/**
 	 * Text
 	 * @param name 名称
+	 * @param defaultColor 默认的颜色
+	 * @param tintColor 选中的颜色
 	 * @param fragment 对应的Fragment的Class
 	 */
-	constructor(name: String, defaultColor: Color, tintColor: Color, fragment: Class<out Fragment>) {
+	@JvmOverloads
+	constructor(name: String, defaultColor: Color, tintColor: Color, fragment: Class<out Fragment>? = null) {
 		this.name = name
 		this.defaultColor = defaultColor
 		this.tintColor = tintColor
@@ -89,7 +92,8 @@ class CooderTabTopInfo<Color : Comparable<Color>> {
 	 * @param selectedBitmap 选中的Bitmap
 	 * @param fragment 对应的Fragment的Class
 	 */
-	constructor(defaultBitmap: Bitmap, selectedBitmap: Bitmap, fragment: Class<out Fragment>) {
+	@JvmOverloads
+	constructor(defaultBitmap: Bitmap, selectedBitmap: Bitmap, fragment: Class<out Fragment>? = null) {
 		this.defaultBitmap = defaultBitmap
 		this.selectedBitmap = selectedBitmap
 		this.fragment = fragment
@@ -103,7 +107,8 @@ class CooderTabTopInfo<Color : Comparable<Color>> {
 	 * @param selectedBitmap 选中的Bitmap
 	 * @param fragment 对应的Fragment的Class
 	 */
-	constructor(name: String, defaultBitmap: Bitmap, selectedBitmap: Bitmap, defaultColor: Color, tintColor: Color, fragment: Class<out Fragment>) {
+	@JvmOverloads
+	constructor(name: String, defaultBitmap: Bitmap, selectedBitmap: Bitmap, defaultColor: Color, tintColor: Color, fragment: Class<out Fragment>? = null) {
 		this.name = name
 		this.defaultBitmap = defaultBitmap
 		this.selectedBitmap = selectedBitmap
@@ -120,7 +125,8 @@ class CooderTabTopInfo<Color : Comparable<Color>> {
 	 * @param selectedIconName 选中字体名称
 	 * @param fragment 对应的Fragment的Class
 	 */
-	constructor(iconFont: String, defaultIconName: String, selectedIconName: String, defaultColor: Color, tintColor: Color, fragment: Class<out Fragment>) {
+	@JvmOverloads
+	constructor(iconFont: String, defaultIconName: String, selectedIconName: String, defaultColor: Color, tintColor: Color, fragment: Class<out Fragment>? = null) {
 		this.iconFont = iconFont
 		this.defaultIconName = defaultIconName
 		this.selectedIconName = selectedIconName
@@ -138,7 +144,8 @@ class CooderTabTopInfo<Color : Comparable<Color>> {
 	 * @param selectedIconName 选中字体名称
 	 * @param fragment 对应的Fragment的Class
 	 */
-	constructor(name: String, iconFont: String, defaultIconName: String, selectedIconName: String, defaultColor: Color, tintColor: Color, fragment: Class<out Fragment>) {
+	@JvmOverloads
+	constructor(name: String, iconFont: String, defaultIconName: String, selectedIconName: String, defaultColor: Color, tintColor: Color, fragment: Class<out Fragment>? = null) {
 		this.iconFont = iconFont
 		this.defaultIconName = defaultIconName
 		this.selectedIconName = selectedIconName
@@ -157,13 +164,14 @@ class CooderTabTopInfo<Color : Comparable<Color>> {
 	 * @param tintColorId 选中的颜色资源Id
 	 * @param fragment 对应的Fragment的Class
 	 */
+	@JvmOverloads
 	constructor(
 		iconFont: String,
 		@StringRes defaultIconId: Int,
 		@StringRes selectedIconId: Int,
 		@ColorRes defaultColorId: Int,
 		@ColorRes tintColorId: Int,
-		fragment: Class<out Fragment>,
+		fragment: Class<out Fragment>? = null
 	) {
 		this.iconFont = iconFont
 		this.defaultIconId = defaultIconId
@@ -184,6 +192,7 @@ class CooderTabTopInfo<Color : Comparable<Color>> {
 	 * @param tintColorId 选中的颜色资源Id
 	 * @param fragment 对应的Fragment的Class
 	 */
+	@JvmOverloads
 	constructor(
 		@StringRes nameId: Int,
 		iconFont: String,
@@ -191,7 +200,7 @@ class CooderTabTopInfo<Color : Comparable<Color>> {
 		@StringRes selectedIconId: Int,
 		@ColorRes defaultColorId: Int,
 		@ColorRes tintColorId: Int,
-		fragment: Class<out Fragment>,
+		fragment: Class<out Fragment>? = null
 	) {
 		this.nameId = nameId
 		this.iconFont = iconFont

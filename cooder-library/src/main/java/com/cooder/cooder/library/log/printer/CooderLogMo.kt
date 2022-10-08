@@ -5,13 +5,13 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 /**
- * 项目名称：CooderLibrary
+ * 项目：CooderLibrary
  *
- * 作者姓名：李佳伟
+ * 作者：李佳伟
  *
- * 创建时间：2022/9/26 10:40
+ * 创建：2022/9/26 10:40
  *
- * 文件介绍：CooderLogMo
+ * 介绍：CooderLogMo
  */
 internal data class CooderLogMo(
 	private val timeMillis: Long,

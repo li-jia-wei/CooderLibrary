@@ -3,13 +3,13 @@ package com.cooder.cooder.library.util
 import android.content.Context
 
 /**
- * 项目名称：CooderLibrary
+ * 项目：CooderLibrary
  *
- * 作者姓名：李佳伟
+ * 作者：李佳伟
  *
- * 创建时间：2022/9/26 12:14
+ * 创建：2022/9/26 12:14
  *
- * 文件介绍：屏幕单位转换工具
+ * 介绍：屏幕单位转换工具
  */
 object CooderDisplayUtil {
 	

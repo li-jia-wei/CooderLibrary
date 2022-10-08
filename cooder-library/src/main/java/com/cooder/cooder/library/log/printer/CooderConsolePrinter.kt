@@ -5,13 +5,13 @@ import com.cooder.cooder.library.log.CooderLogConfig
 import com.cooder.cooder.library.log.CooderLogConfig.Companion.LOG_MAX_LENGTH
 
 /**
- * 项目名称：CooderLibrary
+ * 项目：CooderLibrary
  *
- * 作者姓名：李佳伟
+ * 作者：李佳伟
  *
- * 创建时间：2022/9/24 16:43
+ * 创建：2022/9/24 16:43
  *
- * 文件介绍：CooderConsolePrinter
+ * 介绍：CooderConsolePrinter
  */
 class CooderConsolePrinter : CooderLogPrinter {
 	

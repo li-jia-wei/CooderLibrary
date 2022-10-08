@@ -6,13 +6,13 @@ import com.cooder.cooder.library.log.printer.CooderLogPrinter
 import com.cooder.cooder.library.log.util.CooderLogFileUtil
 
 /**
- * 项目名称：CooderLibrary
+ * 项目：CooderLibrary
  *
- * 作者姓名：李佳伟
+ * 作者：李佳伟
  *
- * 创建时间：2022/9/23 23:51
+ * 创建：2022/9/23 23:51
  *
- * 文件介绍：Log管理
+ * 介绍：Log管理
  */
 class CooderLogManager private constructor(
 	val config: CooderLogConfig,

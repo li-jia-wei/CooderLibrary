@@ -21,13 +21,13 @@ import com.cooder.cooder.ui.tab.common.ICooderTabLayout
 import kotlin.math.abs
 
 /**
- * 项目名称：CooderLibrary
+ * 项目：CooderLibrary
  *
- * 作者姓名：李佳伟
+ * 作者：李佳伟
  *
- * 创建时间：2022/9/28 18:09
+ * 创建：2022/9/28 18:09
  *
- * 文件介绍：CooderTabBottomLayout
+ * 介绍：CooderTabBottomLayout
  */
 class CooderTabBottomLayout @JvmOverloads constructor(
 	context: Context,
@@ -37,7 +37,7 @@ class CooderTabBottomLayout @JvmOverloads constructor(
 	
 	private val tabSelectedChangeListeners = mutableListOf<ICooderTabLayout.OnTabSelectedListener<CooderTabBottomInfo<*>>>()
 	private var selectedInfo: CooderTabBottomInfo<*>? = null
-	private lateinit var infoList: MutableList<CooderTabBottomInfo<*>>
+	private val infoList = mutableListOf<CooderTabBottomInfo<*>>()
 	
 	private var bottomAlpha = DEFAULT_BOTTOM_ALPHA
 	private var tabBottomHeight = DEFAULT_TAB_BOTTOM_HEIGHT
@@ -111,12 +111,12 @@ class CooderTabBottomLayout @JvmOverloads constructor(
 	/**
 	 * 找到选中的Tab
 	 */
-	override fun findTab(data: CooderTabBottomInfo<*>): CooderTabBottom? {
+	override fun findTab(info: CooderTabBottomInfo<*>): CooderTabBottom? {
 		val tabBottomLayout: FrameLayout = findViewWithTag(TAG_TAB_BOTTOM)
 		val iterator = tabBottomLayout.iterator()
 		while (iterator.hasNext()) {
 			val child = iterator.next()
-			if (child is CooderTabBottom && child.getTabInfo() == data) {
+			if (child is CooderTabBottom && child.getTabInfo() == info) {
 				return child
 			}
 		}
@@ -133,7 +133,8 @@ class CooderTabBottomLayout @JvmOverloads constructor(
 	
 	override fun inflateInfo(infoList: List<CooderTabBottomInfo<*>>) {
 		if (infoList.isEmpty()) return
-		this.infoList = infoList.toMutableList()
+		this.infoList.clear()
+		this.infoList += infoList
 		// 移除之前已经添加的View
 		for (index in childCount - 1 downTo 1) {
 			removeViewAt(index)
@@ -157,7 +158,7 @@ class CooderTabBottomLayout @JvmOverloads constructor(
 			params.gravity = Gravity.BOTTOM
 			params.leftMargin = i * width
 			val tabBottom = CooderTabBottom(context)
-			tabSelectedChangeListeners.add(tabBottom)
+			tabSelectedChangeListeners += tabBottom
 			tabBottom.setTabInfo(info)
 			tabBottomLayout.addView(tabBottom, params)
 			tabBottom.setOnClickListener {
@@ -170,6 +171,16 @@ class CooderTabBottomLayout @JvmOverloads constructor(
 		addView(tabBottomLayout, tabBottomParams)
 		
 		fixContentView()
+	}
+	
+	/**
+	 * 选中导航项
+	 */
+	private fun onSelected(nextInfo: CooderTabBottomInfo<*>) {
+		tabSelectedChangeListeners.forEach {
+			it.onTabSelectedChange(infoList.indexOf(nextInfo), selectedInfo, nextInfo)
+		}
+		selectedInfo = nextInfo
 	}
 	
 	/**
@@ -190,16 +201,6 @@ class CooderTabBottomLayout @JvmOverloads constructor(
 		if (prevIndex >= 0) {
 			onSelected(infoList[prevIndex])
 		}
-	}
-	
-	/**
-	 * 选中导航项
-	 */
-	private fun onSelected(nextInfo: CooderTabBottomInfo<*>) {
-		tabSelectedChangeListeners.forEach {
-			it.onTabSelectedChange(infoList.indexOf(nextInfo), selectedInfo, nextInfo)
-		}
-		selectedInfo = nextInfo
 	}
 	
 	/**
@@ -308,6 +309,6 @@ class CooderTabBottomLayout @JvmOverloads constructor(
 		var secondY: Float,
 		var prevX: Float,
 		var minDistance: Float,
-		var onlyDirection: Boolean = true
+		var onlyDirection: Boolean = true,
 	)
 }
