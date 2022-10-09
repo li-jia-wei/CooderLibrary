@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
+import com.cooder.cooder.ui.tab.common.CooderTabInfo
 
 /**
  * 项目：CooderLibrary
@@ -14,7 +15,7 @@ import androidx.fragment.app.Fragment
  *
  * 介绍：CooderTabBottomInfo
  */
-class CooderTabBottomInfo<Color : Comparable<Color>> {
+class CooderTabBottomInfo<Color : Comparable<Color>> : CooderTabInfo<Color> {
 	
 	enum class TabType {
 		BITMAP, ICON, VALUE_RES
@@ -29,7 +30,7 @@ class CooderTabBottomInfo<Color : Comparable<Color>> {
 	/**
 	 * 对应Fragment
 	 */
-	var fragment: Class<out Fragment>? = null
+	override var fragment: Class<out Fragment>? = null
 		private set
 	
 	/**

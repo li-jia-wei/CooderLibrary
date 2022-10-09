@@ -13,7 +13,7 @@ import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import com.cooder.cooder.ui.R
-import com.cooder.cooder.ui.tab.common.ICooderTab
+import com.cooder.cooder.ui.tab.common.CooderTab
 import com.cooder.cooder.ui.tab.top.CooderTabTopInfo.TabType.*
 
 /**
@@ -29,7 +29,7 @@ class CooderTabTop @JvmOverloads constructor(
 	context: Context,
 	attributeSet: AttributeSet? = null,
 	defStyleAttr: Int = 0,
-) : LinearLayout(context, attributeSet, defStyleAttr), ICooderTab<CooderTabTopInfo<*>> {
+) : LinearLayout(context, attributeSet, defStyleAttr), CooderTab<CooderTabTopInfo<*>> {
 	
 	private lateinit var tabInfo: CooderTabTopInfo<*>
 	private val tabImageView: ImageView
@@ -157,28 +157,42 @@ class CooderTabTop @JvmOverloads constructor(
 				VALUE_RES -> {
 					if (init) {
 						tabImageView.visibility = GONE
-						tabIconView.visibility = VISIBLE
-						val typeface = Typeface.createFromAsset(context.assets, tabInfo.iconFont)
-						tabIconView.typeface = typeface
 						if (tabInfo.nameId != -1) {
 							tabNameView.visibility = VISIBLE
 							tabNameView.setText(tabInfo.nameId)
 						} else {
 							tabNameView.visibility = GONE
 						}
+						if (tabInfo.defaultIconId == -1 && tabInfo.selectedIconId == -1) {
+							tabIconView.visibility = GONE
+						} else {
+							tabNameView.visibility = VISIBLE
+							val typeface = Typeface.createFromAsset(context.assets, tabInfo.iconFont)
+							tabIconView.typeface = typeface
+						}
 					}
 					if (selected) {
 						indicator.visibility = VISIBLE
 						tabIconView.setText(tabInfo.selectedIconId)
 						val tintColor = ContextCompat.getColor(context, tabInfo.tintColorId)
-						tabNameView.setTextColor(tintColor)
-						tabIconView.setTextColor(tintColor)
+						if (tabNameView.visibility == VISIBLE) {
+							tabNameView.setTextColor(tintColor)
+						}
+						if (tabIconView.visibility == VISIBLE) {
+							tabIconView.setText(tabInfo.selectedIconId)
+							tabIconView.setTextColor(tintColor)
+						}
 					} else {
 						indicator.visibility = GONE
 						tabIconView.setText(tabInfo.defaultIconId)
 						val defaultColor = ContextCompat.getColor(context, tabInfo.defaultColorId)
-						tabNameView.setTextColor(defaultColor)
-						tabIconView.setTextColor(defaultColor)
+						if (tabNameView.visibility == VISIBLE) {
+							tabNameView.setTextColor(defaultColor)
+						}
+						if (tabIconView.visibility == VISIBLE) {
+							tabIconView.setText(tabInfo.defaultIconId)
+							tabIconView.setTextColor(defaultColor)
+						}
 					}
 				}
 			}

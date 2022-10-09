@@ -11,7 +11,7 @@ import androidx.annotation.Px
  *
  * 介绍：ICooderTab
  */
-interface ICooderTab<Info> : ICooderTabLayout.OnTabSelectedListener<Info> {
+internal interface CooderTab<Info : CooderTabInfo<*>> : CooderTabLayout.OnTabSelectedListener<Info> {
 	
 	fun setTabInfo(info: Info)
 	

@@ -1,13 +1,15 @@
 package com.cooder.cooder.ui.tab.top
 
 import android.content.Context
+import android.graphics.Rect
 import android.util.AttributeSet
 import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
 import androidx.annotation.IntRange
 import androidx.core.view.iterator
 import com.cooder.cooder.library.util.CooderDisplayUtil
-import com.cooder.cooder.ui.tab.common.ICooderTabLayout
+import com.cooder.cooder.ui.tab.common.CooderTabLayout
+import kotlin.math.abs
 
 /**
  * 项目：CooderProject
@@ -22,9 +24,9 @@ class CooderTabTopLayout @JvmOverloads constructor(
 	context: Context,
 	attributeSet: AttributeSet? = null,
 	defStyleAttr: Int = 0,
-) : HorizontalScrollView(context, attributeSet, defStyleAttr), ICooderTabLayout<CooderTabTop, CooderTabTopInfo<*>> {
+) : HorizontalScrollView(context, attributeSet, defStyleAttr), CooderTabLayout<CooderTabTop, CooderTabTopInfo<*>> {
 	
-	private val tabSelectedChangeListeners = mutableListOf<ICooderTabLayout.OnTabSelectedListener<CooderTabTopInfo<*>>>()
+	private val tabSelectedChangeListeners = mutableListOf<CooderTabLayout.OnTabSelectedListener<CooderTabTopInfo<*>>>()
 	private var selectedInfo: CooderTabTopInfo<*>? = null
 	private val infoList = mutableListOf<CooderTabTopInfo<*>>()
 	
@@ -58,7 +60,7 @@ class CooderTabTopLayout @JvmOverloads constructor(
 		return null
 	}
 	
-	override fun addTabSelectedChangeListener(listener: ICooderTabLayout.OnTabSelectedListener<CooderTabTopInfo<*>>) {
+	override fun addTabSelectedChangeListener(listener: CooderTabLayout.OnTabSelectedListener<CooderTabTopInfo<*>>) {
 		tabSelectedChangeListeners += listener
 	}
 	
@@ -117,26 +119,6 @@ class CooderTabTopLayout @JvmOverloads constructor(
 	}
 	
 	/**
-	 * 选中下一个导航项
-	 */
-	private fun onSelectedNext() {
-		val nextIndex = infoList.indexOf(selectedInfo) + 1
-		if (nextIndex < infoList.size) {
-			onSelected(infoList[nextIndex])
-		}
-	}
-	
-	/**
-	 * 选中上一个导航项
-	 */
-	private fun onSelectedPrev() {
-		val prevIndex = infoList.indexOf(selectedInfo) - 1
-		if (prevIndex >= 0) {
-			onSelected(infoList[prevIndex])
-		}
-	}
-	
-	/**
 	 * 自动滚动，实现点击的位置能够自动滚动以展示前后Info
 	 */
 	private fun autoScroll(nextInfo: CooderTabTopInfo<*>) {
@@ -148,8 +130,51 @@ class CooderTabTopLayout @JvmOverloads constructor(
 			tabWidth = tabTop.width
 		}
 		// 判断点击了屏幕左侧还是右侧
-		if (coords[0] + tabWidth / 2 > CooderDisplayUtil.getDisplayWidth(context) / 2) {
-		
+		val scrollWidth: Int = if (coords[0] + tabWidth / 2 > CooderDisplayUtil.getDisplayWidth(context, CooderDisplayUtil.Unit.PX) / 2) {
+			rangeScrollWidth(index, showInfoCount)
+		} else {
+			rangeScrollWidth(index, -showInfoCount)
+		}
+		scrollTo(scrollX + scrollWidth, 0)
+	}
+	
+	/**
+	 * 获取可滚动的范围
+	 * @param index 从第几个开始
+	 * @param range 向前向后的范围
+	 * @return 可滚动的范围
+	 */
+	private fun rangeScrollWidth(index: Int, range: Int): Int {
+		var scrollWidth = 0
+		for (i in 0..abs(range)) {
+			val next = if (range < 0) range + i + index else range - i + index
+			if (next >= 0 && next < infoList.size) {
+				if (range < 0) {
+					scrollWidth -= scrollWidth(next, false)
+				} else {
+					scrollWidth += scrollWidth(next, true)
+				}
+			}
+		}
+		return scrollWidth
+	}
+	
+	/**
+	 * 指定位置的控件可滚动的距离
+	 * @param index 指定位置的控件
+	 * @param toRight 是否是点击了屏幕右侧
+	 * @return 可滚动的距离
+	 */
+	private fun scrollWidth(index: Int, toRight: Boolean): Int {
+		val target = findTab(infoList[index]) ?: return 0
+		val rect = Rect()
+		target.getLocalVisibleRect(rect)
+		return if (toRight) {
+			// right坐标大于控件的宽度时，说明完全没有展示
+			if (rect.right > tabWidth) tabWidth else tabWidth - rect.right
+		} else {
+			// left坐标小于等于控件的宽度时，说明完全没有显示
+			if (rect.left <= -tabWidth) tabWidth else if (rect.left > 0) rect.left else 0
 		}
 	}
 }

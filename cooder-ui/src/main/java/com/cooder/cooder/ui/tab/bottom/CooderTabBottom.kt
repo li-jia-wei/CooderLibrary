@@ -13,7 +13,7 @@ import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import com.cooder.cooder.ui.R
 import com.cooder.cooder.ui.tab.bottom.CooderTabBottomInfo.TabType.*
-import com.cooder.cooder.ui.tab.common.ICooderTab
+import com.cooder.cooder.ui.tab.common.CooderTab
 
 /**
  * 项目：CooderLibrary
@@ -28,7 +28,7 @@ class CooderTabBottom @JvmOverloads constructor(
 	context: Context,
 	attributeSet: AttributeSet? = null,
 	defStyleAttr: Int = 0,
-) : LinearLayout(context, attributeSet, defStyleAttr), ICooderTab<CooderTabBottomInfo<*>> {
+) : LinearLayout(context, attributeSet, defStyleAttr), CooderTab<CooderTabBottomInfo<*>> {
 	
 	private lateinit var tabInfo: CooderTabBottomInfo<*>
 	private val tabImageView: ImageView

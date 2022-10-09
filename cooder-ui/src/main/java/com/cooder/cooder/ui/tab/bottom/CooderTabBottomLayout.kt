@@ -7,17 +7,17 @@ import android.util.AttributeSet
 import android.view.*
 import android.widget.AbsListView
 import android.widget.FrameLayout
+import android.widget.HorizontalScrollView
 import android.widget.ScrollView
 import androidx.annotation.FloatRange
 import androidx.core.view.iterator
 import androidx.recyclerview.widget.RecyclerView
-import com.cooder.cooder.library.log.CooderLog
 import com.cooder.cooder.library.util.CooderDisplayUtil
 import com.cooder.cooder.library.util.CooderViewUtil
 import com.cooder.cooder.library.util.dp
 import com.cooder.cooder.ui.R
 import com.cooder.cooder.ui.tab.bottom.CooderTabBottomLayout.DistanceType.*
-import com.cooder.cooder.ui.tab.common.ICooderTabLayout
+import com.cooder.cooder.ui.tab.common.CooderTabLayout
 import kotlin.math.abs
 
 /**
@@ -33,9 +33,9 @@ class CooderTabBottomLayout @JvmOverloads constructor(
 	context: Context,
 	attributeSet: AttributeSet? = null,
 	defStyleAttr: Int = 0,
-) : FrameLayout(context, attributeSet, defStyleAttr), ICooderTabLayout<CooderTabBottom, CooderTabBottomInfo<*>> {
+) : FrameLayout(context, attributeSet, defStyleAttr), CooderTabLayout<CooderTabBottom, CooderTabBottomInfo<*>> {
 	
-	private val tabSelectedChangeListeners = mutableListOf<ICooderTabLayout.OnTabSelectedListener<CooderTabBottomInfo<*>>>()
+	private val tabSelectedChangeListeners = mutableListOf<CooderTabLayout.OnTabSelectedListener<CooderTabBottomInfo<*>>>()
 	private var selectedInfo: CooderTabBottomInfo<*>? = null
 	private val infoList = mutableListOf<CooderTabBottomInfo<*>>()
 	
@@ -44,7 +44,7 @@ class CooderTabBottomLayout @JvmOverloads constructor(
 	private var bottomLineHeight = DEFAULT_BOTTOM_LINE_HEIGHT
 	private var bottomLineColor = DEFAULT_BOTTOM_LINE_COLOR
 	
-	private var enableSliding = true
+	private var enableSliding = false
 	private var params = SlidingPageParams(-1F, -1F, -1F, -1F, -1F, DISTANCE_MEDIUM)
 	
 	companion object {
@@ -75,7 +75,6 @@ class CooderTabBottomLayout @JvmOverloads constructor(
 		}
 	}
 	
-	
 	fun setTabAlpha(@FloatRange(from = 0.0, to = 1.0) alpha: Float) {
 		this.bottomAlpha = alpha
 	}
@@ -105,6 +104,7 @@ class CooderTabBottomLayout @JvmOverloads constructor(
 	 * 设置是否开启滑动切换页面
 	 */
 	fun setEnableSliding(enable: Boolean) {
+		// 如果没有可滚动的列表，那么可以切换
 		this.enableSliding = enable
 	}
 	
@@ -123,7 +123,7 @@ class CooderTabBottomLayout @JvmOverloads constructor(
 		return null
 	}
 	
-	override fun addTabSelectedChangeListener(listener: ICooderTabLayout.OnTabSelectedListener<CooderTabBottomInfo<*>>) {
+	override fun addTabSelectedChangeListener(listener: CooderTabLayout.OnTabSelectedListener<CooderTabBottomInfo<*>>) {
 		tabSelectedChangeListeners += listener
 	}
 	
@@ -230,9 +230,7 @@ class CooderTabBottomLayout @JvmOverloads constructor(
 	 * 修复内容区域的底部Padding
 	 */
 	private fun fixContentView() {
-		CooderLog.i("FIX1")
 		if (getChildAt(0) !is ViewGroup) return
-		CooderLog.i("FIX2")
 		val rootView = getChildAt(0) as ViewGroup
 		var targetView: ViewGroup? = CooderViewUtil.findTypeView(rootView, RecyclerView::class.java)
 		if (targetView == null) {
@@ -249,14 +247,22 @@ class CooderTabBottomLayout @JvmOverloads constructor(
 	
 	override fun dispatchTouchEvent(event: MotionEvent?): Boolean {
 		event?.also {
-			if (enableSliding) slidingPageEvent(it)
+			if (enableSliding && !hasScrollView()) slidingPageEvent(it)
 		}
 		return super.dispatchTouchEvent(event)
 	}
 	
 	@SuppressLint("ClickableViewAccessibility")
 	override fun onTouchEvent(event: MotionEvent?): Boolean {
-		return true
+		return if (enableSliding && !hasScrollView()) true else super.onTouchEvent(event)
+	}
+	
+	/**
+	 * 查看是否有可滚动的子View
+	 */
+	private fun hasScrollView(): Boolean {
+		val viewGroup: ViewGroup? = CooderViewUtil.findTypeView(this, HorizontalScrollView::class.java)
+		return viewGroup != null
 	}
 	
 	/**
