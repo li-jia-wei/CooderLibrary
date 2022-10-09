@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
+import com.cooder.cooder.ui.tab.common.ICooderTabInfo
 
 /**
  * 项目：CooderProject
@@ -14,7 +15,7 @@ import androidx.fragment.app.Fragment
  *
  * 介绍：CooderTabTopInfo
  */
-class CooderTabTopInfo<Color : Comparable<Color>> {
+class CooderTabTopInfo<Color : Comparable<Color>> : ICooderTabInfo<Color> {
 	
 	enum class TabType {
 		TEXT, BITMAP, ICON, VALUE_RES
@@ -23,7 +24,7 @@ class CooderTabTopInfo<Color : Comparable<Color>> {
 	var tabType: TabType? = null
 		private set
 	
-	var fragment: Class<out Fragment>? = null
+	override var fragment: Class<out Fragment>? = null
 		private set
 	
 	var name: String? = null
@@ -206,6 +207,22 @@ class CooderTabTopInfo<Color : Comparable<Color>> {
 		this.iconFont = iconFont
 		this.defaultIconId = defaultIconId
 		this.selectedIconId = selectedIconId
+		this.defaultColorId = defaultColorId
+		this.tintColorId = tintColorId
+		this.fragment = fragment
+		this.tabType = TabType.VALUE_RES
+	}
+	
+	/**
+	 * ValueRes - 只有名称
+	 * @param nameId 名称Id
+	 * @param defaultColorId 默认的颜色资源Id
+	 * @param tintColorId 选中的颜色资源Id
+	 * @param fragment 对应的Fragment的Class
+	 */
+	@JvmOverloads
+	constructor(@StringRes nameId: Int, @ColorRes defaultColorId: Int, @ColorRes tintColorId: Int, fragment: Class<out Fragment>? = null) {
+		this.nameId = nameId
 		this.defaultColorId = defaultColorId
 		this.tintColorId = tintColorId
 		this.fragment = fragment

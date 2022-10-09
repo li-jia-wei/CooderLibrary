@@ -11,7 +11,7 @@ import android.view.ViewGroup
  *
  * 介绍：ICooderTabLayout
  */
-interface ICooderTabLayout<Tab : ViewGroup, Info> {
+interface ICooderTabLayout<Tab : ViewGroup, Info : ICooderTabInfo<*>> {
 	
 	fun findTab(info: Info): Tab?
 	
@@ -21,7 +21,7 @@ interface ICooderTabLayout<Tab : ViewGroup, Info> {
 	
 	fun inflateInfo(infoList: List<Info>)
 	
-	interface OnTabSelectedListener<D> {
-		fun onTabSelectedChange(index: Int, prevInfo: D?, nextInfo: D)
+	interface OnTabSelectedListener<Info : ICooderTabInfo<*>> {
+		fun onTabSelectedChange(index: Int, prevInfo: Info?, nextInfo: Info)
 	}
 }
