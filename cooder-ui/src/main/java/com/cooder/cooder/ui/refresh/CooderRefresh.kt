@@ -25,9 +25,9 @@ interface CooderRefresh {
 	/**
 	 * 设置下拉刷新的监听器
 	 */
-	fun setRefreshListener(cooderRefreshListener: CooderRefreshListener)
+	fun setRefreshListener(refreshListener: CooderRefreshListener)
 	
-	fun setRefreshOverView(cooderOverView: CooderOverView)
+	fun setRefreshOverView(overView: CooderOverView)
 	
 	/**
 	 * 下拉刷新的监听器
