@@ -1,8 +1,9 @@
-package com.cooder.cooder.ui.refresh
+package com.cooder.cooder.ui.refresh.overview
 
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
+import com.cooder.cooder.library.util.dp
 
 /**
  * 项目：CooderLibrary
@@ -34,9 +35,14 @@ abstract class CooderOverView @JvmOverloads constructor(
 		STATE_VISIBLE,
 		
 		/**
-		 * 超出可刷新距离的状态
+		 * 刷新中的状态
 		 */
 		STATE_REFRESH,
+		
+		/**
+		 * 超出可刷新距离的状态
+		 */
+		STATE_OVER,
 		
 		/**
 		 * 超出刷新位置松手后的状态
@@ -47,13 +53,14 @@ abstract class CooderOverView @JvmOverloads constructor(
 	/**
 	 * 当前刷新状态
 	 */
-	protected var state = CooderRefreshState.STATE_INIT
+	var state = CooderRefreshState.STATE_INIT
 	
 	companion object {
 		/**
 		 * 触发下拉刷新需要的最小高度
 		 */
-		const val PULL_REFRESH_HEIGHT = 0
+		var PULL_REFRESH_HEIGHT = 0
+			private set
 		
 		/**
 		 * 最小阻尼
@@ -66,20 +73,32 @@ abstract class CooderOverView @JvmOverloads constructor(
 		const val MAX_DAMP = 2.2F
 	}
 	
+	init {
+		preInit()
+	}
+	
+	/**
+	 * 预初始化
+	 */
+	protected fun preInit() {
+		PULL_REFRESH_HEIGHT = 90.dp.toInt()
+		init()
+	}
+	
 	/**
 	 * 初始化
 	 */
-	abstract fun init()
+	protected abstract fun init()
 	
 	/**
 	 * 刷新
 	 */
-	protected abstract fun onScroll(scrollY: Int, pullRefreshHeight: Int)
+	abstract fun onScroll(scrollY: Int, pullRefreshHeight: Int)
 	
 	/**
 	 * 显示出Overlay回调方法
 	 */
-	protected abstract fun onVisible()
+	abstract fun onVisible()
 	
 	/**
 	 * 超过Overlay，释放就会加载

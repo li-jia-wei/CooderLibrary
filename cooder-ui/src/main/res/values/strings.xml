@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="refresh_text_overview_visible">下拉刷新</string>
+	<string name="refresh_text_overview_over">松开刷新</string>
+	<string name="refresh_text_overview_refresh">正在刷新…</string>
+</resources>

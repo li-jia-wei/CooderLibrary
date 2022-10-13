@@ -5,10 +5,12 @@ import android.util.AttributeSet
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.MotionEvent.*
+import android.view.View
 import android.view.animation.LinearInterpolator
 import android.widget.FrameLayout
 import android.widget.Scroller
-import com.cooder.cooder.ui.refresh.CooderOverView.CooderRefreshState.*
+import com.cooder.cooder.ui.refresh.overview.CooderOverView
+import com.cooder.cooder.ui.refresh.overview.CooderOverView.CooderRefreshState.*
 import com.cooder.cooder.ui.refresh.util.CooderScrollUtil
 import kotlinx.coroutines.Runnable
 import kotlin.math.abs
@@ -68,18 +70,14 @@ class CooderRefreshLayout @JvmOverloads constructor(
 					}).toInt()
 					// 如果是正在刷新状态，不允许在滑动的时候改变状态
 					val bool = moveDown(speed, true)
+					lastY = -distanceY.toInt()
+					return bool
+				} else {
+					return false
 				}
+			} else {
+				return false
 			}
-			return super.onScroll(e1, e2, distanceX, distanceY)
-		}
-		
-		/**
-		 * 根据偏移量移动Header与Child
-		 * @param offsetY 偏移量
-		 * @param nonAuto 是否非自动滚动触发
-		 */
-		private fun moveDown(offsetY: Int, nonAuto: Boolean) {
-			TODO("上次写到这里是: 2022-10-11 22:17:58")
 		}
 	}
 	
@@ -92,7 +90,17 @@ class CooderRefreshLayout @JvmOverloads constructor(
 	}
 	
 	override fun refreshFinished() {
-		
+		val head = getChildAt(0)
+		overView?.also {
+			it.onFinish()
+			it.state = STATE_INIT
+			val bottom = head.bottom
+			if (bottom > 0) {
+				// 恢复视图
+				recover(bottom)
+			}
+			state = STATE_INIT
+		}
 	}
 	
 	override fun setRefreshListener(refreshListener: CooderRefresh.CooderRefreshListener) {
@@ -100,7 +108,12 @@ class CooderRefreshLayout @JvmOverloads constructor(
 	}
 	
 	override fun setRefreshOverView(overView: CooderOverView) {
+		if (this.overView != null) {
+			removeView(overView)
+		}
 		this.overView = overView
+		val params = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
+		addView(overView, 0, params)
 	}
 	
 	override fun dispatchTouchEvent(event: MotionEvent?): Boolean {
@@ -140,6 +153,27 @@ class CooderRefreshLayout @JvmOverloads constructor(
 		}
 	}
 	
+	override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+		// 定义head和child的排列位置
+		val head = getChildAt(0)
+		val child = getChildAt(1)
+		if (head != null && child != null) {
+			if (state == STATE_REFRESH) {
+				head.layout(0, CooderOverView.PULL_REFRESH_HEIGHT - head.measuredHeight, right, CooderOverView.PULL_REFRESH_HEIGHT)
+				child.layout(0, CooderOverView.PULL_REFRESH_HEIGHT, right, CooderOverView.PULL_REFRESH_HEIGHT + child.measuredHeight)
+			} else {
+				val childTop = child.top
+				head.layout(0, childTop - head.measuredHeight, right, childTop)
+				child.layout(0, childTop, right, childTop + child.measuredHeight)
+			}
+			var other: View
+			for (i in 2 until childCount) {
+				other = getChildAt(i)
+				other.layout(0, top, right, bottom)
+			}
+		}
+	}
+	
 	/**
 	 * 借助Scroller实现视图自动滚动
 	 */
@@ -153,6 +187,8 @@ class CooderRefreshLayout @JvmOverloads constructor(
 		
 		override fun run() {
 			if (scroller.computeScrollOffset()) {
+				// 设置滚动
+				moveDown(lastY - scroller.currY, false)
 				lastY = scroller.currY
 				post(this)
 			} else {
@@ -168,6 +204,67 @@ class CooderRefreshLayout @JvmOverloads constructor(
 			isFinished = false
 			scroller.startScroll(0, 0, 0, dis, 300)
 			post(this)
+		}
+	}
+	
+	/**
+	 * 根据偏移量移动header与child
+	 * @param offsetY 偏移量
+	 * @param nonAuto 是否非自动滚动触发
+	 */
+	private fun moveDown(offsetY: Int, nonAuto: Boolean): Boolean {
+		val head = getChildAt(0)
+		val child = getChildAt(1)
+		val childTop = child.top + offsetY
+		if (childTop <= 0) {    // 异常情况
+			val offsetY1 = -child.top
+			// 移动head与child的位置到原始位置
+			head.offsetTopAndBottom(offsetY1)
+			child.offsetTopAndBottom(offsetY1)
+			if (state != STATE_REFRESH) {
+				state = STATE_INIT
+			}
+		} else if (state == STATE_REFRESH && childTop > CooderOverView.PULL_REFRESH_HEIGHT) {
+			// 如果正在下拉刷新中，禁止继续下拉
+			return false
+		} else if (childTop <= CooderOverView.PULL_REFRESH_HEIGHT) {    // 还没超出设定的刷新距离
+			if (overView != null && overView!!.state != STATE_VISIBLE && nonAuto) {
+				overView?.also {
+					it.onVisible()
+					it.state = STATE_VISIBLE
+				}
+				state = STATE_VISIBLE
+			}
+			head.offsetTopAndBottom(offsetY)
+			child.offsetTopAndBottom(offsetY)
+			if (childTop == CooderOverView.PULL_REFRESH_HEIGHT && state == STATE_OVER_RELEASE) {
+				refresh()
+			}
+		} else {
+			if (overView != null && overView!!.state != STATE_OVER && nonAuto) {
+				overView?.also {
+					it.onOver()
+					it.state = STATE_OVER
+				}
+			}
+			head.offsetTopAndBottom(offsetY)
+			child.offsetTopAndBottom(offsetY)
+		}
+		overView?.onScroll(head.bottom, CooderOverView.PULL_REFRESH_HEIGHT)
+		return true
+	}
+	
+	/**
+	 * 开始刷新
+	 */
+	private fun refresh() {
+		refreshListener?.also { listener ->
+			overView?.also {
+				it.onRefresh()
+				it.state = STATE_REFRESH
+			}
+			state = STATE_REFRESH
+			listener.onRefresh()
 		}
 	}
 }

@@ -1,5 +1,7 @@
 package com.cooder.cooder.ui.refresh
 
+import com.cooder.cooder.ui.refresh.overview.CooderOverView
+
 /**
  * 项目：CooderLibrary
  *
@@ -40,8 +42,10 @@ interface CooderRefresh {
 		fun onRefresh()
 		
 		/**
-		 * 是否开启刷新
+		 * 是否开启刷新，默认true
 		 */
-		fun enableRefresh(): Boolean
+		fun enableRefresh(): Boolean {
+			return true
+		}
 	}
 }
