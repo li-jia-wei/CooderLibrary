@@ -1,0 +1,17 @@
+<resources>
+	<string name="app_name">Cooder库</string>
+
+	<!-- 阿里巴巴图标库 -->
+	<!-- 首页 -->
+	<string name="ic_alibaba_home">&#xe89a;</string>
+	<string name="ic_alibaba_home_fill">&#xe8a0;</string>
+	<!-- 产品分类 -->
+	<string name="ic_alibaba_category_products">&#xe7d6;</string>
+	<string name="ic_alibaba_category_products_fill">&#xe862;</string>
+	<!-- 购物车 -->
+	<string name="ic_alibaba_cart_empty">&#xe759;</string>
+	<string name="ic_alibaba_cart_empty_fill">&#xe817;</string>
+	<!-- 用户账户 -->
+	<string name="ic_alibaba_user_account">&#xe8a5;</string>
+	<string name="ic_alibaba_user_account_fill">&#xe89d;</string>
+</resources>
