@@ -10,4 +10,12 @@
 	<color name="cooder_tab_bottom_icon">#666666</color>
 	<color name="cooder_tab_bottom_name">#999999</color>
 	<color name="cooder_tab_top_indicator">#40A9FE</color>
+
+	<color name="cooder_lottie_wary_dot1">#F5212C</color>
+	<color name="cooder_lottie_wary_dot2">#F98B15</color>
+	<color name="cooder_lottie_wary_dot3">#F9DB13</color>
+	<color name="cooder_lottie_wary_dot4">#52C41A</color>
+	<color name="cooder_lottie_wary_dot5">#1790FE</color>
+	<color name="cooder_lottie_wary_dot6">#2E53EB</color>
+	<color name="cooder_lottie_wary_dot7">#712DD1</color>
 </resources>

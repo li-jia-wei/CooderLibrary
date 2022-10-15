@@ -6,7 +6,6 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import com.cooder.cooder.app.R
-import com.cooder.cooder.library.log.CooderLog
 import com.cooder.cooder.library.util.CooderDisplayUtil
 import com.cooder.cooder.ui.tab.bottom.CooderTabBottomInfo
 import com.cooder.cooder.ui.tab.bottom.CooderTabBottomLayout
@@ -84,7 +83,7 @@ class CooderTabBottomActivity : AppCompatActivity() {
 		tabBottomLayout.inflateInfo(bottomInfoList)
 		tabBottomLayout.addTabSelectedChangeListener(object : CooderTabLayout.OnTabSelectedListener<CooderTabBottomInfo<*>> {
 			override fun onTabSelectedChange(index: Int, prevInfo: CooderTabBottomInfo<*>?, nextInfo: CooderTabBottomInfo<*>) {
-				CooderLog.i(nextInfo.name)
+			
 			}
 		})
 		tabBottomLayout.defaultSelected(homeInfo)

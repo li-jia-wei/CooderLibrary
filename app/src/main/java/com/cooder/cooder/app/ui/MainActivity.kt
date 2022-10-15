@@ -27,6 +27,5 @@ class MainActivity : AppCompatActivity() {
 		
 		val gridView: GridView = findViewById(R.id.grid_view)
 		gridView.adapter = ComponentsAdapter(this, components)
-		
 	}
 }

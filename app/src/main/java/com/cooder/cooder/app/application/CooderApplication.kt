@@ -27,7 +27,9 @@ class CooderApplication : Application() {
 	 */
 	private fun initCooderLogManager() {
 		CooderLogManager.init(this, object : CooderLogConfig() {
-		
+			override fun globalTag(): String {
+				return "CooderLibraryTAG"
+			}
 		}, CooderConsolePrinter(), CooderFilePrinter(this))
 	}
 }

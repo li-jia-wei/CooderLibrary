@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
 import com.cooder.cooder.library.util.dp
+import com.cooder.cooder.ui.refresh.overview.CooderOverView.CooderRefreshState.STATE_INIT
 
 /**
  * 项目：CooderLibrary
@@ -53,7 +54,7 @@ abstract class CooderOverView @JvmOverloads constructor(
 	/**
 	 * 当前刷新状态
 	 */
-	var state = CooderRefreshState.STATE_INIT
+	var state = STATE_INIT
 	
 	companion object {
 		/**
@@ -80,7 +81,7 @@ abstract class CooderOverView @JvmOverloads constructor(
 	/**
 	 * 预初始化
 	 */
-	protected fun preInit() {
+	private fun preInit() {
 		PULL_REFRESH_HEIGHT = 90.dp.toInt()
 		init()
 	}

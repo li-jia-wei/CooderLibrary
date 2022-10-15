@@ -31,13 +31,14 @@ class CooderRefreshLayout @JvmOverloads constructor(
 ) : FrameLayout(context, attributeSet, defStyleAttr), CooderRefresh {
 	
 	private var state: CooderOverView.CooderRefreshState = STATE_INIT
+	
 	private var gestureDetector: GestureDetector
 	private var refreshListener: CooderRefresh.CooderRefreshListener? = null
 	
 	private var overView: CooderOverView? = null
 	private var lastY: Int = 0
 	
-	private var disableRefreshScroll: Boolean = false
+	private var disableRefreshScroll: Boolean = true
 	
 	private val autoScroller = AutoScroller()
 	
@@ -50,7 +51,7 @@ class CooderRefreshLayout @JvmOverloads constructor(
 			}
 			if (disableRefreshScroll && state == STATE_REFRESH) {
 				// 刷新时是否禁用滚动
-				return true
+				return false
 			}
 			val head = getChildAt(0)
 			val child = CooderScrollUtil.findScrollableChild(this@CooderRefreshLayout)
@@ -92,15 +93,15 @@ class CooderRefreshLayout @JvmOverloads constructor(
 	override fun refreshFinished() {
 		val head = getChildAt(0)
 		overView?.also {
-			it.onFinish()
 			it.state = STATE_INIT
-			val bottom = head.bottom
-			if (bottom > 0) {
-				// 恢复视图
-				recover(bottom)
-			}
-			state = STATE_INIT
+			it.onFinish()
 		}
+		val bottom = head.bottom
+		if (bottom > 0) {
+			// 恢复视图
+			recover(bottom)
+		}
+		state = STATE_INIT
 	}
 	
 	override fun setRefreshListener(refreshListener: CooderRefresh.CooderRefreshListener) {
