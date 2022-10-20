@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.AttributeSet
 import com.cooder.cooder.ui.refresh.overview.lottie.LottieAnim
 import com.cooder.cooder.ui.refresh.overview.lottie.LottieType
-import com.cooder.cooder.ui.refresh.overview.lottie.LottieType.ROTATE
 import com.cooder.cooder.ui.refresh.overview.lottie.LottieType.WAVY
 import com.cooder.cooder.ui.refresh.overview.lottie.LottieWavyAnim
 
@@ -29,7 +28,6 @@ class CooderLottieOverView @JvmOverloads constructor(
 	init {
 		lottieAnim = when (lottieType) {
 			WAVY -> LottieWavyAnim(context, this)
-			ROTATE -> TODO("未实现")
 		}
 	}
 	

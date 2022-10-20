@@ -14,9 +14,4 @@ enum class LottieType {
 	 * 波浪线
 	 */
 	WAVY,
-	
-	/**
-	 * 旋转
-	 */
-	ROTATE,
 }
