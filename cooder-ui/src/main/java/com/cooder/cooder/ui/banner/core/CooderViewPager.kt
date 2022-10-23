@@ -7,7 +7,10 @@ import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
 import android.view.MotionEvent
+import androidx.annotation.IntRange
 import androidx.viewpager.widget.ViewPager
+import com.cooder.cooder.library.log.CooderLog
+import java.lang.reflect.Field
 
 /**
  * 项目：CooderLibrary
@@ -26,7 +29,7 @@ class CooderViewPager @JvmOverloads constructor(
 	/**
 	 * 自动播放时切换页面的间隔时间，默认：5000毫秒
 	 */
-	private var intervalTime: Long = 5000L
+	private var intervalTime: Int = 5000
 	
 	/**
 	 * 是否开启自动播放，默认：false
@@ -43,7 +46,7 @@ class CooderViewPager @JvmOverloads constructor(
 		override fun run() {
 			// 切换到下一个
 			next()
-			autoPlayHandler.postDelayed(this, intervalTime)
+			autoPlayHandler.postDelayed(this, intervalTime.toLong())
 		}
 	}
 	
@@ -52,13 +55,26 @@ class CooderViewPager @JvmOverloads constructor(
 	 */
 	fun setAutoPlay(auto: Boolean) {
 		this.autoPlay = auto
-		handler.removeCallbacks(autoPlayRunnable)
+		if (!autoPlay) {
+			autoPlayHandler.removeCallbacks(autoPlayRunnable)
+		} else {
+			start()
+		}
+	}
+	
+	/**
+	 * 设置ViewPager的滚动速度
+	 *
+	 * @param duration page切换动画的时间长度
+	 */
+	fun setScrollDuration(@IntRange(from = 100, to = 3000) duration: Int) {
+		setPrivateScrollerInViewPager(duration)
 	}
 	
 	/**
 	 * 设置切换间隔时间（单位：毫秒）
 	 */
-	fun setIntervalTime(intervalTime: Long) {
+	fun setIntervalTime(intervalTime: Int) {
 		this.intervalTime = intervalTime
 	}
 	
@@ -66,9 +82,9 @@ class CooderViewPager @JvmOverloads constructor(
 	 * 开始自动播放
 	 */
 	fun start() {
-		handler.removeCallbacksAndMessages(null)
+		autoPlayHandler.removeCallbacksAndMessages(null)
 		if (autoPlay) {
-			handler.postDelayed(autoPlayRunnable, intervalTime)
+			autoPlayHandler.postDelayed(autoPlayRunnable, intervalTime.toLong())
 		}
 	}
 	
@@ -76,7 +92,7 @@ class CooderViewPager @JvmOverloads constructor(
 	 * 停止自动播放
 	 */
 	fun stop() {
-		handler.removeCallbacksAndMessages(null)
+		autoPlayHandler.removeCallbacksAndMessages(null)
 	}
 	
 	/**
@@ -92,8 +108,9 @@ class CooderViewPager @JvmOverloads constructor(
 		}
 		nextPosition = currentItem + 1
 		if (nextPosition >= adapter!!.count) {
-			// 获取第一个Item的索引
+			nextPosition = (adapter as CooderBannerAdapter).getFirstItem()
 		}
+		CooderLog.i(nextPosition)
 		setCurrentItem(nextPosition, true)
 		return nextPosition
 	}
@@ -139,13 +156,30 @@ class CooderViewPager @JvmOverloads constructor(
 	}
 	
 	/**
+	 * 反射
+	 *
 	 * 将ViewPager中的私有字段mFirstLayout设置为false
 	 */
 	private fun setPrivateFirstLayoutInViewPagerFromTrueToFalse() {
 		try {
-			val scroller = ViewPager::class.java.getDeclaredField("mFirstLayout")
-			scroller.isAccessible = true
-			scroller.set(this, false)
+			val firstLayoutField: Field = ViewPager::class.java.getDeclaredField("mFirstLayout")
+			firstLayoutField.isAccessible = true
+			firstLayoutField.set(this, false)
+		} catch (e: NoSuchFieldException) {
+			e.printStackTrace()
+		}
+	}
+	
+	/**
+	 * 反射
+	 *
+	 * 将ViewPager中的私有字段mScroller设置为CooderBannerScroller，使能够自定义设置切换页面动画的长度
+	 */
+	private fun setPrivateScrollerInViewPager(duration: Int) {
+		try {
+			val scrollerField: Field = ViewPager::class.java.getDeclaredField("mScroller")
+			scrollerField.isAccessible = true
+			scrollerField.set(this, CooderBannerScroller(context, duration))
 		} catch (e: NoSuchFieldException) {
 			e.printStackTrace()
 		}

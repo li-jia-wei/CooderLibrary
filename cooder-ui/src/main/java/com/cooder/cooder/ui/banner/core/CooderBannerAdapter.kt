@@ -25,22 +25,22 @@ class CooderBannerAdapter(
 	/**
 	 * Bind适配器
 	 */
-	var bindAdapter: IBindAdapter? = null
+	private var bindAdapter: IBindAdapter? = null
 	
 	/**
 	 * 是否开启自动轮播
 	 */
-	var isAutoPlay = true
+	private var autoPlay = true
 	
 	/**
-	 * 非自动轮播状态下是否可以循环切换
+	 * 是否可以循环切换
 	 */
-	var isLoop = false
+	private var loop = true
 	
 	/**
 	 * Banner点击监听器
 	 */
-	var bannerClickListener: ICooderBanner.OnBannerClickListener? = null
+	private var onBannerClickListener: ICooderBanner.OnBannerClickListener? = null
 	
 	/**
 	 * ViewHolder缓存
@@ -63,6 +63,34 @@ class CooderBannerAdapter(
 	}
 	
 	/**
+	 * 设置Bind适配器
+	 */
+	fun setBindAdapter(bindAdapter: IBindAdapter) {
+		this.bindAdapter = bindAdapter
+	}
+	
+	/**
+	 * 设置是否自动播放
+	 */
+	fun setAutoPlay(autoPlay: Boolean) {
+		this.autoPlay = autoPlay
+	}
+	
+	/**
+	 * 设置是否能循环切换
+	 */
+	fun setLoop(loop: Boolean) {
+		this.loop = loop
+	}
+	
+	/**
+	 * 设置Banner点击事件
+	 */
+	fun setOnBannerClickListener(onBannerClickListener: ICooderBanner.OnBannerClickListener) {
+		this.onBannerClickListener = onBannerClickListener
+	}
+	
+	/**
 	 * 设置LayoutResId
 	 */
 	fun setLayoutResId(@LayoutRes layoutResId: Int) {
@@ -70,7 +98,7 @@ class CooderBannerAdapter(
 	}
 	
 	override fun getCount(): Int {
-		return if (isAutoPlay || isLoop) Int.MAX_VALUE else getRealCount()
+		return if (autoPlay || loop) Int.MAX_VALUE else getRealCount()
 	}
 	
 	/**
@@ -85,7 +113,7 @@ class CooderBannerAdapter(
 	 *
 	 * @return 初次展示的Item的位置
 	 */
-	fun getFirstItemPosition(): Int {
+	fun getFirstItem(): Int {
 		return Int.MAX_VALUE / 2 - (Int.MAX_VALUE / 2) % getRealCount()
 	}
 	
@@ -129,7 +157,7 @@ class CooderBannerAdapter(
 	
 	private fun onBind(viewHolder: CooderBannerViewHolder, bannerMo: CooderBannerMo, position: Int) {
 		viewHolder.rootView.setOnClickListener {
-			bannerClickListener?.onBannerClick(viewHolder, bannerMo, position)
+			onBannerClickListener?.onBannerClick(viewHolder, bannerMo, position)
 		}
 		bindAdapter?.onBind(viewHolder, bannerMo, position)
 	}
@@ -149,17 +177,21 @@ class CooderBannerAdapter(
 		if (layoutResId == -1) {
 			throw IllegalStateException("You must first call the setLayoutResId method.")
 		}
-		return layoutInflater.inflate(layoutResId, parent, false)
+		val view = layoutInflater.inflate(layoutResId, parent, false)
+		return view
 	}
 	
 	/**
 	 * BannerViewHolder
 	 */
-	data class CooderBannerViewHolder(val rootView: View) {
+	class CooderBannerViewHolder(val rootView: View) {
 		private var viewSparseArray: SparseArray<View>? = null
 		
+		@Suppress("UNCHECKED_CAST")
 		fun <V : View> findViewById(@IdRes id: Int): V {
-			if (rootView is ViewGroup) return rootView as V
+			if (rootView !is ViewGroup) {
+				return rootView as V
+			}
 			if (viewSparseArray == null) {
 				viewSparseArray = SparseArray(1)
 			}

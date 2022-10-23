@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.cooder.cooder.app.R
-import com.cooder.cooder.app.mo.ComponentMo
 
 /**
  * 项目：CooderLibrary
@@ -19,7 +19,7 @@ import com.cooder.cooder.app.mo.ComponentMo
  *
  * 介绍：ComponentsAdapter
  */
-class ComponentsAdapter(private val context: Context, private val data: List<ComponentMo>) : BaseAdapter() {
+class ComponentsAdapter(private val context: Context, private val data: List<Pair<Class<out AppCompatActivity>, String>>) : BaseAdapter() {
 	
 	private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 	
@@ -27,7 +27,7 @@ class ComponentsAdapter(private val context: Context, private val data: List<Com
 		return data.size
 	}
 	
-	override fun getItem(position: Int): ComponentMo {
+	override fun getItem(position: Int): Pair<Class<out AppCompatActivity>, String> {
 		return data[position]
 	}
 	
@@ -46,9 +46,9 @@ class ComponentsAdapter(private val context: Context, private val data: List<Com
 			name = view.tag as TextView
 		}
 		val item = getItem(position)
-		name.text = item.name
+		name.text = item.second
 		name.setOnClickListener {
-			context.startActivity(Intent(context, item.toActivityClass))
+			context.startActivity(Intent(context, item.first))
 		}
 		return view
 	}

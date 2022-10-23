@@ -11,8 +11,8 @@ android {
         applicationId "com.cooder.cooder.app"
         minSdk 26
         targetSdk 33
-        versionCode 1
-        versionName "1.0.0"
+        versionCode 2
+        versionName "1.1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -35,7 +35,7 @@ android {
 
 dependencies {
 
-    // library
+    // Cooder库
     implementation project(":cooder-library")
     implementation project(":cooder-ui")
 
@@ -48,4 +48,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     implementation 'com.google.code.gson:gson:2.9.0'
+    // Glide图片加载库
+    implementation 'com.github.bumptech.glide:glide:4.14.2'
 }

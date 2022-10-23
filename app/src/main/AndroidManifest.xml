@@ -3,6 +3,8 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	package="com.cooder.cooder.app">
 
+	<uses-permission android:name="android.permission.INTERNET" />
+
 	<application
 		android:name=".application.CooderApplication"
 		android:allowBackup="true"
@@ -13,6 +15,7 @@
 		android:roundIcon="@mipmap/ic_launcher_round"
 		android:supportsRtl="true"
 		android:theme="@style/Theme.CooderLibrary"
+		android:usesCleartextTraffic="true"
 		tools:targetApi="31">
 		<activity
 			android:name=".ui.MainActivity"
@@ -27,6 +30,7 @@
 		<activity android:name=".ui.tab.CooderTabBottomActivity" />
 		<activity android:name=".ui.tab.CooderTabTopActivity" />
 		<activity android:name=".ui.refresh.CooderRefreshActivity" />
+		<activity android:name=".ui.banner.CooderBannerActivity" />
 	</application>
 
 </manifest>
