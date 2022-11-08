@@ -36,13 +36,13 @@ class CooderBannerActivity : AppCompatActivity() {
 	private lateinit var intervalTime: EditText
 	
 	private val urls = listOf(
-		"http://10.0.2.2:8080/FileServer/img/1.png",
-		"http://10.0.2.2:8080/FileServer/img/2.png",
-		"http://10.0.2.2:8080/FileServer/img/3.png",
-		"http://10.0.2.2:8080/FileServer/img/4.png",
-		"http://10.0.2.2:8080/FileServer/img/5.png",
-		"http://10.0.2.2:8080/FileServer/img/6.png",
-		"http://10.0.2.2:8080/FileServer/img/7.png",
+		"http://10.0.2.2:8080/CooderFileServer/img/1.png",
+		"http://10.0.2.2:8080/CooderFileServer/img/2.png",
+		"http://10.0.2.2:8080/CooderFileServer/img/3.png",
+		"http://10.0.2.2:8080/CooderFileServer/img/4.png",
+		"http://10.0.2.2:8080/CooderFileServer/img/5.png",
+		"http://10.0.2.2:8080/CooderFileServer/img/6.png",
+		"http://10.0.2.2:8080/CooderFileServer/img/7.png",
 	)
 	
 	override fun onCreate(savedInstanceState: Bundle?) {

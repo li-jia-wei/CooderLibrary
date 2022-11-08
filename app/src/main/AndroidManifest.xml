@@ -31,6 +31,8 @@
 		<activity android:name=".ui.tab.CooderTabTopActivity" />
 		<activity android:name=".ui.refresh.CooderRefreshActivity" />
 		<activity android:name=".ui.banner.CooderBannerActivity" />
+		<activity android:name=".ui.TestActivity" />
+		<activity android:name=".ui.item.CooderDataItemActivity" />
 	</application>
 
 </manifest>
