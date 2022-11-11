@@ -15,7 +15,7 @@ import com.cooder.cooder.app.ui.tab.CooderTabTopActivity
 
 class MainActivity : AppCompatActivity() {
 	
-	private val isTestMode = false
+	private val isTestMode = true
 	
 	private val components = listOf(
 		CooderLogActivity::class.java to "Log",

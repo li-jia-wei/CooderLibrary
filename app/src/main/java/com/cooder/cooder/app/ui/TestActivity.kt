@@ -1,9 +1,10 @@
 package com.cooder.cooder.app.ui
 
 import android.os.Bundle
-import android.widget.TextView
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.cooder.cooder.app.R
+import com.cooder.cooder.app.coroutine.SemaphoreDemo
 
 /**
  * 项目：CooderLibrary
@@ -19,9 +20,10 @@ class TestActivity : AppCompatActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_test)
-		val test: TextView = findViewById(R.id.tv_test)
-		Thread {
-			test.text = String.format("我来自子线程，%s", Thread.currentThread().name)
-		}.start()
+		
+		val test = findViewById<Button>(R.id.test)
+		test.setOnClickListener {
+			SemaphoreDemo().start()
+		}
 	}
 }

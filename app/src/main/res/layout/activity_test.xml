@@ -7,10 +7,10 @@
 	android:orientation="vertical"
 	tools:context=".ui.TestActivity">
 
-	<TextView
-		android:id="@+id/tv_test"
-		android:layout_width="wrap_content"
+	<Button
+		android:id="@+id/test"
+		android:layout_width="150dp"
 		android:layout_height="wrap_content"
-		android:textSize="26sp" />
+		android:text="测试" />
 
 </LinearLayout>
