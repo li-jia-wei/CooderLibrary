@@ -9,7 +9,7 @@ import android.view.ViewGroup
  *
  * 创建：2022/9/27 19:32
  *
- * 介绍：ICooderTabLayout
+ * 介绍：CooderTabLayout
  */
 interface CooderTabLayout<Tab : ViewGroup, Info : CooderTabInfo<*>> {
 	

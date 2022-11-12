@@ -1,5 +1,7 @@
 package com.cooder.cooder.library.restful
 
+import androidx.annotation.MainThread
+import androidx.annotation.WorkerThread
 import java.io.IOException
 
 /**
@@ -13,9 +15,17 @@ import java.io.IOException
  */
 interface CooderCall<T> {
 	
+	/**
+	 * 子线程调用
+	 */
 	@Throws(IOException::class)
+	@WorkerThread
 	fun execute(): CooderResponse<T>
 	
+	/**
+	 * 主线程上调用
+	 */
+	@MainThread
 	fun enqueue(callback: CooderCallback<T>)
 	
 	/**
