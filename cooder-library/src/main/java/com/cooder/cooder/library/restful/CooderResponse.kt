@@ -12,8 +12,9 @@ package com.cooder.cooder.library.restful
 open class CooderResponse<T> {
 	
 	companion object {
-		const val SUCCESS = 0
-		const val FAILURE = 1
+		const val SUCCESS = 1
+		const val FAILURE = 0
+		const val EXCEPTION = -1
 	}
 	
 	/**

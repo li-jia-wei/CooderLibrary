@@ -1,6 +1,7 @@
 package com.cooder.cooder.library.restful
 
 import androidx.annotation.IntDef
+import com.cooder.cooder.library.util.DomainUtil
 import java.lang.reflect.Type
 
 /**
@@ -28,7 +29,7 @@ open class CooderRequest {
 	/**
 	 * 参数
 	 */
-	var parameters: MutableMap<String, Comparable<*>>? = null
+	var parameters: MutableMap<String, String>? = null
 	
 	/**
 	 * 域名
@@ -45,12 +46,36 @@ open class CooderRequest {
 	 */
 	var returnType: Type? = null
 	
+	/**
+	 * POST请求时，是否为表单提交，默认: true
+	 */
+	var formPost = true
+	
 	@IntDef(METHOD.NONE, METHOD.GET, METHOD.POST)
-	internal annotation class METHOD {
+	annotation class METHOD {
 		companion object {
 			const val NONE = -1
 			const val GET = 0
 			const val POST = 1
 		}
+	}
+	
+	/**
+	 * 获取完整路径
+	 */
+	fun getCompleteUrl(): String {
+		check(domainUrl != null) { "domainUrl == null" }
+		check(relativeUrl != null) { "relativeUrl == null" }
+		if (!relativeUrl!!.startsWith("/")) {
+			if (!domainUrl!!.endsWith("/")) domainUrl += "/"
+			return domainUrl + relativeUrl
+		}
+		val realDomain = DomainUtil.getRealDomainUrl(domainUrl!!)
+		return realDomain + relativeUrl
+	}
+	
+	fun addHeader(name: String, value: String) {
+		if (headers == null) headers = mutableMapOf()
+		headers!![name] = value
 	}
 }

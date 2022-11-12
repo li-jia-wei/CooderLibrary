@@ -18,7 +18,7 @@ import kotlin.reflect.KClass
 class MethodParser(
 	private val baseUrl: String,
 	method: Method,
-	args: Array<Comparable<*>>
+	args: Array<Any>
 ) {
 	
 	/**
@@ -49,7 +49,7 @@ class MethodParser(
 	
 	private var headers = mutableMapOf<String, String>()
 	
-	private var parameters = mutableMapOf<String, Comparable<*>>()
+	private var parameters = mutableMapOf<String, String>()
 	
 	init {
 		parseMethodAnnotations(method)
@@ -58,7 +58,7 @@ class MethodParser(
 	}
 	
 	companion object {
-		fun parse(baseUrl: String, method: Method, args: Array<Comparable<*>>): MethodParser {
+		fun parse(baseUrl: String, method: Method, args: Array<Any>): MethodParser {
 			return MethodParser(baseUrl, method, args)
 		}
 	}
@@ -74,6 +74,7 @@ class MethodParser(
 		request.returnType = returnType
 		request.headers = headers
 		request.httpMethod = httpMethod
+		request.formPost = formPost
 		return request
 	}
 	
@@ -124,7 +125,7 @@ class MethodParser(
 	/**
 	 * 解析方法参数，如: Filed, Replace
 	 */
-	private fun parseMethodParameters(method: Method, args: Array<Comparable<*>>) {
+	private fun parseMethodParameters(method: Method, args: Array<Any>) {
 		val parameterAnnotations = method.parameterAnnotations
 		val equals = parameterAnnotations.size == args.size
 		require(equals) {
@@ -143,7 +144,7 @@ class MethodParser(
 			when (val annotation = annotations[0]) {
 				is Filed -> {
 					val key = annotation.name
-					parameters[key] = value
+					parameters[key] = value.toString()
 				}
 				is Path -> {
 					val replaceName = annotation.replacedName
@@ -166,7 +167,7 @@ class MethodParser(
 	/**
 	 * 查看是否是基本数据类型
 	 */
-	private fun isPrimitive(value: Comparable<*>): Boolean {
+	private fun isPrimitive(value: Any): Boolean {
 		if (value.javaClass == String::class.java) return true
 		try {
 			val field = value.javaClass.getField("TYPE")

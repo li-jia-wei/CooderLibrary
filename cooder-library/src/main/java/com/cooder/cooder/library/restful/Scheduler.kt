@@ -7,12 +7,16 @@ package com.cooder.cooder.library.restful
  *
  * 创建：2022/11/11 20:40
  *
- * 介绍：代理CallFactory创建处理啊的call对象，实现拦截器的派发动作
+ * 介绍：代理CallFactory创建处理啊的call对象，实现拦截器的派发
  */
 class Scheduler(
 	private val callFactory: CooderCall.Factory,
-	private val interceptors: MutableList<CooderInterceptor>
+	val interceptors: MutableList<CooderInterceptor>
 ) {
+	
+	/**
+	 * 代理创建Call，实现拦截器的派发
+	 */
 	fun newCall(request: CooderRequest): CooderCall<*> {
 		val delegate = callFactory.newCall(request)
 		return ProxyCall(delegate, request)
@@ -45,8 +49,12 @@ class Scheduler(
 			})
 		}
 		
+		/**
+		 * 调度拦截器
+		 */
 		private fun dispatchInterceptor(request: CooderRequest, response: CooderResponse<T>?) {
-			InterceptorChain(request, response).dispatch()
+			val interceptorChain = InterceptorChain(request, response)
+			interceptorChain.dispatch()
 		}
 		
 		/**

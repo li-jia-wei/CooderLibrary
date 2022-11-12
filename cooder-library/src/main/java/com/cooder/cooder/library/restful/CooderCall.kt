@@ -18,6 +18,9 @@ interface CooderCall<T> {
 	
 	fun enqueue(callback: CooderCallback<T>)
 	
+	/**
+	 * 实现工厂
+	 */
 	interface Factory {
 		
 		fun newCall(request: CooderRequest): CooderCall<*>

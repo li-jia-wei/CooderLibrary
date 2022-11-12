@@ -11,8 +11,8 @@ android {
         applicationId "com.cooder.cooder.app"
         minSdk 26
         targetSdk 33
-        versionCode 2
-        versionName "1.1.0"
+        versionCode 15
+        versionName "1.2.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

@@ -15,16 +15,12 @@ import java.util.concurrent.ConcurrentHashMap
  */
 open class CooderRestful(
 	private val baseUrl: String,
-	private val callFactory: CooderCall.Factory
+	callFactory: CooderCall.Factory
 ) {
 	
 	private val interceptors = mutableListOf<CooderInterceptor>()
 	private val methodParsers = ConcurrentHashMap<Method, MethodParser>()
-	private val scheduler: Scheduler
-	
-	init {
-		scheduler = Scheduler(callFactory, interceptors)
-	}
+	private val scheduler = Scheduler(callFactory, interceptors)
 	
 	fun addInterceptor(interceptor: CooderInterceptor) {
 		this.interceptors += interceptor
@@ -32,10 +28,10 @@ open class CooderRestful(
 	
 	fun <T> create(service: Class<T>): T {
 		@Suppress("UNCHECKED_CAST")
-		return Proxy.newProxyInstance(service.classLoader, arrayOf<Class<*>>(service)) { proxy: Any, method: Method, args: Array<Any>? ->
+		return Proxy.newProxyInstance(service.classLoader, arrayOf<Class<*>>(service)) { _: Any, method: Method, args: Array<Any>? ->
 			var methodParser = methodParsers[method]
 			if (methodParser == null) {
-				methodParser = MethodParser.parse(baseUrl, method, args as Array<Comparable<*>>)
+				methodParser = MethodParser.parse(baseUrl, method, args!!)
 				methodParsers[method] = methodParser
 			}
 			val request = methodParser.newRequest()
