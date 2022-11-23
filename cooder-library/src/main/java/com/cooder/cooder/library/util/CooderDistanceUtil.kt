@@ -17,6 +17,7 @@ object CooderDistanceUtil {
 	/**
 	 * 两点间距离公式
 	 */
+	@JvmStatic
 	fun between2Points(x1: Float, y1: Float, x2: Float, y2: Float): Float {
 		return sqrt((x1 - x2).pow(2) + (y1 - y2).pow(2))
 	}

@@ -29,17 +29,17 @@ class Scheduler(
 	) : CooderCall<T> {
 		
 		override fun execute(): CooderResponse<T> {
-			dispatchInterceptor(request, null)
+			dispatchRequestInterceptor(request)
 			val response = delegate.execute()
-			dispatchInterceptor(request, response)
+			dispatchResponseInterceptor(response)
 			return response
 		}
 		
 		override fun enqueue(callback: CooderCallback<T>) {
-			dispatchInterceptor(request, null)
+			dispatchRequestInterceptor(request)
 			delegate.enqueue(object : CooderCallback<T> {
 				override fun onSuccess(response: CooderResponse<T>) {
-					dispatchInterceptor(request, response)
+					dispatchResponseInterceptor(response)
 					callback.onSuccess(response)
 				}
 				
@@ -50,43 +50,58 @@ class Scheduler(
 		}
 		
 		/**
-		 * 调度拦截器
+		 * request 调度拦截器
 		 */
-		private fun dispatchInterceptor(request: CooderRequest, response: CooderResponse<T>?) {
-			val interceptorChain = InterceptorChain(request, response)
-			interceptorChain.dispatch()
+		private fun dispatchRequestInterceptor(request: CooderRequest) {
+			RequestInterceptor(request).dispatch()
 		}
 		
 		/**
-		 * 拦截器链
+		 * response 调度拦截器
 		 */
-		internal inner class InterceptorChain(
-			private val request: CooderRequest,
-			private val response: CooderResponse<T>?
-		) : CooderInterceptor.Chain {
+		private fun dispatchResponseInterceptor(response: CooderResponse<*>) {
+			ResponseInterceptor(response).dispatch()
+		}
+		
+		/**
+		 * Request 拦截器链
+		 */
+		internal inner class RequestInterceptor(
+			private val request: CooderRequest
+		) : CooderInterceptor.RequestChain {
 			
-			/**
-			 * 分发的是第几个拦截器
-			 */
 			private var callIndex = 0
-			
-			override val isRequestPeriod: Boolean
-				get() = response == null
 			
 			override fun request(): CooderRequest {
 				return request
 			}
 			
-			override fun response(): CooderResponse<*>? {
+			fun dispatch() {
+				val interceptor = interceptors[callIndex]
+				val intercept = interceptor.requestIntercept(this)
+				callIndex++
+				if (!intercept && callIndex < interceptors.size) {
+					dispatch()
+				}
+			}
+		}
+		
+		/**
+		 * Response 拦截器链
+		 */
+		internal inner class ResponseInterceptor(
+			private val response: CooderResponse<*>
+		) : CooderInterceptor.ResponseChain {
+			
+			private var callIndex = 0
+			
+			override fun response(): CooderResponse<*> {
 				return response
 			}
 			
-			/**
-			 * 派发拦截器
-			 */
 			fun dispatch() {
 				val interceptor = interceptors[callIndex]
-				val intercept = interceptor.intercept(this)
+				val intercept = interceptor.responseIntercept(this)
 				callIndex++
 				if (!intercept && callIndex < interceptors.size) {
 					dispatch()

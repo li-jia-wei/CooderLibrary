@@ -22,6 +22,7 @@ object CooderViewUtil {
 	 * @param cls 如：RecyclerView::class.java
 	 * @return 查找指定的View
 	 */
+	@JvmStatic
 	fun <T> findTypeView(group: ViewGroup?, cls: Class<T>): T? {
 		group ?: return null
 		val deque: Deque<View> = ArrayDeque()

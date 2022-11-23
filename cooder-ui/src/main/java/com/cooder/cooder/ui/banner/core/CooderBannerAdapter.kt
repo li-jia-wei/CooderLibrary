@@ -167,7 +167,7 @@ class CooderBannerAdapter(
 	 */
 	private fun initCachedView() {
 		cacheViews = SparseArray()
-		models?.forEachIndexed { index, cooderBannerMo ->
+		models?.forEachIndexed { index, _ ->
 			val viewHolder = CooderBannerViewHolder(createView(LayoutInflater.from(context), null))
 			cacheViews[index] = viewHolder
 		}

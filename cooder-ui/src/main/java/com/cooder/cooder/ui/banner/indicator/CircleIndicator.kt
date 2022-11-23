@@ -10,7 +10,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.annotation.DrawableRes
 import androidx.core.view.forEachIndexed
-import com.cooder.cooder.library.log.CooderLog
 import com.cooder.cooder.library.util.dp
 import com.cooder.cooder.ui.R
 
@@ -78,8 +77,6 @@ class CircleIndicator @JvmOverloads constructor(
 	}
 	
 	override fun onPointChange(current: Int, count: Int) {
-		CooderLog.i(this.childCount)
-		CooderLog.i(this.childCount)
 		val viewGroup = getChildAt(0) as ViewGroup
 		viewGroup.forEachIndexed { index: Int, view: View ->
 			val point = view as ImageView

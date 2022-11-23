@@ -33,6 +33,7 @@
 		<activity android:name=".ui.banner.CooderBannerActivity" />
 		<activity android:name=".ui.TestActivity" />
 		<activity android:name=".ui.item.CooderDataItemActivity" />
+		<activity android:name=".ui.view.CooderCustomViewActivity" />
 	</application>
 
 </manifest>

@@ -16,6 +16,7 @@ object CooderLog {
 	/**
 	 * Verbose级别
 	 */
+	@JvmStatic
 	fun <T> v(vararg contents: T?) {
 		log(CooderLogType.V, *contents)
 	}
@@ -23,6 +24,7 @@ object CooderLog {
 	/**
 	 * Verbose级别，包含TAG
 	 */
+	@JvmStatic
 	fun <T> vt(tag: String, vararg contents: T?) {
 		log(CooderLogType.V, tag, *contents)
 	}
@@ -30,6 +32,7 @@ object CooderLog {
 	/**
 	 * Debug级别
 	 */
+	@JvmStatic
 	fun <T> d(vararg contents: T?) {
 		log(CooderLogType.D, *contents)
 	}
@@ -37,6 +40,7 @@ object CooderLog {
 	/**
 	 * Debug级别，包含TAG
 	 */
+	@JvmStatic
 	fun <T> dt(tag: String, vararg contents: T?) {
 		log(CooderLogType.D, tag, *contents)
 	}
@@ -44,6 +48,7 @@ object CooderLog {
 	/**
 	 * Info级别
 	 */
+	@JvmStatic
 	fun <T> i(vararg contents: T?) {
 		log(CooderLogType.I, *contents)
 	}
@@ -51,6 +56,7 @@ object CooderLog {
 	/**
 	 * Info级别，包含TAG
 	 */
+	@JvmStatic
 	fun <T> it(tag: String, vararg contents: T?) {
 		log(CooderLogType.I, tag, *contents)
 	}
@@ -58,6 +64,7 @@ object CooderLog {
 	/**
 	 * Warn级别
 	 */
+	@JvmStatic
 	fun <T> w(vararg contents: T?) {
 		log(CooderLogType.W, *contents)
 	}
@@ -65,6 +72,7 @@ object CooderLog {
 	/**
 	 * Warn级别，包含TAG
 	 */
+	@JvmStatic
 	fun <T> wt(tag: String, vararg contents: T?) {
 		log(CooderLogType.W, tag, *contents)
 	}
@@ -72,6 +80,7 @@ object CooderLog {
 	/**
 	 * Error级别
 	 */
+	@JvmStatic
 	fun <T> e(vararg contents: T?) {
 		log(CooderLogType.E, *contents)
 	}
@@ -79,6 +88,7 @@ object CooderLog {
 	/**
 	 * Error级别，包含TAG
 	 */
+	@JvmStatic
 	fun <T> et(tag: String, vararg contents: T?) {
 		log(CooderLogType.E, tag, *contents)
 	}
@@ -86,6 +96,7 @@ object CooderLog {
 	/**
 	 * Assert级别
 	 */
+	@JvmStatic
 	fun <T> a(vararg contents: T?) {
 		log(CooderLogType.A, *contents)
 	}
@@ -93,16 +104,21 @@ object CooderLog {
 	/**
 	 * Assert级别，包含TAG
 	 */
+	@JvmStatic
 	fun <T> at(tag: String, vararg contents: T?) {
 		log(CooderLogType.A, tag, *contents)
 	}
 	
 	private fun <T> log(@CooderLogType.Type type: Int, vararg contents: T?) {
-		log(type, CooderLogManager.getInstance().config.globalTag(), *contents)
+		if (CooderLogManager.isInit()) {
+			log(type, CooderLogManager.getInstance().config.globalTag(), *contents)
+		}
 	}
 	
 	private fun <T> log(@CooderLogType.Type type: Int, tag: String, vararg contents: T?) {
-		log(CooderLogManager.getInstance().config, type, tag, *contents)
+		if (CooderLogManager.isInit()) {
+			log(CooderLogManager.getInstance().config, type, tag, *contents)
+		}
 	}
 	
 	/**

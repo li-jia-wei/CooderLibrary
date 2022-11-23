@@ -16,9 +16,7 @@ import kotlin.reflect.KClass
  * 介绍：方法解析器
  */
 class MethodParser(
-	private val baseUrl: String,
-	method: Method,
-	args: Array<Any>
+	private val baseUrl: String, method: Method, args: Array<Any>
 ) {
 	
 	/**
@@ -148,19 +146,29 @@ class MethodParser(
 				}
 				is Path -> {
 					val replaceName = annotation.replacedName
-					val replacement = value.toString()
+					val replaceValue = value.toString()
 					if (replaceName.isNotBlank()) {
-						require(relativeUrl!!.indexOf("{$replaceName}") != -1) {
-							"In method ${method.name}, the replacement character for @Path was not found."
-						}
-						if (relativeUrl!!.indexOf("") != -1)
-							relativeUrl = relativeUrl!!.replace("{$replaceName}", replacement)
+						replaceValue(replaceName, replaceValue)
 					}
 				}
 				else -> {
 					throw IllegalStateException("Cannot handle method annotation : ${it.javaClass}")
 				}
 			}
+		}
+	}
+	
+	/**
+	 * 替换所有注解上的信息
+	 */
+	private fun replaceValue(replaceName: String, replaceValue: String) {
+		// 替换域名
+		if (domainUrl!!.indexOf("{$replaceName}") != -1) {
+			domainUrl = domainUrl!!.replace("{$replaceName}", replaceValue)
+		}
+		// 替换Headers上的
+		for (header in headers) {
+			headers[header.key] = header.value.replace("{$replaceName}", replaceValue)
 		}
 	}
 	

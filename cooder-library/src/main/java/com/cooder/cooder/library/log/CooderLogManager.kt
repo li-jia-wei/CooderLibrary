@@ -49,6 +49,15 @@ class CooderLogManager private constructor(
 		}
 		
 		/**
+		 * 是否初始化
+		 */
+		fun isInit(): Boolean {
+			synchronized(this) {
+				return instance != null
+			}
+		}
+		
+		/**
 		 * 获取实例
 		 */
 		fun getInstance(): CooderLogManager {

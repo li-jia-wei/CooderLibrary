@@ -12,8 +12,24 @@ package com.cooder.cooder.library.restful
 open class CooderResponse<T> {
 	
 	companion object {
-		const val SUCCESS = 1
-		const val FAILURE = 0
+		const val SUCCESS = 0                   // 成功
+		
+		const val RC_HAS_ERROR = 5000           // 有错误
+		const val RC_ACCOUNT_INVALID = 5001     // 账号不存在
+		const val RC_PWD_INVALID = 5002         // 密码错误
+		const val RC_NEED_LOGIN = 5003          // 请先登录
+		const val RC_NOT_PURCHASED = 5004       // 未购买本课程，或用户ID有误
+		const val RC_CHECK_SERVER_ERROR = 5005  // 校验服务报错
+		const val RC_USERNAME_EXISTS = 5006     // 此用户名被占用
+		
+		const val RC_AUTH_TOKEN_EXPIRED = 4030  // 访问Token过期，请重新设置
+		const val RC_AUTH_TOKEN_INVALID = 4031  // 访问Token不正确，请重新设置
+		
+		const val RC_USER_FORBID = 6001         // 用户身份非法
+		
+		const val RC_HTML_INVALID = 8001        // 请输入HTML
+		const val RC_CONFIG_INVALID = 8002      // 请输入配置
+		
 		const val EXCEPTION = -1
 	}
 	

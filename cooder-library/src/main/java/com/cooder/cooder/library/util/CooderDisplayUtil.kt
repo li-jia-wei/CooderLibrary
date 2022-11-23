@@ -17,22 +17,28 @@ object CooderDisplayUtil {
 		DP, PX
 	}
 	
+	@JvmStatic
 	fun dp2px(context: Context, dp: Float): Float {
 		return dp * context.resources.displayMetrics.density
 	}
 	
+	@JvmStatic
 	fun dp2px(context: Context, dp: Int): Int {
 		return (dp * context.resources.displayMetrics.density).toInt()
 	}
 	
+	@JvmStatic
 	fun px2dp(context: Context, px: Float): Float {
 		return px / context.resources.displayMetrics.density
 	}
 	
+	@JvmStatic
 	fun px2dp(context: Context, px: Int): Int {
 		return (px / context.resources.displayMetrics.density).toInt()
 	}
 	
+	@JvmStatic
+	@JvmOverloads
 	fun getDisplayWidth(context: Context, unit: Unit = Unit.DP): Int {
 		return when (unit) {
 			Unit.DP -> (context.resources.displayMetrics.widthPixels * context.resources.displayMetrics.density).toInt()
@@ -40,6 +46,8 @@ object CooderDisplayUtil {
 		}
 	}
 	
+	@JvmStatic
+	@JvmOverloads
 	fun getDisplayHeight(context: Context, unit: Unit = Unit.DP): Int {
 		return when (unit) {
 			Unit.DP -> (context.resources.displayMetrics.heightPixels * context.resources.displayMetrics.density).toInt()

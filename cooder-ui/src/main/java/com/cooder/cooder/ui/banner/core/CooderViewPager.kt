@@ -9,7 +9,6 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import androidx.annotation.IntRange
 import androidx.viewpager.widget.ViewPager
-import com.cooder.cooder.library.log.CooderLog
 import java.lang.reflect.Field
 
 /**
@@ -110,7 +109,6 @@ class CooderViewPager @JvmOverloads constructor(
 		if (nextPosition >= adapter!!.count) {
 			nextPosition = (adapter as CooderBannerAdapter).getFirstItem()
 		}
-		CooderLog.i(nextPosition)
 		setCurrentItem(nextPosition, true)
 		return nextPosition
 	}

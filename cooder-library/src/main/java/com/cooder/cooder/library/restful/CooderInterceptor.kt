@@ -12,24 +12,36 @@ package com.cooder.cooder.library.restful
 interface CooderInterceptor {
 	
 	/**
-	 * @return true:拦截, false:不拦截
+	 * request 拦截器
+	 * @return true: 拦截
 	 */
-	fun intercept(chain: Chain): Boolean
+	fun requestIntercept(chain: RequestChain): Boolean
 	
 	/**
-	 * Chain 会在派发拦截器的时候创建
+	 * response 拦截器
+	 * @return true: 拦截
 	 */
-	interface Chain {
-		val isRequestPeriod: Boolean get() = false
+	fun responseIntercept(chain: ResponseChain): Boolean
+	
+	/**
+	 * Request 派发拦截器的时候创建
+	 */
+	interface RequestChain {
 		
 		/**
-		 * 请求
+		 * 获取request消息
 		 */
 		fun request(): CooderRequest
+	}
+	
+	/**
+	 * Response 派发拦截器的时候创建
+	 */
+	interface ResponseChain {
 		
 		/**
-		 * 这个response在网络发起前是为null的
+		 * 获取response数据
 		 */
-		fun response(): CooderResponse<*>?
+		fun response(): CooderResponse<*>
 	}
 }

@@ -12,10 +12,11 @@ import com.cooder.cooder.app.ui.log.CooderLogActivity
 import com.cooder.cooder.app.ui.refresh.CooderRefreshActivity
 import com.cooder.cooder.app.ui.tab.CooderTabBottomActivity
 import com.cooder.cooder.app.ui.tab.CooderTabTopActivity
+import com.cooder.cooder.app.ui.view.CooderCustomViewActivity
 
 class MainActivity : AppCompatActivity() {
 	
-	private val isTestMode = true
+	private val isTestMode = false
 	
 	private val components = listOf(
 		CooderLogActivity::class.java to "Log",
@@ -23,7 +24,8 @@ class MainActivity : AppCompatActivity() {
 		CooderTabTopActivity::class.java to "TabTop",
 		CooderRefreshActivity::class.java to "Refresh",
 		CooderBannerActivity::class.java to "Banner",
-		CooderDataItemActivity::class.java to "DataItem"
+		CooderDataItemActivity::class.java to "DataItem",
+		CooderCustomViewActivity::class.java to "CustomView"
 	)
 	
 	override fun onCreate(savedInstanceState: Bundle?) {
