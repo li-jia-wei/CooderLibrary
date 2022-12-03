@@ -138,7 +138,7 @@ class CooderRefreshLayout @JvmOverloads constructor(
 			}
 			return if (consumed) true else super.dispatchTouchEvent(ev)
 		}
-		return super.dispatchTouchEvent(event)
+		return super.dispatchTouchEvent(null)
 	}
 	
 	/**

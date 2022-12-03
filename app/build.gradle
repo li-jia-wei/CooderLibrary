@@ -5,10 +5,10 @@ plugins {
 
 android {
     compileSdk 33
-    namespace 'com.cooder.cooder.app'
+    namespace 'com.cooder.cooder.library.app'
 
     defaultConfig {
-        applicationId "com.cooder.cooder.app"
+        applicationId "com.cooder.cooder.library.app"
         minSdk 26
         targetSdk 33
         versionCode 15

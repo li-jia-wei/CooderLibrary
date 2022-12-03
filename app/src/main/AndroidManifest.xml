@@ -1,39 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
-	package="com.cooder.cooder.app">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.cooder.cooder.library.app">
 
-	<uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
-	<application
-		android:name=".application.CooderApplication"
-		android:allowBackup="true"
-		android:dataExtractionRules="@xml/data_extraction_rules"
-		android:fullBackupContent="@xml/backup_rules"
-		android:icon="@mipmap/ic_launcher"
-		android:label="@string/app_name"
+    <application
+        android:name="com.cooder.cooder.library.app.application.CooderApplication"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
 		android:roundIcon="@mipmap/ic_launcher_round"
 		android:supportsRtl="true"
 		android:theme="@style/Theme.CooderLibrary"
 		android:usesCleartextTraffic="true"
-		tools:targetApi="31">
-		<activity
-			android:name=".ui.MainActivity"
-			android:exported="true">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
+        tools:targetApi="31">
+        <activity
+            android:name="com.cooder.cooder.library.app.ui.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
-		</activity>
-		<activity android:name=".ui.log.CooderLogActivity" />
-		<activity android:name=".ui.tab.CooderTabBottomActivity" />
-		<activity android:name=".ui.tab.CooderTabTopActivity" />
-		<activity android:name=".ui.refresh.CooderRefreshActivity" />
-		<activity android:name=".ui.banner.CooderBannerActivity" />
-		<activity android:name=".ui.TestActivity" />
-		<activity android:name=".ui.item.CooderDataItemActivity" />
-		<activity android:name=".ui.view.CooderCustomViewActivity" />
-	</application>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.cooder.cooder.library.app.ui.log.CooderLogActivity" />
+        <activity android:name="com.cooder.cooder.library.app.ui.tab.CooderTabBottomActivity" />
+        <activity android:name="com.cooder.cooder.library.app.ui.tab.CooderTabTopActivity" />
+        <activity android:name="com.cooder.cooder.library.app.ui.refresh.CooderRefreshActivity" />
+        <activity android:name="com.cooder.cooder.library.app.ui.banner.CooderBannerActivity" />
+        <activity android:name="com.cooder.cooder.library.app.ui.TestActivity" />
+        <activity android:name="com.cooder.cooder.library.app.ui.item.CooderDataItemActivity" />
+    </application>
 
 </manifest>

@@ -7,8 +7,8 @@ import androidx.annotation.LayoutRes
 import androidx.viewpager.widget.ViewPager
 import com.cooder.cooder.ui.R
 import com.cooder.cooder.ui.banner.CooderBanner
-import com.cooder.cooder.ui.banner.indicator.*
-import com.cooder.cooder.ui.banner.indicator.IndicatorType.*
+import com.cooder.cooder.ui.banner.indicator.CircleIndicator
+import com.cooder.cooder.ui.banner.indicator.CooderIndicator
 
 /**
  * 项目：CooderLibrary
@@ -32,7 +32,6 @@ class CooderBannerDelegate(
 	private var loop = true
 	private var bannerMos: List<CooderBannerMo>? = null
 	private var onPageChangeListener: ViewPager.OnPageChangeListener? = null
-	private var onBannerClickListener: ICooderBanner.OnBannerClickListener? = null
 	private var intervalTime = 5000
 	private var viewPager: CooderViewPager? = null
 	private var scrollDuration = -1
@@ -69,20 +68,6 @@ class CooderBannerDelegate(
 		}
 	}
 	
-	override fun setBannerIndicatorType(type: IndicatorType) {
-		if (!isCallBannerData && !isCallBannerIndicator) {
-			isCallBannerIndicator = true
-			this.indicator = when (type) {
-				CIRCLE -> CircleIndicator(context)
-				NUMBER -> NumberIndicator(context)
-				LINE -> LineIndicator(context)
-			}
-		} else {
-			// 不能重复设置指示器
-			throw IllegalStateException("You cannot set the indicator repeatedly.")
-		}
-	}
-	
 	override fun setAutoPlay(autoPlay: Boolean) {
 		// 必须开启循环播放和自动播放才能开启自动播放，否则不能开启
 		this.autoPlay = autoPlay && loop
@@ -105,6 +90,14 @@ class CooderBannerDelegate(
 			this.intervalTime = intervalTime
 			viewPager?.setIntervalTime(intervalTime)
 		}
+	}
+	
+	override fun setBindAdapter(bindAdapter: (viewHolder: CooderBannerAdapter.CooderBannerViewHolder, bannerMo: CooderBannerMo, position: Int) -> Unit) {
+		setBindAdapter(object : IBindAdapter {
+			override fun onBind(viewHolder: CooderBannerAdapter.CooderBannerViewHolder, bannerMo: CooderBannerMo, position: Int) {
+				bindAdapter.invoke(viewHolder, bannerMo, position)
+			}
+		})
 	}
 	
 	override fun setBindAdapter(bindAdapter: IBindAdapter) {
@@ -133,21 +126,28 @@ class CooderBannerDelegate(
 		this.onPageChangeListener = onPageChangeListener
 	}
 	
+	override fun setOnBannerClickListener(onBannerClickListener: (viewHolder: CooderBannerAdapter.CooderBannerViewHolder, bannerMo: CooderBannerMo, position: Int) -> Unit) {
+		setOnBannerClickListener(object : ICooderBanner.OnBannerClickListener {
+			override fun onBannerClick(viewHolder: CooderBannerAdapter.CooderBannerViewHolder, bannerMo: CooderBannerMo, position: Int) {
+				onBannerClickListener.invoke(viewHolder, bannerMo, position)
+			}
+		})
+	}
+	
 	override fun setOnBannerClickListener(onBannerClickListener: ICooderBanner.OnBannerClickListener) {
-		this.onBannerClickListener = onBannerClickListener
+		this.adapter!!.setOnBannerClickListener(onBannerClickListener)
 	}
 	
 	private fun init(layoutResId: Int) {
 		if (adapter == null) adapter = CooderBannerAdapter(context)
 		isCallBannerIndicator = true
-		if (indicator == null) indicator = CircleIndicator(context)
+		if (indicator == null) indicator = CircleIndicator(context, size = CircleIndicator.SMALL)
 		bannerMos?.apply { indicator!!.onInflate(this.size) }
 		adapter!!.apply {
 			setLayoutResId(layoutResId)
 			bannerMos?.also { setBannerData(it) }
 			setAutoPlay(autoPlay)
 			setLoop(loop)
-			onBannerClickListener?.also { setOnBannerClickListener(it) }
 		}
 		
 		if (viewPager == null) viewPager = CooderViewPager(context)

@@ -33,9 +33,9 @@ class LineIndicator @JvmOverloads constructor(
 	
 	override fun onInflate(count: Int) {
 		val groupView = LinearLayout(context)
-		val groupViewParams = LayoutParams(LayoutParams.MATCH_PARENT, 6.dp.toInt())
+		val groupViewParams = LayoutParams(LayoutParams.MATCH_PARENT, 5.dp.toInt())
 		groupViewParams.gravity = Gravity.BOTTOM
-		groupViewParams.setMargins(6.dp.toInt())
+		groupViewParams.setMargins(5.dp.toInt())
 		var rect: View
 		repeat(count) {
 			rect = View(context)

@@ -10,15 +10,15 @@ import androidx.recyclerview.widget.RecyclerView
  *
  * 作者：李佳伟
  *
- * 创建：2022/11/7 09:14
+ * 创建：2022/11/30 23:28
  *
  * 介绍：CooderDataItem
  */
 abstract class CooderDataItem<DATA, VM : RecyclerView.ViewHolder>(
-	private val data: DATA
+	val data: DATA
 ) {
 	
-	private var adapter: CooderDataItemAdapter? = null
+	private var adapter: CooderAdapter? = null
 	
 	abstract fun onBindData(holder: VM, position: Int)
 	
@@ -31,34 +31,51 @@ abstract class CooderDataItem<DATA, VM : RecyclerView.ViewHolder>(
 	}
 	
 	/**
-	 * 返回该Item的视图View
+	 * 返回该Item的视图View，这个比getItemLayoutRes优先
 	 */
 	open fun getItemView(parent: ViewGroup): View? {
 		return null
 	}
 	
-	fun setAdapter(adapter: CooderDataItemAdapter) {
+	/**
+	 * 设置Adapter
+	 */
+	fun setAdapter(adapter: CooderAdapter) {
 		this.adapter = adapter
 	}
 	
 	/**
-	 * 刷新列表
+	 * 刷新Item
 	 */
 	fun refreshItem() {
-		adapter?.refreshItem(this) ?: throw RuntimeException("Please setAdapter before refreshItem.")
+		adapter?.refreshItem(this) ?: throw RuntimeException("adapter == null, 请先执行setAdapter方法")
 	}
 	
 	/**
 	 * 从列表上移除
 	 */
 	fun removeItem() {
-		adapter?.removeItem(this) ?: throw RuntimeException("Please setAdapter before removeItem.")
+		adapter?.removeItem(this) ?: throw RuntimeException("adapter == null, 请先执行setAdapter方法")
 	}
 	
 	/**
-	 * 获取多少列
+	 * 设置DataItem占多少列，大于设置的列数则等于设置的列数
 	 */
 	open fun getSpanSize(): Int {
 		return 0
+	}
+	
+	/**
+	 * 该Item被滑进屏幕
+	 */
+	open fun onViewAttachedToWindow(holder: VM) {
+	
+	}
+	
+	/**
+	 * 该Item被划出屏幕
+	 */
+	open fun onViewDetachedFromWindow(holder: VM) {
+	
 	}
 }

@@ -8,12 +8,8 @@ import androidx.annotation.IntRange
 import androidx.annotation.LayoutRes
 import androidx.viewpager.widget.ViewPager
 import com.cooder.cooder.ui.R
-import com.cooder.cooder.ui.banner.core.CooderBannerDelegate
-import com.cooder.cooder.ui.banner.core.CooderBannerMo
-import com.cooder.cooder.ui.banner.core.IBindAdapter
-import com.cooder.cooder.ui.banner.core.ICooderBanner
+import com.cooder.cooder.ui.banner.core.*
 import com.cooder.cooder.ui.banner.indicator.CooderIndicator
-import com.cooder.cooder.ui.banner.indicator.IndicatorType
 
 /**
  * 项目：CooderLibrary
@@ -60,10 +56,6 @@ class CooderBanner @JvmOverloads constructor(
 		delegate.setBannerIndicator(indicator)
 	}
 	
-	override fun setBannerIndicatorType(type: IndicatorType) {
-		delegate.setBannerIndicatorType(type)
-	}
-	
 	override fun setAutoPlay(autoPlay: Boolean) {
 		delegate.setAutoPlay(autoPlay)
 	}
@@ -76,6 +68,10 @@ class CooderBanner @JvmOverloads constructor(
 		delegate.setIntervalTime(intervalTime)
 	}
 	
+	override fun setBindAdapter(bindAdapter: (viewHolder: CooderBannerAdapter.CooderBannerViewHolder, bannerMo: CooderBannerMo, position: Int) -> Unit) {
+		delegate.setBindAdapter(bindAdapter)
+	}
+	
 	override fun setBindAdapter(bindAdapter: IBindAdapter) {
 		delegate.setBindAdapter(bindAdapter)
 	}
@@ -86,6 +82,10 @@ class CooderBanner @JvmOverloads constructor(
 	
 	override fun setOnPageChangeListener(onPageChangeListener: ViewPager.OnPageChangeListener) {
 		delegate.setOnPageChangeListener(onPageChangeListener)
+	}
+	
+	override fun setOnBannerClickListener(onBannerClickListener: (viewHolder: CooderBannerAdapter.CooderBannerViewHolder, bannerMo: CooderBannerMo, position: Int) -> Unit) {
+		delegate.setOnBannerClickListener(onBannerClickListener)
 	}
 	
 	override fun setOnBannerClickListener(onBannerClickListener: ICooderBanner.OnBannerClickListener) {

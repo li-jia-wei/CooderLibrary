@@ -13,23 +13,30 @@ import java.lang.reflect.Proxy
  * 介绍：CooderRestful
  */
 open class CooderRestful(
-	private val baseUrl: String,
-	callFactory: CooderCall.Factory
+	private val baseUrl: String, callFactory: CooderCall.Factory
 ) {
 	
 	private val interceptors = mutableListOf<CooderInterceptor>()
 	private val scheduler = Scheduler(callFactory, interceptors)
+	private val methodService = mutableMapOf<Method, MethodParser>()
 	
 	fun addInterceptor(interceptor: CooderInterceptor) {
 		this.interceptors += interceptor
 	}
 	
-	fun <T> create(service: Class<T>): T {
+	/**
+	 *
+	 */
+	fun <T> create(service: Class<T>, cancelInterceptors: Array<out Class<out CooderInterceptor>>): T {
 		@Suppress("UNCHECKED_CAST")
 		return Proxy.newProxyInstance(service.classLoader, arrayOf<Class<*>>(service)) { _: Any, method: Method, args: Array<Any>? ->
-			val methodParser = MethodParser.parse(baseUrl, method, args!!)
-			val request = methodParser.newRequest()
-			scheduler.newCall(request)
+			var methodParser = methodService[method]
+			if (methodParser == null) {
+				methodParser = MethodParser.parse(baseUrl, method)
+				methodService[method] = methodParser
+			}
+			val request = methodParser.newRequest(method, args)
+			scheduler.newCall(request, cancelInterceptors)
 		} as T
 	}
 }

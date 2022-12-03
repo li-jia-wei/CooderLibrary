@@ -17,15 +17,16 @@ class Scheduler(
 	/**
 	 * 代理创建Call，实现拦截器的派发
 	 */
-	fun newCall(request: CooderRequest): CooderCall<*> {
+	fun newCall(request: CooderRequest, cancelInterceptors: Array<out Class<out CooderInterceptor>>): CooderCall<*> {
 		val delegate = callFactory.newCall(request)
-		return ProxyCall(delegate, request)
+		return ProxyCall(delegate, request, cancelInterceptors)
 	}
 	
 	// Call代理
 	internal inner class ProxyCall<T>(
 		private val delegate: CooderCall<T>,
-		private val request: CooderRequest
+		private val request: CooderRequest,
+		private val cancelInterceptors: Array<out Class<out CooderInterceptor>>
 	) : CooderCall<T> {
 		
 		override fun execute(): CooderResponse<T> {
@@ -67,7 +68,7 @@ class Scheduler(
 		 * Request 拦截器链
 		 */
 		internal inner class RequestInterceptor(
-			private val request: CooderRequest
+			private val request: CooderRequest,
 		) : CooderInterceptor.RequestChain {
 			
 			private var callIndex = 0
@@ -78,7 +79,10 @@ class Scheduler(
 			
 			fun dispatch() {
 				val interceptor = interceptors[callIndex]
-				val intercept = interceptor.requestIntercept(this)
+				var intercept = false
+				if (!cancelInterceptors.contains(interceptor::class.java)) {
+					intercept = interceptor.requestIntercept(this)
+				}
 				callIndex++
 				if (!intercept && callIndex < interceptors.size) {
 					dispatch()
@@ -101,7 +105,10 @@ class Scheduler(
 			
 			fun dispatch() {
 				val interceptor = interceptors[callIndex]
-				val intercept = interceptor.responseIntercept(this)
+				var intercept = false
+				if (!cancelInterceptors.contains(interceptor::class.java)) {
+					intercept = interceptor.responseIntercept(this)
+				}
 				callIndex++
 				if (!intercept && callIndex < interceptors.size) {
 					dispatch()

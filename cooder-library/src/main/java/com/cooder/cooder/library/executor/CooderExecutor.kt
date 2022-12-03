@@ -10,11 +10,15 @@ import java.util.concurrent.atomic.AtomicLong
 import java.util.concurrent.locks.ReentrantLock
 
 /**
- * 支持按任务的优先级去执行
+ * 项目：CooderLibrary
  *
- * 支持线程池暂停，恢复，（批量文件下载，上传等）
+ * 作者：李佳伟
  *
- * 异步结果主动回调主线程
+ * 创建：2022/11/12 00:00
+ *
+ * 介绍：CooderExecutor
+ *
+ * 支持按任务的优先级去执行、线程池暂停与恢复、异步结果主动回调主线程
  */
 @Suppress("UNCHECKED_CAST")
 object CooderExecutor {

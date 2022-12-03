@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:orientation="vertical"
-	tools:context=".ui.banner.CooderBannerActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.cooder.cooder.library.app.ui.banner.CooderBannerActivity">
 
-	<ScrollView
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-		<LinearLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-			<com.cooder.cooder.ui.banner.CooderBanner
-				android:id="@+id/banner_circle"
-				android:layout_width="match_parent"
-				android:layout_height="180dp"
-				android:background="@color/material_dynamic_tertiary30"
-				app:autoPlay="true"
-				app:intervalTime="1000"
-				app:loop="true" />
+            <com.cooder.cooder.ui.banner.CooderBanner
+                android:id="@+id/banner_circle"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:background="@color/material_dynamic_tertiary30"
+                app:autoPlay="true"
+                app:intervalTime="1000"
+                app:loop="true" />
 
 			<com.cooder.cooder.ui.banner.CooderBanner
 				android:id="@+id/banner_number"
@@ -50,8 +50,9 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:layout_marginHorizontal="20dp"
-				android:layout_marginTop="15dp"
-				android:text="是否自动播放"
+                android:layout_marginTop="15dp"
+                android:minHeight="48dp"
+                android:text="是否自动播放"
 				android:textColor="@color/material_dynamic_tertiary30"
 				android:textSize="18sp"
 				tools:ignore="UseSwitchCompatOrMaterialXml" />
@@ -71,17 +72,18 @@
 
 				<EditText
 					android:id="@+id/et_interval_time"
-					android:layout_width="0dp"
-					android:layout_height="wrap_content"
-					android:layout_marginStart="30dp"
-					android:layout_weight="1"
-					android:hint="200-10000(ms)"
-					android:inputType="number"
-					android:maxLength="5"
-					android:maxLines="1"
-					android:paddingHorizontal="5dp"
-					android:textColor="@color/material_dynamic_tertiary30"
-					android:textColorHint="@color/material_dynamic_tertiary50" />
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_weight="1"
+                    android:hint="200-10000(ms)"
+                    android:inputType="number"
+                    android:maxLength="5"
+                    android:maxLines="1"
+                    android:paddingHorizontal="5dp"
+                    android:textColor="@color/material_dynamic_tertiary30"
+                    android:textColorHint="@color/material_dynamic_tertiary50"
+                    tools:ignore="TouchTargetSizeCheck" />
 
 			</LinearLayout>
 

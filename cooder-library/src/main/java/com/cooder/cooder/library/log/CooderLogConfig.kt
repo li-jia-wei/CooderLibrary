@@ -19,7 +19,7 @@ abstract class CooderLogConfig {
 		val COODER_THREAD_FORMATTER = CooderThreadFormatter()
 		val COODER_STACK_TRACE_FORMATTER = CooderStackTraceFormatter()
 		
-		val LOG_MAX_LENGTH: Int get() = 2000
+		const val LOG_MAX_LENGTH = 2048
 	}
 	
 	/**

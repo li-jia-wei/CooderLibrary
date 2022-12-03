@@ -9,6 +9,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.annotation.DrawableRes
+import androidx.annotation.IntDef
 import androidx.core.view.forEachIndexed
 import com.cooder.cooder.library.util.dp
 import com.cooder.cooder.ui.R
@@ -25,34 +26,60 @@ import com.cooder.cooder.ui.R
 class CircleIndicator @JvmOverloads constructor(
 	context: Context,
 	attributeSet: AttributeSet? = null,
-	defStyleAttr: Int = 0
+	defStyleAttr: Int = 0,
+	@SizeDef private val size: Int = MEDIUM
 ) : FrameLayout(context, attributeSet, defStyleAttr), CooderIndicator<FrameLayout> {
 	
 	/**
 	 * 默认状态
 	 */
 	@DrawableRes
-	private val pointNormal = R.drawable.shape_indicator_point_normal
+	private val pointNormal = arrayOf(
+		R.drawable.shape_indicator_point_small_normal,
+		R.drawable.shape_indicator_point_medium_normal,
+		R.drawable.shape_indicator_point_large_normal
+	)
 	
 	/**
 	 * 选中状态
 	 */
 	@DrawableRes
-	private val pointSelected = R.drawable.shape_indicator_point_selected
+	private val pointSelected = arrayOf(
+		R.drawable.shape_indicator_point_small_selected,
+		R.drawable.shape_indicator_point_medium_selected,
+		R.drawable.shape_indicator_point_large_selected
+	)
 	
 	/**
 	 * 水平边距
 	 */
-	private val pointHorizontalMargin = 5.dp.toInt()
+	private val pointHorizontalMargin = when (size) {
+		SMALL -> 1.8
+		MEDIUM -> 3
+		LARGE -> 4
+		else -> 3
+	}.dp.toInt()
 	
 	/**
 	 * 上下边距
 	 */
-	private val pointVerticalMargin = 15.dp.toInt()
+	private val pointVerticalMargin = when (size) {
+		SMALL -> 8
+		MEDIUM -> 12
+		LARGE -> 14
+		else -> 12
+	}.dp.toInt()
 	
 	companion object {
 		private const val VMC = ViewGroup.LayoutParams.WRAP_CONTENT
+		
+		const val SMALL = 0
+		const val MEDIUM = 1
+		const val LARGE = 2
 	}
+	
+	@IntDef(SMALL, MEDIUM, LARGE)
+	annotation class SizeDef
 	
 	override fun get(): FrameLayout {
 		return this
@@ -68,7 +95,7 @@ class CircleIndicator @JvmOverloads constructor(
 		pointParams.setMargins(pointHorizontalMargin, pointVerticalMargin, pointHorizontalMargin, pointVerticalMargin)
 		repeat(count) {
 			point = ImageView(context)
-			point.setImageResource(if (it == 0) pointSelected else pointNormal)
+			point.setImageResource(if (it == 0) pointSelected[size] else pointNormal[size])
 			groupView.addView(point, pointParams)
 		}
 		val groupViewParams = LayoutParams(VMC, VMC)
@@ -80,7 +107,7 @@ class CircleIndicator @JvmOverloads constructor(
 		val viewGroup = getChildAt(0) as ViewGroup
 		viewGroup.forEachIndexed { index: Int, view: View ->
 			val point = view as ImageView
-			point.setImageResource(if (index == current) pointSelected else pointNormal)
+			point.setImageResource(if (index == current) pointSelected[size] else pointNormal[size])
 			point.requestLayout()
 		}
 	}

@@ -16,7 +16,7 @@ import kotlin.reflect.KClass
  * 介绍：方法解析器
  */
 class MethodParser(
-	private val baseUrl: String, method: Method, args: Array<Any>
+	private val baseUrl: String, method: Method
 ) {
 	
 	/**
@@ -51,20 +51,21 @@ class MethodParser(
 	
 	init {
 		parseMethodAnnotations(method)
-		parseMethodParameters(method, args)
+//		parseMethodParameters(method, args)
 		parseMethodGenericReturnType(method)
 	}
 	
 	companion object {
-		fun parse(baseUrl: String, method: Method, args: Array<Any>): MethodParser {
-			return MethodParser(baseUrl, method, args)
+		fun parse(baseUrl: String, method: Method): MethodParser {
+			return MethodParser(baseUrl, method)
 		}
 	}
 	
 	/**
 	 * 创建Request对象
 	 */
-	fun newRequest(): CooderRequest {
+	fun newRequest(method: Method, args: Array<Any>?): CooderRequest {
+		parseMethodParameters(method, args)
 		val request = CooderRequest()
 		request.domainUrl = domainUrl
 		request.relativeUrl = relativeUrl
@@ -123,13 +124,14 @@ class MethodParser(
 	/**
 	 * 解析方法参数，如: Filed, Replace
 	 */
-	private fun parseMethodParameters(method: Method, args: Array<Any>) {
+	private fun parseMethodParameters(method: Method, args: Array<Any>?) {
+		if (args == null || args.isEmpty()) return
 		val parameterAnnotations = method.parameterAnnotations
 		val equals = parameterAnnotations.size == args.size
 		require(equals) {
 			"The arguments annotations count ${parameterAnnotations.size} don't match expect count ${args.size}, but found ${method.name}"
 		}
-		
+		parameters.clear()
 		args.indices.forEach {
 			val annotations = parameterAnnotations[it]
 			require(annotations.size == 1) {

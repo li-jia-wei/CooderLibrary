@@ -4,7 +4,6 @@ import androidx.annotation.IntRange
 import androidx.annotation.LayoutRes
 import androidx.viewpager.widget.ViewPager
 import com.cooder.cooder.ui.banner.indicator.CooderIndicator
-import com.cooder.cooder.ui.banner.indicator.IndicatorType
 
 /**
  * 项目：CooderLibrary
@@ -33,11 +32,6 @@ interface ICooderBanner {
 	fun setBannerIndicator(indicator: CooderIndicator<*>)
 	
 	/**
-	 * 设置指示器类型
-	 */
-	fun setBannerIndicatorType(type: IndicatorType)
-	
-	/**
 	 * 设置是否自动播放
 	 */
 	fun setAutoPlay(autoPlay: Boolean)
@@ -55,6 +49,11 @@ interface ICooderBanner {
 	/**
 	 * 设置绑定适配器
 	 */
+	fun setBindAdapter(bindAdapter: (viewHolder: CooderBannerAdapter.CooderBannerViewHolder, bannerMo: CooderBannerMo, position: Int) -> Unit)
+	
+	/**
+	 * 设置绑定适配器
+	 */
 	fun setBindAdapter(bindAdapter: IBindAdapter)
 	
 	/**
@@ -66,6 +65,11 @@ interface ICooderBanner {
 	 * 设置页面切换监听器
 	 */
 	fun setOnPageChangeListener(onPageChangeListener: ViewPager.OnPageChangeListener)
+	
+	/**
+	 * 设置Banner点击事件
+	 */
+	fun setOnBannerClickListener(onBannerClickListener: (viewHolder: CooderBannerAdapter.CooderBannerViewHolder, bannerMo: CooderBannerMo, position: Int) -> Unit)
 	
 	/**
 	 * 设置Banner点击事件
