@@ -49,7 +49,13 @@ interface ICooderBanner {
 	/**
 	 * 设置绑定适配器
 	 */
-	fun setBindAdapter(bindAdapter: (viewHolder: CooderBannerAdapter.CooderBannerViewHolder, bannerMo: CooderBannerMo, position: Int) -> Unit)
+	fun setBindAdapter(bindAdapter: (viewHolder: CooderBannerAdapter.CooderBannerViewHolder, bannerMo: CooderBannerMo, position: Int) -> Unit) {
+		setBindAdapter(object : IBindAdapter {
+			override fun onBind(viewHolder: CooderBannerAdapter.CooderBannerViewHolder, bannerMo: CooderBannerMo, position: Int) {
+				bindAdapter.invoke(viewHolder, bannerMo, position)
+			}
+		})
+	}
 	
 	/**
 	 * 设置绑定适配器
@@ -69,7 +75,13 @@ interface ICooderBanner {
 	/**
 	 * 设置Banner点击事件
 	 */
-	fun setOnBannerClickListener(onBannerClickListener: (viewHolder: CooderBannerAdapter.CooderBannerViewHolder, bannerMo: CooderBannerMo, position: Int) -> Unit)
+	fun setOnBannerClickListener(onBannerClickListener: (viewHolder: CooderBannerAdapter.CooderBannerViewHolder, bannerMo: CooderBannerMo, position: Int) -> Unit) {
+		setOnBannerClickListener(object : OnBannerClickListener {
+			override fun onBannerClick(viewHolder: CooderBannerAdapter.CooderBannerViewHolder, bannerMo: CooderBannerMo, position: Int) {
+				onBannerClickListener.invoke(viewHolder, bannerMo, position)
+			}
+		})
+	}
 	
 	/**
 	 * 设置Banner点击事件

@@ -17,14 +17,9 @@ import com.cooder.cooder.ui.tab.common.CooderTabInfo
  */
 class CooderTabTopInfo<Color : Comparable<Color>> : CooderTabInfo<Color> {
 	
-	enum class TabType {
-		TEXT, BITMAP, ICON, VALUE_RES
-	}
+	override var fragment: Class<out Fragment>? = null
 	
 	var tabType: TabType? = null
-		private set
-	
-	override var fragment: Class<out Fragment>? = null
 		private set
 	
 	var name: String? = null
@@ -70,6 +65,13 @@ class CooderTabTopInfo<Color : Comparable<Color>> : CooderTabInfo<Color> {
 	@ColorRes
 	var tintColorId: Int = -1
 		private set
+	
+	/**
+	 * Tab类型
+	 */
+	enum class TabType {
+		TEXT, BITMAP, ICON, VALUE_RES
+	}
 	
 	/**
 	 * Text

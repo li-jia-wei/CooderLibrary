@@ -64,8 +64,8 @@ class CooderTabTopLayout @JvmOverloads constructor(
 		tabSelectedChangeListeners += listener
 	}
 	
-	override fun defaultSelected(defaultInfo: CooderTabTopInfo<*>) {
-		onSelected(defaultInfo)
+	override fun selectTabInfo(tabInfo: CooderTabTopInfo<*>) {
+		onSelected(tabInfo)
 	}
 	
 	override fun inflateInfo(infoList: List<CooderTabTopInfo<*>>) {

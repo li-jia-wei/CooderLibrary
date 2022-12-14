@@ -8,7 +8,10 @@ import androidx.annotation.IntRange
 import androidx.annotation.LayoutRes
 import androidx.viewpager.widget.ViewPager
 import com.cooder.cooder.ui.R
-import com.cooder.cooder.ui.banner.core.*
+import com.cooder.cooder.ui.banner.core.CooderBannerDelegate
+import com.cooder.cooder.ui.banner.core.CooderBannerMo
+import com.cooder.cooder.ui.banner.core.IBindAdapter
+import com.cooder.cooder.ui.banner.core.ICooderBanner
 import com.cooder.cooder.ui.banner.indicator.CooderIndicator
 
 /**
@@ -22,7 +25,7 @@ import com.cooder.cooder.ui.banner.indicator.CooderIndicator
  */
 class CooderBanner @JvmOverloads constructor(
 	context: Context,
-	attributeSet: AttributeSet,
+	attributeSet: AttributeSet? = null,
 	defStyleAttr: Int = 0
 ) : FrameLayout(context, attributeSet, defStyleAttr), ICooderBanner {
 	
@@ -33,7 +36,7 @@ class CooderBanner @JvmOverloads constructor(
 		initCustomAttrs(context, attributeSet)
 	}
 	
-	private fun initCustomAttrs(context: Context, attrs: AttributeSet) {
+	private fun initCustomAttrs(context: Context, attrs: AttributeSet?) {
 		val typedArray: TypedArray = context.obtainStyledAttributes(attrs, R.styleable.CooderBanner)
 		val autoPlay = typedArray.getBoolean(R.styleable.CooderBanner_autoPlay, true)
 		val loop = typedArray.getBoolean(R.styleable.CooderBanner_loop, true)
@@ -68,10 +71,6 @@ class CooderBanner @JvmOverloads constructor(
 		delegate.setIntervalTime(intervalTime)
 	}
 	
-	override fun setBindAdapter(bindAdapter: (viewHolder: CooderBannerAdapter.CooderBannerViewHolder, bannerMo: CooderBannerMo, position: Int) -> Unit) {
-		delegate.setBindAdapter(bindAdapter)
-	}
-	
 	override fun setBindAdapter(bindAdapter: IBindAdapter) {
 		delegate.setBindAdapter(bindAdapter)
 	}
@@ -82,10 +81,6 @@ class CooderBanner @JvmOverloads constructor(
 	
 	override fun setOnPageChangeListener(onPageChangeListener: ViewPager.OnPageChangeListener) {
 		delegate.setOnPageChangeListener(onPageChangeListener)
-	}
-	
-	override fun setOnBannerClickListener(onBannerClickListener: (viewHolder: CooderBannerAdapter.CooderBannerViewHolder, bannerMo: CooderBannerMo, position: Int) -> Unit) {
-		delegate.setOnBannerClickListener(onBannerClickListener)
 	}
 	
 	override fun setOnBannerClickListener(onBannerClickListener: ICooderBanner.OnBannerClickListener) {

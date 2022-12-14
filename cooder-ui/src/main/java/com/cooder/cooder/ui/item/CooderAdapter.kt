@@ -198,7 +198,7 @@ class CooderAdapter(
 	 * 刷新所有的DataItem
 	 */
 	fun refreshAllItems() {
-		notifyItemRangeChanged(getHeaderSize(), getItemSize())
+		notifyItemRangeChanged(getHeaderSize(), getItemSize() + 1)
 	}
 	
 	/**
@@ -253,34 +253,6 @@ class CooderAdapter(
 	}
 	
 	/**
-	 * 刷新HeaderView
-	 * @param view HeaderView
-	 */
-	fun refreshHeaderView(view: View) {
-		val index = headers.indexOfValue(view)
-		if (index >= 0 && index < getHeaderSize()) {
-			notifyItemChanged(index)
-		}
-	}
-	
-	/**
-	 * 刷新多个HeaderView
-	 * @param views 多个HeaderView
-	 */
-	fun refreshHeaderViews(views: Collection<View>) {
-		for (view in views) {
-			refreshHeaderView(view)
-		}
-	}
-	
-	/**
-	 * 刷新所有HeaderView
-	 */
-	fun refreshAllHeaderViews() {
-		notifyItemRangeChanged(0, getHeaderSize())
-	}
-	
-	/**
 	 * 添加FooterView
 	 * @param view FooterView
 	 */
@@ -332,31 +304,13 @@ class CooderAdapter(
 	}
 	
 	/**
-	 * 刷新FooterView
-	 * @param view FooterView
+	 * 清楚所有HeaderView、DataItem和FooterView
 	 */
-	fun refreshFooterView(view: View) {
-		val index = footers.indexOfValue(view)
-		if (index >= 0 && index < getFooterSize()) {
-			notifyItemChanged(getHeaderSize() + getItemSize() + index)
-		}
-	}
-	
-	/**
-	 * 刷新多个FooterView
-	 * @param views 多个FooterView
-	 */
-	fun refreshFooterViews(views: Collection<View>) {
-		for (view in views) {
-			refreshFooterView(view)
-		}
-	}
-	
-	/**
-	 * 刷新所有FooterView
-	 */
-	fun refreshAllFooterViews() {
-		notifyItemRangeChanged(getHeaderSize() + getItemSize(), getFooterSize())
+	fun removeAll() {
+		notifyItemRangeRemoved(0, itemCount)
+		headers.clear()
+		dataItems.clear()
+		footers.clear()
 	}
 	
 	/**

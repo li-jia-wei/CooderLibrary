@@ -70,7 +70,7 @@ class CooderTabBottom @JvmOverloads constructor(
 	 * 填充视图
 	 */
 	private fun inflateInfo(selected: Boolean, init: Boolean) {
-		tabInfo.tabType?.also {
+		tabInfo.tabType?.let {
 			when (it) {
 				BITMAP -> {
 					if (init) {

@@ -92,10 +92,8 @@ class CooderRefreshLayout @JvmOverloads constructor(
 	
 	override fun refreshFinished() {
 		val head = getChildAt(0)
-		overView?.also {
-			it.state = STATE_INIT
-			it.onFinish()
-		}
+		overView?.onFinish()
+		overView?.state = STATE_INIT
 		val bottom = head.bottom
 		if (bottom > 0) {
 			// 恢复视图
@@ -118,7 +116,7 @@ class CooderRefreshLayout @JvmOverloads constructor(
 	}
 	
 	override fun dispatchTouchEvent(event: MotionEvent?): Boolean {
-		event?.also { ev ->
+		event?.let { ev ->
 			val head = getChildAt(0)
 			when (ev.action) {
 				ACTION_UP, ACTION_CANCEL, ACTION_POINTER_INDEX_MASK -> {
@@ -230,7 +228,7 @@ class CooderRefreshLayout @JvmOverloads constructor(
 			return false
 		} else if (childTop <= CooderOverView.PULL_REFRESH_HEIGHT) {    // 还没超出设定的刷新距离
 			if (overView != null && overView!!.state != STATE_VISIBLE && nonAuto) {
-				overView?.also {
+				overView?.let {
 					it.onVisible()
 					it.state = STATE_VISIBLE
 				}
@@ -243,7 +241,7 @@ class CooderRefreshLayout @JvmOverloads constructor(
 			}
 		} else {
 			if (overView != null && overView!!.state != STATE_OVER && nonAuto) {
-				overView?.also {
+				overView?.let {
 					it.onOver()
 					it.state = STATE_OVER
 				}
@@ -259,8 +257,8 @@ class CooderRefreshLayout @JvmOverloads constructor(
 	 * 开始刷新
 	 */
 	private fun refresh() {
-		refreshListener?.also { listener ->
-			overView?.also {
+		refreshListener?.let { listener ->
+			overView?.let {
 				it.onRefresh()
 				it.state = STATE_REFRESH
 			}

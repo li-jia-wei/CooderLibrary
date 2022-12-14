@@ -1,6 +1,8 @@
 package com.cooder.cooder.library.app.ui.item
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
@@ -66,5 +68,11 @@ class CooderDataItemActivity : AppCompatActivity() {
 		val footerTv2: TextView = footerView2.findViewById(R.id.tv)
 		footerTv2.text = "Footer2"
 		adapter.addFooterView(footerView2)
+		Thread {
+			Thread.sleep(500)
+			Handler(Looper.getMainLooper()).post {
+				adapter.refreshAllItems()
+			}
+		}.start()
 	}
 }

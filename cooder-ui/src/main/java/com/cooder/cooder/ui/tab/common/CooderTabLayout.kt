@@ -13,14 +13,40 @@ import android.view.ViewGroup
  */
 interface CooderTabLayout<Tab : ViewGroup, Info : CooderTabInfo<*>> {
 	
+	/**
+	 * 查找Tab
+	 */
 	fun findTab(info: Info): Tab?
 	
+	/**
+	 * 添加Tab切换事件
+	 */
 	fun addTabSelectedChangeListener(listener: OnTabSelectedListener<Info>)
 	
-	fun defaultSelected(defaultInfo: Info)
+	/**
+	 * 添加Tab切换事件
+	 */
+	fun addTabSelectedChangeListener(listener: (index: Int, prevInfo: Info?, nextInfo: Info) -> Unit) {
+		addTabSelectedChangeListener(object : OnTabSelectedListener<Info> {
+			override fun onTabSelectedChange(index: Int, prevInfo: Info?, nextInfo: Info) {
+				listener.invoke(index, prevInfo, nextInfo)
+			}
+		})
+	}
 	
+	/**
+	 * 选中TabInfo
+	 */
+	fun selectTabInfo(tabInfo: Info)
+	
+	/**
+	 * 添加视图
+	 */
 	fun inflateInfo(infoList: List<Info>)
 	
+	/**
+	 * Tab选中事件
+	 */
 	interface OnTabSelectedListener<Info : CooderTabInfo<*>> {
 		fun onTabSelectedChange(index: Int, prevInfo: Info?, nextInfo: Info)
 	}

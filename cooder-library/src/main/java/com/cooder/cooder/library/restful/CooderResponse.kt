@@ -57,4 +57,11 @@ open class CooderResponse<T> {
 	 * 错误信息
 	 */
 	var msg: String? = null
+	
+	/**
+	 * 判断是否成功
+	 */
+	fun isSuccess(): Boolean {
+		return code == SUCCESS
+	}
 }

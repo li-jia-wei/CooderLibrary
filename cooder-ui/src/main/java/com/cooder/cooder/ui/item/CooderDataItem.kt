@@ -20,6 +20,9 @@ abstract class CooderDataItem<DATA, VM : RecyclerView.ViewHolder>(
 	
 	private var adapter: CooderAdapter? = null
 	
+	/**
+	 * 绑定数据
+	 */
 	abstract fun onBindData(holder: VM, position: Int)
 	
 	/**

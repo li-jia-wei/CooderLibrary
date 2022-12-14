@@ -24,7 +24,7 @@ import com.cooder.cooder.ui.banner.indicator.CooderIndicator
 class CooderBannerDelegate(
 	private val context: Context,
 	private val banner: CooderBanner
-) : ICooderBanner, ViewPager.OnPageChangeListener {
+) : ViewPager.OnPageChangeListener, ICooderBanner {
 	
 	private var adapter: CooderBannerAdapter? = null
 	private var indicator: CooderIndicator<*>? = null
@@ -92,14 +92,6 @@ class CooderBannerDelegate(
 		}
 	}
 	
-	override fun setBindAdapter(bindAdapter: (viewHolder: CooderBannerAdapter.CooderBannerViewHolder, bannerMo: CooderBannerMo, position: Int) -> Unit) {
-		setBindAdapter(object : IBindAdapter {
-			override fun onBind(viewHolder: CooderBannerAdapter.CooderBannerViewHolder, bannerMo: CooderBannerMo, position: Int) {
-				bindAdapter.invoke(viewHolder, bannerMo, position)
-			}
-		})
-	}
-	
 	override fun setBindAdapter(bindAdapter: IBindAdapter) {
 		if (isCallBannerData) {
 			if (!isCallBindAdapter) {
@@ -126,14 +118,6 @@ class CooderBannerDelegate(
 		this.onPageChangeListener = onPageChangeListener
 	}
 	
-	override fun setOnBannerClickListener(onBannerClickListener: (viewHolder: CooderBannerAdapter.CooderBannerViewHolder, bannerMo: CooderBannerMo, position: Int) -> Unit) {
-		setOnBannerClickListener(object : ICooderBanner.OnBannerClickListener {
-			override fun onBannerClick(viewHolder: CooderBannerAdapter.CooderBannerViewHolder, bannerMo: CooderBannerMo, position: Int) {
-				onBannerClickListener.invoke(viewHolder, bannerMo, position)
-			}
-		})
-	}
-	
 	override fun setOnBannerClickListener(onBannerClickListener: ICooderBanner.OnBannerClickListener) {
 		this.adapter!!.setOnBannerClickListener(onBannerClickListener)
 	}
@@ -145,7 +129,7 @@ class CooderBannerDelegate(
 		bannerMos?.apply { indicator!!.onInflate(this.size) }
 		adapter!!.apply {
 			setLayoutResId(layoutResId)
-			bannerMos?.also { setBannerData(it) }
+			bannerMos?.let { setBannerData(it) }
 			setAutoPlay(autoPlay)
 			setLoop(loop)
 		}
@@ -169,7 +153,7 @@ class CooderBannerDelegate(
 			removeAllViews()
 			val params = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
 			addView(viewPager, params)
-			indicator?.also {
+			indicator?.let {
 				addView(it.get(), params)
 			}
 		}

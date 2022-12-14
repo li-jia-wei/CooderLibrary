@@ -1,6 +1,7 @@
 package com.cooder.cooder.ui.tab.top
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Typeface
 import android.text.TextUtils
@@ -43,6 +44,7 @@ class CooderTabTop @JvmOverloads constructor(
 		this.tabIconView = findViewById(R.id.tv_icon)
 		this.tabNameView = findViewById(R.id.tv_name)
 		this.indicator = findViewById(R.id.indicator)
+//		this.indicator.backgroundTintList = ColorStateList.valueOf(Color.BLACK)
 	}
 	
 	fun getTabInfo(): CooderTabTopInfo<*> {
@@ -85,7 +87,7 @@ class CooderTabTop @JvmOverloads constructor(
 	}
 	
 	private fun inflateInfo(selected: Boolean, init: Boolean) {
-		tabInfo.tabType?.also {
+		tabInfo.tabType?.let {
 			when (it) {
 				TEXT -> {
 					if (init) {
@@ -95,6 +97,7 @@ class CooderTabTop @JvmOverloads constructor(
 							tabNameView.visibility = VISIBLE
 							tabNameView.text = tabInfo.name
 						}
+						indicator.backgroundTintList = ColorStateList.valueOf(getTextColor(tabInfo.tintColor))
 					}
 					if (selected) {
 						indicator.visibility = VISIBLE
@@ -114,6 +117,7 @@ class CooderTabTop @JvmOverloads constructor(
 						} else {
 							tabNameView.visibility = GONE
 						}
+						indicator.backgroundTintList = ColorStateList.valueOf(getTextColor(tabInfo.tintColor))
 					}
 					if (selected) {
 						indicator.visibility = VISIBLE
@@ -139,6 +143,7 @@ class CooderTabTop @JvmOverloads constructor(
 						} else {
 							tabNameView.visibility = GONE
 						}
+						indicator.backgroundTintList = ColorStateList.valueOf(getTextColor(tabInfo.tintColor))
 					}
 					if (selected) {
 						indicator.visibility = VISIBLE
@@ -170,6 +175,7 @@ class CooderTabTop @JvmOverloads constructor(
 							val typeface = Typeface.createFromAsset(context.assets, tabInfo.iconFont)
 							tabIconView.typeface = typeface
 						}
+						indicator.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, tabInfo.tintColorId))
 					}
 					if (selected) {
 						indicator.visibility = VISIBLE

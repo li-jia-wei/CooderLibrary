@@ -127,8 +127,8 @@ class CooderTabBottomLayout @JvmOverloads constructor(
 		tabSelectedChangeListeners += listener
 	}
 	
-	override fun defaultSelected(defaultInfo: CooderTabBottomInfo<*>) {
-		onSelected(defaultInfo)
+	override fun selectTabInfo(tabInfo: CooderTabBottomInfo<*>) {
+		onSelected(tabInfo)
 	}
 	
 	override fun inflateInfo(infoList: List<CooderTabBottomInfo<*>>) {
@@ -246,7 +246,7 @@ class CooderTabBottomLayout @JvmOverloads constructor(
 	}
 	
 	override fun dispatchTouchEvent(event: MotionEvent?): Boolean {
-		event?.also {
+		event?.let {
 			if (enableSliding && !hasScrollView()) slidingPageEvent(it)
 		}
 		return super.dispatchTouchEvent(event)
