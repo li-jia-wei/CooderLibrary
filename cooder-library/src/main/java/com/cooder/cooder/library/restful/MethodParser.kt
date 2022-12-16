@@ -25,7 +25,12 @@ class MethodParser(
 	private var domainUrl: String? = null
 	
 	/**
-	 * 相对路径
+	 * 原始相对路径，需要使用它来解析替换@Path等，放置第二次复用不了
+	 */
+	private var rawRelativeUrl: String? = null
+	
+	/**
+	 * 相对路径真实Url
 	 */
 	private var relativeUrl: String? = null
 	
@@ -51,7 +56,6 @@ class MethodParser(
 	
 	init {
 		parseMethodAnnotations(method)
-//		parseMethodParameters(method, args)
 		parseMethodGenericReturnType(method)
 	}
 	
@@ -102,13 +106,13 @@ class MethodParser(
 				is GET -> {
 					checkRepeatedSettingHttpMethod(method.name)
 					requireUrlNotNullOrBlank(it.url, GET::class, method.name)
-					relativeUrl = it.url
+					rawRelativeUrl = it.url
 					httpMethod = CooderRequest.METHOD.GET
 				}
 				is POST -> {
 					checkRepeatedSettingHttpMethod(method.name)
 					requireUrlNotNullOrBlank(it.url, POST::class, method.name)
-					relativeUrl = it.url
+					rawRelativeUrl = it.url
 					formPost = it.formPost
 					httpMethod = CooderRequest.METHOD.POST
 				}
@@ -125,6 +129,8 @@ class MethodParser(
 	 * 解析方法参数，如: Filed, Replace
 	 */
 	private fun parseMethodParameters(method: Method, args: Array<Any>?) {
+		// 将原始相对路径赋值上去，放置之前被相同的Method复用之后再次Path替换不了
+		relativeUrl = rawRelativeUrl
 		if (args == null || args.isEmpty()) return
 		val parameterAnnotations = method.parameterAnnotations
 		val equals = parameterAnnotations.size == args.size
@@ -164,13 +170,9 @@ class MethodParser(
 	 * 替换所有注解上的信息
 	 */
 	private fun replaceValue(replaceName: String, replaceValue: String) {
-		// 替换域名
-		if (domainUrl!!.indexOf("{$replaceName}") != -1) {
-			domainUrl = domainUrl!!.replace("{$replaceName}", replaceValue)
-		}
-		// 替换Headers上的
-		for (header in headers) {
-			headers[header.key] = header.value.replace("{$replaceName}", replaceValue)
+		// 替换相对路径中的Path，在此之前是替换域名，认为domainUrl中不应该存在被替换的地方
+		if (relativeUrl!!.indexOf("{$replaceName}") != -1) {
+			relativeUrl = relativeUrl!!.replace("{$replaceName}", replaceValue)
 		}
 	}
 	

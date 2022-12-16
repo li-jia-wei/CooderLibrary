@@ -1,7 +1,5 @@
 package com.cooder.cooder.library.util
 
-import android.content.Context
-
 /**
  * 项目：CooderLibrary
  *
@@ -13,44 +11,50 @@ import android.content.Context
  */
 object CooderDisplayUtil {
 	
+	@JvmStatic
+	fun dp2px(dp: Float): Float {
+		val context = AppGlobals.getBaseContext()
+		return dp * context.resources.displayMetrics.density
+	}
+	
+	@JvmStatic
+	fun dp2px(dp: Int): Int {
+		val context = AppGlobals.getBaseContext()
+		return (dp * context.resources.displayMetrics.density).toInt()
+	}
+	
+	@JvmStatic
+	fun px2dp(px: Float): Float {
+		val context = AppGlobals.getBaseContext()
+		return px / context.resources.displayMetrics.density
+	}
+	
+	@JvmStatic
+	fun px2dp(px: Int): Int {
+		val context = AppGlobals.getBaseContext()
+		return (px / context.resources.displayMetrics.density).toInt()
+	}
+	
 	enum class Unit {
 		DP, PX
 	}
 	
 	@JvmStatic
-	fun dp2px(context: Context, dp: Float): Float {
-		return dp * context.resources.displayMetrics.density
-	}
-	
-	@JvmStatic
-	fun dp2px(context: Context, dp: Int): Int {
-		return (dp * context.resources.displayMetrics.density).toInt()
-	}
-	
-	@JvmStatic
-	fun px2dp(context: Context, px: Float): Float {
-		return px / context.resources.displayMetrics.density
-	}
-	
-	@JvmStatic
-	fun px2dp(context: Context, px: Int): Int {
-		return (px / context.resources.displayMetrics.density).toInt()
-	}
-	
-	@JvmStatic
 	@JvmOverloads
-	fun getDisplayWidth(context: Context, unit: Unit = Unit.DP): Int {
+	fun getDisplayWidth(unit: Unit = Unit.DP): Int {
+		val context = AppGlobals.getBaseContext()
 		return when (unit) {
-			Unit.DP -> (context.resources.displayMetrics.widthPixels * context.resources.displayMetrics.density).toInt()
+			Unit.DP -> px2dp(context.resources.displayMetrics.widthPixels)
 			Unit.PX -> context.resources.displayMetrics.widthPixels
 		}
 	}
 	
 	@JvmStatic
 	@JvmOverloads
-	fun getDisplayHeight(context: Context, unit: Unit = Unit.DP): Int {
+	fun getDisplayHeight(unit: Unit = Unit.DP): Int {
+		val context = AppGlobals.getBaseContext()
 		return when (unit) {
-			Unit.DP -> (context.resources.displayMetrics.heightPixels * context.resources.displayMetrics.density).toInt()
+			Unit.DP -> px2dp(context.resources.displayMetrics.heightPixels)
 			Unit.PX -> context.resources.displayMetrics.heightPixels
 		}
 	}

@@ -46,7 +46,7 @@ class CooderViewPrinterProvider(
 		}
 		val params = FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 		params.gravity = Gravity.BOTTOM or Gravity.END
-		params.bottomMargin = CooderDisplayUtil.dp2px(rootView.context, FLOATING_MARGIN_BOTTOM).toInt()
+		params.bottomMargin = CooderDisplayUtil.dp2px(FLOATING_MARGIN_BOTTOM).toInt()
 		val floatingView = genFloatingView()
 		floatingView.setBackgroundColor(Color.BLACK)
 		floatingView.alpha = ALPHA_FLOATING_VIEW
@@ -87,7 +87,7 @@ class CooderViewPrinterProvider(
 		if (rootView.findViewWithTag<View>(TAG_LOG_VIEW) != null) {
 			return
 		}
-		val params = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, CooderDisplayUtil.dp2px(rootView.context, LOG_VIEW_HEIGHT).toInt())
+		val params = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, CooderDisplayUtil.dp2px(LOG_VIEW_HEIGHT).toInt())
 		params.gravity = Gravity.BOTTOM
 		val logView = genLogView()
 		logView.tag = TAG_LOG_VIEW

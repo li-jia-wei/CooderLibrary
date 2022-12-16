@@ -130,7 +130,7 @@ class CooderTabTopLayout @JvmOverloads constructor(
 			tabWidth = tabTop.width
 		}
 		// 判断点击了屏幕左侧还是右侧
-		val scrollWidth: Int = if (coords[0] + tabWidth / 2 > CooderDisplayUtil.getDisplayWidth(context, CooderDisplayUtil.Unit.PX) / 2) {
+		val scrollWidth: Int = if (coords[0] + tabWidth / 2 > CooderDisplayUtil.getDisplayWidth(CooderDisplayUtil.Unit.PX) / 2) {
 			rangeScrollWidth(index, showInfoCount)
 		} else {
 			rangeScrollWidth(index, -showInfoCount)

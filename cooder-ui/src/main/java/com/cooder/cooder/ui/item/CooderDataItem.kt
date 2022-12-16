@@ -18,7 +18,7 @@ abstract class CooderDataItem<DATA, VM : RecyclerView.ViewHolder>(
 	val data: DATA
 ) {
 	
-	private var adapter: CooderAdapter? = null
+	protected var cooderAdapter: CooderAdapter? = null
 	
 	/**
 	 * 绑定数据
@@ -44,21 +44,21 @@ abstract class CooderDataItem<DATA, VM : RecyclerView.ViewHolder>(
 	 * 设置Adapter
 	 */
 	fun setAdapter(adapter: CooderAdapter) {
-		this.adapter = adapter
+		this.cooderAdapter = adapter
 	}
 	
 	/**
 	 * 刷新Item
 	 */
 	fun refreshItem() {
-		adapter?.refreshItem(this) ?: throw RuntimeException("adapter == null, 请先执行setAdapter方法")
+		cooderAdapter?.refreshItem(this) ?: throw RuntimeException("adapter == null, 请先执行setAdapter方法")
 	}
 	
 	/**
 	 * 从列表上移除
 	 */
 	fun removeItem() {
-		adapter?.removeItem(this) ?: throw RuntimeException("adapter == null, 请先执行setAdapter方法")
+		cooderAdapter?.removeItem(this) ?: throw RuntimeException("adapter == null, 请先执行setAdapter方法")
 	}
 	
 	/**

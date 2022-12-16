@@ -489,7 +489,7 @@ class CooderAdapter(
 	/**
 	 * 获取AttachRecyclerView
 	 */
-	private fun getAttachRecyclerView(): RecyclerView? {
+	fun getAttachRecyclerView(): RecyclerView? {
 		return recyclerViewRef?.get()
 	}
 	

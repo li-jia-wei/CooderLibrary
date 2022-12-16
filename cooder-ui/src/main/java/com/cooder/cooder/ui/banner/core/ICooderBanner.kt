@@ -49,10 +49,10 @@ interface ICooderBanner {
 	/**
 	 * 设置绑定适配器
 	 */
-	fun setBindAdapter(bindAdapter: (viewHolder: CooderBannerAdapter.CooderBannerViewHolder, bannerMo: CooderBannerMo, position: Int) -> Unit) {
+	fun setBindAdapter(bindAdapter: (viewHolder: CooderBannerAdapter.CooderBannerViewHolder, mo: CooderBannerMo, position: Int) -> Unit) {
 		setBindAdapter(object : IBindAdapter {
-			override fun onBind(viewHolder: CooderBannerAdapter.CooderBannerViewHolder, bannerMo: CooderBannerMo, position: Int) {
-				bindAdapter.invoke(viewHolder, bannerMo, position)
+			override fun onBind(viewHolder: CooderBannerAdapter.CooderBannerViewHolder, mo: CooderBannerMo, position: Int) {
+				bindAdapter.invoke(viewHolder, mo, position)
 			}
 		})
 	}
@@ -75,10 +75,10 @@ interface ICooderBanner {
 	/**
 	 * 设置Banner点击事件
 	 */
-	fun setOnBannerClickListener(onBannerClickListener: (viewHolder: CooderBannerAdapter.CooderBannerViewHolder, bannerMo: CooderBannerMo, position: Int) -> Unit) {
+	fun setOnBannerClickListener(onBannerClickListener: (viewHolder: CooderBannerAdapter.CooderBannerViewHolder, mo: CooderBannerMo, position: Int) -> Unit) {
 		setOnBannerClickListener(object : OnBannerClickListener {
-			override fun onBannerClick(viewHolder: CooderBannerAdapter.CooderBannerViewHolder, bannerMo: CooderBannerMo, position: Int) {
-				onBannerClickListener.invoke(viewHolder, bannerMo, position)
+			override fun onBannerClick(viewHolder: CooderBannerAdapter.CooderBannerViewHolder, mo: CooderBannerMo, position: Int) {
+				onBannerClickListener.invoke(viewHolder, mo, position)
 			}
 		})
 	}
@@ -89,6 +89,6 @@ interface ICooderBanner {
 	fun setOnBannerClickListener(onBannerClickListener: OnBannerClickListener)
 	
 	interface OnBannerClickListener {
-		fun onBannerClick(viewHolder: CooderBannerAdapter.CooderBannerViewHolder, bannerMo: CooderBannerMo, position: Int)
+		fun onBannerClick(viewHolder: CooderBannerAdapter.CooderBannerViewHolder, mo: CooderBannerMo, position: Int)
 	}
 }

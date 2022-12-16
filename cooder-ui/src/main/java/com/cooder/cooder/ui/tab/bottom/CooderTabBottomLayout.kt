@@ -150,8 +150,8 @@ class CooderTabBottomLayout @JvmOverloads constructor(
 		
 		val tabBottomLayout = FrameLayout(context)
 		tabBottomLayout.tag = TAG_TAB_BOTTOM
-		val width = CooderDisplayUtil.getDisplayWidth(context, CooderDisplayUtil.Unit.PX) / infoList.size
-		val height = CooderDisplayUtil.dp2px(context, tabBottomHeight).toInt()
+		val width = CooderDisplayUtil.getDisplayWidth(CooderDisplayUtil.Unit.PX) / infoList.size
+		val height = CooderDisplayUtil.dp2px(tabBottomHeight).toInt()
 		for ((i, info) in infoList.withIndex()) {
 			// tips: 为何不用LinearLayout，当动态改变child大小后Gravity.BOTTOM会失效
 			val params = LayoutParams(width, height)
@@ -208,7 +208,7 @@ class CooderTabBottomLayout @JvmOverloads constructor(
 	 */
 	private fun addBackground() {
 		val view = LayoutInflater.from(context).inflate(R.layout.cooder_bottom_layout_bg, this, false)
-		val params = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, CooderDisplayUtil.dp2px(context, tabBottomHeight).toInt())
+		val params = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, CooderDisplayUtil.dp2px(tabBottomHeight).toInt())
 		params.gravity = Gravity.BOTTOM
 		addView(view, params)
 		view.alpha = bottomAlpha
@@ -220,9 +220,9 @@ class CooderTabBottomLayout @JvmOverloads constructor(
 	private fun addBottomLine() {
 		val bottomLine = View(context)
 		bottomLine.setBackgroundColor(Color.parseColor(bottomLineColor))
-		val bottomLineParams = LayoutParams(LayoutParams.MATCH_PARENT, CooderDisplayUtil.dp2px(context, bottomLineHeight).toInt())
+		val bottomLineParams = LayoutParams(LayoutParams.MATCH_PARENT, CooderDisplayUtil.dp2px(bottomLineHeight).toInt())
 		bottomLineParams.gravity = Gravity.BOTTOM
-		bottomLineParams.bottomMargin = CooderDisplayUtil.dp2px(context, tabBottomHeight - bottomLineHeight).toInt()
+		bottomLineParams.bottomMargin = CooderDisplayUtil.dp2px(tabBottomHeight - bottomLineHeight).toInt()
 		addView(bottomLine, bottomLineParams)
 	}
 	
@@ -240,7 +240,7 @@ class CooderTabBottomLayout @JvmOverloads constructor(
 			targetView = CooderViewUtil.findTypeView(rootView, AbsListView::class.java)
 		}
 		targetView?.apply {
-			this.setPadding(0, 0, 0, CooderDisplayUtil.dp2px(context, tabBottomHeight).toInt())
+			this.setPadding(0, 0, 0, CooderDisplayUtil.dp2px(tabBottomHeight).toInt())
 			this.clipToPadding = false
 		}
 	}

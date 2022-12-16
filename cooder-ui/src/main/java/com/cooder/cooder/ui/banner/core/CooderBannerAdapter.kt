@@ -155,11 +155,11 @@ class CooderBannerAdapter(
 		return POSITION_NONE
 	}
 	
-	private fun onBind(viewHolder: CooderBannerViewHolder, bannerMo: CooderBannerMo, position: Int) {
+	private fun onBind(viewHolder: CooderBannerViewHolder, mo: CooderBannerMo, position: Int) {
 		viewHolder.rootView.setOnClickListener {
-			onBannerClickListener?.onBannerClick(viewHolder, bannerMo, position)
+			onBannerClickListener?.onBannerClick(viewHolder, mo, position)
 		}
-		bindAdapter?.onBind(viewHolder, bannerMo, position)
+		bindAdapter?.onBind(viewHolder, mo, position)
 	}
 	
 	/**
@@ -173,6 +173,9 @@ class CooderBannerAdapter(
 		}
 	}
 	
+	/**
+	 * 创建View
+	 */
 	private fun createView(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
 		if (layoutResId == -1) {
 			throw IllegalStateException("You must first call the setLayoutResId method.")

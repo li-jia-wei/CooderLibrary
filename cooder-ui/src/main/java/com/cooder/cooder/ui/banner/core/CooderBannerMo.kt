@@ -9,4 +9,4 @@ package com.cooder.cooder.ui.banner.core
  *
  * 文件介绍：CooderBannerMo
  */
-class CooderBannerMo(val url: String)
+open class CooderBannerMo(val url: String)
