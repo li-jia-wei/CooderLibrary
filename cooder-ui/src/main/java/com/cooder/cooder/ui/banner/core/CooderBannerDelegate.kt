@@ -51,7 +51,8 @@ class CooderBannerDelegate(
 	override fun setBannerData(models: List<CooderBannerMo>) {
 		if (!isCallBannerData) {
 			isCallBannerData = true
-			setBannerData(R.layout.cooder_banner_item_image, models)
+			bannerMos = models
+			init(R.layout.cooder_banner_item_image)
 		}
 	}
 	

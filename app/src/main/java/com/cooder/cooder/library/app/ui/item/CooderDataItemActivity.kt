@@ -4,16 +4,16 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.cooder.cooder.library.app.R
 import com.cooder.cooder.library.app.ui.item.dataitem.DataItem
 import com.cooder.cooder.library.app.ui.item.dataitem.ItemData
 import com.cooder.cooder.ui.item.CooderAdapter
-import com.cooder.cooder.ui.item.CooderDataItem
 
 /**
  * 项目：CooderLibrary
@@ -34,45 +34,28 @@ class CooderDataItemActivity : AppCompatActivity() {
 	
 	private fun item() {
 		val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
-		recyclerView.layoutManager = StaggeredGridLayoutManager(3, RecyclerView.VERTICAL)
-		val dataItem1 = DataItem(ItemData(this, "1"))
-		val dataItem2 = DataItem(ItemData(this, "2"))
-		val dataItem3 = DataItem(ItemData(this, "3"))
-		val dataItem4 = DataItem(ItemData(this, "4"))
-		val dataItem5 = DataItem(ItemData(this, "5"))
-		val dataItem6 = DataItem(ItemData(this, "6"))
+		recyclerView.layoutManager = GridLayoutManager(this, 2)
 		val adapter = CooderAdapter(this)
 		recyclerView.adapter = adapter
-		val dataItems = mutableListOf<CooderDataItem<ItemData, out RecyclerView.ViewHolder>>()
-		dataItems += dataItem1
-		dataItems += dataItem2
-		dataItems += dataItem3
-		dataItems += dataItem4
-		dataItems += dataItem5
-		dataItems += dataItem6
-		adapter.addItems(dataItems)
-		adapter.refreshAllItems()
-		val headerView1 = LayoutInflater.from(this).inflate(R.layout.data_item, window.decorView as ViewGroup, false)
-		val headerTv1: TextView = headerView1.findViewById(R.id.tv)
-		headerTv1.text = "Header1"
-		adapter.addHeaderView(headerView1)
-		val headerView2 = LayoutInflater.from(this).inflate(R.layout.data_item, window.decorView as ViewGroup, false)
-		val headerTv2: TextView = headerView2.findViewById(R.id.tv)
-		headerTv2.text = "Header2"
-		adapter.addHeaderView(headerView2)
-		val footerView1 = LayoutInflater.from(this).inflate(R.layout.data_item, window.decorView as ViewGroup, false)
-		val footerTv1: TextView = footerView1.findViewById(R.id.tv)
-		footerTv1.text = "Footer1"
-		adapter.addFooterView(footerView1)
-		val footerView2 = LayoutInflater.from(this).inflate(R.layout.data_item, window.decorView as ViewGroup, false)
-		val footerTv2: TextView = footerView2.findViewById(R.id.tv)
-		footerTv2.text = "Footer2"
-		adapter.addFooterView(footerView2)
+		val bottom1 = createView("BOTTOM")
+		adapter.setBottomView(bottom1)
+		val handler = Handler(Looper.myLooper()!!)
 		Thread {
-			Thread.sleep(500)
-			Handler(Looper.getMainLooper()).post {
-				adapter.refreshAllItems()
+			Thread.sleep(400)
+			handler.post {
+				val items = mutableListOf<DataItem>()
+				repeat(30) {
+					items += DataItem(ItemData(this, "Item${it + 1}"))
+				}
+				adapter.addItems(items)
 			}
 		}.start()
+	}
+	
+	private fun createView(text: String): View {
+		val view = LayoutInflater.from(this).inflate(R.layout.data_item, window.decorView as ViewGroup, false)
+		val textView: TextView = view.findViewById(R.id.tv)
+		textView.text = text
+		return view
 	}
 }

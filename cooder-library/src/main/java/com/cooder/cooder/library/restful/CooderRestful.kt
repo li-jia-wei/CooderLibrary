@@ -24,9 +24,6 @@ open class CooderRestful(
 		this.interceptors += interceptor
 	}
 	
-	/**
-	 *
-	 */
 	fun <T> create(service: Class<T>, cancelInterceptors: Array<out Class<out CooderInterceptor>>): T {
 		@Suppress("UNCHECKED_CAST")
 		return Proxy.newProxyInstance(service.classLoader, arrayOf<Class<*>>(service)) { _: Any, method: Method, args: Array<Any>? ->

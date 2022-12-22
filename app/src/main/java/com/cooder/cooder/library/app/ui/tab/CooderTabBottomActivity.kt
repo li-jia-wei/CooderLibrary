@@ -86,7 +86,7 @@ class CooderTabBottomActivity : AppCompatActivity() {
 			
 			}
 		})
-		tabBottomLayout.defaultSelected(homeInfo)
-		tabBottomLayout.findTab(bottomInfoList[2])?.resetHeight(CooderDisplayUtil.dp2px(this, 48))
+		tabBottomLayout.selectTabInfo(homeInfo)
+		tabBottomLayout.findTab(bottomInfoList[2])?.resetHeight(CooderDisplayUtil.dp2px(48))
 	}
 }

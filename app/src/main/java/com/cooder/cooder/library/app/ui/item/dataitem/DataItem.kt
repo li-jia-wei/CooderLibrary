@@ -28,8 +28,7 @@ open class DataItem(
 	override fun onBindData(holder: RecyclerView.ViewHolder, position: Int) {
 		val tv: TextView = holder.itemView.findViewById(R.id.tv)
 		tv.text = itemData.name
-		val height = listOf(50, 80, 110)
-		val param = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height.random().dp.toInt())
+		val param = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 80.dp.toInt())
 		param.setMargins(5.dp.toInt())
 		tv.layoutParams = param
 	}

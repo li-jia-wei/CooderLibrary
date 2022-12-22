@@ -29,7 +29,7 @@ import com.cooder.cooder.ui.item.CooderDataItem
  */
 class MainActivity : AppCompatActivity() {
 	
-	private val isTestMode = false
+	private val isTest = false
 	
 	private val components: List<Pair<Class<out AppCompatActivity>, String>> = listOf(
 		CooderLogActivity::class.java to "Log",
@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
 	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		if (isTestMode) {
+		if (isTest) {
 			startActivity(Intent(this, TestActivity::class.java))
 			finish()
 		}

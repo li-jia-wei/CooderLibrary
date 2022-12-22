@@ -24,7 +24,7 @@ object CooderViewUtil {
 	 */
 	@JvmStatic
 	fun <T> findTypeView(group: ViewGroup?, cls: Class<T>): T? {
-		group ?: return null
+		if (group == null) return null
 		val deque: Deque<View> = ArrayDeque()
 		deque += group
 		while (deque.isNotEmpty()) {

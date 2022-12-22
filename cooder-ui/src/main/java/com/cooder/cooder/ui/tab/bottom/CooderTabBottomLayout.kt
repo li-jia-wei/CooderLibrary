@@ -12,6 +12,7 @@ import android.widget.ScrollView
 import androidx.annotation.FloatRange
 import androidx.core.view.iterator
 import androidx.recyclerview.widget.RecyclerView
+import com.cooder.cooder.library.log.CooderLog
 import com.cooder.cooder.library.util.CooderDisplayUtil
 import com.cooder.cooder.library.util.CooderViewUtil
 import com.cooder.cooder.library.util.dp
@@ -106,6 +107,13 @@ class CooderTabBottomLayout @JvmOverloads constructor(
 	fun setEnableSliding(enable: Boolean) {
 		// 如果没有可滚动的列表，那么可以切换
 		this.enableSliding = enable
+	}
+	
+	/**
+	 * 获取底部高度
+	 */
+	fun getTabBottomLayoutHeight(): Float {
+		return tabBottomHeight
 	}
 	
 	/**
@@ -229,8 +237,7 @@ class CooderTabBottomLayout @JvmOverloads constructor(
 	/**
 	 * 修复内容区域的底部Padding
 	 */
-	private fun fixContentView() {
-		if (getChildAt(0) !is ViewGroup) return
+	fun fixContentView() {
 		val rootView = getChildAt(0) as ViewGroup
 		var targetView: ViewGroup? = CooderViewUtil.findTypeView(rootView, RecyclerView::class.java)
 		if (targetView == null) {
@@ -239,6 +246,7 @@ class CooderTabBottomLayout @JvmOverloads constructor(
 		if (targetView == null) {
 			targetView = CooderViewUtil.findTypeView(rootView, AbsListView::class.java)
 		}
+		CooderLog.i(targetView)
 		targetView?.apply {
 			this.setPadding(0, 0, 0, CooderDisplayUtil.dp2px(tabBottomHeight).toInt())
 			this.clipToPadding = false

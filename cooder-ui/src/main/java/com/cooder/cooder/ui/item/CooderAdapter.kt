@@ -35,9 +35,14 @@ class CooderAdapter(
 	private val headers = SparseArray<View>()
 	private val footers = SparseArray<View>()
 	
+	private var topView: View? = null
+	private var bottomView: View? = null
+	
 	private companion object {
 		private var BASE_HEADER_ITEM = 1000000
 		private var BASE_FOOTER_ITEM = 2000000
+		private var TOP_VIEW_ITEM = 3000000
+		private var BOTTOM_VIEW_ITEM = 3000001
 	}
 	
 	/**
@@ -56,9 +61,9 @@ class CooderAdapter(
 		}
 		if (notify) {
 			if (isSetIndex) {
-				notifyItemInserted(getHeaderSize() + index)
+				notifyItemInserted(getToHeaderSize() + index)
 			} else {
-				notifyItemInserted(getHeaderSize() + getItemSize() - 1)
+				notifyItemInserted(getToItemSize() - 1)
 			}
 		}
 	}
@@ -79,9 +84,9 @@ class CooderAdapter(
 		}
 		if (notify) {
 			if (isSetStartIndex) {
-				notifyItemRangeInserted(getHeaderSize() + startIndex, dataItems.size)
+				notifyItemRangeInserted(getToHeaderSize() + startIndex, dataItems.size)
 			} else {
-				notifyItemRangeInserted(getHeaderSize() + getItemSize() - dataItems.size, dataItems.size)
+				notifyItemRangeInserted(getToItemSize() - dataItems.size, dataItems.size)
 			}
 		}
 	}
@@ -94,7 +99,7 @@ class CooderAdapter(
 		val index = this.dataItems.indexOf(dataItem)
 		if (index >= 0) {
 			this.dataItems.removeAt(index)
-			notifyItemRemoved(getHeaderSize() + index)
+			notifyItemRemoved(getToHeaderSize() + index)
 		}
 	}
 	
@@ -107,7 +112,7 @@ class CooderAdapter(
 			val index = this.dataItems.indexOf(dataItem)
 			if (index >= 0) {
 				this.dataItems.removeAt(index)
-				notifyItemRemoved(getHeaderSize() + index)
+				notifyItemRemoved(getToHeaderSize() + index)
 			}
 		}
 	}
@@ -120,7 +125,7 @@ class CooderAdapter(
 	fun removeItemAt(index: Int): CooderDataItem<*, out RecyclerView.ViewHolder>? {
 		if (index >= 0 && index < getItemSize()) {
 			val remove = dataItems.removeAt(index)
-			notifyItemRemoved(getHeaderSize() + index)
+			notifyItemRemoved(getToHeaderSize() + index)
 			return remove
 		}
 		return null
@@ -140,7 +145,7 @@ class CooderAdapter(
 				val item = dataItems.removeAt(startIndex)
 				items += item
 			}
-			notifyItemRangeRemoved(getHeaderSize() + startIndex, removeCount)
+			notifyItemRangeRemoved(getToHeaderSize() + startIndex, removeCount)
 		}
 		return items
 	}
@@ -149,7 +154,7 @@ class CooderAdapter(
 	 * 删除所有DataItem
 	 */
 	fun removeAllItems() {
-		notifyItemRangeRemoved(getHeaderSize(), getItemSize())
+		notifyItemRangeRemoved(getToHeaderSize(), getItemSize())
 		this.dataItems.clear()
 	}
 	
@@ -160,7 +165,7 @@ class CooderAdapter(
 	fun refreshItem(dataItem: CooderDataItem<*, out RecyclerView.ViewHolder>) {
 		val index = dataItems.indexOf(dataItem)
 		if (index >= 0 && index < getItemSize()) {
-			notifyItemChanged(getHeaderSize() + index)
+			notifyItemChanged(getToHeaderSize() + index)
 		}
 	}
 	
@@ -180,7 +185,7 @@ class CooderAdapter(
 	 */
 	fun refreshItemAt(index: Int) {
 		if (index >= 0 && index < getItemSize()) {
-			notifyItemChanged(getHeaderSize() + index)
+			notifyItemChanged(getToHeaderSize() + index)
 		}
 	}
 	
@@ -191,14 +196,14 @@ class CooderAdapter(
 	 */
 	fun refreshItemsAt(startIndex: Int, itemCount: Int) {
 		val refreshCount = min(getItemSize() - startIndex, itemCount)
-		notifyItemRangeChanged(getHeaderSize() + startIndex, refreshCount)
+		notifyItemRangeChanged(getToHeaderSize() + startIndex, refreshCount)
 	}
 	
 	/**
 	 * 刷新所有的DataItem
 	 */
 	fun refreshAllItems() {
-		notifyItemRangeChanged(getHeaderSize(), getItemSize() + 1)
+		notifyItemRangeChanged(getToHeaderSize(), getItemSize() + 1)
 	}
 	
 	/**
@@ -208,7 +213,7 @@ class CooderAdapter(
 	fun addHeaderView(view: View) {
 		if (!headers.containsValue(view)) {
 			headers.put(BASE_HEADER_ITEM++, view)
-			notifyItemInserted(getHeaderSize() - 1)
+			notifyItemInserted(getToHeaderSize() - 1)
 		}
 	}
 	
@@ -230,7 +235,7 @@ class CooderAdapter(
 		val index = headers.indexOfValue(view)
 		if (index >= 0) {
 			headers.removeAt(index)
-			notifyItemRemoved(index)
+			notifyItemRemoved(getTopSize() + index)
 		}
 	}
 	
@@ -248,7 +253,7 @@ class CooderAdapter(
 	 * 删除所有HeaderView
 	 */
 	fun removeAllHeaderViews() {
-		notifyItemRangeRemoved(0, getHeaderSize())
+		notifyItemRangeRemoved(getTopSize(), getHeaderSize())
 		headers.clear()
 	}
 	
@@ -259,7 +264,7 @@ class CooderAdapter(
 	fun addFooterView(view: View) {
 		if (!footers.containsValue(view)) {
 			footers.put(BASE_FOOTER_ITEM++, view)
-			notifyItemInserted(itemCount - 1)
+			notifyItemInserted(getToFooterSize())
 		}
 	}
 	
@@ -281,7 +286,7 @@ class CooderAdapter(
 		val index = footers.indexOfValue(view)
 		if (index >= 0 && index < getFooterSize()) {
 			footers.removeAt(index)
-			notifyItemRemoved(getHeaderSize() + getItemSize() + index)
+			notifyItemRemoved(getToItemSize() + index)
 		}
 	}
 	
@@ -299,8 +304,54 @@ class CooderAdapter(
 	 * 删除所有FooterView
 	 */
 	fun removeAllFooterView() {
-		notifyItemRangeRemoved(getHeaderSize() + getItemSize(), getFooterSize())
+		notifyItemRangeRemoved(getToItemSize(), getFooterSize())
 		footers.clear()
+	}
+	
+	/**
+	 * 添加顶部View
+	 */
+	fun setTopView(view: View) {
+		if (this.topView == null) {
+			this.topView = view
+			notifyItemInserted(0)
+		} else {
+			this.topView = view
+			notifyItemChanged(0)
+		}
+	}
+	
+	/**
+	 * 移除顶部View
+	 */
+	fun removeTopView() {
+		if (this.topView != null) {
+			this.topView = null
+			notifyItemRemoved(0)
+		}
+	}
+	
+	/**
+	 * 添加底部View
+	 */
+	fun setBottomView(view: View) {
+		if (this.bottomView == null) {
+			this.bottomView = view
+			notifyItemInserted(itemCount - 1)
+		} else {
+			this.bottomView = view
+			notifyItemChanged(itemCount - 1)
+		}
+	}
+	
+	/**
+	 * 移除底部View
+	 */
+	fun removeBottomView(view: View) {
+		if (this.bottomView != null) {
+			this.bottomView = null
+			notifyItemRemoved(itemCount - 1)
+		}
 	}
 	
 	/**
@@ -308,17 +359,26 @@ class CooderAdapter(
 	 */
 	fun removeAll() {
 		notifyItemRangeRemoved(0, itemCount)
+		topView = null
 		headers.clear()
 		dataItems.clear()
 		footers.clear()
+		bottomView = null
 	}
 	
 	/**
 	 * 获取ItemView类型
 	 */
 	override fun getItemViewType(position: Int): Int {
+		if (isTopViewPosition(position)) {
+			return TOP_VIEW_ITEM
+		}
+		if (isBottomViewPosition(position)) {
+			return BOTTOM_VIEW_ITEM
+		}
 		if (isHeaderPosition(position)) {
-			return headers.keyAt(position)
+			val headerPosition = getRealHeaderPosition(position)
+			return headers.keyAt(headerPosition)
 		}
 		if (isFooterPosition(position)) {
 			val footerPosition = getRealFooterPosition(position)
@@ -337,20 +397,40 @@ class CooderAdapter(
 	 * 判断是否是Header
 	 */
 	private fun isHeaderPosition(position: Int): Boolean {
-		return position >= 0 && position < getHeaderSize()
+		return position >= getTopSize() && position < getToHeaderSize()
 	}
 	
 	/**
 	 * 判断是否是Footer
 	 */
 	private fun isFooterPosition(position: Int): Boolean {
-		return position >= getHeaderSize() + getItemSize() && position < itemCount
+		return position >= getToItemSize() && position < getToFooterSize()
+	}
+	
+	/**
+	 * 判断是否是TopView
+	 */
+	private fun isTopViewPosition(position: Int): Boolean {
+		return getTopSize() == 1 && position == 0
+	}
+	
+	/**
+	 * 判断是否是BottomView
+	 */
+	private fun isBottomViewPosition(position: Int): Boolean {
+		return getBottomSize() == 1 && position == itemCount - 1
 	}
 	
 	/**
 	 * 创建ViewHolder
 	 */
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+		if (viewType == TOP_VIEW_ITEM) {
+			return object : RecyclerView.ViewHolder(topView!!) {}
+		}
+		if (viewType == BOTTOM_VIEW_ITEM) {
+			return object : RecyclerView.ViewHolder(bottomView!!) {}
+		}
 		if (headers.containsKey(viewType)) {
 			val view = headers[viewType]
 			return object : RecyclerView.ViewHolder(view) {}
@@ -393,7 +473,7 @@ class CooderAdapter(
 	}
 	
 	override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-		if (isHeaderPosition(position) || isFooterPosition(position)) {
+		if (isHeaderPosition(position) || isFooterPosition(position) || isTopViewPosition(position) || isBottomViewPosition(position)) {
 			return
 		}
 		val itemPosition = getRealItemPosition(position)
@@ -410,48 +490,6 @@ class CooderAdapter(
 	}
 	
 	/**
-	 * 获取DataItem的真实索引位置
-	 */
-	private fun getRealItemPosition(position: Int): Int {
-		return position - getHeaderSize()
-	}
-	
-	/**
-	 * 获取Footer的真实索引位置
-	 */
-	private fun getRealFooterPosition(position: Int): Int {
-		return position - getHeaderSize() - getItemSize()
-	}
-	
-	/**
-	 * 获取Header的数量
-	 */
-	fun getHeaderSize(): Int {
-		return this.headers.size()
-	}
-	
-	/**
-	 * 获取DataItem的数量
-	 */
-	fun getItemSize(): Int {
-		return this.dataItems.size
-	}
-	
-	/**
-	 * 获取Footer的数量
-	 */
-	fun getFooterSize(): Int {
-		return this.footers.size()
-	}
-	
-	/**
-	 * 获取Item总数
-	 */
-	override fun getItemCount(): Int {
-		return this.headers.size() + dataItems.size + footers.size()
-	}
-	
-	/**
 	 * 由回收器视图在开始观察此适配器时调用
 	 */
 	override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
@@ -464,7 +502,7 @@ class CooderAdapter(
 			manager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
 				override fun getSpanSize(position: Int): Int {
 					if (position < itemCount) {
-						if (isHeaderPosition(position) || isFooterPosition(position)) {
+						if (isHeaderPosition(position) || isFooterPosition(position) || isTopViewPosition(position) || isBottomViewPosition(position)) {
 							return spanCount
 						}
 						val itemPosition = getRealItemPosition(position)
@@ -504,7 +542,7 @@ class CooderAdapter(
 			val lp = holder.itemView.layoutParams
 			// 适配StaggeredGridLayout
 			if (lp != null && lp is StaggeredGridLayoutManager.LayoutParams) {
-				if (isHeaderPosition(position) || isFooterPosition(position)) {
+				if (isHeaderPosition(position) || isFooterPosition(position) || isTopViewPosition(position) || isBottomViewPosition(position)) {
 					lp.isFullSpan = true
 					return
 				}
@@ -527,11 +565,104 @@ class CooderAdapter(
 	override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder) {
 		super.onViewDetachedFromWindow(holder)
 		val position = holder.adapterPosition
-		if (isHeaderPosition(position) || isFooterPosition(position)) {
+		if (isHeaderPosition(position) || isFooterPosition(position) || isTopViewPosition(position) || isBottomViewPosition(position)) {
 			return
 		}
 		val itemPosition = getRealItemPosition(position)
 		val dataItem = getItem(itemPosition) ?: return
 		dataItem.onViewDetachedFromWindow(holder)
+	}
+	
+	/**
+	 * 获取Header的真实索引位置
+	 */
+	private fun getRealHeaderPosition(position: Int): Int {
+		return position - getTopSize()
+	}
+	
+	/**
+	 * 获取DataItem的真实索引位置
+	 */
+	private fun getRealItemPosition(position: Int): Int {
+		return position - getToHeaderSize()
+	}
+	
+	/**
+	 * 获取Footer的真实索引位置
+	 */
+	private fun getRealFooterPosition(position: Int): Int {
+		return position - getToItemSize()
+	}
+	
+	/**
+	 * 获取Header的数量
+	 */
+	fun getHeaderSize(): Int {
+		return this.headers.size()
+	}
+	
+	/**
+	 * 获取DataItem的数量
+	 */
+	fun getItemSize(): Int {
+		return this.dataItems.size
+	}
+	
+	/**
+	 * 获取Footer的数量
+	 */
+	fun getFooterSize(): Int {
+		return this.footers.size()
+	}
+	
+	/**
+	 * 获取顶部视图数量
+	 * @return 0 or 1
+	 */
+	fun getTopSize(): Int {
+		return if (topView != null) 1 else 0
+	}
+	
+	/**
+	 * 获取底部视图数量
+	 * @return 0 or 1
+	 */
+	fun getBottomSize(): Int {
+		return if (bottomView != null) 1 else 0
+	}
+	
+	/**
+	 * 获取从topView到headerView的数量
+	 */
+	private fun getToHeaderSize(): Int {
+		return getTopSize() + getHeaderSize()
+	}
+	
+	/**
+	 * 获取从topView到dataItem的数量
+	 */
+	private fun getToItemSize(): Int {
+		return getToHeaderSize() + getItemSize()
+	}
+	
+	/**
+	 * 获取从topView到footerView的数量
+	 */
+	private fun getToFooterSize(): Int {
+		return getToItemSize() + getFooterSize()
+	}
+	
+	/**
+	 * 获取Item总数
+	 */
+	override fun getItemCount(): Int {
+		return getHeaderSize() + getItemSize() + getFooterSize() + getTopSize() + getBottomSize()
+	}
+	
+	/**
+	 * 判断ItemCount是否为0
+	 */
+	fun isEmpty(): Boolean {
+		return itemCount == 0
 	}
 }

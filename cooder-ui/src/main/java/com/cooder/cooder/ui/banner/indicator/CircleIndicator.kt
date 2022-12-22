@@ -54,7 +54,7 @@ class CircleIndicator @JvmOverloads constructor(
 	 * 水平边距
 	 */
 	private val pointHorizontalMargin = when (size) {
-		SMALL -> 1.8
+		SMALL -> 2
 		MEDIUM -> 3
 		LARGE -> 4
 		else -> 3
@@ -64,10 +64,10 @@ class CircleIndicator @JvmOverloads constructor(
 	 * 上下边距
 	 */
 	private val pointVerticalMargin = when (size) {
-		SMALL -> 8
-		MEDIUM -> 12
-		LARGE -> 14
-		else -> 12
+		SMALL -> 6
+		MEDIUM -> 10
+		LARGE -> 12
+		else -> 10
 	}.dp.toInt()
 	
 	companion object {

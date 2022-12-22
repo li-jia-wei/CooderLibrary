@@ -43,6 +43,6 @@ class CooderTabTopActivity : AppCompatActivity() {
 				Toast.makeText(this@CooderTabTopActivity, nextInfo.name, Toast.LENGTH_SHORT).show()
 			}
 		})
-		tabTopLayout.defaultSelected(infoList[0])
+		tabTopLayout.selectTabInfo(infoList[0])
 	}
 }

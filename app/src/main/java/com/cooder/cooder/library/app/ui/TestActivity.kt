@@ -1,11 +1,9 @@
 package com.cooder.cooder.library.app.ui
 
 import android.os.Bundle
-import android.util.SparseArray
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.cooder.cooder.library.app.R
-import com.cooder.cooder.library.log.CooderLog
+import com.cooder.cooder.library.util.CooderStatusBar
 
 /**
  * 项目：CooderLibrary
@@ -18,16 +16,9 @@ import com.cooder.cooder.library.log.CooderLog
  */
 class TestActivity : AppCompatActivity() {
 	
-	private val sparseArray = SparseArray<String>()
-	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_test)
-		
-		val test = findViewById<Button>(R.id.test)
-		test.setOnClickListener {
-			sparseArray[100] = "Hello"
-			CooderLog.i(sparseArray.indexOfValue("Hello"))
-		}
+		CooderStatusBar.setStatusBarImmersive(this, false)
 	}
 }

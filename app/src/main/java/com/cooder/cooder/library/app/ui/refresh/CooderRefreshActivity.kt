@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.cooder.cooder.library.app.R
 import com.cooder.cooder.ui.refresh.CooderRefresh
 import com.cooder.cooder.ui.refresh.CooderRefreshLayout
-import com.cooder.cooder.ui.refresh.overview.CooderLottieOverView
+import com.cooder.cooder.ui.refresh.overview.CooderTextOverView
 
 /**
  * 项目：CooderLibrary
@@ -26,7 +26,7 @@ class CooderRefreshActivity : AppCompatActivity() {
 		setContentView(R.layout.activity_cooder_refresh)
 		
 		val refreshLayout: CooderRefreshLayout = findViewById(R.id.refresh_layout)
-		refreshLayout.setRefreshOverView(CooderLottieOverView(this))
+		refreshLayout.setRefreshOverView(CooderTextOverView(this))
 		refreshLayout.setRefreshListener(object : CooderRefresh.CooderRefreshListener {
 			override fun onRefresh() {
 				Toast.makeText(this@CooderRefreshActivity, "刷新事件", Toast.LENGTH_SHORT).show()

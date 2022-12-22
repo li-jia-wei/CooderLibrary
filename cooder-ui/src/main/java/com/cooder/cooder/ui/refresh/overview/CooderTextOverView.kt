@@ -3,9 +3,8 @@ package com.cooder.cooder.ui.refresh.overview
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.view.animation.LinearInterpolator
-import android.view.animation.RotateAnimation
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.StringRes
@@ -74,12 +73,8 @@ class CooderTextOverView @JvmOverloads constructor(
 	
 	override fun onRefresh() {
 		hintView.text = refreshHint
-		val rotateAnim = RotateAnimation(0F, 360F, 0.5F, 0.5F)
-		rotateAnim.duration = 700L
-//		rotateAnim.repeatMode = Animation.RESTART
-		rotateAnim.repeatCount = Animation.INFINITE
+		val rotateAnim = AnimationUtils.loadAnimation(context, R.anim.cooder_refresh_text_rotate_anim)
 		rotateAnim.interpolator = LinearInterpolator()
-		rotateAnim.startNow()
 		rotateView.startAnimation(rotateAnim)
 	}
 	
