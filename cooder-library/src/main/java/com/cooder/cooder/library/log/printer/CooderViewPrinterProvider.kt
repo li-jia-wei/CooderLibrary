@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.cooder.cooder.library.util.CooderDisplayUtil
+import com.cooder.cooder.library.util.dpInt
 
 /**
  * 项目：CooderLibrary
@@ -32,9 +32,9 @@ class CooderViewPrinterProvider(
 		
 		private const val ALPHA_FLOATING_VIEW = 1F
 		private const val ALPHA_LOG_VIEW = 1F
-		
+
 		private const val LOG_VIEW_HEIGHT = 250F
-		private const val FLOATING_MARGIN_BOTTOM = 20F
+		private const val FLOATING_MARGIN_BOTTOM = 20
 	}
 	
 	/**
@@ -46,7 +46,7 @@ class CooderViewPrinterProvider(
 		}
 		val params = FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 		params.gravity = Gravity.BOTTOM or Gravity.END
-		params.bottomMargin = CooderDisplayUtil.dp2px(FLOATING_MARGIN_BOTTOM).toInt()
+		params.bottomMargin = FLOATING_MARGIN_BOTTOM.dpInt
 		val floatingView = genFloatingView()
 		floatingView.setBackgroundColor(Color.BLACK)
 		floatingView.alpha = ALPHA_FLOATING_VIEW
@@ -87,7 +87,7 @@ class CooderViewPrinterProvider(
 		if (rootView.findViewWithTag<View>(TAG_LOG_VIEW) != null) {
 			return
 		}
-		val params = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, CooderDisplayUtil.dp2px(LOG_VIEW_HEIGHT).toInt())
+		val params = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, LOG_VIEW_HEIGHT.dpInt)
 		params.gravity = Gravity.BOTTOM
 		val logView = genLogView()
 		logView.tag = TAG_LOG_VIEW

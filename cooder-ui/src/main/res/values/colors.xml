@@ -21,4 +21,9 @@
 	<color name="cooder_lottie_wary_dot5">#1790FE</color>
 	<color name="cooder_lottie_wary_dot6">#2E53EB</color>
 	<color name="cooder_lottie_wary_dot7">#712DD1</color>
+
+	<color name="cooder_slider_text_color_normal">#666666</color>
+	<color name="cooder_slider_text_color_select">@color/primary</color>
+	<color name="cooder_slider_bg_color_normal">#F7F8F9</color>
+	<color name="cooder_slider_bg_color_select">#FFFFFF</color>
 </resources>

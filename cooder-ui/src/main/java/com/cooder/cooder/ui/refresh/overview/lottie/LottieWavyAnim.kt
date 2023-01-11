@@ -35,7 +35,7 @@ internal class LottieWavyAnim(
 	}
 	
 	override fun init() {
-		LayoutInflater.from(context).inflate(R.layout.cooder_refresh_lottie_wavy_overview, root, true)
+		LayoutInflater.from(context).inflate(R.layout.cooder_refresh_overview_lottie_wavy, root, true)
 		dots += root.findViewById<ImageView>(R.id.dot1)
 		dots += root.findViewById<ImageView>(R.id.dot2)
 		dots += root.findViewById<ImageView>(R.id.dot3)

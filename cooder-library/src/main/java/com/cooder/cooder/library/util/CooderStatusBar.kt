@@ -5,6 +5,8 @@ import android.graphics.Color
 import android.view.WindowManager
 import androidx.annotation.ColorInt
 import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 
 /**
  * 项目：CooderLibrary
@@ -50,17 +52,27 @@ object CooderStatusBar {
 		window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
 		window.statusBarColor = statusBarColor
 	}
-	
+
 	/**
-	 * 设置状态栏沉浸式布局
+	 * 沉浸式状态栏，包含状态栏内容显示
 	 */
 	@JvmOverloads
 	@JvmStatic
-	fun setStatusBarImmersive(activity: Activity, darkContent: Boolean = true) {
+	fun immersiveStatusBar(activity: Activity, darkContent: Boolean = true) {
 		val window = activity.window
 		window.statusBarColor = Color.TRANSPARENT
 		val controller = WindowCompat.getInsetsController(window, window.decorView)
 		controller.isAppearanceLightStatusBars = darkContent
-		WindowCompat.setDecorFitsSystemWindows(window, false)
+		WindowCompat.setDecorFitsSystemWindows(window, true)
+	}
+
+	/**
+	 * 隐藏状态栏
+	 */
+	fun hintStatusBar(activity: Activity) {
+		val window = activity.window
+		val controller = WindowCompat.getInsetsController(window, window.decorView)
+		controller.hide(WindowInsetsCompat.Type.statusBars())
+		controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
 	}
 }

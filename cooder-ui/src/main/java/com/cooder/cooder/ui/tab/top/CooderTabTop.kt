@@ -15,7 +15,10 @@ import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import com.cooder.cooder.ui.R
 import com.cooder.cooder.ui.tab.common.CooderTab
-import com.cooder.cooder.ui.tab.top.CooderTabTopInfo.TabType.*
+import com.cooder.cooder.ui.tab.top.CooderTabTopInfo.TabType.BITMAP
+import com.cooder.cooder.ui.tab.top.CooderTabTopInfo.TabType.ICON
+import com.cooder.cooder.ui.tab.top.CooderTabTopInfo.TabType.TEXT
+import com.cooder.cooder.ui.tab.top.CooderTabTopInfo.TabType.VALUE_RES
 
 /**
  * 项目：CooderProject
@@ -28,16 +31,16 @@ import com.cooder.cooder.ui.tab.top.CooderTabTopInfo.TabType.*
  */
 class CooderTabTop @JvmOverloads constructor(
 	context: Context,
-	attributeSet: AttributeSet? = null,
+	attrs: AttributeSet? = null,
 	defStyleAttr: Int = 0,
-) : LinearLayout(context, attributeSet, defStyleAttr), CooderTab<CooderTabTopInfo<*>> {
-	
+) : LinearLayout(context, attrs, defStyleAttr), CooderTab<CooderTabTopInfo<*>> {
+
 	private lateinit var tabInfo: CooderTabTopInfo<*>
 	private val tabImageView: ImageView
 	private val tabIconView: TextView
 	private val tabNameView: TextView
 	private val indicator: View
-	
+
 	init {
 		LayoutInflater.from(context).inflate(R.layout.cooder_tab_top, this)
 		this.tabImageView = findViewById(R.id.iv_image)

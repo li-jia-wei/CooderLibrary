@@ -3,7 +3,9 @@ package com.cooder.cooder.library.util
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.iterator
-import java.util.*
+import com.cooder.cooder.library.log.CooderLog
+import java.util.ArrayDeque
+import java.util.Deque
 
 /**
  * 项目：CooderLibrary
@@ -29,6 +31,7 @@ object CooderViewUtil {
 		deque += group
 		while (deque.isNotEmpty()) {
 			val node: View = deque.removeFirst()
+            CooderLog.i(cls.canonicalName, node::class.simpleName)
 			if (cls.isInstance(node)) {
 				return cls.cast(node)
 			} else if (node is ViewGroup) {

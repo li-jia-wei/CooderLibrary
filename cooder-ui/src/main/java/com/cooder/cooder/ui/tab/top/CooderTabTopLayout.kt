@@ -22,22 +22,22 @@ import kotlin.math.abs
  */
 class CooderTabTopLayout @JvmOverloads constructor(
 	context: Context,
-	attributeSet: AttributeSet? = null,
+	attrs: AttributeSet? = null,
 	defStyleAttr: Int = 0,
-) : HorizontalScrollView(context, attributeSet, defStyleAttr), CooderTabLayout<CooderTabTop, CooderTabTopInfo<*>> {
-	
+) : HorizontalScrollView(context, attrs, defStyleAttr), CooderTabLayout<CooderTabTop, CooderTabTopInfo<*>> {
+
 	private val tabSelectedChangeListeners = mutableListOf<CooderTabLayout.OnTabSelectedListener<CooderTabTopInfo<*>>>()
 	private var selectedInfo: CooderTabTopInfo<*>? = null
 	private val infoList = mutableListOf<CooderTabTopInfo<*>>()
-	
+
 	private var showInfoCount = 2
-	
+
 	private var tabWidth = 0
-	
+
 	init {
 		isVerticalScrollBarEnabled = false
 	}
-	
+
 	/**
 	 * 设置左右显示Item的数量以展示更多的信息
 	 */

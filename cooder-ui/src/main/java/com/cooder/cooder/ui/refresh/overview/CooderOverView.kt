@@ -3,7 +3,7 @@ package com.cooder.cooder.ui.refresh.overview
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
-import com.cooder.cooder.library.util.dp
+import com.cooder.cooder.library.util.dpInt
 import com.cooder.cooder.ui.refresh.overview.CooderOverView.CooderRefreshState.STATE_INIT
 
 /**
@@ -17,10 +17,10 @@ import com.cooder.cooder.ui.refresh.overview.CooderOverView.CooderRefreshState.S
  */
 abstract class CooderOverView @JvmOverloads constructor(
 	context: Context,
-	attributeSet: AttributeSet? = null,
+	attrs: AttributeSet? = null,
 	defStyleAttr: Int = 0
-) : FrameLayout(context, attributeSet, defStyleAttr) {
-	
+) : FrameLayout(context, attrs, defStyleAttr) {
+
 	/**
 	 * 刷新状态
 	 */
@@ -82,7 +82,7 @@ abstract class CooderOverView @JvmOverloads constructor(
 	 * 预初始化
 	 */
 	private fun preInit() {
-		PULL_REFRESH_HEIGHT = 90.dp.toInt()
+		PULL_REFRESH_HEIGHT = 90.dpInt
 		init()
 	}
 	

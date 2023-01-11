@@ -16,6 +16,7 @@ import com.cooder.cooder.library.log.CooderLog
 import com.cooder.cooder.library.util.CooderDisplayUtil
 import com.cooder.cooder.library.util.CooderViewUtil
 import com.cooder.cooder.library.util.dp
+import com.cooder.cooder.library.util.dpInt
 import com.cooder.cooder.ui.R
 import com.cooder.cooder.ui.tab.bottom.CooderTabBottomLayout.DistanceType.*
 import com.cooder.cooder.ui.tab.common.CooderTabLayout
@@ -32,25 +33,25 @@ import kotlin.math.abs
  */
 class CooderTabBottomLayout @JvmOverloads constructor(
 	context: Context,
-	attributeSet: AttributeSet? = null,
+	attrs: AttributeSet? = null,
 	defStyleAttr: Int = 0,
-) : FrameLayout(context, attributeSet, defStyleAttr), CooderTabLayout<CooderTabBottom, CooderTabBottomInfo<*>> {
-	
+) : FrameLayout(context, attrs, defStyleAttr), CooderTabLayout<CooderTabBottom, CooderTabBottomInfo<*>> {
+
 	private val tabSelectedChangeListeners = mutableListOf<CooderTabLayout.OnTabSelectedListener<CooderTabBottomInfo<*>>>()
 	private var selectedInfo: CooderTabBottomInfo<*>? = null
 	private val infoList = mutableListOf<CooderTabBottomInfo<*>>()
-	
+
 	private var bottomAlpha = DEFAULT_BOTTOM_ALPHA
 	private var tabBottomHeight = DEFAULT_TAB_BOTTOM_HEIGHT
 	private var bottomLineHeight = DEFAULT_BOTTOM_LINE_HEIGHT
 	private var bottomLineColor = DEFAULT_BOTTOM_LINE_COLOR
-	
+
 	private var enableSliding = false
 	private var params = SlidingPageParams(-1F, -1F, -1F, -1F, -1F, DISTANCE_MEDIUM)
-	
+
 	companion object {
 		private const val TAG_TAB_BOTTOM = "TAG_TAB_BOTTOM"
-		
+
 		const val DEFAULT_BOTTOM_ALPHA = 1F
 		const val DEFAULT_TAB_BOTTOM_HEIGHT = 52F
 		const val DEFAULT_BOTTOM_LINE_HEIGHT = 0.8F
@@ -149,17 +150,17 @@ class CooderTabBottomLayout @JvmOverloads constructor(
 		}
 		selectedInfo = null
 		addBackground()
-		
+
 		// 清除之前添加的CooderTabBottom listener, Tip: Java foreach remove问题
 		val iterator = tabSelectedChangeListeners.iterator()
 		while (iterator.hasNext()) {
 			if (iterator.next() is CooderTabBottom) iterator.remove()
 		}
-		
+
 		val tabBottomLayout = FrameLayout(context)
 		tabBottomLayout.tag = TAG_TAB_BOTTOM
 		val width = CooderDisplayUtil.getDisplayWidth(CooderDisplayUtil.Unit.PX) / infoList.size
-		val height = CooderDisplayUtil.dp2px(tabBottomHeight).toInt()
+		val height = tabBottomHeight.dpInt
 		for ((i, info) in infoList.withIndex()) {
 			// tips: 为何不用LinearLayout，当动态改变child大小后Gravity.BOTTOM会失效
 			val params = LayoutParams(width, height)
@@ -216,7 +217,7 @@ class CooderTabBottomLayout @JvmOverloads constructor(
 	 */
 	private fun addBackground() {
 		val view = LayoutInflater.from(context).inflate(R.layout.cooder_bottom_layout_bg, this, false)
-		val params = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, CooderDisplayUtil.dp2px(tabBottomHeight).toInt())
+		val params = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, tabBottomHeight.dpInt)
 		params.gravity = Gravity.BOTTOM
 		addView(view, params)
 		view.alpha = bottomAlpha
@@ -228,9 +229,9 @@ class CooderTabBottomLayout @JvmOverloads constructor(
 	private fun addBottomLine() {
 		val bottomLine = View(context)
 		bottomLine.setBackgroundColor(Color.parseColor(bottomLineColor))
-		val bottomLineParams = LayoutParams(LayoutParams.MATCH_PARENT, CooderDisplayUtil.dp2px(bottomLineHeight).toInt())
+		val bottomLineParams = LayoutParams(LayoutParams.MATCH_PARENT, bottomLineHeight.dpInt)
 		bottomLineParams.gravity = Gravity.BOTTOM
-		bottomLineParams.bottomMargin = CooderDisplayUtil.dp2px(tabBottomHeight - bottomLineHeight).toInt()
+		bottomLineParams.bottomMargin = (tabBottomHeight - bottomLineHeight).dpInt
 		addView(bottomLine, bottomLineParams)
 	}
 	
@@ -248,7 +249,7 @@ class CooderTabBottomLayout @JvmOverloads constructor(
 		}
 		CooderLog.i(targetView)
 		targetView?.apply {
-			this.setPadding(0, 0, 0, CooderDisplayUtil.dp2px(tabBottomHeight).toInt())
+			this.setPadding(0, 0, 0, tabBottomHeight.dpInt)
 			this.clipToPadding = false
 		}
 	}

@@ -4,7 +4,8 @@ import android.content.Context
 import com.cooder.cooder.library.log.printer.CooderFilePrinter
 import java.io.File
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
 
 /**
  * 项目：CooderLibrary
@@ -16,28 +17,31 @@ import java.util.*
  * 介绍：日志文件工具类
  */
 object CooderLogFileUtil {
-	
-	private const val FILE_RETENTION_DAYS: Int = 30
-	
-	private const val MILLIS_IN_ONE_DAY: Long = 1000 * 60 * 60 * 24
-	private const val FILE_RETENTION_MILLIS: Long = FILE_RETENTION_DAYS * MILLIS_IN_ONE_DAY
-	
-	private val SIMPLE_DATE_FORMAT = SimpleDateFormat("yyyy-MM-dd", Locale.CHINA)
-	
-	/**
-	 * 检查超时的日志文件并删除
-	 */
-	fun checkLogFileForTimeoutAndClear(context: Context) {
-		CooderFilePrinter.executor.execute {
-			val logPath = context.filesDir.absolutePath + "/log"
-			val dir = File(logPath)
-			if (!dir.exists()) {
-				dir.mkdir()
-				return@execute
-			}
-			val now = Calendar.getInstance()
-			now.get(Calendar.DAY_OF_YEAR)
-			dir.listFiles()?.forEach {
+
+    /**
+     * 文件保留天数
+     */
+    private const val FILE_RETENTION_DAYS: Int = 30
+
+    private const val MILLIS_IN_ONE_DAY: Long = 1000 * 60 * 60 * 24
+    private const val FILE_RETENTION_MILLIS: Long = FILE_RETENTION_DAYS * MILLIS_IN_ONE_DAY
+
+    private val SIMPLE_DATE_FORMAT = SimpleDateFormat("yyyy-MM-dd", Locale.CHINA)
+
+    /**
+     * 清理超时日志
+     */
+    fun clearTimeoutLogFile(context: Context) {
+        CooderFilePrinter.executor.execute {
+            val logPath = context.filesDir.absolutePath + "/log"
+            val dir = File(logPath)
+            if (!dir.exists()) {
+                dir.mkdir()
+                return@execute
+            }
+            val now = Calendar.getInstance()
+            now.get(Calendar.DAY_OF_YEAR)
+            dir.listFiles()?.forEach {
 				val date = it.name.substring(0, 10)
 				if (isClear(date)) {
 					it.delete()

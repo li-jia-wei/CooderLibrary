@@ -22,21 +22,21 @@ import java.lang.reflect.Field
  */
 class CooderViewPager @JvmOverloads constructor(
 	context: Context,
-	attributeSet: AttributeSet? = null
-) : ViewPager(context, attributeSet) {
-	
+	attrs: AttributeSet? = null
+) : ViewPager(context, attrs) {
+
 	/**
 	 * 自动播放时切换页面的间隔时间，默认：5000毫秒
 	 */
-	private var intervalTime: Int = 5000
-	
+	private var intervalTime: Int = 4000
+
 	/**
 	 * 是否开启自动播放，默认：false
 	 */
 	private var autoPlay = true
-	
+
 	private var isLayout = false
-	
+
 	/**
 	 * 自动播放处理
 	 */

@@ -10,7 +10,7 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.annotation.IntDef
 import androidx.core.view.setMargins
-import com.cooder.cooder.library.util.dp
+import com.cooder.cooder.library.util.dpInt
 import com.cooder.cooder.ui.R
 
 /**
@@ -24,25 +24,25 @@ import com.cooder.cooder.ui.R
  */
 class NumberIndicator @JvmOverloads constructor(
 	context: Context,
-	attributeSet: AttributeSet? = null,
+	attrs: AttributeSet? = null,
 	defStyleAttr: Int = 0
-) : FrameLayout(context, attributeSet, defStyleAttr), CooderIndicator<FrameLayout> {
-	
+) : FrameLayout(context, attrs, defStyleAttr), CooderIndicator<FrameLayout> {
+
 	@GravityDef
 	private var gravity: Int = RIGHT_TOP
-	
+
 	private var isInflate = false
-	
+
 	companion object {
 		private const val VMC = ViewGroup.LayoutParams.WRAP_CONTENT
-		private val MARGIN = 6.dp.toInt()
-		
+		private val MARGIN = 6.dpInt
+
 		const val LEFT_TOP = Gravity.START or Gravity.TOP
 		const val LEFT_BOTTOM = Gravity.START or Gravity.BOTTOM
 		const val RIGHT_TOP = Gravity.END or Gravity.TOP
 		const val RIGHT_BOTTOM = Gravity.END or Gravity.BOTTOM
 	}
-	
+
 	@IntDef(LEFT_TOP, LEFT_BOTTOM, RIGHT_TOP, RIGHT_BOTTOM)
 	annotation class GravityDef
 	
@@ -60,7 +60,7 @@ class NumberIndicator @JvmOverloads constructor(
 		val numberParams = LayoutParams(VMC, VMC)
 		numberParams.gravity = gravity
 		numberParams.setMargins(MARGIN)
-		number.setBackgroundResource(R.drawable.shape_indicator_number)
+		number.setBackgroundResource(R.drawable.shape_banner_indicator_number)
 		addView(number, numberParams)
 	}
 	

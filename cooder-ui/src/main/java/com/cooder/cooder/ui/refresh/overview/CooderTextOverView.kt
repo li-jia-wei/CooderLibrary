@@ -21,17 +21,17 @@ import com.cooder.cooder.ui.R
  */
 class CooderTextOverView @JvmOverloads constructor(
 	context: Context,
-	attributeSet: AttributeSet? = null,
+	attrs: AttributeSet? = null,
 	defStyleAttr: Int = 0
-) : CooderOverView(context, attributeSet, defStyleAttr) {
-	
+) : CooderOverView(context, attrs, defStyleAttr) {
+
 	private lateinit var hintView: TextView
 	private lateinit var rotateView: ImageView
-	
+
 	var visibleHint = context.getString(R.string.refresh_text_overview_visible)
 	var overHint = context.getString(R.string.refresh_text_overview_over)
 	var refreshHint = context.getString(R.string.refresh_text_overview_refresh)
-	
+
 	/**
 	 * 设置刚下拉时候时的提示文本
 	 */
@@ -54,7 +54,7 @@ class CooderTextOverView @JvmOverloads constructor(
 	}
 	
 	override fun init() {
-		LayoutInflater.from(context).inflate(R.layout.cooder_refresh_text_overview, this, true)
+		LayoutInflater.from(context).inflate(R.layout.cooder_refresh_overview_text, this, true)
 		hintView = findViewById(R.id.tv_hint)
 		rotateView = findViewById(R.id.iv_rotate)
 	}

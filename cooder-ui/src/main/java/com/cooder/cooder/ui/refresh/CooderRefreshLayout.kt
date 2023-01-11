@@ -4,13 +4,19 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.GestureDetector
 import android.view.MotionEvent
-import android.view.MotionEvent.*
+import android.view.MotionEvent.ACTION_CANCEL
+import android.view.MotionEvent.ACTION_POINTER_INDEX_MASK
+import android.view.MotionEvent.ACTION_UP
 import android.view.View
 import android.view.animation.LinearInterpolator
 import android.widget.FrameLayout
 import android.widget.Scroller
 import com.cooder.cooder.ui.refresh.overview.CooderOverView
-import com.cooder.cooder.ui.refresh.overview.CooderOverView.CooderRefreshState.*
+import com.cooder.cooder.ui.refresh.overview.CooderOverView.CooderRefreshState.STATE_INIT
+import com.cooder.cooder.ui.refresh.overview.CooderOverView.CooderRefreshState.STATE_OVER
+import com.cooder.cooder.ui.refresh.overview.CooderOverView.CooderRefreshState.STATE_OVER_RELEASE
+import com.cooder.cooder.ui.refresh.overview.CooderOverView.CooderRefreshState.STATE_REFRESH
+import com.cooder.cooder.ui.refresh.overview.CooderOverView.CooderRefreshState.STATE_VISIBLE
 import com.cooder.cooder.ui.refresh.util.CooderScrollUtil
 import kotlinx.coroutines.Runnable
 import kotlin.math.abs
@@ -26,18 +32,18 @@ import kotlin.math.abs
  */
 class CooderRefreshLayout @JvmOverloads constructor(
 	context: Context,
-	attributeSet: AttributeSet? = null,
+	attrs: AttributeSet? = null,
 	defStyleAttr: Int = 0
-) : FrameLayout(context, attributeSet, defStyleAttr), CooderRefresh {
-	
+) : FrameLayout(context, attrs, defStyleAttr), CooderRefresh {
+
 	private var state: CooderOverView.CooderRefreshState = STATE_INIT
-	
+
 	private var gestureDetector: GestureDetector
 	private var refreshListener: CooderRefresh.CooderRefreshListener? = null
-	
+
 	private var overView: CooderOverView? = null
 	private var lastY: Int = 0
-	
+
 	private var disableRefreshScroll: Boolean = true
 	
 	private val autoScroller = AutoScroller()

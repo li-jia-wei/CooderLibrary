@@ -1,7 +1,6 @@
 package com.cooder.cooder.library.log
 
 import android.content.Context
-import com.cooder.cooder.library.log.printer.CooderFilePrinter
 import com.cooder.cooder.library.log.printer.CooderLogPrinter
 import com.cooder.cooder.library.log.util.CooderLogFileUtil
 
@@ -19,32 +18,23 @@ class CooderLogManager private constructor(
 	printers: Array<out CooderLogPrinter>,
 ) {
 	
-	private val printers: MutableList<CooderLogPrinter> = ArrayList()
+	private val printers = mutableListOf<CooderLogPrinter>()
 	
 	init {
 		this.printers += printers
 	}
 	
 	companion object {
-		@Volatile
 		private var instance: CooderLogManager? = null
 		
 		/**
-		 * 线程安全的初始化
+		 * 初始化
 		 */
 		fun init(context: Context, config: CooderLogConfig, vararg printers: CooderLogPrinter) {
+			// 此处无需加多线程，毕竟app启动就执行一次
 			if (instance == null) {
-				synchronized(this) {
-					if (instance == null) {
-						printers.forEach {
-							if (it is CooderFilePrinter) {
-								CooderLogFileUtil.checkLogFileForTimeoutAndClear(context)
-								return@forEach
-							}
-						}
-						instance = CooderLogManager(config, printers)
-					}
-				}
+				CooderLogFileUtil.clearTimeoutLogFile(context)
+				instance = CooderLogManager(config, printers)
 			}
 		}
 		
@@ -52,9 +42,7 @@ class CooderLogManager private constructor(
 		 * 是否初始化
 		 */
 		fun isInit(): Boolean {
-			synchronized(this) {
-				return instance != null
-			}
+			return instance != null
 		}
 		
 		/**
@@ -76,13 +64,13 @@ class CooderLogManager private constructor(
 	 * 增加一个打印器
 	 */
 	fun addPrinter(printer: CooderLogPrinter) {
-		this.printers.add(printer)
+		this.printers += printer
 	}
 	
 	/**
 	 * 移除一个打印器
 	 */
 	fun removePrinter(printer: CooderLogPrinter) {
-		this.printers.remove(printer)
+		this.printers -= printer
 	}
 }

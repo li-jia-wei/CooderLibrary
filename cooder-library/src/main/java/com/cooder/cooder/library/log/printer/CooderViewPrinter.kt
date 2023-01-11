@@ -1,11 +1,11 @@
 package com.cooder.cooder.library.log.printer
 
 import android.app.Activity
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import android.widget.ListView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -30,7 +30,6 @@ class CooderViewPrinter(
 	private var adapter: LogAdapter
 	private var viewProvider: CooderViewPrinterProvider
 	
-	private lateinit var a: ListView
 	init {
 		val rootView: FrameLayout = activity.findViewById(android.R.id.content)
 		recyclerView = RecyclerView(activity)
@@ -49,7 +48,8 @@ class CooderViewPrinter(
 	}
 	
 	override fun print(config: CooderLogConfig, level: Int, tag: String, printString: String) {
-		adapter.addItem(CooderLogMo(System.currentTimeMillis(), level, tag, printString))
+        Log.i("CooderLibraryTag", "View")
+        adapter.addItem(CooderLogMo(System.currentTimeMillis(), level, tag, printString))
 		recyclerView.smoothScrollToPosition(adapter.itemCount - 1)
 	}
 	

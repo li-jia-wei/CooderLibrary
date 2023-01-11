@@ -11,7 +11,7 @@ import android.widget.LinearLayout
 import androidx.annotation.DrawableRes
 import androidx.annotation.IntDef
 import androidx.core.view.forEachIndexed
-import com.cooder.cooder.library.util.dp
+import com.cooder.cooder.library.util.dpInt
 import com.cooder.cooder.ui.R
 
 /**
@@ -25,29 +25,29 @@ import com.cooder.cooder.ui.R
  */
 class CircleIndicator @JvmOverloads constructor(
 	context: Context,
-	attributeSet: AttributeSet? = null,
+	attrs: AttributeSet? = null,
 	defStyleAttr: Int = 0,
 	@SizeDef private val size: Int = MEDIUM
-) : FrameLayout(context, attributeSet, defStyleAttr), CooderIndicator<FrameLayout> {
-	
+) : FrameLayout(context, attrs, defStyleAttr), CooderIndicator<FrameLayout> {
+
 	/**
 	 * 默认状态
 	 */
 	@DrawableRes
 	private val pointNormal = arrayOf(
-		R.drawable.shape_indicator_point_small_normal,
-		R.drawable.shape_indicator_point_medium_normal,
-		R.drawable.shape_indicator_point_large_normal
+		R.drawable.shape_banner_indicator_point_small_normal,
+		R.drawable.shape_banner_indicator_point_medium_normal,
+		R.drawable.shape_banner_indicator_point_large_normal
 	)
-	
+
 	/**
 	 * 选中状态
 	 */
 	@DrawableRes
 	private val pointSelected = arrayOf(
-		R.drawable.shape_indicator_point_small_selected,
-		R.drawable.shape_indicator_point_medium_selected,
-		R.drawable.shape_indicator_point_large_selected
+		R.drawable.shape_banner_indicator_point_small_selected,
+		R.drawable.shape_banner_indicator_point_medium_selected,
+		R.drawable.shape_banner_indicator_point_large_selected
 	)
 	
 	/**
@@ -58,7 +58,7 @@ class CircleIndicator @JvmOverloads constructor(
 		MEDIUM -> 3
 		LARGE -> 4
 		else -> 3
-	}.dp.toInt()
+	}.dpInt
 	
 	/**
 	 * 上下边距
@@ -68,7 +68,7 @@ class CircleIndicator @JvmOverloads constructor(
 		MEDIUM -> 10
 		LARGE -> 12
 		else -> 10
-	}.dp.toInt()
+	}.dpInt
 	
 	companion object {
 		private const val VMC = ViewGroup.LayoutParams.WRAP_CONTENT

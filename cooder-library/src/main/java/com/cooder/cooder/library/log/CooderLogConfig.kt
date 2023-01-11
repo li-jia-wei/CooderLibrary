@@ -33,7 +33,7 @@ abstract class CooderLogConfig {
 	 * 是否开启日志打印
 	 */
 	open fun enable(): Boolean {
-		return true
+		return false
 	}
 	
 	/**

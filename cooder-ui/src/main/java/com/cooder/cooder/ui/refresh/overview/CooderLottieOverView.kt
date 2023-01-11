@@ -18,27 +18,27 @@ import com.cooder.cooder.ui.refresh.overview.lottie.LottieWavyAnim
  */
 class CooderLottieOverView @JvmOverloads constructor(
 	context: Context,
-	attributeSet: AttributeSet? = null,
+	attrs: AttributeSet? = null,
 	defStyleAttr: Int = 0,
 	lottieType: LottieType = WAVY
-) : CooderOverView(context, attributeSet, defStyleAttr) {
-	
+) : CooderOverView(context, attrs, defStyleAttr) {
+
 	private var lottieAnim: LottieAnim
-	
+
 	init {
 		lottieAnim = when (lottieType) {
 			WAVY -> LottieWavyAnim(context, this)
 		}
 	}
-	
+
 	override fun init() {
-	
+
 	}
-	
+
 	override fun onScroll(scrollY: Int, pullRefreshHeight: Int) {
-	
+
 	}
-	
+
 	override fun onVisible() {
 		lottieAnim.visible()
 	}
