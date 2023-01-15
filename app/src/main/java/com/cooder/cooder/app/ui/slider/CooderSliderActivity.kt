@@ -15,7 +15,6 @@ import com.cooder.cooder.library.util.CooderStatusBar
  * 介绍：CooderSliderActivity
  */
 class CooderSliderActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cooder_slider)

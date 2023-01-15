@@ -65,11 +65,11 @@ class CooderBannerActivity : AppCompatActivity() {
         initBannerAttrs()
 		
 		autoPlay.isChecked = true
-		autoPlay.setOnCheckedChangeListener { buttonView, isChecked ->
-			banners.forEach {
-				it.setAutoPlay(isChecked)
-			}
-		}
+		autoPlay.setOnCheckedChangeListener { _, isChecked ->
+            banners.forEach {
+                it.setAutoPlay(isChecked)
+            }
+        }
 		
 		intervalTime.addTextChangedListener {
 			if (it == null) return@addTextChangedListener

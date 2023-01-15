@@ -15,10 +15,10 @@ import com.cooder.cooder.library.util.CooderStatusBar
  * 介绍：TestActivity
  */
 class TestActivity : AppCompatActivity() {
-	
-	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
-		setContentView(R.layout.activity_test)
-        CooderStatusBar.hintStatusBar(this)
-	}
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_test)
+        CooderStatusBar.setStatusBarColor(this)
+    }
 }

@@ -3,12 +3,7 @@ package com.cooder.cooder.app.coroutine
 import android.content.res.AssetManager
 import com.cooder.cooder.library.executor.CooderExecutor
 import com.cooder.cooder.library.log.CooderLog
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.*
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
@@ -26,6 +21,7 @@ object CoroutineScene {
 	/**
 	 * 以此启动三个子线程，并且以同步的方式拿到他们的返回值，进而更新UI
 	 */
+    @OptIn(DelicateCoroutinesApi::class)
 	fun startScene1() {
 		GlobalScope.launch(Dispatchers.Main) {
 			val result1 = request1()
@@ -57,17 +53,18 @@ object CoroutineScene {
 		CooderLog.i("updateUI1 work on ${Thread.currentThread().name}")
 		CooderLog.i(result3)
 	}
-	
-	fun startScene2() {
-		GlobalScope.launch(Dispatchers.Main) {
-			val result4 = request4()
-			val deferred5 = GlobalScope.async { request5(result4) }
-			val deferred6 = GlobalScope.async { request5(result4) }
-			updateUI2(deferred5.await(), deferred6.await())
-			deferred5.cancel()
-			deferred6.cancel()
-		}
-	}
+
+    @OptIn(DelicateCoroutinesApi::class)
+    fun startScene2() {
+        GlobalScope.launch(Dispatchers.Main) {
+            val result4 = request4()
+            val deferred5 = GlobalScope.async { request5(result4) }
+            val deferred6 = GlobalScope.async { request5(result4) }
+            updateUI2(deferred5.await(), deferred6.await())
+            deferred5.cancel()
+            deferred6.cancel()
+        }
+    }
 	
 	private suspend fun request4(): String {
 		delay(2000)

@@ -11,8 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        tools:ignore="ContentDescription"
-        tools:src="@drawable/shape_slider_indicator" />
+        android:src="@drawable/shape_slider_indicator"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/menu_item_title"
