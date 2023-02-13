@@ -10,7 +10,7 @@ import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
 import android.widget.ImageView
 import android.widget.TextView
-import com.cooder.cooder.library.util.dp
+import com.cooder.cooder.library.util.expends.dp
 import com.cooder.cooder.ui.R
 
 /**
@@ -35,7 +35,7 @@ internal class LottieWavyAnim(
 	}
 	
 	override fun init() {
-		LayoutInflater.from(context).inflate(R.layout.cooder_refresh_overview_lottie_wavy, root, true)
+		LayoutInflater.from(context).inflate(R.layout.co_refresh_overview_lottie_wavy, root, true)
 		dots += root.findViewById<ImageView>(R.id.dot1)
 		dots += root.findViewById<ImageView>(R.id.dot2)
 		dots += root.findViewById<ImageView>(R.id.dot3)

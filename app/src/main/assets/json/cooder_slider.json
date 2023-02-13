@@ -1,0 +1,83 @@
+{
+	"data": [
+		{
+			"menu": "菜单1",
+			"content": [
+				{
+					"name": "内容1",
+					"background": "#FE4D4F"
+				},
+				{
+					"name": "内容2",
+					"background": "#FEC53C"
+				},
+				{
+					"name": "内容3",
+					"background": "#FEA940"
+				},
+				{
+					"name": "内容4",
+					"background": "#FE7945"
+				},
+				{
+					"name": "内容5",
+					"background": "#B9E637"
+				},
+				{
+					"name": "内容6",
+					"background": "#73D13C"
+				}
+			]
+		},
+		{
+			"menu": "菜单2",
+			"content": [
+				{
+					"name": "内容1",
+					"background": "#FEC53C"
+				},
+				{
+					"name": "内容2",
+					"background": "#FE7945"
+				},
+				{
+					"name": "内容3",
+					"background": "#B9E637"
+				},
+				{
+					"name": "内容4",
+					"background": "#FE4D4F"
+				},
+				{
+					"name": "内容5",
+					"background": "#FE4D4F"
+				},
+				{
+					"name": "内容6",
+					"background": "#FEC53C"
+				}
+			]
+		},
+		{
+			"menu": "菜单3",
+			"content": [
+				{
+					"name": "内容1",
+					"background": "#252525"
+				},
+				{
+					"name": "内容2",
+					"background": "#FEC53C"
+				},
+				{
+					"name": "内容3",
+					"background": "#FE7945"
+				},
+				{
+					"name": "内容4",
+					"background": "#2E53EB"
+				}
+			]
+		}
+	]
+}

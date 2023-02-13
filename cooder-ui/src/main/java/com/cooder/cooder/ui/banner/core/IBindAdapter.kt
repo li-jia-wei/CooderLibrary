@@ -11,5 +11,5 @@ package com.cooder.cooder.ui.banner.core
  */
 interface IBindAdapter {
 	
-	fun onBind(viewHolder: CooderBannerAdapter.CooderBannerViewHolder, mo: CooderBannerMo, position: Int)
+	fun onBind(viewHolder: CoBannerAdapter.CoBannerViewHolder, mo: CoBannerMo, position: Int)
 }

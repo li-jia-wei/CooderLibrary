@@ -42,8 +42,8 @@ class MethodParser(
 	/**
 	 * 请求方式
 	 */
-	@CooderRequest.METHOD
-	private var httpMethod: Int = CooderRequest.METHOD.NONE
+	@CoRequest.METHOD
+	private var httpMethod: Int = CoRequest.METHOD.NONE
 	
 	/**
 	 * 当请求方式为POST时，是否是表单提交
@@ -68,9 +68,9 @@ class MethodParser(
 	/**
 	 * 创建Request对象
 	 */
-	fun newRequest(method: Method, args: Array<Any>?): CooderRequest {
+	fun newRequest(method: Method, args: Array<Any>?): CoRequest {
 		parseMethodParameters(method, args)
-		val request = CooderRequest()
+		val request = CoRequest()
 		request.domainUrl = domainUrl
 		request.relativeUrl = relativeUrl
 		request.parameters = parameters
@@ -107,14 +107,14 @@ class MethodParser(
 					checkRepeatedSettingHttpMethod(method.name)
 					requireUrlNotNullOrBlank(it.url, GET::class, method.name)
 					rawRelativeUrl = it.url
-					httpMethod = CooderRequest.METHOD.GET
+					httpMethod = CoRequest.METHOD.GET
 				}
 				is POST -> {
 					checkRepeatedSettingHttpMethod(method.name)
 					requireUrlNotNullOrBlank(it.url, POST::class, method.name)
 					rawRelativeUrl = it.url
 					formPost = it.formPost
-					httpMethod = CooderRequest.METHOD.POST
+					httpMethod = CoRequest.METHOD.POST
 				}
 				else -> {
 					throw IllegalStateException("Cannot handle method annotation : ${it.javaClass}")
@@ -199,7 +199,7 @@ class MethodParser(
 	 * 解析方法泛型返回类型
 	 */
 	private fun parseMethodGenericReturnType(method: Method) {
-		check(method.returnType == CooderCall::class.java) {
+		check(method.returnType == CoCall::class.java) {
 			"The method ${method.name} return type must be type of CooderCall::class.java."
 		}
 		val genericReturnType = method.genericReturnType
@@ -218,7 +218,7 @@ class MethodParser(
 	 * 检查有没有重复指定GET或者POST
 	 */
 	private fun checkRepeatedSettingHttpMethod(methodName: String) {
-		check(httpMethod == CooderRequest.METHOD.NONE) {
+		check(httpMethod == CoRequest.METHOD.NONE) {
 			"The method $methodName already set up httpMethod, cannot be repeated settings it."
 		}
 	}
@@ -236,7 +236,7 @@ class MethodParser(
 	 * 检查设置必须要设置的注解有没有设置
 	 */
 	private fun requireMustSettingAnnotations(methodName: String) {
-		require(httpMethod == CooderRequest.METHOD.GET || httpMethod == CooderRequest.METHOD.POST) {
+		require(httpMethod == CoRequest.METHOD.GET || httpMethod == CoRequest.METHOD.POST) {
 			"The method $methodName must have a request mode, such as @GET or @POST."
 		}
 	}

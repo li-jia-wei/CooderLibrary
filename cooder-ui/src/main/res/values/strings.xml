@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<!-- CooderRefresh -->
+	<!-- CoRefresh -->
 	<string name="refresh_text_overview_visible">下拉刷新</string>
 	<string name="refresh_text_overview_over">松开刷新</string>
 	<string name="refresh_text_overview_refresh">正在刷新…</string>
 	<string name="refresh_lottie_wavy_visible">&#xe8a4;</string>        <!-- 向下的箭头 -->
 	<string name="refresh_lottie_wavy_over">&#xe74c;</string>            <!-- 向上的箭头 -->
 	<string name="refresh_lottie_wavy_refresh">&#xe8a2;</string>        <!-- 水平线 -->
-
-
 </resources>

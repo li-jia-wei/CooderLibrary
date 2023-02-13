@@ -1,9 +1,10 @@
 package com.cooder.cooder.app.ui.test
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.cooder.cooder.app.R
-import com.cooder.cooder.library.util.CooderStatusBar
+import com.cooder.cooder.library.util.setStatusBar
 
 /**
  * 项目：CooderLibrary
@@ -18,7 +19,7 @@ class TestActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_test)
-        CooderStatusBar.setStatusBarColor(this)
+	    setContentView(R.layout.activity_test)
+	    setStatusBar(true, Color.WHITE)
     }
 }

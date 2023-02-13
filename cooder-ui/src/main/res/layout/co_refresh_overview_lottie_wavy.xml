@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="bottom"
+		android:orientation="vertical">
+
+		<LinearLayout
+			android:id="@+id/refresh_area"
+			android:layout_width="match_parent"
+			android:layout_height="40dp"
+			android:layout_marginBottom="2dp"
+			android:gravity="center_horizontal|bottom">
+
+			<View
+				android:id="@+id/dot1"
+				android:layout_width="12dp"
+				android:layout_height="12dp"
+				android:layout_marginHorizontal="4dp"
+				android:background="@drawable/ic_refresh_overview_lottie_wavy_circle"
+				android:backgroundTint="@color/lottie_wary_dot1" />
+			
+			<View
+				android:id="@+id/dot2"
+				android:layout_width="12dp"
+				android:layout_height="12dp"
+				android:layout_marginHorizontal="4dp"
+				android:background="@drawable/ic_refresh_overview_lottie_wavy_circle"
+				android:backgroundTint="@color/lottie_wary_dot2" />
+			
+			<View
+				android:id="@+id/dot3"
+				android:layout_width="12dp"
+				android:layout_height="12dp"
+				android:layout_marginHorizontal="4dp"
+				android:background="@drawable/ic_refresh_overview_lottie_wavy_circle"
+				android:backgroundTint="@color/lottie_wary_dot3" />
+			
+			<View
+				android:id="@+id/dot4"
+				android:layout_width="12dp"
+				android:layout_height="12dp"
+				android:layout_marginHorizontal="4dp"
+				android:background="@drawable/ic_refresh_overview_lottie_wavy_circle"
+				android:backgroundTint="@color/lottie_wary_dot4" />
+			
+			<View
+				android:id="@+id/dot5"
+				android:layout_width="12dp"
+				android:layout_height="12dp"
+				android:layout_marginHorizontal="4dp"
+				android:background="@drawable/ic_refresh_overview_lottie_wavy_circle"
+				android:backgroundTint="@color/lottie_wary_dot5" />
+			
+			<View
+				android:id="@+id/dot6"
+				android:layout_width="12dp"
+				android:layout_height="12dp"
+				android:layout_marginHorizontal="4dp"
+				android:background="@drawable/ic_refresh_overview_lottie_wavy_circle"
+				android:backgroundTint="@color/lottie_wary_dot6" />
+			
+			<View
+				android:id="@+id/dot7"
+				android:layout_width="12dp"
+				android:layout_height="12dp"
+				android:layout_marginHorizontal="4dp"
+				android:background="@drawable/ic_refresh_overview_lottie_wavy_circle"
+				android:backgroundTint="@color/lottie_wary_dot7" />
+
+		</LinearLayout>
+
+		<TextView
+			android:id="@+id/tv_hint_line"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_horizontal"
+			android:gravity="center"
+			android:textColor="@color/primary"
+			android:textSize="36sp" />
+
+	</LinearLayout>
+
+</merge>

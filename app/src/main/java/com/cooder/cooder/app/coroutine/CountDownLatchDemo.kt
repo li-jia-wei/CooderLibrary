@@ -1,6 +1,6 @@
 package com.cooder.cooder.app.coroutine
 
-import com.cooder.cooder.library.log.CooderLog
+import com.cooder.cooder.library.log.CoLog
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Executors
 
@@ -21,11 +21,11 @@ class CountDownLatchDemo {
 		repeat(countDownLatch.count.toInt()) {
 			executor.execute {
 				Thread.sleep(4000)
-				CooderLog.i("${Thread.currentThread().name}准备好了")
+				CoLog.i("${Thread.currentThread().name}准备好了")
 				countDownLatch.countDown()
 			}
 		}
 		countDownLatch.await()
-		CooderLog.i("全部执行完成")
+		CoLog.i("全部执行完成")
 	}
 }

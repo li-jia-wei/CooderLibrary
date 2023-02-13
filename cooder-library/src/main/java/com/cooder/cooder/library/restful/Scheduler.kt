@@ -10,36 +10,36 @@ package com.cooder.cooder.library.restful
  * 介绍：代理CallFactory创建处理啊的call对象，实现拦截器的派发
  */
 class Scheduler(
-	private val callFactory: CooderCall.Factory,
-	val interceptors: MutableList<CooderInterceptor>
+	private val callFactory: CoCall.Factory,
+	val interceptors: MutableList<CoInterceptor>
 ) {
 	
 	/**
 	 * 代理创建Call，实现拦截器的派发
 	 */
-	fun newCall(request: CooderRequest, cancelInterceptors: Array<out Class<out CooderInterceptor>>): CooderCall<*> {
+	fun newCall(request: CoRequest, cancelInterceptors: Array<out Class<out CoInterceptor>>): CoCall<*> {
 		val delegate = callFactory.newCall(request)
 		return ProxyCall(delegate, request, cancelInterceptors)
 	}
 	
 	// Call代理
 	internal inner class ProxyCall<T>(
-		private val delegate: CooderCall<T>,
-		private val request: CooderRequest,
-		private val cancelInterceptors: Array<out Class<out CooderInterceptor>>
-	) : CooderCall<T> {
+		private val delegate: CoCall<T>,
+		private val request: CoRequest,
+		private val cancelInterceptors: Array<out Class<out CoInterceptor>>
+	) : CoCall<T> {
 		
-		override fun execute(): CooderResponse<T> {
+		override fun execute(): CoResponse<T> {
 			dispatchRequestInterceptor(request)
 			val response = delegate.execute()
 			dispatchResponseInterceptor(response)
 			return response
 		}
 		
-		override fun enqueue(callback: CooderCallback<T>) {
+		override fun enqueue(callback: CoCallback<T>) {
 			dispatchRequestInterceptor(request)
-			delegate.enqueue(object : CooderCallback<T> {
-				override fun onSuccess(response: CooderResponse<T>) {
+			delegate.enqueue(object : CoCallback<T> {
+				override fun onSuccess(response: CoResponse<T>) {
 					dispatchResponseInterceptor(response)
 					callback.onSuccess(response)
 				}
@@ -53,14 +53,14 @@ class Scheduler(
 		/**
 		 * request 调度拦截器
 		 */
-		private fun dispatchRequestInterceptor(request: CooderRequest) {
+		private fun dispatchRequestInterceptor(request: CoRequest) {
 			RequestInterceptor(request).dispatch()
 		}
 		
 		/**
 		 * response 调度拦截器
 		 */
-		private fun dispatchResponseInterceptor(response: CooderResponse<*>) {
+		private fun dispatchResponseInterceptor(response: CoResponse<*>) {
 			ResponseInterceptor(response).dispatch()
 		}
 		
@@ -68,12 +68,12 @@ class Scheduler(
 		 * Request 拦截器链
 		 */
 		internal inner class RequestInterceptor(
-			private val request: CooderRequest,
-		) : CooderInterceptor.RequestChain {
+			private val request: CoRequest,
+		) : CoInterceptor.RequestChain {
 			
 			private var callIndex = 0
 			
-			override fun request(): CooderRequest {
+			override fun request(): CoRequest {
 				return request
 			}
 			
@@ -94,12 +94,12 @@ class Scheduler(
 		 * Response 拦截器链
 		 */
 		internal inner class ResponseInterceptor(
-			private val response: CooderResponse<*>
-		) : CooderInterceptor.ResponseChain {
+			private val response: CoResponse<*>
+		) : CoInterceptor.ResponseChain {
 			
 			private var callIndex = 0
 			
-			override fun response(): CooderResponse<*> {
+			override fun response(): CoResponse<*> {
 				return response
 			}
 			

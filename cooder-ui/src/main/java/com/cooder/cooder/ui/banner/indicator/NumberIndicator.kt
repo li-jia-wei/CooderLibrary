@@ -10,7 +10,7 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.annotation.IntDef
 import androidx.core.view.setMargins
-import com.cooder.cooder.library.util.dpInt
+import com.cooder.cooder.library.util.expends.dpInt
 import com.cooder.cooder.ui.R
 
 /**
@@ -26,13 +26,13 @@ class NumberIndicator @JvmOverloads constructor(
 	context: Context,
 	attrs: AttributeSet? = null,
 	defStyleAttr: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr), CooderIndicator<FrameLayout> {
-
+) : FrameLayout(context, attrs, defStyleAttr), CoIndicator<FrameLayout> {
+	
 	@GravityDef
 	private var gravity: Int = RIGHT_TOP
-
+	
 	private var isInflate = false
-
+	
 	companion object {
 		private const val VMC = ViewGroup.LayoutParams.WRAP_CONTENT
 		private val MARGIN = 6.dpInt

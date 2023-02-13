@@ -9,16 +9,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cooder.cooder.app.R
-import com.cooder.cooder.app.ui.banner.CooderBannerActivity
-import com.cooder.cooder.app.ui.item.CooderDataItemActivity
-import com.cooder.cooder.app.ui.log.CooderLogActivity
-import com.cooder.cooder.app.ui.refresh.CooderRefreshActivity
-import com.cooder.cooder.app.ui.slider.CooderSliderActivity
-import com.cooder.cooder.app.ui.tab.CooderTabBottomActivity
-import com.cooder.cooder.app.ui.tab.CooderTabTopActivity
+import com.cooder.cooder.app.ui.banner.CoBannerActivity
+import com.cooder.cooder.app.ui.item.CoDataItemActivity
+import com.cooder.cooder.app.ui.log.CoLogActivity
+import com.cooder.cooder.app.ui.refresh.CoRefreshActivity
+import com.cooder.cooder.app.ui.slider.CoSliderActivity
+import com.cooder.cooder.app.ui.tab.CoTabBottomActivity
+import com.cooder.cooder.app.ui.tab.CoTabTopActivity
 import com.cooder.cooder.app.ui.test.TestActivity
-import com.cooder.cooder.ui.item.CooderAdapter
-import com.cooder.cooder.ui.item.CooderDataItem
+import com.cooder.cooder.ui.item.CoAdapter
+import com.cooder.cooder.ui.item.CoDataItem
 import kotlin.reflect.KClass
 
 /**
@@ -33,14 +33,14 @@ import kotlin.reflect.KClass
 class MainActivity : AppCompatActivity() {
 
     private val components: List<Pair<KClass<out AppCompatActivity>, String>> = listOf(
-        TestActivity::class to "Test",
-        CooderLogActivity::class to "Log",
-        CooderTabBottomActivity::class to "TabBottom",
-        CooderTabTopActivity::class to "TabTop",
-        CooderRefreshActivity::class to "Refresh",
-        CooderBannerActivity::class to "Banner",
-        CooderDataItemActivity::class to "DataItem",
-        CooderSliderActivity::class to "Slider"
+	    TestActivity::class to "Test",
+	    CoLogActivity::class to "Log",
+	    CoTabBottomActivity::class to "TabBottom",
+	    CoTabTopActivity::class to "TabTop",
+	    CoRefreshActivity::class to "Refresh",
+	    CoBannerActivity::class to "Banner",
+	    CoDataItemActivity::class to "DataItem",
+	    CoSliderActivity::class to "Slider"
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
 
         val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
         recyclerView.layoutManager = GridLayoutManager(this, 2)
-        val adapter = CooderAdapter(this)
+	    val adapter = CoAdapter(this)
         recyclerView.adapter = adapter
         val dataItems = mutableListOf<ComponentsDataItem>()
         components.forEach {
@@ -57,21 +57,21 @@ class MainActivity : AppCompatActivity() {
         }
         adapter.addItems(dataItems)
     }
-
-    class ComponentsDataItem(
-        private val context: Context,
-        private val itemData: Pair<KClass<out AppCompatActivity>, String>
-    ) : CooderDataItem<Pair<KClass<out AppCompatActivity>, String>, ComponentsHolder>(itemData) {
-
-        override fun getItemLayoutRes(): Int {
-            return R.layout.item_component
-        }
-
-        override fun getSpanSize(): Int {
-            return 1
-        }
-
-        override fun onBindData(holder: ComponentsHolder, position: Int) {
+	
+	class ComponentsDataItem(
+		private val context: Context,
+		private val itemData: Pair<KClass<out AppCompatActivity>, String>
+	) : CoDataItem<Pair<KClass<out AppCompatActivity>, String>, ComponentsHolder>(itemData) {
+		
+		override fun getItemLayoutRes(): Int {
+			return R.layout.item_component
+		}
+		
+		override fun getSpanSize(): Int {
+			return 1
+		}
+		
+		override fun onBindData(holder: ComponentsHolder, position: Int) {
             holder.name.text = itemData.second
             holder.name.setOnClickListener {
                 context.startActivity(Intent(context, itemData.first.java))

@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".application.CooderApplication"
+        android:name=".application.CoApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -22,18 +22,18 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+            
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".ui.test.TestActivity" />
-        <activity android:name=".ui.log.CooderLogActivity" />
-        <activity android:name=".ui.tab.CooderTabBottomActivity" />
-        <activity android:name=".ui.tab.CooderTabTopActivity" />
-        <activity android:name=".ui.refresh.CooderRefreshActivity" />
-        <activity android:name=".ui.banner.CooderBannerActivity" />
-        <activity android:name=".ui.item.CooderDataItemActivity" />
-        <activity android:name=".ui.slider.CooderSliderActivity" />
+        <activity android:name=".ui.log.CoLogActivity" />
+        <activity android:name=".ui.tab.CoTabBottomActivity" />
+        <activity android:name=".ui.tab.CoTabTopActivity" />
+        <activity android:name=".ui.refresh.CoRefreshActivity" />
+        <activity android:name=".ui.banner.CoBannerActivity" />
+        <activity android:name=".ui.item.CoDataItemActivity" />
+        <activity android:name=".ui.slider.CoSliderActivity" />
     </application>
 
 </manifest>

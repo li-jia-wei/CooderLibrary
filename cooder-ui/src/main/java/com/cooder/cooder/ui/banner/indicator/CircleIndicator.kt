@@ -11,7 +11,7 @@ import android.widget.LinearLayout
 import androidx.annotation.DrawableRes
 import androidx.annotation.IntDef
 import androidx.core.view.forEachIndexed
-import com.cooder.cooder.library.util.dpInt
+import com.cooder.cooder.library.util.expends.dpInt
 import com.cooder.cooder.ui.R
 
 /**
@@ -28,8 +28,8 @@ class CircleIndicator @JvmOverloads constructor(
 	attrs: AttributeSet? = null,
 	defStyleAttr: Int = 0,
 	@SizeDef private val size: Int = MEDIUM
-) : FrameLayout(context, attrs, defStyleAttr), CooderIndicator<FrameLayout> {
-
+) : FrameLayout(context, attrs, defStyleAttr), CoIndicator<FrameLayout> {
+	
 	/**
 	 * 默认状态
 	 */

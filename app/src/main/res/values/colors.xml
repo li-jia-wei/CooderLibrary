@@ -3,11 +3,13 @@
 	<color name="primary">#1790FE</color>
 	<color name="primary_variant">#40A9FE</color>
 	<color name="status_bar_color">@color/primary</color>
-    <color name="view_bg">#07969C</color>
-
+	<color name="view_bg">#07969C</color>
+	
 	<color name="black">#FF000000</color>
 	<color name="white">#FFFFFFFF</color>
-
+	
 	<color name="tab_default">#7B7B7B</color>
 	<color name="tab_tint">@color/primary</color>
+	
+	<color name="slider_menu_item_bg">#F0F3F6</color>
 </resources>

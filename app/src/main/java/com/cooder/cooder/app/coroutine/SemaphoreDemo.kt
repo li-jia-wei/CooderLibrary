@@ -1,6 +1,6 @@
 package com.cooder.cooder.app.coroutine
 
-import com.cooder.cooder.library.log.CooderLog
+import com.cooder.cooder.library.log.CoLog
 import java.util.concurrent.Executors
 import java.util.concurrent.Semaphore
 
@@ -22,9 +22,9 @@ class SemaphoreDemo {
 		repeat(10) {
 			executor.execute {
 				semaphore.acquire()
-				CooderLog.i("$it 开始游玩")
+				CoLog.i("$it 开始游玩")
 				Thread.sleep((0L..5000L).random())
-				CooderLog.i("$it 游玩好了")
+				CoLog.i("$it 游玩好了")
 				semaphore.release()
 			}
 		}

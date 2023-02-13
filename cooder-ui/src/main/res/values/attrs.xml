@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- CooderBanner -->
-    <declare-styleable name="CooderBanner">
+    <!-- CoBanner -->
+    <declare-styleable name="CoBanner">
         <!-- 自动播放 -->
         <attr name="autoPlay" format="boolean" />
         <!-- 循环播放 -->
@@ -26,9 +26,9 @@
         <!-- 关闭指示器 -->
         <attr name="closeIndicator" format="boolean" />
     </declare-styleable>
-
-    <!-- CooderSlider -->
-    <declare-styleable name="CooderSliderView">
+    
+    <!-- CoSlider -->
+    <declare-styleable name="CoSliderView">
         <!-- 菜单项宽度 -->
         <attr name="menuItemWidth" format="dimension" />
         <!-- 菜单项高度 -->

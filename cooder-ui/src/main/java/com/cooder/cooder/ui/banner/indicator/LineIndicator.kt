@@ -9,7 +9,7 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.core.view.forEachIndexed
 import androidx.core.view.setMargins
-import com.cooder.cooder.library.util.dpInt
+import com.cooder.cooder.library.util.expends.dpInt
 import com.cooder.cooder.ui.R
 
 /**
@@ -25,12 +25,12 @@ class LineIndicator @JvmOverloads constructor(
 	context: Context,
 	attrs: AttributeSet? = null,
 	defStyleAttr: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr), CooderIndicator<FrameLayout> {
-
+) : FrameLayout(context, attrs, defStyleAttr), CoIndicator<FrameLayout> {
+	
 	override fun get(): FrameLayout {
 		return this
 	}
-
+	
 	override fun onInflate(count: Int) {
 		val groupView = LinearLayout(context)
 		val groupViewParams = LayoutParams(LayoutParams.MATCH_PARENT, 5.dpInt)
