@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
  *
  * 创建：2022/11/30 23:28
  *
- * 介绍：CooderDataItem
+ * 介绍：CoDataItem
  */
 abstract class CoDataItem<DATA, VM : RecyclerView.ViewHolder>(
 	val data: DATA

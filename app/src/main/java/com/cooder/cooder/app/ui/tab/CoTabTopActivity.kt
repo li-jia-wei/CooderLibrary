@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.cooder.cooder.app.R
-import com.cooder.cooder.library.util.setStatusBar
+import com.cooder.cooder.library.util.expends.setStatusBar
 import com.cooder.cooder.ui.tab.common.CoTabLayout
 import com.cooder.cooder.ui.tab.top.CoTabTopInfo
 import com.cooder.cooder.ui.tab.top.CoTabTopLayout

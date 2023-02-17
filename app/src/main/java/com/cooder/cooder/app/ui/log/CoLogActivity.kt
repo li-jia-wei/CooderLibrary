@@ -9,7 +9,7 @@ import com.cooder.cooder.library.log.CoLogConfig
 import com.cooder.cooder.library.log.CoLogManager
 import com.cooder.cooder.library.log.CoLogType
 import com.cooder.cooder.library.log.printer.CoViewPrinter
-import com.cooder.cooder.library.util.immersiveStatusBar
+import com.cooder.cooder.library.util.expends.immersiveStatusBar
 
 /**
  * 项目：CooderLibrary

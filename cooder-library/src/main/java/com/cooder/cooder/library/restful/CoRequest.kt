@@ -11,7 +11,7 @@ import java.lang.reflect.Type
  *
  * 创建：2022/11/11 15:07
  *
- * 介绍：CooderRequest
+ * 介绍：CoRequest
  */
 open class CoRequest {
 	

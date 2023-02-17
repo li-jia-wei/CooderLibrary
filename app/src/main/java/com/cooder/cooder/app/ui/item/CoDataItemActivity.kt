@@ -2,8 +2,6 @@ package com.cooder.cooder.app.ui.item
 
 import android.graphics.Color
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cooder.cooder.app.R
 import com.cooder.cooder.app.ui.item.dataitem.DataItem
 import com.cooder.cooder.app.ui.item.dataitem.ItemData
-import com.cooder.cooder.library.util.setStatusBar
+import com.cooder.cooder.library.util.expends.setStatusBar
 import com.cooder.cooder.ui.item.CoAdapter
 
 /**
@@ -43,17 +41,12 @@ class CoDataItemActivity : AppCompatActivity() {
 		recyclerView.adapter = adapter
 		val bottom1 = createView("BOTTOM")
 		adapter.setBottomView(bottom1)
-		val handler = Handler(Looper.myLooper()!!)
-		Thread {
-			Thread.sleep(400)
-			handler.post {
-				val items = mutableListOf<DataItem>()
-				repeat(30) {
-					items += DataItem(ItemData(this, "Item${it + 1}"))
-				}
-				adapter.addItems(items)
-			}
-		}.start()
+		val items = mutableListOf<DataItem>()
+		repeat(30) {
+			items += DataItem(ItemData(this, "Item${it + 1}"))
+		}
+		adapter.addItems(items)
+		recyclerView.scrollToPosition(0)
 	}
 	
 	private fun createView(text: String): View {

@@ -31,36 +31,35 @@ import kotlin.reflect.KClass
  * 介绍：MainActivity
  */
 class MainActivity : AppCompatActivity() {
-
-    private val components: List<Pair<KClass<out AppCompatActivity>, String>> = listOf(
-	    TestActivity::class to "Test",
-	    CoLogActivity::class to "Log",
-	    CoTabBottomActivity::class to "TabBottom",
-	    CoTabTopActivity::class to "TabTop",
-	    CoRefreshActivity::class to "Refresh",
-	    CoBannerActivity::class to "Banner",
-	    CoDataItemActivity::class to "DataItem",
-	    CoSliderActivity::class to "Slider"
-    )
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
-        recyclerView.layoutManager = GridLayoutManager(this, 2)
-	    val adapter = CoAdapter(this)
-        recyclerView.adapter = adapter
-        val dataItems = mutableListOf<ComponentsDataItem>()
-        components.forEach {
-            dataItems += ComponentsDataItem(this, it)
-        }
-        adapter.addItems(dataItems)
-    }
+	
+	private val components: List<Pair<KClass<out AppCompatActivity>, String>> = listOf(
+		TestActivity::class to "Test",
+		CoLogActivity::class to "Log",
+		CoTabBottomActivity::class to "TabBottom",
+		CoTabTopActivity::class to "TabTop",
+		CoRefreshActivity::class to "Refresh",
+		CoBannerActivity::class to "Banner",
+		CoDataItemActivity::class to "DataItem",
+		CoSliderActivity::class to "Slider"
+	)
+	
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		setContentView(R.layout.activity_main)
+		
+		val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
+		recyclerView.layoutManager = GridLayoutManager(this, 2)
+		val adapter = CoAdapter(this)
+		recyclerView.adapter = adapter
+		val dataItems = mutableListOf<ComponentsDataItem>()
+		components.forEach {
+			dataItems += ComponentsDataItem(this, it)
+		}
+		adapter.addItems(dataItems)
+	}
 	
 	class ComponentsDataItem(
-		private val context: Context,
-		private val itemData: Pair<KClass<out AppCompatActivity>, String>
+		private val context: Context, private val itemData: Pair<KClass<out AppCompatActivity>, String>
 	) : CoDataItem<Pair<KClass<out AppCompatActivity>, String>, ComponentsHolder>(itemData) {
 		
 		override fun getItemLayoutRes(): Int {
@@ -72,14 +71,14 @@ class MainActivity : AppCompatActivity() {
 		}
 		
 		override fun onBindData(holder: ComponentsHolder, position: Int) {
-            holder.name.text = itemData.second
-            holder.name.setOnClickListener {
-                context.startActivity(Intent(context, itemData.first.java))
-            }
-        }
-    }
-
-    class ComponentsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val name: TextView = itemView.findViewById(R.id.name)
-    }
+			holder.name.text = itemData.second
+			holder.name.setOnClickListener {
+				context.startActivity(Intent(context, itemData.first.java))
+			}
+		}
+	}
+	
+	class ComponentsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+		val name: TextView = itemView.findViewById(R.id.name)
+	}
 }

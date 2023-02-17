@@ -10,7 +10,7 @@ import java.lang.reflect.Proxy
  *
  * 创建：2022/11/11 15:22
  *
- * 介绍：CooderRestful
+ * 介绍：CoRestful
  */
 open class CoRestful(
 	private val baseUrl: String, callFactory: CoCall.Factory

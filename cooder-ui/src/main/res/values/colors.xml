@@ -24,11 +24,4 @@
 	<color name="lottie_wary_dot5">#1790FE</color>
 	<color name="lottie_wary_dot6">#2E53EB</color>
 	<color name="lottie_wary_dot7">#712DD1</color>
-	
-	<!-- CoSliderView -->
-	<color name="slider_menu_text_color_normal">#666666</color>
-	<color name="slider_menu_text_color_select">@color/primary</color>
-	<color name="slider_menu_bg_color_normal">#F7F8F9</color>
-	<color name="slider_menu_bg_color_select">#FFFFFF</color>
-	<color name="slider_content_item_title">#666666</color>
 </resources>

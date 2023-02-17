@@ -7,7 +7,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import com.cooder.cooder.app.R
 import com.cooder.cooder.library.util.CoDisplayUtil
-import com.cooder.cooder.library.util.hintStatusBar
+import com.cooder.cooder.library.util.expends.hintStatusBar
 import com.cooder.cooder.ui.tab.bottom.CoTabBottomInfo
 import com.cooder.cooder.ui.tab.bottom.CoTabBottomLayout
 import com.cooder.cooder.ui.tab.common.CoTabLayout

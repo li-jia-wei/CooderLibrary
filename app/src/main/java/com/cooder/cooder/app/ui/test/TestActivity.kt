@@ -1,10 +1,9 @@
 package com.cooder.cooder.app.ui.test
 
-import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.cooder.cooder.app.R
-import com.cooder.cooder.library.util.setStatusBar
+import com.cooder.cooder.library.util.expends.immersiveStatusBar
 
 /**
  * 项目：CooderLibrary
@@ -16,10 +15,10 @@ import com.cooder.cooder.library.util.setStatusBar
  * 介绍：TestActivity
  */
 class TestActivity : AppCompatActivity() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-	    setContentView(R.layout.activity_test)
-	    setStatusBar(true, Color.WHITE)
-    }
+	
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		setContentView(R.layout.activity_test)
+		immersiveStatusBar(false)
+	}
 }

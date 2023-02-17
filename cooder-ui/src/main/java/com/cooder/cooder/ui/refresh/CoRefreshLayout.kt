@@ -22,7 +22,7 @@ import kotlin.math.abs
  *
  * 创建：2022/10/11 15:21
  *
- * 介绍：CooderRefreshLayout
+ * 介绍：CoRefreshLayout
  */
 class CoRefreshLayout @JvmOverloads constructor(
 	context: Context,

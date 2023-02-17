@@ -1,55 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- CoBanner -->
-    <declare-styleable name="CoBanner">
-        <!-- 自动播放 -->
-        <attr name="autoPlay" format="boolean" />
-        <!-- 循环播放 -->
-        <attr name="loop" format="boolean" />
-        <!-- 播放下一个的间隔时间 (ms) -->
-        <attr name="intervalTime" format="integer|reference" />
-        <!-- 滚动的持续时间 (ms) -->
-        <attr name="scrollDuration" format="integer|reference" />
-        <!-- 指示器 -->
-        <attr name="indicator" format="enum">
-            <!-- 圆形指示器 小 -->
-            <enum name="circle_small" value="0" />
-            <!-- 圆形指示器 中 -->
-            <enum name="circle_medium" value="1" />
-            <!-- 圆形指示器 大 -->
-            <enum name="circle_large" value="2" />
-            <!-- 条形指示器 -->
-            <enum name="line" value="10" />
-            <!-- 数字指示器 -->
-            <enum name="number" value="20" />
-        </attr>
-        <!-- 关闭指示器 -->
-        <attr name="closeIndicator" format="boolean" />
-    </declare-styleable>
-    
-    <!-- CoSlider -->
-    <declare-styleable name="CoSliderView">
-        <!-- 菜单项宽度 -->
-        <attr name="menuItemWidth" format="dimension" />
-        <!-- 菜单项高度 -->
-        <attr name="menuItemHeight" format="dimension" />
-        <!-- 菜单项文本大小 -->
-        <attr name="menuItemTextSize" format="dimension" />
-        <!-- 菜单项选中后文本大小 -->
-        <attr name="menuItemSelectTextSize" format="dimension" />
-        <!-- 菜单项文本颜色 -->
-        <attr name="menuItemTextColor" format="color" />
-        <!-- 菜单项选中后文本颜色 -->
-        <attr name="menuItemSelectTextColor" format="color" />
-        <!-- 菜单项指示器 -->
-        <attr name="menuItemIndicator" format="reference" />
-        <!-- 菜单项背景 -->
-        <attr name="menuItemBackground" format="reference|color" />
-        <!-- 菜单项选中后背景 -->
-        <attr name="menuItemSelectBackground" format="reference|color" />
-    </declare-styleable>
-
-    <declare-styleable name="MyView">
-        <attr name="myBackground" format="reference|color" />
-    </declare-styleable>
+	<!-- CoBanner -->
+	<declare-styleable name="CoBanner">
+		<attr name="autoPlay" format="boolean" />
+		<attr name="loop" format="boolean" />
+		<attr name="intervalTime" format="integer|reference" />
+		<attr name="scrollDuration" format="integer|reference" />
+		<attr name="indicator" format="enum">
+			<enum name="circle_small" value="0" />
+			<enum name="circle_medium" value="1" />
+			<enum name="circle_large" value="2" />
+			<enum name="line" value="10" />
+			<enum name="number" value="20" />
+		</attr>
+		<attr name="closeIndicator" format="boolean" />
+	</declare-styleable>
+	
+	<!-- CoSlider -->
+	<declare-styleable name="CoSliderView">
+		<attr name="menuWidth" format="dimension" />
+		<attr name="menuHeight" format="dimension" />
+		<attr name="menuTextSize" format="dimension" />
+		<attr name="menuTextColor" format="reference|color" />
+		<attr name="menuSelectTextSize" format="dimension" />
+		<attr name="menuIndicator" format="reference" />
+		<attr name="menuBackground" format="reference|color" />
+		<attr name="menuSelectBackground" format="reference|color" />
+	</declare-styleable>
 </resources>

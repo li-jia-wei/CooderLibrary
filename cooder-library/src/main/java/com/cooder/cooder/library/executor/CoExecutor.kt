@@ -16,14 +16,14 @@ import java.util.concurrent.locks.ReentrantLock
  *
  * 创建：2022/11/12 00:00
  *
- * 介绍：CooderExecutor
+ * 介绍：CoExecutor
  *
  * 支持按任务的优先级去执行、线程池暂停与恢复、异步结果主动回调主线程
  */
 @Suppress("UNCHECKED_CAST")
 object CoExecutor {
 	
-	private const val TAG = "CooderExecutor"
+	private const val TAG = "CoExecutor"
 	
 	private val cooderExecutor: ThreadPoolExecutor
 	
@@ -182,7 +182,7 @@ object CoExecutor {
 			}
 			this.isPaused = true
 		}
-		CoLog.wt(TAG, "CooderExecutor is paused.")
+		CoLog.wt(TAG, "CoExecutor is paused.")
 	}
 	
 	/**
@@ -203,6 +203,6 @@ object CoExecutor {
 				lock.unlock()
 			}
 		}
-		CoLog.wt(TAG, "CooderExecutor is resume.")
+		CoLog.wt(TAG, "CoExecutor is resume.")
 	}
 }

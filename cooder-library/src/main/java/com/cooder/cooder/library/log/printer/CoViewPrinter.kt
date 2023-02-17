@@ -1,7 +1,6 @@
 package com.cooder.cooder.library.log.printer
 
 import android.app.Activity
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,7 +47,6 @@ class CoViewPrinter(
 	}
 	
 	override fun print(config: CoLogConfig, level: Int, tag: String, printString: String) {
-		Log.i("CooderLibraryTag", "View")
 		adapter.addItem(CoLogMo(System.currentTimeMillis(), level, tag, printString))
 		recyclerView.smoothScrollToPosition(adapter.itemCount - 1)
 	}

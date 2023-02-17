@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import com.bumptech.glide.Glide
 import com.cooder.cooder.app.R
-import com.cooder.cooder.library.util.hintStatusBar
+import com.cooder.cooder.library.util.expends.hintStatusBar
 import com.cooder.cooder.ui.banner.CoBanner
 import com.cooder.cooder.ui.banner.core.CoBannerAdapter
 import com.cooder.cooder.ui.banner.core.CoBannerMo

@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
  *
  * 创建：2023/1/12 19:11
  *
- * 介绍：CooderViewHolder
+ * 介绍：CoViewHolder
  */
 open class CoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 	

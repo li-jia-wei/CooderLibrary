@@ -49,7 +49,7 @@ class CoLogManager private constructor(
 		 * 获取实例
 		 */
 		fun getInstance(): CoLogManager {
-			return instance ?: throw IllegalStateException("暂未初始化CooderLogManager，请使用init方法初始化!")
+			return instance ?: throw IllegalStateException("暂未初始化CoLogManager，请使用init方法初始化!")
 		}
 	}
 	

@@ -7,7 +7,7 @@ import android.os.Looper
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.cooder.cooder.app.R
-import com.cooder.cooder.library.util.setStatusBar
+import com.cooder.cooder.library.util.expends.setStatusBar
 import com.cooder.cooder.ui.refresh.CoRefresh
 import com.cooder.cooder.ui.refresh.CoRefreshLayout
 import com.cooder.cooder.ui.refresh.overview.CoTextOverView

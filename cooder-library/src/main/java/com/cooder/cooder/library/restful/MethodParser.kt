@@ -200,7 +200,7 @@ class MethodParser(
 	 */
 	private fun parseMethodGenericReturnType(method: Method) {
 		check(method.returnType == CoCall::class.java) {
-			"The method ${method.name} return type must be type of CooderCall::class.java."
+			"The method ${method.name} return type must be type of CoCall::class.java."
 		}
 		val genericReturnType = method.genericReturnType
 		if (genericReturnType is ParameterizedType) {

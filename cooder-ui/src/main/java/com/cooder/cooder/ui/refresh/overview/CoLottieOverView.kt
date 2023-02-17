@@ -14,7 +14,7 @@ import com.cooder.cooder.ui.refresh.overview.lottie.LottieWavyAnim
  *
  * 创建：2022/10/14 17:35
  *
- * 介绍：CooderDotOverView
+ * 介绍：CoDotOverView
  */
 class CoLottieOverView @JvmOverloads constructor(
 	context: Context,

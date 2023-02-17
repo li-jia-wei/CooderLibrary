@@ -10,7 +10,7 @@ import android.view.MotionEvent
  *
  * 创建：2022/11/29 17:53
  *
- * 介绍：CooderGestureDetectorListener
+ * 介绍：CoGestureDetectorListener
  */
 internal open class CoGestureDetectorListener : GestureDetector.OnGestureListener {
 	

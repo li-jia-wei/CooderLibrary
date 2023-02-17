@@ -16,7 +16,7 @@ import androidx.viewpager.widget.PagerAdapter
  *
  * 创建：2022/10/20 20:14
  *
- * 介绍：CooderBannerAdapter
+ * 介绍：CoBannerAdapter
  */
 class CoBannerAdapter(
 	private val context: Context

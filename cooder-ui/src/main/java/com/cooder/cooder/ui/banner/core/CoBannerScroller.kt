@@ -10,7 +10,7 @@ import android.widget.Scroller
  *
  * 创建：2022/10/24 18:57
  *
- * 介绍：CooderBannercroller
+ * 介绍：CoBannercroller
  */
 class CoBannerScroller(
 	context: Context,

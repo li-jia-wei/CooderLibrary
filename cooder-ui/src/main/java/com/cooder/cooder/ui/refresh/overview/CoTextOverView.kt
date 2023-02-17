@@ -17,7 +17,7 @@ import com.cooder.cooder.ui.R
  *
  * 创建：2022/10/13 17:20
  *
- * 介绍：CooderRefreshTextOverView
+ * 介绍：CoRefreshTextOverView
  */
 class CoTextOverView @JvmOverloads constructor(
 	context: Context,

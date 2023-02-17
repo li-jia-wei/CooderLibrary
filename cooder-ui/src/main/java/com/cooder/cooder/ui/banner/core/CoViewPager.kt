@@ -18,7 +18,7 @@ import java.lang.reflect.Field
  *
  * 创建：2022/10/20 15:48
  *
- * 介绍：CooderViewPager
+ * 介绍：CoViewPager
  */
 class CoViewPager @JvmOverloads constructor(
 	context: Context,

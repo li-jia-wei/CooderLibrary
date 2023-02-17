@@ -29,7 +29,7 @@ import kotlin.math.abs
  *
  * 创建：2022/9/28 18:09
  *
- * 介绍：CooderTabBottomLayout
+ * 介绍：CoTabBottomLayout
  */
 class CoTabBottomLayout @JvmOverloads constructor(
 	context: Context,

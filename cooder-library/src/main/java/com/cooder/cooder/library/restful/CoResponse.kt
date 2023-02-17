@@ -61,7 +61,7 @@ open class CoResponse<T> {
 	/**
 	 * 判断是否成功
 	 */
-	fun isSuccess(): Boolean {
+	fun isSuccessed(): Boolean {
 		return code == SUCCESS
 	}
 }

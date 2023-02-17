@@ -1,5 +1,4 @@
-@file:JvmName("Expends")
-@file:JvmMultifileClass
+@file:JvmName("Displays")
 
 package com.cooder.cooder.library.util.expends
 
