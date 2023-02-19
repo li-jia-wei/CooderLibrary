@@ -1,4 +1,4 @@
-@file:JvmName("Displays")
+@file:JvmName("Numbers")
 
 package com.cooder.cooder.library.util.expends
 

@@ -10,9 +10,9 @@ import android.widget.FrameLayout
 import android.widget.HorizontalScrollView
 import android.widget.ScrollView
 import androidx.annotation.FloatRange
+import androidx.annotation.Px
 import androidx.core.view.iterator
 import androidx.recyclerview.widget.RecyclerView
-import com.cooder.cooder.library.log.CoLog
 import com.cooder.cooder.library.util.CoDisplayUtil
 import com.cooder.cooder.library.util.CoViewUtil
 import com.cooder.cooder.library.util.expends.dp
@@ -51,7 +51,7 @@ class CoTabBottomLayout @JvmOverloads constructor(
 	
 	companion object {
 		private const val TAG_TAB_BOTTOM = "TAG_TAB_BOTTOM"
-
+		
 		const val DEFAULT_BOTTOM_ALPHA = 1F
 		const val DEFAULT_TAB_BOTTOM_HEIGHT = 52F
 		const val DEFAULT_BOTTOM_LINE_HEIGHT = 0.8F
@@ -60,6 +60,12 @@ class CoTabBottomLayout @JvmOverloads constructor(
 		private val DISTANCE_SHORT = 30.dp
 		private val DISTANCE_MEDIUM = 60.dp
 		private val DISTANCE_LONG = 90.dp
+		
+		@JvmOverloads
+		fun clipBottomPadding(targetView: ViewGroup, @Px height: Int = DEFAULT_TAB_BOTTOM_HEIGHT.dpInt) {
+			targetView.setPadding(0, 0, 0, height)
+			targetView.clipToPadding = false
+		}
 	}
 	
 	enum class DistanceType {
@@ -150,13 +156,13 @@ class CoTabBottomLayout @JvmOverloads constructor(
 		}
 		selectedInfo = null
 		addBackground()
-
+		
 		// 清除之前添加的CooderTabBottom listener, Tip: Java foreach remove问题
 		val iterator = tabSelectedChangeListeners.iterator()
 		while (iterator.hasNext()) {
 			if (iterator.next() is CoTabBottom) iterator.remove()
 		}
-
+		
 		val tabBottomLayout = FrameLayout(context)
 		tabBottomLayout.tag = TAG_TAB_BOTTOM
 		val width = CoDisplayUtil.getDisplayWidth(CoDisplayUtil.Unit.PX) / infoList.size
@@ -247,7 +253,6 @@ class CoTabBottomLayout @JvmOverloads constructor(
 		if (targetView == null) {
 			targetView = CoViewUtil.findViewByType(rootView, AbsListView::class.java)
 		}
-		CoLog.i(targetView)
 		targetView?.apply {
 			this.setPadding(0, 0, 0, tabBottomHeight.dpInt)
 			this.clipToPadding = false

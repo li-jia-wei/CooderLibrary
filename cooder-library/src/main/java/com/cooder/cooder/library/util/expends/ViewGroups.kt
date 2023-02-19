@@ -12,7 +12,7 @@ import java.util.*
  * @param T 要查找的子View的类型
  * @return 查找指定的子View
  */
-inline fun <G : ViewGroup, reified T> G.findViewByType(): T? {
+inline fun <reified T> ViewGroup.findViewByType(): T? {
 	val java = T::class.java
 	val deque: Deque<View> = ArrayDeque()
 	deque += this

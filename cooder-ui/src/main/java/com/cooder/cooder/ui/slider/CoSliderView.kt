@@ -38,8 +38,8 @@ class CoSliderView @JvmOverloads constructor(
 	
 	private var menuAttr = parseMenuAttr(attrs)
 	
-	private val menuView = RecyclerView(context)
-	private val contentView = RecyclerView(context)
+	val menuView = RecyclerView(context)
+	val contentView = RecyclerView(context)
 	
 	private companion object {
 		private val MENU_WIDTH = 100.dpInt

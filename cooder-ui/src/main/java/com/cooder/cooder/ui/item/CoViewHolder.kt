@@ -16,16 +16,16 @@ import androidx.recyclerview.widget.RecyclerView
  */
 open class CoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 	
-	private val viewCache = SparseArray<View>()
+	private val viewCaches = SparseArray<View>()
 	
 	/**
 	 * 查找View
 	 */
 	fun <T : View> findViewById(@IdRes id: Int): T? {
-		var view = viewCache[id]
+		var view = viewCaches[id]
 		if (view == null) {
 			view = itemView.findViewById(id)
-            viewCache[id] = view
+			viewCaches[id] = view
         }
         @Suppress("UNCHECKED_CAST")
         return view as? T

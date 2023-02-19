@@ -56,12 +56,12 @@ open class CoResponse<T> {
 	/**
 	 * 错误信息
 	 */
-	var msg: String? = null
+	var message: String? = null
 	
 	/**
 	 * 判断是否成功
 	 */
-	fun isSuccessed(): Boolean {
+	fun isSuccessful(): Boolean {
 		return code == SUCCESS
 	}
 }
