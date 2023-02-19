@@ -11,22 +11,39 @@ package com.cooder.cooder.library.restful
  */
 class Scheduler(
 	private val callFactory: CoCall.Factory,
-	val interceptors: MutableList<CoInterceptor>
+	private val interceptors: List<CoInterceptor>
 ) {
 	
 	/**
 	 * 代理创建Call，实现拦截器的派发
 	 */
-	fun newCall(request: CoRequest, cancelInterceptors: Array<out Class<out CoInterceptor>>): CoCall<*> {
+	fun newCall(
+		request: CoRequest,
+		ignoreInterceptors: List<Class<out CoInterceptor>>?,
+		extraInterceptors: List<Class<out CoInterceptor>>?
+	): CoCall<*> {
 		val delegate = callFactory.newCall(request)
-		return ProxyCall(delegate, request, cancelInterceptors)
+		val finalInterceptors = if (extraInterceptors == null) interceptors else interceptors + generateExtraInterceptors(extraInterceptors)
+		return ProxyCall(finalInterceptors, delegate, request, ignoreInterceptors)
+	}
+	
+	/**
+	 * 生成额外的拦截器
+	 */
+	private fun generateExtraInterceptors(extraInterceptorsClass: List<Class<out CoInterceptor>>): List<CoInterceptor> {
+		val extraInterceptors = mutableListOf<CoInterceptor>()
+		extraInterceptorsClass.forEach {
+			extraInterceptors += it.newInstance()
+		}
+		return extraInterceptors
 	}
 	
 	// Call代理
-	internal inner class ProxyCall<T>(
+	private class ProxyCall<T>(
+		private val interceptors: List<CoInterceptor>,
 		private val delegate: CoCall<T>,
 		private val request: CoRequest,
-		private val cancelInterceptors: Array<out Class<out CoInterceptor>>
+		private val ignoreInterceptors: List<Class<out CoInterceptor>>?
 	) : CoCall<T> {
 		
 		override fun execute(): CoResponse<T> {
@@ -67,7 +84,7 @@ class Scheduler(
 		/**
 		 * Request 拦截器链
 		 */
-		internal inner class RequestInterceptor(
+		private inner class RequestInterceptor(
 			private val request: CoRequest,
 		) : CoInterceptor.RequestChain {
 			
@@ -80,7 +97,7 @@ class Scheduler(
 			fun dispatch() {
 				val interceptor = interceptors[callIndex]
 				var intercept = false
-				if (!cancelInterceptors.contains(interceptor::class.java)) {
+				if (ignoreInterceptors == null || !ignoreInterceptors.contains(interceptor::class.java)) {
 					intercept = interceptor.requestIntercept(this)
 				}
 				callIndex++
@@ -93,7 +110,7 @@ class Scheduler(
 		/**
 		 * Response 拦截器链
 		 */
-		internal inner class ResponseInterceptor(
+		private inner class ResponseInterceptor(
 			private val response: CoResponse<*>
 		) : CoInterceptor.ResponseChain {
 			
@@ -106,7 +123,7 @@ class Scheduler(
 			fun dispatch() {
 				val interceptor = interceptors[callIndex]
 				var intercept = false
-				if (!cancelInterceptors.contains(interceptor::class.java)) {
+				if (ignoreInterceptors == null || !ignoreInterceptors.contains(interceptor::class.java)) {
 					intercept = interceptor.responseIntercept(this)
 				}
 				callIndex++

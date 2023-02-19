@@ -17,7 +17,6 @@ import com.cooder.cooder.library.util.CoDisplayUtil
 import com.cooder.cooder.library.util.CoViewUtil
 import com.cooder.cooder.library.util.expends.dp
 import com.cooder.cooder.library.util.expends.dpInt
-import com.cooder.cooder.ui.R
 import com.cooder.cooder.ui.tab.bottom.CoTabBottomLayout.DistanceType.*
 import com.cooder.cooder.ui.tab.common.CoTabLayout
 import kotlin.math.abs
@@ -222,11 +221,12 @@ class CoTabBottomLayout @JvmOverloads constructor(
 	 * 设置背景
 	 */
 	private fun addBackground() {
-		val view = LayoutInflater.from(context).inflate(R.layout.co_bottom_layout_bg, this, false)
+		val view = View(context)
+		view.setBackgroundColor(Color.WHITE)
+		view.alpha = bottomAlpha
 		val params = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, tabBottomHeight.dpInt)
 		params.gravity = Gravity.BOTTOM
 		addView(view, params)
-		view.alpha = bottomAlpha
 	}
 	
 	/**

@@ -24,7 +24,11 @@ open class CoRestful(
 		this.interceptors += interceptor
 	}
 	
-	fun <T> create(service: Class<T>, cancelInterceptors: Array<out Class<out CoInterceptor>>): T {
+	fun <T> create(
+		service: Class<T>,
+		ignoreInterceptors: List<Class<out CoInterceptor>>?,
+		extraInterceptor: List<Class<out CoInterceptor>>?
+	): T {
 		@Suppress("UNCHECKED_CAST")
 		return Proxy.newProxyInstance(service.classLoader, arrayOf<Class<*>>(service)) { _: Any, method: Method, args: Array<Any>? ->
 			var methodParser = methodService[method]
@@ -33,7 +37,7 @@ open class CoRestful(
 				methodService[method] = methodParser
 			}
 			val request = methodParser.newRequest(method, args)
-			scheduler.newCall(request, cancelInterceptors)
+			scheduler.newCall(request, ignoreInterceptors, extraInterceptor)
 		} as T
 	}
 }

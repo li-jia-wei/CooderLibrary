@@ -43,6 +43,14 @@ fun Activity.hintStatusBar() {
 	}
 }
 
+fun Activity.hintNavigationBar() {
+	Impl26.hintNavigationBar(this)
+}
+
+fun Activity.showNavigationBar() {
+	Impl26.showNavigationBar(this)
+}
+
 private object Impl26 {
 	
 	fun setStatusBarContent(activity: Activity, darkContent: Boolean) {
@@ -50,7 +58,6 @@ private object Impl26 {
 		val controller = WindowCompat.getInsetsController(window, window.decorView)
 		controller.show(WindowInsetsCompat.Type.statusBars())
 		controller.isAppearanceLightStatusBars = darkContent
-		window.navigationBarColor = previousNavigationBarColors[activity] ?: Color.BLACK
 		WindowCompat.setDecorFitsSystemWindows(window, true)
 	}
 	
@@ -60,17 +67,13 @@ private object Impl26 {
 		controller.show(WindowInsetsCompat.Type.statusBars())
 		window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
 		window.statusBarColor = statusBarColor
-		window.navigationBarColor = previousNavigationBarColors[activity] ?: Color.BLACK
 		WindowCompat.setDecorFitsSystemWindows(window, true)
 	}
 	
 	fun setNavigationBarColor(activity: Activity, @ColorInt color: Int) {
 		val window = activity.window
-		val controller = WindowCompat.getInsetsController(window, window.decorView)
-		controller.show(WindowInsetsCompat.Type.statusBars())
 		window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
 		window.navigationBarColor = color
-		WindowCompat.setDecorFitsSystemWindows(window, true)
 	}
 	
 	fun immersiveStatusBar(activity: Activity, darkContent: Boolean) {
@@ -91,6 +94,17 @@ private object Impl26 {
 		controller.hide(WindowInsetsCompat.Type.statusBars())
 		controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
 		WindowCompat.setDecorFitsSystemWindows(window, false)
+	}
+	
+	fun hintNavigationBar(activity: Activity) {
+		val window = activity.window
+		previousNavigationBarColors[activity] = window.navigationBarColor
+		window.navigationBarColor = Color.TRANSPARENT
+	}
+	
+	fun showNavigationBar(activity: Activity) {
+		val window = activity.window
+		window.navigationBarColor = previousNavigationBarColors[activity] ?: Color.BLACK
 	}
 }
 

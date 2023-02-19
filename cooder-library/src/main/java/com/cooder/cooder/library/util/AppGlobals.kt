@@ -8,9 +8,6 @@ object AppGlobals {
 	
 	private var application: Application? = null
 	
-	/**
-	 * 获取Application
-	 */
 	@SuppressLint("PrivateApi")
 	fun getApplication(): Application {
 		try {

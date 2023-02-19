@@ -1,3 +1,5 @@
+@file:JvmName("CoLogs")
+
 package com.cooder.cooder.library.log.expends
 
 import com.cooder.cooder.library.log.CoLog
