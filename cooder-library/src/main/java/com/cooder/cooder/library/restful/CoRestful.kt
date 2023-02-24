@@ -13,7 +13,8 @@ import java.lang.reflect.Proxy
  * 介绍：CoRestful
  */
 open class CoRestful(
-	private val baseUrl: String, callFactory: CoCall.Factory
+	private val baseUrl: String,
+	callFactory: CoCall.Factory
 ) {
 	
 	private val interceptors = mutableListOf<CoInterceptor>()

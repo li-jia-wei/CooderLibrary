@@ -21,13 +21,16 @@ open class CoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 	/**
 	 * 查找View
 	 */
-	fun <T : View> findViewById(@IdRes id: Int): T? {
+	@Suppress("UNCHECKED_CAST")
+	fun <T : View> findViewById(@IdRes id: Int): T {
 		var view = viewCaches[id]
 		if (view == null) {
 			view = itemView.findViewById(id)
 			viewCaches[id] = view
-        }
-        @Suppress("UNCHECKED_CAST")
-        return view as? T
-    }
+		}
+		if (view == null) {
+			throw IllegalStateException("This view is null.")
+		}
+		return view as T
+	}
 }

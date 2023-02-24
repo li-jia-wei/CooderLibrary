@@ -12,9 +12,9 @@ android {
         applicationId "com.cooder.cooder.app"
         minSdk 26
         targetSdk 33
-        versionCode 24
-        versionName "2.0.2"
-
+        versionCode 27
+        versionName "2.0.4"
+    
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

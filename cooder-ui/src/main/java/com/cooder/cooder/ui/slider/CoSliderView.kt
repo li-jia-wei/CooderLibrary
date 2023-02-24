@@ -147,10 +147,10 @@ class CoSliderView @JvmOverloads constructor(
 			val selected = currentSelectIndex == position
 			val title = holder.findViewById<TextView>(R.id.menu_title)
 			val indicator = holder.findViewById<ImageView>(R.id.menu_indicator)
-			title?.setTextSize(TypedValue.COMPLEX_UNIT_PX, (if (selected) menuAttr.selectTextSize else menuAttr.textSize).toFloat())
-			indicator?.visibility = if (selected) View.VISIBLE else View.GONE
+			title.setTextSize(TypedValue.COMPLEX_UNIT_PX, (if (selected) menuAttr.selectTextSize else menuAttr.textSize).toFloat())
+			indicator.visibility = if (selected) View.VISIBLE else View.GONE
 			holder.itemView.background = if (selected) menuAttr.selectBackground else menuAttr.background
-			title?.isSelected = selected
+			title.isSelected = selected
 		}
 	}
 	

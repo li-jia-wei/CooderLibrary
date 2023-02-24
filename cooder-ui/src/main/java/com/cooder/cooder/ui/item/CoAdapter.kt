@@ -347,7 +347,7 @@ class CoAdapter(
 	/**
 	 * 移除底部View
 	 */
-	fun removeBottomView(view: View) {
+	fun removeBottomView() {
 		if (this.bottomView != null) {
 			this.bottomView = null
 			notifyItemRemoved(itemCount - 1)

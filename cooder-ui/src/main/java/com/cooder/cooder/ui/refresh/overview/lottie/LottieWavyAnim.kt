@@ -1,7 +1,6 @@
 package com.cooder.cooder.ui.refresh.overview.lottie
 
 import android.content.Context
-import android.graphics.Typeface
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
@@ -44,8 +43,6 @@ internal class LottieWavyAnim(
 		dots += root.findViewById<ImageView>(R.id.dot6)
 		dots += root.findViewById<ImageView>(R.id.dot7)
 		hintLine = root.findViewById(R.id.tv_hint_line)
-		val typeface = Typeface.createFromAsset(context.assets, "font/alibaba_iconfont.ttf")
-		hintLine.typeface = typeface
 	}
 	
 	override fun visible() {
@@ -70,7 +67,7 @@ internal class LottieWavyAnim(
 	}
 	
 	override fun stop() {
-		dots.forEachIndexed { i, tv ->
+		dots.forEachIndexed { _, tv ->
 			tv.clearAnimation()
 		}
 	}

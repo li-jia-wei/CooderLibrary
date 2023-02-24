@@ -162,6 +162,7 @@ class CoBannerDelegate(
 		if (viewPager == null) viewPager = CoViewPager(context)
 		viewPager!!.apply {
 			setIntervalTime(intervalTime)
+			@Suppress("DEPRECATION")
 			setOnPageChangeListener(this@CoBannerDelegate)
 			setAutoPlay(autoPlay)
 			adapter = this@CoBannerDelegate.adapter

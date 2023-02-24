@@ -149,6 +149,7 @@ class CoTabTopInfo<Color : Comparable<Color>> : CoTabInfo<Color> {
 	 */
 	@JvmOverloads
 	constructor(name: String, iconFont: String, defaultIconName: String, selectedIconName: String, defaultColor: Color, tintColor: Color, fragment: Class<out Fragment>? = null) {
+		this.name = name
 		this.iconFont = iconFont
 		this.defaultIconName = defaultIconName
 		this.selectedIconName = selectedIconName
