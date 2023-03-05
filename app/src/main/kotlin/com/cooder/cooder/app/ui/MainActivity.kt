@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.cooder.cooder.app.R
 import com.cooder.cooder.app.databinding.ActivityMainBinding
 import com.cooder.cooder.app.ui.banner.CoBannerActivity
+import com.cooder.cooder.app.ui.databus.CoDataBusActivity
 import com.cooder.cooder.app.ui.item.CoDataItemActivity
 import com.cooder.cooder.app.ui.log.CoLogActivity
 import com.cooder.cooder.app.ui.refresh.CoRefreshActivity
@@ -43,7 +44,8 @@ class MainActivity : AppCompatActivity() {
 		CoRefreshActivity::class to "Refresh",
 		CoBannerActivity::class to "Banner",
 		CoDataItemActivity::class to "DataItem",
-		CoSliderActivity::class to "Slider"
+		CoSliderActivity::class to "Slider",
+		CoDataBusActivity::class to "DataBus"
 	)
 	
 	override fun onCreate(savedInstanceState: Bundle?) {
