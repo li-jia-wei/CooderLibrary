@@ -35,6 +35,7 @@
 		<activity android:name=".ui.item.CoDataItemActivity" />
 		<activity android:name=".ui.slider.CoSliderActivity" />
 		<activity android:name=".ui.databus.CoDataBusActivity" />
+		<activity android:name=".ui.cache.CoCacheActivity" />
 	</application>
 
 </manifest>

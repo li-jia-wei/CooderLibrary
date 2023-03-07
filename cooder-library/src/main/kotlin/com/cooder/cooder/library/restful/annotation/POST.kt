@@ -10,8 +10,6 @@ package com.cooder.cooder.library.restful.annotation
  * 介绍：POST提交
  *
  * @param formPost true:表单提交 false:json提交
- *
- * @sample Sample
  */
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)

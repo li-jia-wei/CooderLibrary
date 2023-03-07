@@ -1,5 +1,11 @@
 package com.cooder.cooder.library.restful
 
+import com.cooder.cooder.library.cache.CoStorage
+import com.cooder.cooder.library.executor.CoExecutor
+import com.cooder.cooder.library.log.CoLog
+import com.cooder.cooder.library.restful.annotation.CacheStrategy
+import com.cooder.cooder.library.util.CoMainHandler
+
 /**
  * 项目：CooderLibrary
  *
@@ -48,16 +54,41 @@ class Scheduler(
 		
 		override fun execute(): CoResponse<T> {
 			dispatchRequestInterceptor(request)
+			when (request.cacheStrategy) {
+				CacheStrategy.CACHE_NET_CACHE -> {
+					val cacheResponse = getCache(request)
+					if (cacheResponse.data != null) {
+						return cacheResponse
+					}
+				}
+			}
 			val response = delegate.execute()
 			dispatchResponseInterceptor(response)
+			saveCacheIfNeed(response)
 			return response
 		}
 		
 		override fun enqueue(callback: CoCallback<T>) {
 			dispatchRequestInterceptor(request)
+			
+			if (request.cacheStrategy == CacheStrategy.CACHE_NET_CACHE) {
+				CoExecutor.execute {
+					val cacheResponse = getCache(request)
+					if (cacheResponse.data != null) {
+						CoMainHandler.sendMessageAtFrontOfQueue {
+							callback.onSuccess(cacheResponse)
+						}
+						CoLog.i("enqueue, key=${request.getCacheKey()}")
+					}
+				}
+			}
+			
 			delegate.enqueue(object : CoCallback<T> {
 				override fun onSuccess(response: CoResponse<T>) {
 					dispatchResponseInterceptor(response)
+					
+					saveCacheIfNeed(response)
+					
 					callback.onSuccess(response)
 				}
 				
@@ -65,6 +96,28 @@ class Scheduler(
 					callback.onFailed(throwable)
 				}
 			})
+		}
+		
+		private fun getCache(request: CoRequest): CoResponse<T> {
+			val cacheKey = request.getCacheKey()
+			val cache = CoStorage.getCache<T>(cacheKey)
+			val cacheResponse = CoResponse<T>()
+			cacheResponse.data = cache
+			cacheResponse.code = CoResponse.CACHE_SUCCESS
+			cacheResponse.message = "缓存获取成功"
+			return cacheResponse
+		}
+		
+		private fun saveCacheIfNeed(response: CoResponse<*>) {
+			when (request.cacheStrategy) {
+				CacheStrategy.NET_CACHE, CacheStrategy.CACHE_NET_CACHE -> {
+					if (response.data != null) {
+						CoExecutor.execute {
+							CoStorage.saveCache(request.getCacheKey(), response.data)
+						}
+					}
+				}
+			}
 		}
 		
 		/**

@@ -17,7 +17,7 @@ class CoDataBusActivity : AppCompatActivity() {
 		
 		binding.testDataBus.setOnClickListener {
 			CoDataBus.with<String>("stickyData").observeSticky(this) {
-			
+				
 			}
 		}
 	}

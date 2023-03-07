@@ -8,8 +8,6 @@ package com.cooder.cooder.library.restful.annotation
  * 创建：2022/11/11 14:00
  *
  * 介绍：替换相应的字符串
- *
- * @sample Sample
  */
 @Target(AnnotationTarget.VALUE_PARAMETER)
 @Retention(AnnotationRetention.RUNTIME)

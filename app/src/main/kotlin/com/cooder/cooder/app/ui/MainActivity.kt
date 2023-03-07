@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.cooder.cooder.app.R
 import com.cooder.cooder.app.databinding.ActivityMainBinding
 import com.cooder.cooder.app.ui.banner.CoBannerActivity
+import com.cooder.cooder.app.ui.cache.CoCacheActivity
 import com.cooder.cooder.app.ui.databus.CoDataBusActivity
 import com.cooder.cooder.app.ui.item.CoDataItemActivity
 import com.cooder.cooder.app.ui.log.CoLogActivity
@@ -45,7 +46,8 @@ class MainActivity : AppCompatActivity() {
 		CoBannerActivity::class to "Banner",
 		CoDataItemActivity::class to "DataItem",
 		CoSliderActivity::class to "Slider",
-		CoDataBusActivity::class to "DataBus"
+		CoDataBusActivity::class to "DataBus",
+		CoCacheActivity::class to "Cache"
 	)
 	
 	override fun onCreate(savedInstanceState: Bundle?) {

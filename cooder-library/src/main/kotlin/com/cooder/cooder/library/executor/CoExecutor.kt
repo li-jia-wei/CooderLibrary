@@ -51,7 +51,12 @@ object CoExecutor {
 			return@ThreadFactory thread
 		}
 		cooderExecutor = object : ThreadPoolExecutor(
-			corePoolSize, maxPoolSize, keepAliveTime, unit, blockingQueue as BlockingQueue<Runnable>, threadFactory
+			corePoolSize,
+			maxPoolSize,
+			keepAliveTime,
+			unit,
+			blockingQueue as BlockingQueue<Runnable>,
+			threadFactory
 		) {
 			override fun beforeExecute(t: Thread?, r: Runnable?) {
 				if (isPaused) {

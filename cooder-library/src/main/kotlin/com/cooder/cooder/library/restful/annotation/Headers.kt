@@ -8,8 +8,6 @@ package com.cooder.cooder.library.restful.annotation
  * 创建：2022/11/11 13:45
  *
  * 介绍：设置消息头
- *
- * @sample Sample
  */
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)

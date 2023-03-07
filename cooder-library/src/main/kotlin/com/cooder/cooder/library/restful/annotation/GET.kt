@@ -8,8 +8,6 @@ package com.cooder.cooder.library.restful.annotation
  * 创建：2022/11/11 14:03
  *
  * 介绍：相对路径，如http://api.cooder.com/sample/first 之后的/sample/first
- *
- * @sample Sample
  */
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)

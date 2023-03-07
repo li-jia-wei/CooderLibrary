@@ -1,8 +1,11 @@
 package com.cooder.cooder.library.restful
 
 import androidx.annotation.IntDef
+import com.cooder.cooder.library.restful.annotation.CacheStrategy
 import com.cooder.cooder.library.util.DomainUtil
+import java.io.UnsupportedEncodingException
 import java.lang.reflect.Type
+import java.net.URLEncoder
 
 /**
  * 项目：CooderLibrary
@@ -51,6 +54,17 @@ open class CoRequest {
 	 */
 	var formPost = true
 	
+	/**
+	 * 缓存策略类型
+	 */
+	@CacheStrategy.CacheStrategyDef
+	var cacheStrategy: Int = CacheStrategy.NET_ONLY
+	
+	/**
+	 * 缓存策略键
+	 */
+	private var cacheStrategyKey: String = ""
+	
 	@IntDef(METHOD.NONE, METHOD.GET, METHOD.POST)
 	annotation class METHOD {
 		companion object {
@@ -77,5 +91,39 @@ open class CoRequest {
 	fun addHeader(name: String, value: String) {
 		if (headers == null) headers = mutableMapOf()
 		headers!![name] = value
+	}
+	
+	/**
+	 * 获取缓存Key
+	 */
+	fun getCacheKey(): String {
+		if (cacheStrategyKey.isNotEmpty()) {
+			return cacheStrategyKey
+		}
+		val url = getCompleteUrl()
+		if (parameters!!.isNotEmpty()) {
+			val cacheKey = StringBuilder()
+			cacheKey.append(url)
+			if (url.contains('?')) {
+				if (!(url.endsWith('&') || url.endsWith('?'))) {
+					cacheKey.append('&')
+				}
+			} else {
+				cacheKey.append('?')
+			}
+			parameters!!.forEach { key: String, value: String ->
+				try {
+					val encodeValue = URLEncoder.encode(value, "UTF-8")
+					cacheKey.append(key).append('=').append(encodeValue).append('&')
+				} catch (e: UnsupportedEncodingException) {
+					// Ignore
+				}
+			}
+			cacheKey.delete(0, cacheKey.length - 1)
+			cacheStrategyKey = cacheKey.toString()
+		} else {
+			cacheStrategyKey = url
+		}
+		return cacheStrategyKey
 	}
 }

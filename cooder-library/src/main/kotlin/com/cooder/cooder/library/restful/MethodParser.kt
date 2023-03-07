@@ -1,5 +1,6 @@
 package com.cooder.cooder.library.restful
 
+import com.cooder.cooder.library.restful.annotation.CacheStrategy
 import com.cooder.cooder.library.restful.annotation.DomainUrl
 import com.cooder.cooder.library.restful.annotation.Filed
 import com.cooder.cooder.library.restful.annotation.GET
@@ -59,6 +60,9 @@ class MethodParser(
 	
 	private var parameters = mutableMapOf<String, String>()
 	
+	@CacheStrategy.CacheStrategyDef
+	private var cacheStrategy: Int = CacheStrategy.NET_ONLY
+	
 	init {
 		parseMethodAnnotations(method)
 		parseMethodGenericReturnType(method)
@@ -83,6 +87,7 @@ class MethodParser(
 		request.headers = headers
 		request.httpMethod = httpMethod
 		request.formPost = formPost
+		request.cacheStrategy = cacheStrategy
 		return request
 	}
 	
@@ -97,6 +102,7 @@ class MethodParser(
 					requireUrlNotNullOrBlank(it.value, DomainUrl::class, method.name)
 					this.domainUrl = it.value
 				}
+				
 				is Headers -> {
 					it.value.forEach {
 						val colonPos = it.indexOf(":")
@@ -108,12 +114,14 @@ class MethodParser(
 						headers[name] = value
 					}
 				}
+				
 				is GET -> {
 					checkRepeatedSettingHttpMethod(method.name)
 					requireUrlNotNullOrBlank(it.url, GET::class, method.name)
 					rawRelativeUrl = it.url
 					httpMethod = CoRequest.METHOD.GET
 				}
+				
 				is POST -> {
 					checkRepeatedSettingHttpMethod(method.name)
 					requireUrlNotNullOrBlank(it.url, POST::class, method.name)
@@ -121,6 +129,11 @@ class MethodParser(
 					formPost = it.formPost
 					httpMethod = CoRequest.METHOD.POST
 				}
+				
+				is CacheStrategy -> {
+					cacheStrategy = it.value
+				}
+				
 				else -> {
 					throw IllegalStateException("Cannot handle method annotation : ${it.javaClass}")
 				}
@@ -157,6 +170,7 @@ class MethodParser(
 					val key = annotation.name
 					parameters[key] = value.toString()
 				}
+				
 				is Path -> {
 					val replaceName = annotation.replacedName
 					val replaceValue = value.toString()
@@ -164,6 +178,11 @@ class MethodParser(
 						replaceValue(replaceName, replaceValue)
 					}
 				}
+				
+				is CacheStrategy -> {
+					cacheStrategy = value as Int
+				}
+				
 				else -> {
 					throw IllegalStateException("Cannot handle method annotation : ${it.javaClass}")
 				}

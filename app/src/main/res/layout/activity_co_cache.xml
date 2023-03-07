@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:gravity="center"
+	android:orientation="vertical"
+	tools:context=".ui.cache.CoCacheActivity">
+	
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:paddingHorizontal="20dp">
+		
+		<EditText
+			android:id="@+id/name"
+			android:layout_width="0dp"
+			android:layout_height="50dp"
+			android:layout_marginHorizontal="20dp"
+			android:layout_weight="1"
+			android:gravity="center"
+			android:hint="名字"
+			android:inputType="text"
+			android:paddingHorizontal="10dp" />
+		
+		<EditText
+			android:id="@+id/age"
+			android:layout_width="0dp"
+			android:layout_height="50dp"
+			android:layout_marginHorizontal="20dp"
+			android:layout_weight="1"
+			android:gravity="center"
+			android:hint="年龄"
+			android:inputType="number"
+			android:paddingHorizontal="10dp" />
+	
+	</LinearLayout>
+	
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginHorizontal="20dp">
+		
+		<Button
+			android:id="@+id/save"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginHorizontal="20dp"
+			android:layout_marginTop="20dp"
+			android:layout_weight="1"
+			android:text="保存" />
+		
+		<Button
+			android:id="@+id/remove"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginHorizontal="20dp"
+			android:layout_marginTop="20dp"
+			android:layout_weight="1"
+			android:text="删除" />
+	
+	</LinearLayout>
+	
+	<Button
+		android:id="@+id/query"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginHorizontal="40dp"
+		android:layout_marginTop="20dp"
+		android:text="查询" />
+
+</LinearLayout>
