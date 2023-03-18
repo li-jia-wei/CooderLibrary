@@ -57,8 +57,7 @@ open class CoRequest {
 	/**
 	 * 缓存策略类型
 	 */
-	@CacheStrategy.CacheStrategyDef
-	var cacheStrategy: Int = CacheStrategy.NET_ONLY
+	var cacheStrategy: CacheStrategy.Type = CacheStrategy.Type.NET_ONLY
 	
 	/**
 	 * 缓存策略键
@@ -101,9 +100,10 @@ open class CoRequest {
 			return cacheStrategyKey
 		}
 		val url = getCompleteUrl()
+		val cacheKey = StringBuilder()
+		// net::http://xxx.xxx.xxx.xxx/xxx/xxx?xxx=xxx&xxx=xxx
+		cacheKey.append("net::").append(url)
 		if (parameters!!.isNotEmpty()) {
-			val cacheKey = StringBuilder()
-			cacheKey.append(url)
 			if (url.contains('?')) {
 				if (!(url.endsWith('&') || url.endsWith('?'))) {
 					cacheKey.append('&')
@@ -119,11 +119,13 @@ open class CoRequest {
 					// Ignore
 				}
 			}
-			cacheKey.delete(0, cacheKey.length - 1)
-			cacheStrategyKey = cacheKey.toString()
-		} else {
-			cacheStrategyKey = url
+			cacheKey.delete(cacheKey.length - 1, cacheKey.length)
 		}
+		cacheStrategyKey = cacheKey.toString()
 		return cacheStrategyKey
+	}
+	
+	override fun toString(): String {
+		return "CoRequest(httpMethod=$httpMethod, headers=$headers, parameters=$parameters, domainUrl=$domainUrl, relativeUrl=$relativeUrl, returnType=$returnType, formPost=$formPost, cacheStrategy=$cacheStrategy, cacheStrategyKey='$cacheStrategyKey')"
 	}
 }

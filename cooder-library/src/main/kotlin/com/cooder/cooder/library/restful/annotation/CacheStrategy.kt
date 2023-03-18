@@ -1,35 +1,35 @@
 package com.cooder.cooder.library.restful.annotation
 
-import androidx.annotation.IntDef
-
 @Target(AnnotationTarget.FUNCTION, AnnotationTarget.VALUE_PARAMETER)
 @Retention(AnnotationRetention.RUNTIME)
 annotation class CacheStrategy(
-	@CacheStrategyDef val value: Int = NET_ONLY
+	val value: Type = Type.NET_ONLY
 ) {
 	
-	companion object {
-		
+	enum class Type {
 		/**
-		 * 先缓存，后网络，再更新缓存
+		 * 先使用缓存并返回，再网络请求后返回，并存到缓存中
 		 */
-		const val CACHE_NET_CACHE = 0
-		
-		/**
-		 * 只网络
-		 */
-		const val NET_ONLY = 1
-		
-		/**
-		 * 先网络，后更新缓存
-		 */
-		const val NET_CACHE = 2
-	}
-	
-	@IntDef(
 		CACHE_NET_CACHE,
+		
+		/**
+		 * 只通过网络请求后返回
+		 */
 		NET_ONLY,
-		NET_CACHE
-	)
-	annotation class CacheStrategyDef
+		
+		/**
+		 * 先网络请求后返回，并存到缓存中
+		 */
+		NET_CACHE,
+		
+		/**
+		 * 只通过缓存返回
+		 */
+		CACHE_ONLY,
+		
+		/**
+		 * 先通过缓存返回，再网络请求后存到缓存中，不返回
+		 */
+		CACHE_ONLY_NET_CACHE
+	}
 }

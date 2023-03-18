@@ -1,7 +1,6 @@
 package com.cooder.cooder.library.restful
 
 import androidx.annotation.MainThread
-import androidx.annotation.WorkerThread
 import java.io.IOException
 
 /**
@@ -17,13 +16,16 @@ interface CoCall<T> {
 	
 	/**
 	 * 子线程调用
+	 *
+	 * 如果使用缓存操作，将不再执行网络操作返回
 	 */
 	@Throws(IOException::class)
-	@WorkerThread
 	fun execute(): CoResponse<T>
 	
 	/**
 	 * 主线程上调用
+	 *
+	 * 支持所有注解类型
 	 */
 	@MainThread
 	fun enqueue(callback: CoCallback<T>)

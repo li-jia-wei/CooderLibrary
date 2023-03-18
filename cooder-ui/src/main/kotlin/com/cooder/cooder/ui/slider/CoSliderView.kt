@@ -108,7 +108,9 @@ class CoSliderView @JvmOverloads constructor(
 	}
 	
 	inner class MenuAdapter(
-		@LayoutRes private val layoutRes: Int, private val count: Int, private val callback: BindCallback
+		@LayoutRes private val layoutRes: Int,
+		private val count: Int,
+		private val callback: BindCallback
 	) : RecyclerView.Adapter<CoViewHolder>() {
 		
 		private var currentSelectIndex = 0

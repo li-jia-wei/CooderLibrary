@@ -1,5 +1,7 @@
 package com.cooder.cooder.library.restful
 
+import com.cooder.cooder.library.log.CoLog
+
 /**
  * 项目：CooderLibrary
  *
@@ -13,5 +15,7 @@ interface CoCallback<T> {
 	
 	fun onSuccess(response: CoResponse<T>)
 	
-	fun onFailed(throwable: Throwable)
+	fun onFailed(throwable: Throwable) {
+		CoLog.e(throwable.message)
+	}
 }

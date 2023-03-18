@@ -117,6 +117,6 @@ open class CoResponse<T> {
 	 * 判断是否成功
 	 */
 	fun isSuccessful(): Boolean {
-		return code == SUCCESS
+		return code == SUCCESS || code == CACHE_SUCCESS
 	}
 }

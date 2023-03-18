@@ -2,8 +2,10 @@ package com.cooder.cooder.library.restful
 
 import com.cooder.cooder.library.cache.CoStorage
 import com.cooder.cooder.library.executor.CoExecutor
-import com.cooder.cooder.library.log.CoLog
-import com.cooder.cooder.library.restful.annotation.CacheStrategy
+import com.cooder.cooder.library.restful.annotation.CacheStrategy.Type.CACHE_NET_CACHE
+import com.cooder.cooder.library.restful.annotation.CacheStrategy.Type.CACHE_ONLY
+import com.cooder.cooder.library.restful.annotation.CacheStrategy.Type.CACHE_ONLY_NET_CACHE
+import com.cooder.cooder.library.restful.annotation.CacheStrategy.Type.NET_CACHE
 import com.cooder.cooder.library.util.CoMainHandler
 
 /**
@@ -54,14 +56,18 @@ class Scheduler(
 		
 		override fun execute(): CoResponse<T> {
 			dispatchRequestInterceptor(request)
+			
 			when (request.cacheStrategy) {
-				CacheStrategy.CACHE_NET_CACHE -> {
+				CACHE_NET_CACHE, CACHE_ONLY, CACHE_ONLY_NET_CACHE -> {
 					val cacheResponse = getCache(request)
 					if (cacheResponse.data != null) {
 						return cacheResponse
 					}
 				}
+				
+				else -> {}
 			}
+			
 			val response = delegate.execute()
 			dispatchResponseInterceptor(response)
 			saveCacheIfNeed(response)
@@ -71,25 +77,36 @@ class Scheduler(
 		override fun enqueue(callback: CoCallback<T>) {
 			dispatchRequestInterceptor(request)
 			
-			if (request.cacheStrategy == CacheStrategy.CACHE_NET_CACHE) {
-				CoExecutor.execute {
-					val cacheResponse = getCache(request)
-					if (cacheResponse.data != null) {
-						CoMainHandler.sendMessageAtFrontOfQueue {
-							callback.onSuccess(cacheResponse)
+			var cacheSuccess = false
+			when (request.cacheStrategy) {
+				CACHE_NET_CACHE, CACHE_ONLY, CACHE_ONLY_NET_CACHE -> {
+					CoExecutor.execute {
+						val cacheResponse = getCache(request)
+						if (cacheResponse.data != null) {
+							cacheSuccess = true
+							CoMainHandler.sendMessageAtFrontOfQueue {
+								callback.onSuccess(cacheResponse)
+							}
 						}
-						CoLog.i("enqueue, key=${request.getCacheKey()}")
 					}
 				}
+				
+				else -> {}
 			}
 			
 			delegate.enqueue(object : CoCallback<T> {
 				override fun onSuccess(response: CoResponse<T>) {
+					if (request.cacheStrategy == CACHE_ONLY && cacheSuccess) {
+						return
+					}
+					
 					dispatchResponseInterceptor(response)
 					
 					saveCacheIfNeed(response)
 					
-					callback.onSuccess(response)
+					if (request.cacheStrategy != CACHE_ONLY_NET_CACHE) {
+						callback.onSuccess(response)
+					}
 				}
 				
 				override fun onFailed(throwable: Throwable) {
@@ -110,13 +127,15 @@ class Scheduler(
 		
 		private fun saveCacheIfNeed(response: CoResponse<*>) {
 			when (request.cacheStrategy) {
-				CacheStrategy.NET_CACHE, CacheStrategy.CACHE_NET_CACHE -> {
+				NET_CACHE, CACHE_NET_CACHE, CACHE_ONLY_NET_CACHE -> {
 					if (response.data != null) {
 						CoExecutor.execute {
 							CoStorage.saveCache(request.getCacheKey(), response.data)
 						}
 					}
 				}
+				
+				else -> {}
 			}
 		}
 		

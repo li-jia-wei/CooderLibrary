@@ -60,8 +60,7 @@ class MethodParser(
 	
 	private var parameters = mutableMapOf<String, String>()
 	
-	@CacheStrategy.CacheStrategyDef
-	private var cacheStrategy: Int = CacheStrategy.NET_ONLY
+	private var cacheStrategy: CacheStrategy.Type = CacheStrategy.Type.NET_ONLY
 	
 	init {
 		parseMethodAnnotations(method)
@@ -149,7 +148,7 @@ class MethodParser(
 	private fun parseMethodParameters(method: Method, args: Array<Any>?) {
 		// 将原始相对路径赋值上去，放置之前被相同的Method复用之后再次Path替换不了
 		relativeUrl = rawRelativeUrl
-		if (args == null || args.isEmpty()) return
+		if (args.isNullOrEmpty()) return
 		val parameterAnnotations = method.parameterAnnotations
 		val equals = parameterAnnotations.size == args.size
 		require(equals) {
@@ -158,20 +157,19 @@ class MethodParser(
 		parameters.clear()
 		args.indices.forEach {
 			val annotations = parameterAnnotations[it]
-			require(annotations.size == 1) {
-				"The parameter has one and only one annotation, index = $it"
+			require(annotations.isNotEmpty()) {
+				"The parameter has at least one annotation, index = $it"
 			}
 			val value = args[it]
-			require(isPrimitive(value)) {
-				"Currently, only 8 basic data types and String types are supported."
-			}
 			when (val annotation = annotations[0]) {
 				is Filed -> {
+					checkValueIsPrimitive(value)
 					val key = annotation.name
 					parameters[key] = value.toString()
 				}
 				
 				is Path -> {
+					checkValueIsPrimitive(value)
 					val replaceName = annotation.replacedName
 					val replaceValue = value.toString()
 					if (replaceName.isNotBlank()) {
@@ -180,7 +178,7 @@ class MethodParser(
 				}
 				
 				is CacheStrategy -> {
-					cacheStrategy = value as Int
+					cacheStrategy = value as CacheStrategy.Type
 				}
 				
 				else -> {
@@ -197,6 +195,12 @@ class MethodParser(
 		// 替换相对路径中的Path，在此之前是替换域名，认为domainUrl中不应该存在被替换的地方
 		if (relativeUrl!!.indexOf("{$replaceName}") != -1) {
 			relativeUrl = relativeUrl!!.replace("{$replaceName}", replaceValue)
+		}
+	}
+	
+	private fun checkValueIsPrimitive(value: Any) {
+		require(isPrimitive(value)) {
+			"Currently, only 8 basic data types and String types are supported."
 		}
 	}
 	
