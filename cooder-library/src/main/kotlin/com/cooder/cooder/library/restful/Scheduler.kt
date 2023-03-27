@@ -54,26 +54,6 @@ class Scheduler(
 		private val ignoreInterceptors: List<Class<out CoInterceptor>>?
 	) : CoCall<T> {
 		
-		override fun execute(): CoResponse<T> {
-			dispatchRequestInterceptor(request)
-			
-			when (request.cacheStrategy) {
-				CACHE_NET_CACHE, CACHE_ONLY, CACHE_ONLY_NET_CACHE -> {
-					val cacheResponse = getCache(request)
-					if (cacheResponse.data != null) {
-						return cacheResponse
-					}
-				}
-				
-				else -> {}
-			}
-			
-			val response = delegate.execute()
-			dispatchResponseInterceptor(response)
-			saveCacheIfNeed(response)
-			return response
-		}
-		
 		override fun enqueue(callback: CoCallback<T>) {
 			dispatchRequestInterceptor(request)
 			
@@ -104,7 +84,7 @@ class Scheduler(
 					
 					saveCacheIfNeed(response)
 					
-					if (request.cacheStrategy != CACHE_ONLY_NET_CACHE) {
+					if (request.cacheStrategy != CACHE_ONLY_NET_CACHE || !cacheSuccess) {
 						callback.onSuccess(response)
 					}
 				}

@@ -1,7 +1,6 @@
 package com.cooder.cooder.library.restful
 
 import androidx.annotation.MainThread
-import java.io.IOException
 
 /**
  * 项目：CooderLibrary
@@ -13,14 +12,6 @@ import java.io.IOException
  * 介绍：调用
  */
 interface CoCall<T> {
-	
-	/**
-	 * 子线程调用
-	 *
-	 * 如果使用缓存操作，将不再执行网络操作返回
-	 */
-	@Throws(IOException::class)
-	fun execute(): CoResponse<T>
 	
 	/**
 	 * 主线程上调用
