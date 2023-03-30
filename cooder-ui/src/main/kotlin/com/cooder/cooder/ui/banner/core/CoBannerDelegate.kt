@@ -23,7 +23,8 @@ import com.cooder.cooder.ui.banner.indicator.CoIndicator
  * 将CooderBanner的一些逻辑内聚在这，保证暴露给使用者的CooderBanner干净整洁
  */
 class CoBannerDelegate(
-	private val context: Context, private val banner: CoBanner
+	private val context: Context,
+	private val banner: CoBanner
 ) : ViewPager.OnPageChangeListener, ICoBanner {
 	
 	private var adapter: CoBannerAdapter? = null

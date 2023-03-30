@@ -100,6 +100,8 @@ private object Impl26 {
 		val window = activity.window
 		previousNavigationBarColors[activity] = window.navigationBarColor
 		window.navigationBarColor = Color.TRANSPARENT
+		val controller = WindowCompat.getInsetsController(window, window.decorView)
+		controller.hide(WindowInsetsCompat.Type.navigationBars())
 	}
 	
 	fun showNavigationBar(activity: Activity) {

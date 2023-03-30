@@ -1,5 +1,6 @@
 package com.cooder.cooder.ui.item
 
+import android.content.Context
 import android.util.SparseArray
 import android.view.View
 import androidx.annotation.IdRes
@@ -17,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView
 open class CoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 	
 	private val viewCaches = SparseArray<View>()
+	
+	val context: Context get() = itemView.context
 	
 	/**
 	 * 查找View

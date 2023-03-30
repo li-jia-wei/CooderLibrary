@@ -9,6 +9,7 @@ import androidx.core.util.containsKey
 import androidx.core.util.containsValue
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import java.lang.ref.WeakReference
 import java.lang.reflect.ParameterizedType
@@ -25,11 +26,11 @@ import kotlin.math.min
  */
 class CoAdapter(
 	context: Context
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : RecyclerView.Adapter<CoViewHolder>() {
 	
 	private val inflater = LayoutInflater.from(context)
-	private val dataItems = mutableListOf<CoDataItem<*, out RecyclerView.ViewHolder>>()
-	private val typeArray = SparseArray<CoDataItem<*, out RecyclerView.ViewHolder>>()
+	private val dataItems = mutableListOf<CoDataItem<*, *>>()
+	private val typeArray = SparseArray<CoDataItem<*, *>>()
 	private var recyclerViewRef: WeakReference<RecyclerView>? = null
 	
 	private val headers = SparseArray<View>()
@@ -52,8 +53,9 @@ class CoAdapter(
 	 * @param index 在DataItem中插入的位置
 	 */
 	@JvmOverloads
-	fun addItem(dataItem: CoDataItem<*, out RecyclerView.ViewHolder>, notify: Boolean = true, index: Int = -1) {
+	fun addItem(dataItem: CoDataItem<*, *>, notify: Boolean = true, index: Int = -1) {
 		val isSetIndex = index >= 0 && index <= getItemSize()
+		recyclerViewRef
 		if (isSetIndex) {
 			this.dataItems.add(index, dataItem)
 		} else {
@@ -75,7 +77,7 @@ class CoAdapter(
 	 * @param startIndex 在DataItem中插入的位置
 	 */
 	@JvmOverloads
-	fun addItems(dataItems: Collection<CoDataItem<*, out RecyclerView.ViewHolder>>, notify: Boolean = true, startIndex: Int = -1) {
+	fun addItems(dataItems: Collection<CoDataItem<*, *>>, notify: Boolean = true, startIndex: Int = -1) {
 		val isSetStartIndex = startIndex >= 0 && startIndex <= getItemSize()
 		if (isSetStartIndex) {
 			this.dataItems.addAll(startIndex, dataItems)
@@ -95,7 +97,7 @@ class CoAdapter(
 	 * 删除Item
 	 * @param dataItem DataItem
 	 */
-	fun removeItem(dataItem: CoDataItem<*, out RecyclerView.ViewHolder>?) {
+	fun removeItem(dataItem: CoDataItem<*, *>?) {
 		val index = this.dataItems.indexOf(dataItem)
 		if (index >= 0) {
 			this.dataItems.removeAt(index)
@@ -107,7 +109,7 @@ class CoAdapter(
 	 * 删除多个Item
 	 * @param dataItems 多个DataItem
 	 */
-	fun removeItems(dataItems: Collection<CoDataItem<*, out RecyclerView.ViewHolder>?>?) {
+	fun removeItems(dataItems: Collection<CoDataItem<*, *>?>?) {
 		dataItems?.forEach { dataItem ->
 			val index = this.dataItems.indexOf(dataItem)
 			if (index >= 0) {
@@ -122,7 +124,7 @@ class CoAdapter(
 	 * @param index 在DataItem中的位置
 	 * @return 获取被删除的DataItem
 	 */
-	fun removeItemAt(index: Int): CoDataItem<*, out RecyclerView.ViewHolder>? {
+	fun removeItemAt(index: Int): CoDataItem<*, *>? {
 		if (index >= 0 && index < getItemSize()) {
 			val remove = dataItems.removeAt(index)
 			notifyItemRemoved(getToHeaderSize() + index)
@@ -137,8 +139,8 @@ class CoAdapter(
 	 * @param itemCount DataItem的数量
 	 * @return 获取被删除的多个DataItem
 	 */
-	fun removeItemsAt(startIndex: Int, itemCount: Int): Collection<CoDataItem<*, out RecyclerView.ViewHolder>> {
-		val items = mutableListOf<CoDataItem<*, out RecyclerView.ViewHolder>>()
+	fun removeItemsAt(startIndex: Int, itemCount: Int): Collection<CoDataItem<*, *>> {
+		val items = mutableListOf<CoDataItem<*, *>>()
 		if (startIndex >= 0 && startIndex < getItemSize()) {
 			val removeCount = min(getItemSize() - startIndex, itemCount)
 			repeat(removeCount) {
@@ -162,7 +164,7 @@ class CoAdapter(
 	 * 刷新DataItem
 	 * @param dataItem DataItem
 	 */
-	fun refreshItem(dataItem: CoDataItem<*, out RecyclerView.ViewHolder>) {
+	fun refreshItem(dataItem: CoDataItem<*, *>) {
 		val index = dataItems.indexOf(dataItem)
 		if (index >= 0 && index < getItemSize()) {
 			notifyItemChanged(getToHeaderSize() + index)
@@ -173,7 +175,7 @@ class CoAdapter(
 	 * 刷新多个Item
 	 * @param dataItems 多个DataItem
 	 */
-	fun refreshItems(dataItems: Collection<CoDataItem<*, out RecyclerView.ViewHolder>>) {
+	fun refreshItems(dataItems: Collection<CoDataItem<*, *>>) {
 		for (dataItem in dataItems) {
 			refreshItem(dataItem)
 		}
@@ -424,20 +426,20 @@ class CoAdapter(
 	/**
 	 * 创建ViewHolder
 	 */
-	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoViewHolder {
 		if (viewType == TOP_VIEW_ITEM) {
-			return object : RecyclerView.ViewHolder(topView!!) {}
+			return object : CoViewHolder(topView!!) {}
 		}
 		if (viewType == BOTTOM_VIEW_ITEM) {
-			return object : RecyclerView.ViewHolder(bottomView!!) {}
+			return object : CoViewHolder(bottomView!!) {}
 		}
 		if (headers.containsKey(viewType)) {
 			val view = headers[viewType]
-			return object : RecyclerView.ViewHolder(view) {}
+			return object : CoViewHolder(view) {}
 		}
 		if (footers.containsKey(viewType)) {
 			val view = footers[viewType]
-			return object : RecyclerView.ViewHolder(view) {}
+			return object : CoViewHolder(view) {}
 		}
 		val dataItem = typeArray[viewType]
 		var view = dataItem.getItemView(parent)
@@ -455,24 +457,24 @@ class CoAdapter(
 	/**
 	 * 创建ViewHolder
 	 */
-	private fun createViewHolderInternal(javaClass: Class<CoDataItem<*, out RecyclerView.ViewHolder>>, view: View): RecyclerView.ViewHolder {
+	private fun createViewHolderInternal(javaClass: Class<CoDataItem<*, *>>, view: View): CoViewHolder {
 		val superclass = javaClass.genericSuperclass
 		if (superclass is ParameterizedType) {
 			val arguments = superclass.actualTypeArguments
 			for (argument in arguments) {
-				if (argument is Class<*> && RecyclerView.ViewHolder::class.java.isAssignableFrom(argument)) {
+				if (argument is Class<*> && CoViewHolder::class.java.isAssignableFrom(argument)) {
 					try {
-						return argument.getConstructor(View::class.java).newInstance(view) as RecyclerView.ViewHolder
+						return argument.getConstructor(View::class.java).newInstance(view) as CoViewHolder
 					} catch (e: Exception) {
 						e.printStackTrace()
 					}
 				}
 			}
 		}
-		return object : RecyclerView.ViewHolder(view) {}
+		return object : CoViewHolder(view) {}
 	}
 	
-	override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+	override fun onBindViewHolder(holder: CoViewHolder, position: Int) {
 		if (isHeaderPosition(position) || isFooterPosition(position) || isTopViewPosition(position) || isBottomViewPosition(position)) {
 			return
 		}
@@ -481,12 +483,12 @@ class CoAdapter(
 		dataItem?.onBindData(holder, position)
 	}
 	
-	private fun getItem(position: Int): CoDataItem<*, RecyclerView.ViewHolder>? {
+	private fun getItem(position: Int): CoDataItem<*, CoViewHolder>? {
 		if (position < 0 || position >= getItemSize()) {
 			return null
 		}
 		@Suppress("UNCHECKED_CAST")
-		return dataItems[position] as CoDataItem<*, RecyclerView.ViewHolder>
+		return dataItems[position] as CoDataItem<*, CoViewHolder>
 	}
 	
 	/**
@@ -534,7 +536,7 @@ class CoAdapter(
 	/**
 	 * 当此适配器创建的视图已附加到窗口时调用
 	 */
-	override fun onViewAttachedToWindow(holder: RecyclerView.ViewHolder) {
+	override fun onViewAttachedToWindow(holder: CoViewHolder) {
 		super.onViewAttachedToWindow(holder)
 		val recyclerView = getAttachRecyclerView()
 		if (recyclerView != null) {
@@ -562,7 +564,7 @@ class CoAdapter(
 	/**
 	 * 当此适配器创建的视图已与其窗口分离时调用
 	 */
-	override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder) {
+	override fun onViewDetachedFromWindow(holder: CoViewHolder) {
 		super.onViewDetachedFromWindow(holder)
 		val position = holder.adapterPosition
 		if (isHeaderPosition(position) || isFooterPosition(position) || isTopViewPosition(position) || isBottomViewPosition(position)) {
@@ -664,5 +666,15 @@ class CoAdapter(
 	 */
 	fun isEmpty(): Boolean {
 		return itemCount == 0
+	}
+	
+	/**
+	 * 移除动画
+	 */
+	fun clearAnimation() {
+		val recyclerView = recyclerViewRef?.get()
+		val anim = recyclerView?.itemAnimator as SimpleItemAnimator?
+		anim?.supportsChangeAnimations = false
+		recyclerView?.itemAnimator = null
 	}
 }

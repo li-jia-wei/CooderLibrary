@@ -7,15 +7,14 @@ package com.cooder.cooder.library.restful
  *
  * 创建：2023/3/10 21:29
  *
- * 介绍：数据类
+ * 介绍：LiveData的返回结果封装
  */
 data class CoResult<T>(
 	val data: T?,
-	val success: Boolean = true,
 	val msg: String? = null
 ) {
 	
 	fun isSuccessful(): Boolean {
-		return success && data != null
+		return data != null
 	}
 }

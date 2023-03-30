@@ -3,10 +3,10 @@ package com.cooder.cooder.app.ui.item.dataitem
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.view.setMargins
-import androidx.recyclerview.widget.RecyclerView
 import com.cooder.cooder.app.R
 import com.cooder.cooder.library.util.expends.dpInt
 import com.cooder.cooder.ui.item.CoDataItem
+import com.cooder.cooder.ui.item.CoViewHolder
 
 /**
  * 项目：CooderLibrary
@@ -19,19 +19,19 @@ import com.cooder.cooder.ui.item.CoDataItem
  */
 open class DataItem(
 	private val itemData: ItemData,
-) : CoDataItem<ItemData, RecyclerView.ViewHolder>(itemData) {
+) : CoDataItem<ItemData, CoViewHolder>(itemData) {
 	
 	override fun getItemLayoutRes(): Int {
 		return R.layout.data_item
 	}
 	
-	override fun onBindData(holder: RecyclerView.ViewHolder, position: Int) {
+	override fun onBindData(holder: CoViewHolder, position: Int) {
 		val tv: TextView = holder.itemView.findViewById(R.id.tv)
 		tv.text = itemData.name
 		val param = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 80.dpInt)
 		param.setMargins(5.dpInt)
-        tv.layoutParams = param
-    }
+		tv.layoutParams = param
+	}
 	
 	override fun getSpanSize(): Int {
 		return 1

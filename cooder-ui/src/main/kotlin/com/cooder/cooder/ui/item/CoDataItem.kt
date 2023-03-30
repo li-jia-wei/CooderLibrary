@@ -2,8 +2,8 @@ package com.cooder.cooder.ui.item
 
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.IntRange
 import androidx.annotation.LayoutRes
-import androidx.recyclerview.widget.RecyclerView
 
 /**
  * 项目：CooderLibrary
@@ -14,9 +14,11 @@ import androidx.recyclerview.widget.RecyclerView
  *
  * 介绍：CoDataItem
  */
-abstract class CoDataItem<DATA, VM : RecyclerView.ViewHolder>(
-	val data: DATA
+abstract class CoDataItem<DATA, VM : CoViewHolder> @JvmOverloads constructor(
+	private val _data: DATA? = null
 ) {
+	
+	val data: DATA get() = _data!!
 	
 	protected var coAdapter: CoAdapter? = null
 	
@@ -64,6 +66,7 @@ abstract class CoDataItem<DATA, VM : RecyclerView.ViewHolder>(
 	/**
 	 * 设置DataItem占多少列，大于设置的列数则等于设置的列数
 	 */
+	@IntRange(from = 0, to = 4)
 	open fun getSpanSize(): Int {
 		return 0
 	}
