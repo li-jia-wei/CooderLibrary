@@ -1,12 +1,12 @@
 [versions]
 
-com-android-application = "7.4.2"
-com-android-library = "7.4.2"
+com-android-application = "8.0.0"
+com-android-library = "8.0.0"
 org-jetbrains-kotlin-android = "1.8.10"
 org-jetbrains-kotlin-jvm = "1.8.10"
 com-google-devtools-ksp = "1.8.10-1.0.9"
 
-core-kts = "1.9.0"
+core-kts = "1.10.0"
 appcompat = "1.6.1"
 material = "1.8.0"
 constraintlayout = "2.1.4"
@@ -15,9 +15,9 @@ androidx-test-ext-junit = "1.1.5"
 espresso-core = "3.5.1"
 
 glide = "4.15.1"
-lifecycle-runtime-ktx = "2.5.1"
-room-runtime = "2.5.0"
-room-compiler = "2.5.0"
+lifecycle-runtime-ktx = "2.6.1"
+room-runtime = "2.5.1"
+room-compiler = "2.5.1"
 
 
 [libraries]
