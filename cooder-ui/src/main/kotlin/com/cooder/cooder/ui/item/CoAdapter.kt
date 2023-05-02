@@ -55,7 +55,6 @@ class CoAdapter(
 	@JvmOverloads
 	fun addItem(dataItem: CoDataItem<*, *>, notify: Boolean = true, index: Int = -1) {
 		val isSetIndex = index >= 0 && index <= getItemSize()
-		recyclerViewRef
 		if (isSetIndex) {
 			this.dataItems.add(index, dataItem)
 		} else {
@@ -98,6 +97,10 @@ class CoAdapter(
 	 * @param dataItem DataItem
 	 */
 	fun removeItem(dataItem: CoDataItem<*, *>?) {
+		val type = dataItem!!.javaClass.hashCode()
+		if (typeArray.containsKey(type)) {
+			typeArray.remove(type)
+		}
 		val index = this.dataItems.indexOf(dataItem)
 		if (index >= 0) {
 			this.dataItems.removeAt(index)
@@ -110,8 +113,12 @@ class CoAdapter(
 	 * @param dataItems 多个DataItem
 	 */
 	fun removeItems(dataItems: Collection<CoDataItem<*, *>?>?) {
-		dataItems?.forEach { dataItem ->
-			val index = this.dataItems.indexOf(dataItem)
+		dataItems?.forEach {
+			val type = it!!.javaClass.hashCode()
+			if (typeArray.containsKey(type)) {
+				typeArray.remove(type)
+			}
+			val index = this.dataItems.indexOf(it)
 			if (index >= 0) {
 				this.dataItems.removeAt(index)
 				notifyItemRemoved(getToHeaderSize() + index)
@@ -127,6 +134,10 @@ class CoAdapter(
 	fun removeItemAt(index: Int): CoDataItem<*, *>? {
 		if (index >= 0 && index < getItemSize()) {
 			val remove = dataItems.removeAt(index)
+			val type = remove.javaClass.hashCode()
+			if (typeArray.containsKey(type)) {
+				typeArray.remove(type)
+			}
 			notifyItemRemoved(getToHeaderSize() + index)
 			return remove
 		}
@@ -145,6 +156,10 @@ class CoAdapter(
 			val removeCount = min(getItemSize() - startIndex, itemCount)
 			repeat(removeCount) {
 				val item = dataItems.removeAt(startIndex)
+				val type = item.javaClass.hashCode()
+				if (typeArray.containsKey(type)) {
+					typeArray.remove(type)
+				}
 				items += item
 			}
 			notifyItemRangeRemoved(getToHeaderSize() + startIndex, removeCount)
@@ -157,6 +172,12 @@ class CoAdapter(
 	 */
 	fun removeAllItems() {
 		notifyItemRangeRemoved(getToHeaderSize(), getItemSize())
+		dataItems.forEach {
+			val type = it.javaClass.hashCode()
+			if (typeArray.containsKey(type)) {
+				typeArray.remove(type)
+			}
+		}
 		this.dataItems.clear()
 	}
 	
@@ -361,10 +382,10 @@ class CoAdapter(
 	 */
 	fun removeAll() {
 		notifyItemRangeRemoved(0, itemCount)
+		removeAllItems()
+		removeAllHeaderViews()
+		removeAllFooterView()
 		topView = null
-		headers.clear()
-		dataItems.clear()
-		footers.clear()
 		bottomView = null
 	}
 	

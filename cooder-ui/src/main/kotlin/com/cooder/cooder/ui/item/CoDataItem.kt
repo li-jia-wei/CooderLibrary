@@ -14,11 +14,7 @@ import androidx.annotation.LayoutRes
  *
  * 介绍：CoDataItem
  */
-abstract class CoDataItem<DATA, VM : CoViewHolder> @JvmOverloads constructor(
-	private val _data: DATA? = null
-) {
-	
-	val data: DATA get() = _data!!
+abstract class CoDataItem<DATA, VM : CoViewHolder> {
 	
 	protected var coAdapter: CoAdapter? = null
 	
