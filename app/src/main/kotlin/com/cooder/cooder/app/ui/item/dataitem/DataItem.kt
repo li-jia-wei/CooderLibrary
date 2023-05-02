@@ -19,7 +19,7 @@ import com.cooder.cooder.ui.item.CoViewHolder
  */
 open class DataItem(
 	private val itemData: ItemData,
-) : CoDataItem<ItemData, CoViewHolder>(itemData) {
+) : CoDataItem<ItemData, CoViewHolder>() {
 	
 	override fun getItemLayoutRes(): Int {
 		return R.layout.data_item

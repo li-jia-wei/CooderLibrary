@@ -23,6 +23,8 @@ import kotlin.math.min
  * 创建：2022/11/30 23:27
  *
  * 介绍：作为RecyclerView的适配器，适配GridLayout、StaggeredGridLayout
+ *
+ * 顺序：top(1) -> header(n) -> item(n) -> footer(n) -> bottom(1)
  */
 class CoAdapter(
 	context: Context
@@ -226,7 +228,7 @@ class CoAdapter(
 	 * 刷新所有的DataItem
 	 */
 	fun refreshAllItems() {
-		notifyItemRangeChanged(getToHeaderSize(), getItemSize() + 1)
+		notifyItemRangeChanged(getToHeaderSize(), getItemSize())
 	}
 	
 	/**
@@ -373,7 +375,7 @@ class CoAdapter(
 	fun removeBottomView() {
 		if (this.bottomView != null) {
 			this.bottomView = null
-			notifyItemRemoved(itemCount - 1)
+			notifyItemRemoved(itemCount)
 		}
 	}
 	
@@ -381,12 +383,11 @@ class CoAdapter(
 	 * 清楚所有HeaderView、DataItem和FooterView
 	 */
 	fun removeAll() {
-		notifyItemRangeRemoved(0, itemCount)
-		removeAllItems()
+		removeTopView()
 		removeAllHeaderViews()
+		removeAllItems()
 		removeAllFooterView()
-		topView = null
-		bottomView = null
+		removeBottomView()
 	}
 	
 	/**
@@ -420,28 +421,35 @@ class CoAdapter(
 	 * 判断是否是Header
 	 */
 	private fun isHeaderPosition(position: Int): Boolean {
-		return position >= getTopSize() && position < getToHeaderSize()
+		return position in (getTopSize() until getToHeaderSize())
 	}
 	
 	/**
 	 * 判断是否是Footer
 	 */
 	private fun isFooterPosition(position: Int): Boolean {
-		return position >= getToItemSize() && position < getToFooterSize()
+		return position in (getToItemSize() until getToFooterSize())
 	}
 	
 	/**
 	 * 判断是否是TopView
 	 */
 	private fun isTopViewPosition(position: Int): Boolean {
-		return getTopSize() == 1 && position == 0
+		return position in (0 until getTopSize())
 	}
 	
 	/**
 	 * 判断是否是BottomView
 	 */
 	private fun isBottomViewPosition(position: Int): Boolean {
-		return getBottomSize() == 1 && position == itemCount - 1
+		return position in (getToFooterSize() until itemCount)
+	}
+	
+	/**
+	 * 判断是否不是Item的索引
+	 */
+	private fun isNotItemPosition(position: Int): Boolean {
+		return position !in (getToHeaderSize() until getToItemSize())
 	}
 	
 	/**
@@ -496,7 +504,7 @@ class CoAdapter(
 	}
 	
 	override fun onBindViewHolder(holder: CoViewHolder, position: Int) {
-		if (isHeaderPosition(position) || isFooterPosition(position) || isTopViewPosition(position) || isBottomViewPosition(position)) {
+		if (isNotItemPosition(position)) {
 			return
 		}
 		val itemPosition = getRealItemPosition(position)
@@ -525,7 +533,7 @@ class CoAdapter(
 			manager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
 				override fun getSpanSize(position: Int): Int {
 					if (position < itemCount) {
-						if (isHeaderPosition(position) || isFooterPosition(position) || isTopViewPosition(position) || isBottomViewPosition(position)) {
+						if (isNotItemPosition(position)) {
 							return spanCount
 						}
 						val itemPosition = getRealItemPosition(position)
@@ -565,7 +573,7 @@ class CoAdapter(
 			val lp = holder.itemView.layoutParams
 			// 适配StaggeredGridLayout
 			if (lp != null && lp is StaggeredGridLayoutManager.LayoutParams) {
-				if (isHeaderPosition(position) || isFooterPosition(position) || isTopViewPosition(position) || isBottomViewPosition(position)) {
+				if (isNotItemPosition(position)) {
 					lp.isFullSpan = true
 					return
 				}
@@ -588,7 +596,7 @@ class CoAdapter(
 	override fun onViewDetachedFromWindow(holder: CoViewHolder) {
 		super.onViewDetachedFromWindow(holder)
 		val position = holder.adapterPosition
-		if (isHeaderPosition(position) || isFooterPosition(position) || isTopViewPosition(position) || isBottomViewPosition(position)) {
+		if (isNotItemPosition(position)) {
 			return
 		}
 		val itemPosition = getRealItemPosition(position)

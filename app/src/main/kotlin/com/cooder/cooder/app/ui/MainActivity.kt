@@ -66,8 +66,9 @@ class MainActivity : AppCompatActivity() {
 	}
 	
 	class ComponentsDataItem(
-		private val context: Context, private val itemData: Pair<KClass<out AppCompatActivity>, String>
-	) : CoDataItem<Pair<KClass<out AppCompatActivity>, String>, ComponentsHolder>(itemData) {
+		private val context: Context,
+		private val itemData: Pair<KClass<out AppCompatActivity>, String>
+	) : CoDataItem<Pair<KClass<out AppCompatActivity>, String>, ComponentsHolder>() {
 		
 		override fun getItemLayoutRes(): Int {
 			return R.layout.item_component

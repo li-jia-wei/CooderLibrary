@@ -45,6 +45,7 @@ class CoDataItemActivity : AppCompatActivity() {
 		}
 		adapter.addItems(items)
 		binding.recyclerView.scrollToPosition(0)
+		adapter.removeAll()
 	}
 	
 	private fun createView(text: String): View {
