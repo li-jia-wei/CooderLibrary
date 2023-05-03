@@ -6,6 +6,7 @@ import android.widget.FrameLayout
 import androidx.annotation.IntRange
 import androidx.annotation.LayoutRes
 import androidx.viewpager.widget.ViewPager
+import com.cooder.cooder.library.log.CoLog
 import com.cooder.cooder.ui.R
 import com.cooder.cooder.ui.banner.CoBanner
 import com.cooder.cooder.ui.banner.indicator.CircleIndicator
@@ -63,6 +64,7 @@ class CoBannerDelegate(
 	 * 请在setBannerData方法之前执行，否则将只能使用默认指示器
 	 */
 	override fun setBannerIndicator(indicator: CoIndicator<out View>) {
+		CoLog.i("??????")
 		if (!isCallBannerData && !isCallBannerIndicator) {
 			isCallBannerIndicator = true
 			this.indicator = indicator
@@ -73,7 +75,7 @@ class CoBannerDelegate(
 	}
 	
 	/**
-	 * 首次调用将不会判断指示器是否null，将指示器在init里完成，放置在设置不显示指示器的时候new出指示器，浪费内存
+	 * 首次调用将不会判断指示器是否null，将指示器在init里完成，防止在设置不显示指示器的时候new出指示器，浪费内存
 	 */
 	override fun setBannerCloseIndicator(close: Boolean) {
 		this.closeIndicator = close

@@ -122,11 +122,11 @@ class CoBanner @JvmOverloads constructor(
 	private fun setBannerIndicatorAttrs() {
 		if (indicator != -1) {
 			when (indicator) {
-				CIRCLE_INDICATOR_SMALL -> delegate.setBannerIndicator(CircleIndicator(context, attrs, defStyleAttr, CircleIndicator.SMALL))
-				CIRCLE_INDICATOR_MEDIUM -> delegate.setBannerIndicator(CircleIndicator(context, attrs, defStyleAttr, CircleIndicator.MEDIUM))
-				CIRCLE_INDICATOR_LARGE -> delegate.setBannerIndicator(CircleIndicator(context, attrs, defStyleAttr, CircleIndicator.LARGE))
-				LINE_INDICATOR -> delegate.setBannerIndicator(LineIndicator(context, attrs, defStyleAttr))
-				NUMBER_INDICATOR -> delegate.setBannerIndicator(NumberIndicator(context, attrs, defStyleAttr))
+				CIRCLE_INDICATOR_SMALL -> delegate.setBannerIndicator(CircleIndicator(context, size = CircleIndicator.SMALL))
+				CIRCLE_INDICATOR_MEDIUM -> delegate.setBannerIndicator(CircleIndicator(context, size = CircleIndicator.MEDIUM))
+				CIRCLE_INDICATOR_LARGE -> delegate.setBannerIndicator(CircleIndicator(context, size = CircleIndicator.LARGE))
+				LINE_INDICATOR -> delegate.setBannerIndicator(LineIndicator(context))
+				NUMBER_INDICATOR -> delegate.setBannerIndicator(NumberIndicator(context))
 			}
 			indicator = -1
 		}
