@@ -138,6 +138,10 @@ class CoBannerDelegate(
 		this.adapter!!.setOnBannerClickListener(onBannerClickListener)
 	}
 	
+	override fun getBannerChildAt(position: Int): View? {
+		return this.adapter!!.getCacheViewAt(position)
+	}
+	
 	fun <T : CoIndicator<out View>> getIndicator(): T {
 		@Suppress("UNCHECKED_CAST") return indicator as T
 	}

@@ -22,7 +22,7 @@ abstract class CacheDatabase : RoomDatabase() {
 		private var database: CacheDatabase
 		
 		init {
-			val context = AppGlobals.getBaseContext()
+			val context = AppGlobals.getContext()
 			database = Room.databaseBuilder(context, CacheDatabase::class.java, "cooder_cache.db")
 				.allowMainThreadQueries()
 				.build()

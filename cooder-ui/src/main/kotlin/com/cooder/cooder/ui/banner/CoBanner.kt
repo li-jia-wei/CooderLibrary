@@ -112,6 +112,9 @@ class CoBanner @JvmOverloads constructor(
 		delegate.setOnBannerClickListener(onBannerClickListener)
 	}
 	
+	override fun getBannerChildAt(position: Int): View? {
+		return delegate.getBannerChildAt(position)
+	}
 	
 	/**
 	 * 设置指示器

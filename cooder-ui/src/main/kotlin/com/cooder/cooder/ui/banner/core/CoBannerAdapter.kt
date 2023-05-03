@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
+import androidx.core.util.containsKey
 import androidx.viewpager.widget.PagerAdapter
 
 /**
@@ -181,7 +182,15 @@ class CoBannerAdapter(
 			throw IllegalStateException("You must first call the setLayoutResId method.")
 		}
 		val view = layoutInflater.inflate(layoutResId, parent, false)
+		
 		return view
+	}
+	
+	fun getCacheViewAt(realPosition: Int): View? {
+		if (cacheViews.containsKey(realPosition)) {
+			return cacheViews[realPosition].rootView
+		}
+		return null
 	}
 	
 	/**

@@ -48,6 +48,8 @@ dependencies {
 	androidTestImplementation libs.androidx.test.ext.junit
 	androidTestImplementation libs.espresso.core
 	
+	implementation libs.palette.ktx
+	
 	// Room
 	implementation libs.room.runtime
 	ksp libs.room.compiler

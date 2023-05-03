@@ -94,6 +94,8 @@ interface ICoBanner {
 	 */
 	fun setOnBannerClickListener(onBannerClickListener: OnBannerClickListener)
 	
+	fun getBannerChildAt(position: Int): View?
+	
 	interface OnBannerClickListener {
 		fun onBannerClick(viewHolder: CoBannerAdapter.CoBannerViewHolder, mo: CoBannerMo, position: Int)
 	}
