@@ -16,7 +16,7 @@ import java.util.concurrent.locks.ReentrantLock
  *
  * 创建：2022/11/12 00:00
  *
- * 介绍：CoExecutor
+ * 介绍：线程执行器
  *
  * 支持按任务的优先级去执行、线程池暂停与恢复、异步结果主动回调主线程
  */

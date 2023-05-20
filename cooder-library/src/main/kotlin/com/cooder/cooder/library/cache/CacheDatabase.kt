@@ -12,7 +12,7 @@ import com.cooder.cooder.library.util.AppGlobals
  *
  * 创建：2023/3/7 13:27
  *
- * 介绍：CacheDatabase
+ * 介绍：缓存数据库
  */
 @Database(entities = [Cache::class], version = 1)
 abstract class CacheDatabase : RoomDatabase() {

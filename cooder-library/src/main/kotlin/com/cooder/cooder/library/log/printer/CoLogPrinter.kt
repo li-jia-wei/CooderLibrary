@@ -10,7 +10,7 @@ import com.cooder.cooder.library.log.CoLogType
  *
  * 创建：2022/9/24 13:49
  *
- * 介绍：CoLogPrinter
+ * 介绍：日志打印
  */
 interface CoLogPrinter {
 	

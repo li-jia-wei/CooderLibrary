@@ -39,13 +39,14 @@ class CoDataItemActivity : AppCompatActivity() {
 		binding.recyclerView.adapter = adapter
 		val bottom1 = createView("BOTTOM")
 		adapter.setBottomView(bottom1)
+		adapter.addItem(DataItem(ItemData(this, "Item0")))
 		val items = mutableListOf<DataItem>()
 		repeat(30) {
 			items += DataItem(ItemData(this, "Item${it + 1}"))
 		}
 		adapter.addItems(items)
 		binding.recyclerView.scrollToPosition(0)
-		adapter.removeAll()
+//		adapter.removeAll()
 	}
 	
 	private fun createView(text: String): View {

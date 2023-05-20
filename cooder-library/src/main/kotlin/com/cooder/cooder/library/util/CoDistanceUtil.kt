@@ -10,7 +10,7 @@ import kotlin.math.sqrt
  *
  * 创建：2022/10/5 23:45
  *
- * 介绍：CoDistanceUtil
+ * 介绍：距离计算工具
  */
 object CoDistanceUtil {
 	

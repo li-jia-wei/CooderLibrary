@@ -9,7 +9,7 @@ import com.cooder.cooder.ui.refresh.overview.CoOverView
  *
  * 创建：2022/10/11 00:05
  *
- * 介绍：CoRefresh
+ * 介绍：下拉刷新接口
  */
 interface CoRefresh {
 	

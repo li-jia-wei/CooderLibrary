@@ -25,7 +25,7 @@ import com.cooder.cooder.ui.banner.indicator.NumberIndicator
  *
  * 创建：2022/10/23 15:00
  *
- * 介绍：CoBanner
+ * 介绍：轮播图
  */
 class CoBanner @JvmOverloads constructor(
 	context: Context,

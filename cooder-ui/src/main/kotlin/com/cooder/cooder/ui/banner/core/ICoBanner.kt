@@ -13,7 +13,7 @@ import com.cooder.cooder.ui.banner.indicator.CoIndicator
  *
  * 创建：2022/10/20 18:59
  *
- * 介绍：ICooderBanner
+ * 介绍：ICoBanner
  */
 interface ICoBanner {
 	

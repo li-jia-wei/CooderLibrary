@@ -9,7 +9,7 @@ import androidx.annotation.Px
  *
  * 创建：2022/9/27 19:38
  *
- * 介绍：ICooderTab
+ * 介绍：CoTab
  */
 internal interface CoTab<Info : CoTabInfo<*>> : CoTabLayout.OnTabSelectedListener<Info> {
 	

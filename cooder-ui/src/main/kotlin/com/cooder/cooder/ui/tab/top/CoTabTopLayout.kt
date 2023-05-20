@@ -18,7 +18,7 @@ import kotlin.math.abs
  *
  * 创建：2022/10/8 07:34
  *
- * 介绍：CoTabTopLayout
+ * 介绍：顶部标签视图
  */
 class CoTabTopLayout @JvmOverloads constructor(
 	context: Context,

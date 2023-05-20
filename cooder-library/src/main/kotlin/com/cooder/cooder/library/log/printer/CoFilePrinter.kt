@@ -13,7 +13,7 @@ import java.util.concurrent.Executors
  *
  * 创建：2022/9/26 19:01
  *
- * 介绍：CoFilePrinter
+ * 介绍：日志文件打印
  */
 class CoFilePrinter(private val context: Context) : CoLogPrinter {
 	

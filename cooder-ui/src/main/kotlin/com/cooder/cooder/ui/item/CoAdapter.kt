@@ -23,7 +23,7 @@ import kotlin.math.min
  * 创建：2022/11/30 23:27
  *
  * 介绍：作为RecyclerView的适配器，适配GridLayout、StaggeredGridLayout
- *
+ *z
  * 顺序：top(1) -> header(n) -> item(n) -> footer(n) -> bottom(1)
  */
 class CoAdapter(
@@ -457,21 +457,21 @@ class CoAdapter(
 	 */
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoViewHolder {
 		if (viewType == TOP_VIEW_ITEM) {
-			return object : CoViewHolder(topView!!) {}
+			return CoViewHolder(topView!!)
 		}
 		if (viewType == BOTTOM_VIEW_ITEM) {
-			return object : CoViewHolder(bottomView!!) {}
+			return CoViewHolder(bottomView!!)
 		}
 		if (headers.containsKey(viewType)) {
 			val view = headers[viewType]
-			return object : CoViewHolder(view) {}
+			return CoViewHolder(view)
 		}
 		if (footers.containsKey(viewType)) {
 			val view = footers[viewType]
-			return object : CoViewHolder(view) {}
+			return CoViewHolder(view)
 		}
 		val dataItem = typeArray[viewType]
-		var view = dataItem.getItemView(parent)
+		var view = dataItem.getItemView(LayoutInflater.from(parent.context), parent)
 		val layoutRes = dataItem.getItemLayoutRes()
 		if (view != null && layoutRes != -1) {
 			throw IllegalStateException("${dataItem.javaClass.name}: getItemView与getItemLayout只能重写一个")
@@ -500,7 +500,7 @@ class CoAdapter(
 				}
 			}
 		}
-		return object : CoViewHolder(view) {}
+		return CoViewHolder(view)
 	}
 	
 	override fun onBindViewHolder(holder: CoViewHolder, position: Int) {
@@ -570,23 +570,22 @@ class CoAdapter(
 		val recyclerView = getAttachRecyclerView()
 		if (recyclerView != null) {
 			val position = recyclerView.getChildAdapterPosition(holder.itemView)
-			val lp = holder.itemView.layoutParams
+			val itemPosition = getRealItemPosition(position)
+			val dataItem = getItem(itemPosition) ?: return
 			// 适配StaggeredGridLayout
+			val lp = holder.itemView.layoutParams
 			if (lp != null && lp is StaggeredGridLayoutManager.LayoutParams) {
+				val manager = recyclerView.layoutManager as StaggeredGridLayoutManager
 				if (isNotItemPosition(position)) {
 					lp.isFullSpan = true
 					return
 				}
-				val itemPosition = getRealItemPosition(position)
-				val dataItem = getItem(itemPosition) ?: return
-				
-				val manager = recyclerView.layoutManager as StaggeredGridLayoutManager
 				val spanSize = dataItem.getSpanSize()
 				if (spanSize == manager.spanCount) {
 					lp.isFullSpan = true
 				}
-				dataItem.onViewAttachedToWindow(holder)
 			}
+			dataItem.onViewAttachedToWindow(holder)
 		}
 	}
 	

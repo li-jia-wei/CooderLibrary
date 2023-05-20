@@ -27,7 +27,7 @@ import com.cooder.cooder.ui.tab.top.CoTabTopInfo.TabType.VALUE_RES
  *
  * 创建：2022/10/7 20:06
  *
- * 介绍：顶部导航组件
+ * 介绍：顶部标签组件
  */
 class CoTabTop @JvmOverloads constructor(
 	context: Context,

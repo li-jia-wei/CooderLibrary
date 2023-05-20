@@ -11,7 +11,7 @@ import androidx.room.PrimaryKey
  *
  * 创建：2023/3/7 13:25
  *
- * 介绍：Cache
+ * 介绍：缓存表
  */
 @Entity(tableName = "tb_cache")
 class Cache {

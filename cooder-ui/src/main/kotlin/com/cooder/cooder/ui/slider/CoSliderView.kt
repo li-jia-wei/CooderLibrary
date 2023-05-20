@@ -30,7 +30,7 @@ import com.cooder.cooder.ui.item.CoViewHolder
  *
  * 创建：2023/2/15 08:11
  *
- * 介绍：SliderView
+ * 介绍：侧边导航栏
  */
 class CoSliderView @JvmOverloads constructor(
 	context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0

@@ -10,7 +10,7 @@ import java.io.InputStreamReader
  *
  * 创建：2023/1/17 18:23
  *
- * 介绍：AssetFileUtil
+ * 介绍：文件工具
  */
 object CoFileUtil {
 	

@@ -16,7 +16,7 @@ import com.cooder.cooder.library.util.expends.dpInt
  *
  * 创建：2022/9/26 11:55
  *
- * 介绍：CoViewPrinterProvider
+ * 介绍：日志视图打印提供者
  */
 class CoViewPrinterProvider(
 	private val rootView: FrameLayout,

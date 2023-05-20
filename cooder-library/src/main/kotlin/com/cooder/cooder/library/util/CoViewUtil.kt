@@ -1,5 +1,8 @@
 package com.cooder.cooder.library.util
 
+import android.app.Activity
+import android.content.Context
+import android.content.ContextWrapper
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.iterator
@@ -13,7 +16,7 @@ import java.util.Deque
  *
  * 创建：2022/9/29 13:03
  *
- * 介绍：CoViewUtil
+ * 介绍：视图工具
  */
 object CoViewUtil {
 	
@@ -39,5 +42,24 @@ object CoViewUtil {
 			}
 		}
 		return null
+	}
+	
+	/**
+	 * 判断Activity是否被销毁
+	 */
+	fun isActivityDestroy(context: Context): Boolean {
+		val activity = findActivity(context) ?: return true
+		return activity.isDestroyed && activity.isFinishing
+	}
+	
+	/**
+	 * 不要将context直接转换成Activity，还要转成ContextWrapper并获取baseContext进一步判断
+	 */
+	private fun findActivity(context: Context): Activity? {
+		return when (context) {
+			is Activity -> context
+			is ContextWrapper -> findActivity(context.baseContext)
+			else -> null
+		}
 	}
 }

@@ -1,5 +1,6 @@
 package com.cooder.cooder.ui.item
 
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.IntRange
@@ -12,7 +13,7 @@ import androidx.annotation.LayoutRes
  *
  * 创建：2022/11/30 23:28
  *
- * 介绍：CoDataItem
+ * 介绍：CoDataItem，配合CoAdapter使用
  */
 abstract class CoDataItem<DATA, VM : CoViewHolder> {
 	
@@ -34,7 +35,7 @@ abstract class CoDataItem<DATA, VM : CoViewHolder> {
 	/**
 	 * 返回该Item的视图View，这个比getItemLayoutRes优先
 	 */
-	open fun getItemView(parent: ViewGroup): View? {
+	open fun getItemView(inflater: LayoutInflater, parent: ViewGroup): View? {
 		return null
 	}
 	

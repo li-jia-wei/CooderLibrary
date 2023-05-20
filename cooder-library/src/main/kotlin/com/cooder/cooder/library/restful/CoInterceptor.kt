@@ -7,7 +7,7 @@ package com.cooder.cooder.library.restful
  *
  * 创建：2022/11/11 15:17
  *
- * 介绍：拦截器
+ * 介绍：Restful 拦截器
  */
 interface CoInterceptor {
 	

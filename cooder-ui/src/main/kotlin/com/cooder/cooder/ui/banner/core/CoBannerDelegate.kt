@@ -6,7 +6,6 @@ import android.widget.FrameLayout
 import androidx.annotation.IntRange
 import androidx.annotation.LayoutRes
 import androidx.viewpager.widget.ViewPager
-import com.cooder.cooder.library.log.CoLog
 import com.cooder.cooder.ui.R
 import com.cooder.cooder.ui.banner.CoBanner
 import com.cooder.cooder.ui.banner.indicator.CircleIndicator
@@ -19,7 +18,7 @@ import com.cooder.cooder.ui.banner.indicator.CoIndicator
  *
  * 创建：2022/10/23 15:12
  *
- * 介绍：CoBanner的控制器，辅助CooderBanner完成各种功能的控制
+ * 介绍：CoBanner的委托，辅助CoBanner完成各种功能的控制
  *
  * 将CooderBanner的一些逻辑内聚在这，保证暴露给使用者的CooderBanner干净整洁
  */
@@ -64,13 +63,12 @@ class CoBannerDelegate(
 	 * 请在setBannerData方法之前执行，否则将只能使用默认指示器
 	 */
 	override fun setBannerIndicator(indicator: CoIndicator<out View>) {
-		CoLog.i("??????")
 		if (!isCallBannerData && !isCallBannerIndicator) {
 			isCallBannerIndicator = true
 			this.indicator = indicator
 		} else {
 			// 不能重复设置指示器
-			throw IllegalStateException("You cannot set the indicator repeatedly.")
+			throw IllegalStateException("你不能重复设置指示器！")
 		}
 	}
 	

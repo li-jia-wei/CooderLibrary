@@ -13,7 +13,7 @@ import com.cooder.cooder.ui.tab.common.CoTabInfo
  *
  * 创建：2022/10/7 18:38
  *
- * 介绍：CoTabTopInfo
+ * 介绍：顶部标签信息
  */
 class CoTabTopInfo<Color : Comparable<Color>> : CoTabInfo<Color> {
 	

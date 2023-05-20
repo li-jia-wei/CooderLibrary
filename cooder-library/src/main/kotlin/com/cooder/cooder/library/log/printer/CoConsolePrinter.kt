@@ -11,7 +11,7 @@ import com.cooder.cooder.library.log.CoLogConfig.Companion.LOG_MAX_LENGTH
  *
  * 创建：2022/9/24 16:43
  *
- * 介绍：CoConsolePrinter
+ * 介绍：日志终端打印
  */
 class CoConsolePrinter : CoLogPrinter {
 	

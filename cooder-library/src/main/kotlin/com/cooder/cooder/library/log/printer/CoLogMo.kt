@@ -11,7 +11,7 @@ import java.util.Locale
  *
  * 创建：2022/9/26 10:40
  *
- * 介绍：CoLogMo
+ * 介绍：日志模型
  */
 internal data class CoLogMo(
 	private val timeMillis: Long,

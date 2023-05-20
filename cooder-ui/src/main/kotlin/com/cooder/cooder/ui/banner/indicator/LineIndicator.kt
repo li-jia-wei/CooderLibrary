@@ -19,7 +19,7 @@ import com.cooder.cooder.ui.R
  *
  * 创建：2022/10/24 20:27
  *
- * 介绍：横线指示器
+ * 介绍：线条指示器
  */
 class LineIndicator @JvmOverloads constructor(
 	context: Context,

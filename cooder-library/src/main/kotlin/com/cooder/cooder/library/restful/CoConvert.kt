@@ -9,7 +9,7 @@ import java.lang.reflect.Type
  *
  * 创建：2022/11/12 17:38
  *
- * 介绍：Co转换
+ * 介绍：Restful 转换
  */
 interface CoConvert {
 	

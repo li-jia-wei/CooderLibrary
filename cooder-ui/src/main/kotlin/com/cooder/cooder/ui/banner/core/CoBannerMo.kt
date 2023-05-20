@@ -7,6 +7,6 @@ package com.cooder.cooder.ui.banner.core
  *
  * 创建：2022/10/3 23:47
  *
- * 介绍：CoBannerMo
+ * 介绍：CoBanner的数据
  */
 open class CoBannerMo(val url: String)

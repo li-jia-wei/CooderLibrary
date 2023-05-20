@@ -9,7 +9,7 @@ import com.cooder.cooder.library.log.CoLog
  *
  * 创建：2022/11/11 14:58
  *
- * 介绍：回调
+ * 介绍：Restful 回调
  */
 interface CoCallback<T> {
 	

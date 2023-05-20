@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
  *
  * 创建：2022/10/9 21:05
  *
- * 介绍：ICooderTabInfo
+ * 介绍：CoTabInfo
  */
 interface CoTabInfo<Color : Comparable<Color>> {
 	val fragment: Class<out Fragment>?

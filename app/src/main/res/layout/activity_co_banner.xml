@@ -20,8 +20,7 @@
 				android:id="@+id/banner_circle"
 				android:layout_width="match_parent"
 				android:layout_height="180dp"
-				android:background="@color/view_bg"
-				app:indicator="line" />
+				android:background="@color/view_bg" />
 			
 			<com.cooder.cooder.ui.banner.CoBanner
 				android:id="@+id/banner_number"

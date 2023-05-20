@@ -13,7 +13,7 @@ import androidx.room.Query
  *
  * 创建：2023/3/7 13:33
  *
- * 介绍：CacheDao
+ * 介绍：缓存操作
  */
 @Dao
 interface CacheDao {

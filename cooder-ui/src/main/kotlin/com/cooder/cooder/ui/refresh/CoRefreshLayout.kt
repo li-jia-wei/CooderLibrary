@@ -3,6 +3,7 @@ package com.cooder.cooder.ui.refresh
 import android.content.Context
 import android.util.AttributeSet
 import android.view.GestureDetector
+import android.view.GestureDetector.SimpleOnGestureListener
 import android.view.MotionEvent
 import android.view.MotionEvent.ACTION_CANCEL
 import android.view.MotionEvent.ACTION_POINTER_INDEX_MASK
@@ -48,7 +49,7 @@ class CoRefreshLayout @JvmOverloads constructor(
 	
 	private val autoScroller = AutoScroller()
 	
-	private val gestureDetectorListener = object : CoGestureDetectorListener() {
+	private val gestureDetectorListener = object : SimpleOnGestureListener() {
 		
 		override fun onScroll(e1: MotionEvent, e2: MotionEvent, distanceX: Float, distanceY: Float): Boolean {
 			if (abs(distanceX) > abs(distanceY) || refreshListener != null && !refreshListener!!.enableRefresh()) {

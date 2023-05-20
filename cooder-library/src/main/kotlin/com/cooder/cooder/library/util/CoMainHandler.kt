@@ -11,7 +11,7 @@ import android.os.Message
  *
  * 创建：2023/3/7 21:12
  *
- * 介绍：CoMainHandler
+ * 介绍：主线程Handler
  */
 object CoMainHandler {
 	

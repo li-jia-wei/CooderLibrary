@@ -7,7 +7,7 @@ package com.cooder.cooder.library.log.format
  *
  * 创建：2022/9/24 13:52
  *
- * 介绍：CoLogFormatter
+ * 介绍：日志格式化
  */
 internal interface CoLogFormatter<T> {
 	

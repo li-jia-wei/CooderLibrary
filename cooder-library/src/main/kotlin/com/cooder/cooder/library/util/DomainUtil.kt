@@ -7,7 +7,7 @@ package com.cooder.cooder.library.util
  *
  * 创建：2022/11/12 17:03
  *
- * 介绍：域名工具类
+ * 介绍：域名工具
  */
 object DomainUtil {
 	

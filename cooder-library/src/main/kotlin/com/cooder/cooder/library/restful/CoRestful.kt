@@ -10,7 +10,7 @@ import java.lang.reflect.Proxy
  *
  * 创建：2022/11/11 15:22
  *
- * 介绍：CoRestful
+ * 介绍：Co网络请求框架
  */
 open class CoRestful(
 	private val baseUrl: String,
