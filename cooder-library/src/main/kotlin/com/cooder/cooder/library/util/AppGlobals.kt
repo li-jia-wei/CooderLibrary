@@ -25,7 +25,7 @@ object AppGlobals {
 	/**
 	 * 获取BaseContext
 	 */
-	fun getContext(): Context {
+	fun getBaseContext(): Context {
 		if (application != null)
 			return application!!.baseContext
 		return getApplication().baseContext ?: throw IllegalStateException("Failed to get application!")

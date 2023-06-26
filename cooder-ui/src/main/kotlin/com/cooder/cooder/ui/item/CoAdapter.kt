@@ -40,22 +40,22 @@ class CoAdapter(
 
     private val headers = SparseArray<View>()
     private val footers = SparseArray<View>()
-
-    private var topView: View? = null
-    private var bottomView: View? = null
-
-    private companion object {
-        private var BASE_HEADER_ITEM = 1000000
-        private var BASE_FOOTER_ITEM = 2000000
-        private var TOP_VIEW_ITEM = 3000000
-        private var BOTTOM_VIEW_ITEM = 3000001
-    }
-
-    /**
-     * 添加一个DataItem
-     * @param dataItem DataItem
-     * @param notify 是否刷新
-     * @param index 在DataItem中插入的位置
+	
+	private var topView: View? = null
+	private var bottomView: View? = null
+	
+	private companion object {
+		private var BASE_HEADER_ITEM = 1000000
+		private var BASE_FOOTER_ITEM = 2000000
+		private var TOP_VIEW_ITEM = 3000000
+		private var BOTTOM_VIEW_ITEM = 3000001
+	}
+	
+	/**
+	 * 添加一个DataItem
+	 * @param dataItem DataItem
+	 * @param notify 是否刷新
+	 * @param index 在DataItem中插入的位置
 	 */
 	@JvmOverloads
 	fun addItem(dataItem: CoDataItem<*, *>, notify: Boolean = true, index: Int = -1) {
@@ -83,19 +83,19 @@ class CoAdapter(
 	 */
 	@JvmOverloads
 	fun addItems(dataItems: Collection<CoDataItem<*, *>>, notify: Boolean = true, startIndex: Int = -1) {
-        val isSetStartIndex = startIndex >= 0 && startIndex <= getItemSize()
-        if (isSetStartIndex) {
-            this.dataItems.addAll(startIndex, dataItems)
-        } else {
-            this.dataItems += dataItems
-        }
-        if (notify) {
-            if (isSetStartIndex) {
-                notifyItemRangeInserted(getToHeaderSize() + startIndex, dataItems.size)
-            } else {
-                notifyItemRangeInserted(getToItemSize() - dataItems.size, dataItems.size)
-            }
-        }
+		val isSetStartIndex = startIndex >= 0 && startIndex <= getItemSize()
+		if (isSetStartIndex) {
+			this.dataItems.addAll(startIndex, dataItems)
+		} else {
+			this.dataItems += dataItems
+		}
+		if (notify) {
+			if (isSetStartIndex) {
+				notifyItemRangeInserted(getToHeaderSize() + startIndex, dataItems.size)
+			} else {
+				notifyItemRangeInserted(getToItemSize() - dataItems.size, dataItems.size)
+			}
+		}
         dataItems.forEach {
             it.setAdapter(this)
         }
@@ -133,7 +133,7 @@ class CoAdapter(
                 this.dataItems.removeAt(index)
                 notifyItemRemoved(getToHeaderSize() + index)
             }
-        }
+		}
 	}
 	
 	/**
@@ -171,7 +171,7 @@ class CoAdapter(
                     typePositions.delete(type)
                 }
                 items += item
-            }
+			}
 			notifyItemRangeRemoved(getToHeaderSize() + startIndex, removeCount)
 		}
 		return items
@@ -187,7 +187,7 @@ class CoAdapter(
             if (typePositions.containsKey(type)) {
                 typePositions.delete(type)
             }
-        }
+		}
 		this.dataItems.clear()
 	}
 	
@@ -462,20 +462,20 @@ class CoAdapter(
 	 * 创建ViewHolder
 	 */
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoViewHolder {
-        if (viewType == TOP_VIEW_ITEM) {
-            return CoViewHolder(topView!!)
-        }
-        if (viewType == BOTTOM_VIEW_ITEM) {
-            return CoViewHolder(bottomView!!)
-        }
-        if (headers.containsKey(viewType)) {
-            val view = headers[viewType]
-            return CoViewHolder(view)
-        }
-        if (footers.containsKey(viewType)) {
-            val view = footers[viewType]
-            return CoViewHolder(view)
-        }
+		if (viewType == TOP_VIEW_ITEM) {
+			return CoViewHolder(topView!!)
+		}
+		if (viewType == BOTTOM_VIEW_ITEM) {
+			return CoViewHolder(bottomView!!)
+		}
+		if (headers.containsKey(viewType)) {
+			val view = headers[viewType]
+			return CoViewHolder(view)
+		}
+		if (footers.containsKey(viewType)) {
+			val view = footers[viewType]
+			return CoViewHolder(view)
+		}
         val position = typePositions[viewType]
         val dataItem = dataItems[position]
         val viewHolder = dataItem.onCreateViewHolder(LayoutInflater.from(parent.context), parent)
@@ -490,7 +490,7 @@ class CoAdapter(
             view = inflater.inflate(layoutRes, parent, false)
         }
         return createViewHolderInternal(dataItem.javaClass, view!!)
-    }
+	}
 	
 	/**
 	 * 创建ViewHolder

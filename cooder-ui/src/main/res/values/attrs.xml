@@ -55,6 +55,8 @@
         <attr name="subTitleTextSize" format="dimension" />
         <attr name="subTitleTextColor" format="color" />
         <attr name="elementPadding" format="dimension" />
+        <attr name="underlineEnabled" format="boolean" />
+        <attr name="underlineHeight" format="dimension" />
     </declare-styleable>
 
 </resources>

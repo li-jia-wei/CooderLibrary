@@ -18,7 +18,7 @@ import androidx.appcompat.content.res.AppCompatResources
  */
 object CoRes {
 
-    private val context by lazy { AppGlobals.getContext() }
+    private val context by lazy { AppGlobals.getBaseContext() }
 
     fun getString(@StringRes resId: Int): String {
         return context.getString(resId)

@@ -8,7 +8,7 @@ android {
     namespace 'com.cooder.cooder.app'
 
     defaultConfig {
-        applicationId "com.cooder.cooder.app"
+        applicationId "com.cooder.library.app"
         minSdk 26
         targetSdk 33
         versionCode APP_VERSION_CODE as int
@@ -29,7 +29,7 @@ android {
     kotlinOptions {
         jvmTarget = '17'
     }
-    buildToolsVersion = '33.0.3'
+    buildToolsVersion = '33.0.2'
 
     viewBinding {
         enable true
@@ -49,8 +49,8 @@ dependencies {
 	testImplementation libs.junit
 	androidTestImplementation libs.androidx.test.ext.junit
 	androidTestImplementation libs.espresso.core
-	
-	// Glide
+
+    // Glide
 	implementation libs.glide
 	
 	// 协程

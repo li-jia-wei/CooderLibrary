@@ -11,5 +11,7 @@
         <item name="subTitleTextSize">@dimen/sp_11</item>
         <item name="subTitleTextColor">@color/nav_sub_title_text_color</item>
         <item name="elementPadding">@dimen/dp_8</item>
+        <item name="underlineEnabled">true</item>
+        <item name="underlineHeight">@dimen/dp_3</item>
     </style>
 </resources>

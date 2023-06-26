@@ -12,8 +12,8 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
-import com.cooder.cooder.library.util.expends.dp
 import com.cooder.cooder.library.util.expends.dpInt
 import com.cooder.cooder.library.util.expends.spInt
 import com.cooder.cooder.ui.R
@@ -51,23 +51,27 @@ class CoNavigationBar @JvmOverloads constructor(
     private var titleContainer: LinearLayout? = null
 
     init {
-        if (!navAttrs.titleText.isNullOrBlank()) {
-            setTitle(navAttrs.titleText)
-        }
-        if (!navAttrs.subTitleText.isNullOrBlank()) {
-            setSubTitle(navAttrs.subTitleText)
-        }
-        setBackgroundColor(Color.WHITE)
-        this.translationZ = TRANSLATION_Z.dp
+	    if (!navAttrs.titleText.isNullOrBlank()) {
+		    setTitle(navAttrs.titleText)
+	    }
+	    if (!navAttrs.subTitleText.isNullOrBlank()) {
+		    setSubTitle(navAttrs.subTitleText)
+	    }
+	    setBackgroundColor(Color.WHITE)
+	    if (navAttrs.underlineEnabled) {
+		    this.translationZ = navAttrs.underlineHeight
+	    } else {
+		    this.translationZ = 0F
+	    }
     }
 
     private companion object {
         private const val BTN_TEXT_SIZE = 16
-        private const val TITLE_TEXT_SIZE = 18
-        private const val TITLE_TEXT_SIZE_WITH_SUB = 17
-        private const val SUB_TITLE_TEXT_SIZE = 11
-        private const val ELEMENT_PADDING = 8
-        private const val TRANSLATION_Z = 3
+	    private const val TITLE_TEXT_SIZE = 18
+	    private const val TITLE_TEXT_SIZE_WITH_SUB = 16
+	    private const val SUB_TITLE_TEXT_SIZE = 11
+	    private const val ELEMENT_PADDING = 8
+	    private const val UNDERLINE_HEIGHT = 3
     }
 
     fun setNavigationListener(listener: OnClickListener) {
@@ -76,50 +80,51 @@ class CoNavigationBar @JvmOverloads constructor(
         }
         navButton?.setOnClickListener(listener)
     }
-
-    /**
-     * 添加左侧图标按钮
-     */
-    fun addLeftIconButton(@StringRes resId: Int): IconFontButton {
-        return addLeftButton(context.getString(resId), true) as IconFontButton
-    }
-
-    /**
-     * 添加左侧图标按钮
-     */
-    fun addLeftIconButton(text: String): IconFontButton {
-        return addLeftButton(text, true) as IconFontButton
-    }
-
-    /**
-     * 添加左侧文本按钮
-     */
-    fun addLeftTextButton(@StringRes resId: Int): Button {
-        return addLeftButton(context.getString(resId), false)
-    }
-
-    /**
-     * 添加左侧文本按钮
-     */
-    fun addLeftTextButton(text: String): Button {
-        return addLeftButton(text, false)
-    }
-
-    /**
-     * 添加左侧按钮
-     */
-    private fun addLeftButton(text: String, isIcon: Boolean): Button {
-        val button = generateTextButton(isIcon)
-        button.text = text
-        if (leftViewList.isEmpty()) {
-            button.setPadding(navAttrs.elementPadding * 2, 0, navAttrs.elementPadding, 0)
-        } else {
-            button.setPadding(navAttrs.elementPadding, 0, navAttrs.elementPadding, 0)
-        }
-        val params = generateTextButtonLayoutParams()
-        addLeftView(button, params)
-        return button
-    }
+	
+	/**
+	 * 添加左侧图标按钮
+	 */
+	fun addLeftIconButton(@StringRes iconTextResId: Int, @ColorRes colorResId: Int = -1): IconFontButton {
+		return addLeftButton(context.getString(iconTextResId), colorResId, true) as IconFontButton
+	}
+	
+	/**
+	 * 添加左侧图标按钮
+	 */
+	fun addLeftIconButton(text: String, @ColorRes colorResId: Int = -1): IconFontButton {
+		return addLeftButton(text, colorResId, true) as IconFontButton
+	}
+	
+	/**
+	 * 添加左侧文本按钮
+	 */
+	fun addLeftTextButton(@StringRes textResId: Int, @ColorRes colorResId: Int = -1): Button {
+		return addLeftButton(context.getString(textResId), colorResId, false)
+	}
+	
+	/**
+	 * 添加左侧文本按钮
+	 */
+	@JvmOverloads
+	fun addLeftTextButton(text: String, @ColorRes colorResId: Int = -1): Button {
+		return addLeftButton(text, colorResId, false)
+	}
+	
+	/**
+	 * 添加左侧按钮
+	 */
+	private fun addLeftButton(text: String, colorResId: Int, isIcon: Boolean): Button {
+		val button = generateTextButton(isIcon, colorResId)
+		button.text = text
+		if (leftViewList.isEmpty()) {
+			button.setPadding(navAttrs.elementPadding * 2, 0, navAttrs.elementPadding, 0)
+		} else {
+			button.setPadding(navAttrs.elementPadding, 0, navAttrs.elementPadding, 0)
+		}
+		val params = generateTextButtonLayoutParams()
+		addLeftView(button, params)
+		return button
+	}
 
     private fun addLeftView(view: View, params: LayoutParams) {
         val viewId = view.id
@@ -133,50 +138,54 @@ class CoNavigationBar @JvmOverloads constructor(
         leftViewList += view
         addView(view, params)
     }
-
-    /**
-     * 添加右侧文本按钮
-     */
-    fun addRightTextButton(@StringRes resId: Int): Button {
-        return addRightButton(context.getString(resId), false)
-    }
-
-    /**
-     * 添加右侧文本按钮
-     */
-    fun addRightTextButton(text: String): Button {
-        return addRightButton(text, false)
-    }
-
-    /**
-     * 添加右侧图标按钮
-     */
-    fun addRightIconButton(resId: Int): IconFontButton {
-        return addRightButton(context.getString(resId), true) as IconFontButton
-    }
-
-    /**
-     * 添加右侧图标按钮
-     */
-    fun addRightIconButton(text: String): IconFontButton {
-        return addRightButton(text, true) as IconFontButton
-    }
-
-    /**
-     * 添加右侧按钮
-     */
-    private fun addRightButton(text: String, isIcon: Boolean): Button {
-        val button = generateTextButton(isIcon)
-        button.text = text
-        if (rightViewList.isEmpty()) {
-            button.setPadding(navAttrs.elementPadding, 0, navAttrs.elementPadding * 2, 0)
-        } else {
-            button.setPadding(navAttrs.elementPadding, 0, navAttrs.elementPadding, 0)
-        }
-        val params = generateTextButtonLayoutParams()
-        addRightView(button, params)
-        return button
-    }
+	
+	/**
+	 * 添加右侧文本按钮
+	 */
+	@JvmOverloads
+	fun addRightTextButton(@StringRes textResId: Int, @ColorRes colorResId: Int = -1): Button {
+		return addRightButton(context.getString(textResId), colorResId, false)
+	}
+	
+	/**
+	 * 添加右侧文本按钮
+	 */
+	@JvmOverloads
+	fun addRightTextButton(text: String, @ColorRes colorResId: Int = -1): Button {
+		return addRightButton(text, colorResId, false)
+	}
+	
+	/**
+	 * 添加右侧图标按钮
+	 */
+	@JvmOverloads
+	fun addRightIconButton(@StringRes iconTextResId: Int, @ColorRes colorResId: Int = -1): IconFontButton {
+		return addRightButton(context.getString(iconTextResId), colorResId, true) as IconFontButton
+	}
+	
+	/**
+	 * 添加右侧图标按钮
+	 */
+	@JvmOverloads
+	fun addRightIconButton(iconText: String, @ColorRes colorResId: Int = -1): IconFontButton {
+		return addRightButton(iconText, colorResId, true) as IconFontButton
+	}
+	
+	/**
+	 * 添加右侧按钮
+	 */
+	private fun addRightButton(text: String, colorResId: Int, isIcon: Boolean): Button {
+		val button = generateTextButton(isIcon, colorResId)
+		button.text = text
+		if (rightViewList.isEmpty()) {
+			button.setPadding(navAttrs.elementPadding, 0, navAttrs.elementPadding * 2, 0)
+		} else {
+			button.setPadding(navAttrs.elementPadding, 0, navAttrs.elementPadding, 0)
+		}
+		val params = generateTextButtonLayoutParams()
+		addRightView(button, params)
+		return button
+	}
 
     private fun addRightView(view: View, params: LayoutParams) {
         val viewId = view.id
@@ -273,18 +282,18 @@ class CoNavigationBar @JvmOverloads constructor(
     private fun generateTextButtonLayoutParams(): LayoutParams {
         return LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT)
     }
-
-    private fun generateTextButton(isIcon: Boolean): Button {
-        val button = if (isIcon) IconFontButton(context) else Button(context)
-        button.setBackgroundResource(0)
-        button.minWidth = 0
-        button.minimumWidth = 0
-        button.minHeight = 0
-        button.minHeight = 0
-        button.setTextSize(TypedValue.COMPLEX_UNIT_PX, if (isIcon) navAttrs.btnTextSize * 2 else navAttrs.btnTextSize)
-        button.setTextColor(navAttrs.btnTextColor)
-        button.gravity = Gravity.CENTER
-        button.id = View.generateViewId()
+	
+	private fun generateTextButton(isIcon: Boolean, colorResId: Int): Button {
+		val button = if (isIcon) IconFontButton(context) else Button(context)
+		button.setBackgroundResource(0)
+		button.minWidth = 0
+		button.minimumWidth = 0
+		button.minHeight = 0
+		button.minHeight = 0
+		button.setTextSize(TypedValue.COMPLEX_UNIT_PX, if (isIcon) navAttrs.btnTextSize * 2 else navAttrs.btnTextSize)
+		button.setTextColor(if (colorResId == -1) navAttrs.btnTextColor else context.getColor(colorResId))
+		button.gravity = Gravity.CENTER
+		button.id = View.generateViewId()
         return button
     }
 
@@ -335,44 +344,50 @@ class CoNavigationBar @JvmOverloads constructor(
 
         val btnTextSize = array.getDimensionPixelOffset(R.styleable.CoNavigationBar_btnTextSize, BTN_TEXT_SIZE.dpInt).toFloat()
         val btnTextColor = array.getColor(R.styleable.CoNavigationBar_btnTextColor, context.getColor(R.color.nav_btn_text_color))
-
-        val titleText = array.getString(R.styleable.CoNavigationBar_titleText)
-        val titleTextSize = array.getDimensionPixelOffset(R.styleable.CoNavigationBar_titleTextSize, TITLE_TEXT_SIZE.spInt).toFloat()
-        val titleTextSizeWithSub = array.getDimensionPixelOffset(R.styleable.CoNavigationBar_titleTextSizeWithSub, TITLE_TEXT_SIZE_WITH_SUB.spInt).toFloat()
-        val titleTextColor = array.getColor(R.styleable.CoNavigationBar_titleTextColor, context.getColor(R.color.nav_title_text_color))
-
-        val subTitleText = array.getString(R.styleable.CoNavigationBar_subTitleText)
-        val subTitleTextSize = array.getDimensionPixelOffset(R.styleable.CoNavigationBar_subTitleTextSize, SUB_TITLE_TEXT_SIZE.dpInt).toFloat()
-        val subTitleTextColor = array.getColor(R.styleable.CoNavigationBar_subTitleTextColor, context.getColor(R.color.nav_sub_title_text_color))
-
-        val elementPadding = array.getDimensionPixelOffset(R.styleable.CoNavigationBar_elementPadding, ELEMENT_PADDING.dpInt)
-        array.recycle()
-        return NavAttrs(
-            navIcon,
-            btnTextSize,
-            btnTextColor,
-            titleText,
-            titleTextSize,
-            titleTextSizeWithSub,
-            titleTextColor,
-            subTitleText,
-            subTitleTextSize,
-            subTitleTextColor,
-            elementPadding
-        )
+	    
+	    val titleText = array.getString(R.styleable.CoNavigationBar_titleText)
+	    val titleTextSize = array.getDimensionPixelOffset(R.styleable.CoNavigationBar_titleTextSize, TITLE_TEXT_SIZE.spInt).toFloat()
+	    val titleTextSizeWithSub = array.getDimensionPixelOffset(R.styleable.CoNavigationBar_titleTextSizeWithSub, TITLE_TEXT_SIZE_WITH_SUB.spInt).toFloat()
+	    val titleTextColor = array.getColor(R.styleable.CoNavigationBar_titleTextColor, context.getColor(R.color.nav_title_text_color))
+	    
+	    val subTitleText = array.getString(R.styleable.CoNavigationBar_subTitleText)
+	    val subTitleTextSize = array.getDimensionPixelOffset(R.styleable.CoNavigationBar_subTitleTextSize, SUB_TITLE_TEXT_SIZE.dpInt).toFloat()
+	    val subTitleTextColor = array.getColor(R.styleable.CoNavigationBar_subTitleTextColor, context.getColor(R.color.nav_sub_title_text_color))
+	    
+	    val elementPadding = array.getDimensionPixelOffset(R.styleable.CoNavigationBar_elementPadding, ELEMENT_PADDING.dpInt)
+	    val underlineEnabled = array.getBoolean(R.styleable.CoNavigationBar_underlineEnabled, true)
+	    val underlineHeight = array.getDimensionPixelOffset(R.styleable.CoNavigationBar_underlineHeight, UNDERLINE_HEIGHT.dpInt).toFloat()
+	    array.recycle()
+	    return NavAttrs(
+		    navIcon,
+		    btnTextSize,
+		    btnTextColor,
+		    titleText,
+		    titleTextSize,
+		    titleTextSizeWithSub,
+		    titleTextColor,
+		    subTitleText,
+		    subTitleTextSize,
+		    subTitleTextColor,
+		    elementPadding,
+		    underlineEnabled,
+		    underlineHeight
+	    )
     }
 
     data class NavAttrs(
-        val navIcon: String?,
-        val btnTextSize: Float,
-        @ColorInt val btnTextColor: Int,
-        val titleText: String?,
-        val titleTextSize: Float,
-        val titleTextSizeWithSub: Float,
-        @ColorInt val titleTextColor: Int,
-        val subTitleText: String?,
-        val subTitleTextSize: Float,
-        @ColorInt val subTitleTextColor: Int,
-        val elementPadding: Int
+	    val navIcon: String?,
+	    val btnTextSize: Float,
+	    @ColorInt val btnTextColor: Int,
+	    val titleText: String?,
+	    val titleTextSize: Float,
+	    val titleTextSizeWithSub: Float,
+	    @ColorInt val titleTextColor: Int,
+	    val subTitleText: String?,
+	    val subTitleTextSize: Float,
+	    @ColorInt val subTitleTextColor: Int,
+	    val elementPadding: Int,
+	    val underlineEnabled: Boolean,
+	    val underlineHeight: Float
     )
 }

@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.cooder.cooder.app.ui.item.CoDataItemActivity">
-    
+    tools:context="com.cooder.cooder.app.com.cooder.library.app.ui.item.CoDataItemActivity">
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"

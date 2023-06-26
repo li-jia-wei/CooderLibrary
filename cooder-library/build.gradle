@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-	compileSdk 33
-	namespace 'com.cooder.cooder.library'
-	
-	defaultConfig {
-		minSdk 26
+    compileSdk 33
+    namespace 'com.cooder.cooder.library'
+
+    defaultConfig {
+        minSdk 26
         targetSdk 33
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

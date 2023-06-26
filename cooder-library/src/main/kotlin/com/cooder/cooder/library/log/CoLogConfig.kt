@@ -26,7 +26,7 @@ abstract class CoLogConfig {
 	 * 全局TAG
 	 */
 	open fun globalTag(): String {
-		return "Cooder"
+		return "CooderTag"
 	}
 	
 	/**

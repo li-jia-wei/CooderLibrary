@@ -1,6 +1,5 @@
 package com.cooder.cooder.library.cache
 
-import com.cooder.cooder.library.log.CoLog
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.ObjectInputStream
@@ -20,18 +19,19 @@ object CoStorage {
 	private val cacheDao: CacheDao by lazy(LazyThreadSafetyMode.SYNCHRONIZED) { CacheDatabase.get().cacheDao }
 	
 	fun <T> saveCache(key: String, body: T) {
-        val cache = Cache()
-        cache.key = key
-        cache.data = toByteArray(body)
-        this.cacheDao.saveCache(cache)
-        CoLog.i(Thread.currentThread().name)
-    }
+		val cache = Cache()
+		cache.key = key
+		cache.data = toByteArray(body)
+		this.cacheDao.saveCache(cache)
+	}
 	
-	fun <T> getCache(key: String): T? {
+	@JvmOverloads
+	@JvmStatic
+	fun <T> getCache(key: String, defValue: T? = null): T? {
 		val cache = this.cacheDao.getCache(key)
 		return if (cache?.data != null) {
 			toObject(cache.data!!)
-		} else null
+		} else defValue
 	}
 	
 	fun deleteCache(key: String) {

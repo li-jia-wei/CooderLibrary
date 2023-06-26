@@ -78,14 +78,14 @@ object CoDataBus {
 		 * @param sticky 是否开启粘性消息
 		 */
 		private fun observe(owner: LifecycleOwner, sticky: Boolean, observer: Observer<in T>) {
-            owner.lifecycle.addObserver(LifecycleEventObserver { _, event ->
-                // 监听事件发生销毁事件
-                if (event == Lifecycle.Event.ON_DESTROY) {
-                    eventMap.remove(eventName)
-                }
-            })
-            super.observe(owner, StickyObserver(this, sticky, observer))
-        }
+			owner.lifecycle.addObserver(LifecycleEventObserver { _, event ->
+				// 监听事件发生销毁事件
+				if (event == Lifecycle.Event.ON_DESTROY) {
+					eventMap.remove(eventName)
+				}
+			})
+			super.observe(owner, StickyObserver(this, sticky, observer))
+		}
 	}
 	
 	class StickyObserver<T>(

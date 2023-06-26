@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".application.CoApplication"
+        android:name="com.cooder.library.app.application.CoApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -17,7 +17,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.MainActivity"
+            android:name="com.cooder.library.app.ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,37 +26,37 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.test.TestActivity"
+            android:name="com.cooder.library.app.ui.test.TestActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.log.CoLogActivity"
+            android:name="com.cooder.library.app.ui.log.CoLogActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.tab.CoTabBottomActivity"
+            android:name="com.cooder.library.app.ui.tab.CoTabBottomActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.tab.CoTabTopActivity"
+            android:name="com.cooder.library.app.ui.tab.CoTabTopActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.refresh.CoRefreshActivity"
+            android:name="com.cooder.library.app.ui.refresh.CoRefreshActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.banner.CoBannerActivity"
+            android:name="com.cooder.library.app.ui.banner.CoBannerActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.item.CoDataItemActivity"
+            android:name="com.cooder.library.app.ui.item.CoDataItemActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.slider.CoSliderActivity"
+            android:name="com.cooder.library.app.ui.slider.CoSliderActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.databus.CoDataBusActivity"
+            android:name="com.cooder.library.app.ui.databus.CoDataBusActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.cache.CoCacheActivity"
+            android:name="com.cooder.library.app.ui.cache.CoCacheActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.navigation.CoNavigationBarActivity"
+            android:name="com.cooder.library.app.ui.navigation.CoNavigationBarActivity"
             android:exported="false" />
     </application>
 
