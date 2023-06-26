@@ -16,24 +16,24 @@ import androidx.recyclerview.widget.RecyclerView
  *
  * 介绍：CoViewHolder
  */
-open class CoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-	
-	private val viewCaches = SparseArray<View?>()
-	
-	val context: Context get() = itemView.context
-	
-	val parent: ViewGroup get() = itemView.parent as ViewGroup
-	
-	/**
-	 * 查找View
-	 */
-	@Suppress("UNCHECKED_CAST")
-	fun <T : View?> findViewById(@IdRes id: Int): T {
-		var view = viewCaches[id]
-		if (view == null) {
-			view = itemView.findViewById(id)
-			viewCaches[id] = view
-		}
-		return view as T
-	}
+open class CoViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+
+    private val viewCaches = SparseArray<View?>()
+
+    val context: Context get() = itemView.context
+
+    val parent: ViewGroup get() = itemView.parent as ViewGroup
+
+    /**
+     * 查找View
+     */
+    @Suppress("UNCHECKED_CAST")
+    fun <T : View?> findViewById(@IdRes id: Int): T {
+        var view = viewCaches[id]
+        if (view == null) {
+            view = itemView.findViewById(id)
+            viewCaches[id] = view
+        }
+        return view as T
+    }
 }

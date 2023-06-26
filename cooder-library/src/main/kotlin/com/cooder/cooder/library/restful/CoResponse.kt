@@ -1,5 +1,7 @@
 package com.cooder.cooder.library.restful
 
+import java.io.Serializable
+
 /**
  * 项目：CooderLibrary
  *
@@ -9,27 +11,27 @@ package com.cooder.cooder.library.restful
  *
  * 介绍：相应报文
  */
-open class CoResponse<T> {
-	
-	companion object {
-		/**
-		 * 成功
-		 */
-		const val SUCCESS = 0
-		
-		/**
-		 * 缓存成功
-		 */
-		const val CACHE_SUCCESS = 304
-		
-		/**
-		 * 有错误
-		 */
-		const val RC_HAS_ERROR = 5000
-		
-		/**
-		 * 账号不存在
-		 */
+open class CoResponse<T> : Serializable {
+
+    companion object {
+        /**
+         * 成功
+         */
+        const val SUCCESS = 0
+
+        /**
+         * 缓存成功
+         */
+        const val CACHE_SUCCESS = 304
+
+        /**
+         * 有错误
+         */
+        const val RC_HAS_ERROR = 5000
+
+        /**
+         * 账号不存在
+         */
 		const val RC_ACCOUNT_INVALID = 5001
 		
 		/**
@@ -66,27 +68,29 @@ open class CoResponse<T> {
 		 * 访问Token不正确，请重新设置
 		 */
 		const val RC_AUTH_TOKEN_INVALID = 4031
-		
-		/**
-		 * 用户身份非法
-		 */
-		const val RC_USER_FORBID = 6001
-		
-		/**
-		 * 请输入HTML
-		 */
-		const val RC_HTML_INVALID = 8001
-		
-		/**
-		 * 请输入配置
-		 */
-		const val RC_CONFIG_INVALID = 8002
-		
-		/**
-		 * 出现异常
-		 */
-		const val EXCEPTION = -1
-	}
+
+        /**
+         * 用户身份非法
+         */
+        const val RC_USER_FORBID = 6001
+
+        /**
+         * 请输入HTML
+         */
+        const val RC_HTML_INVALID = 8001
+
+        /**
+         * 请输入配置
+         */
+        const val RC_CONFIG_INVALID = 8002
+
+        /**
+         * 出现异常
+         */
+        const val EXCEPTION = -1
+
+        const val serialVersionUID = 1L
+    }
 	
 	/**
 	 * 原始数据

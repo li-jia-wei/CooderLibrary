@@ -2,6 +2,7 @@ package com.cooder.cooder.ui.item
 
 import android.content.Context
 import android.util.SparseArray
+import android.util.SparseIntArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,30 +30,32 @@ import kotlin.math.min
 class CoAdapter(
 	context: Context
 ) : RecyclerView.Adapter<CoViewHolder>() {
-	
-	private val inflater = LayoutInflater.from(context)
-	private val dataItems = mutableListOf<CoDataItem<*, *>>()
-	private val typeArray = SparseArray<CoDataItem<*, *>>()
-	private var recyclerViewRef: WeakReference<RecyclerView>? = null
-	
-	private val headers = SparseArray<View>()
-	private val footers = SparseArray<View>()
-	
-	private var topView: View? = null
-	private var bottomView: View? = null
-	
-	private companion object {
-		private var BASE_HEADER_ITEM = 1000000
-		private var BASE_FOOTER_ITEM = 2000000
-		private var TOP_VIEW_ITEM = 3000000
-		private var BOTTOM_VIEW_ITEM = 3000001
-	}
-	
-	/**
-	 * 添加一个DataItem
-	 * @param dataItem DataItem
-	 * @param notify 是否刷新
-	 * @param index 在DataItem中插入的位置
+
+    private val inflater = LayoutInflater.from(context)
+    private val dataItems = mutableListOf<CoDataItem<*, *>>()
+
+    //	private val typeArray = SparseArray<CoDataItem<*, *>>()
+    private val typePositions = SparseIntArray()
+    private var recyclerViewRef: WeakReference<RecyclerView>? = null
+
+    private val headers = SparseArray<View>()
+    private val footers = SparseArray<View>()
+
+    private var topView: View? = null
+    private var bottomView: View? = null
+
+    private companion object {
+        private var BASE_HEADER_ITEM = 1000000
+        private var BASE_FOOTER_ITEM = 2000000
+        private var TOP_VIEW_ITEM = 3000000
+        private var BOTTOM_VIEW_ITEM = 3000001
+    }
+
+    /**
+     * 添加一个DataItem
+     * @param dataItem DataItem
+     * @param notify 是否刷新
+     * @param index 在DataItem中插入的位置
 	 */
 	@JvmOverloads
 	fun addItem(dataItem: CoDataItem<*, *>, notify: Boolean = true, index: Int = -1) {
@@ -69,6 +72,7 @@ class CoAdapter(
 				notifyItemInserted(getToItemSize() - 1)
 			}
 		}
+        dataItem.setAdapter(this)
 	}
 	
 	/**
@@ -79,36 +83,40 @@ class CoAdapter(
 	 */
 	@JvmOverloads
 	fun addItems(dataItems: Collection<CoDataItem<*, *>>, notify: Boolean = true, startIndex: Int = -1) {
-		val isSetStartIndex = startIndex >= 0 && startIndex <= getItemSize()
-		if (isSetStartIndex) {
-			this.dataItems.addAll(startIndex, dataItems)
-		} else {
-			this.dataItems += dataItems
-		}
-		if (notify) {
-			if (isSetStartIndex) {
-				notifyItemRangeInserted(getToHeaderSize() + startIndex, dataItems.size)
-			} else {
-				notifyItemRangeInserted(getToItemSize() - dataItems.size, dataItems.size)
-			}
-		}
-	}
+        val isSetStartIndex = startIndex >= 0 && startIndex <= getItemSize()
+        if (isSetStartIndex) {
+            this.dataItems.addAll(startIndex, dataItems)
+        } else {
+            this.dataItems += dataItems
+        }
+        if (notify) {
+            if (isSetStartIndex) {
+                notifyItemRangeInserted(getToHeaderSize() + startIndex, dataItems.size)
+            } else {
+                notifyItemRangeInserted(getToItemSize() - dataItems.size, dataItems.size)
+            }
+        }
+        dataItems.forEach {
+            it.setAdapter(this)
+        }
+    }
 	
 	/**
 	 * 删除Item
 	 * @param dataItem DataItem
 	 */
 	fun removeItem(dataItem: CoDataItem<*, *>?) {
-		val type = dataItem!!.javaClass.hashCode()
-		if (typeArray.containsKey(type)) {
-			typeArray.remove(type)
-		}
-		val index = this.dataItems.indexOf(dataItem)
-		if (index >= 0) {
-			this.dataItems.removeAt(index)
-			notifyItemRemoved(getToHeaderSize() + index)
-		}
-	}
+        val type = dataItem!!.javaClass.hashCode()
+        if (typePositions.containsKey(type)) {
+            typePositions.delete(type)
+        }
+        val index = this.dataItems.indexOf(dataItem)
+        if (index >= 0) {
+            this.dataItems.removeAt(index)
+            notifyItemRemoved(getToHeaderSize() + index)
+        }
+        dataItem.setAdapter(this)
+    }
 	
 	/**
 	 * 删除多个Item
@@ -116,16 +124,16 @@ class CoAdapter(
 	 */
 	fun removeItems(dataItems: Collection<CoDataItem<*, *>?>?) {
 		dataItems?.forEach {
-			val type = it!!.javaClass.hashCode()
-			if (typeArray.containsKey(type)) {
-				typeArray.remove(type)
-			}
-			val index = this.dataItems.indexOf(it)
-			if (index >= 0) {
-				this.dataItems.removeAt(index)
-				notifyItemRemoved(getToHeaderSize() + index)
-			}
-		}
+            val type = it!!.javaClass.hashCode()
+            if (typePositions.containsKey(type)) {
+                typePositions.delete(type)
+            }
+            val index = this.dataItems.indexOf(it)
+            if (index >= 0) {
+                this.dataItems.removeAt(index)
+                notifyItemRemoved(getToHeaderSize() + index)
+            }
+        }
 	}
 	
 	/**
@@ -135,14 +143,14 @@ class CoAdapter(
 	 */
 	fun removeItemAt(index: Int): CoDataItem<*, *>? {
 		if (index >= 0 && index < getItemSize()) {
-			val remove = dataItems.removeAt(index)
-			val type = remove.javaClass.hashCode()
-			if (typeArray.containsKey(type)) {
-				typeArray.remove(type)
-			}
-			notifyItemRemoved(getToHeaderSize() + index)
-			return remove
-		}
+            val remove = dataItems.removeAt(index)
+            val type = remove.javaClass.hashCode()
+            if (typePositions.containsKey(type)) {
+                typePositions.delete(type)
+            }
+            notifyItemRemoved(getToHeaderSize() + index)
+            return remove
+        }
 		return null
 	}
 	
@@ -157,13 +165,13 @@ class CoAdapter(
 		if (startIndex >= 0 && startIndex < getItemSize()) {
 			val removeCount = min(getItemSize() - startIndex, itemCount)
 			repeat(removeCount) {
-				val item = dataItems.removeAt(startIndex)
-				val type = item.javaClass.hashCode()
-				if (typeArray.containsKey(type)) {
-					typeArray.remove(type)
-				}
-				items += item
-			}
+                val item = dataItems.removeAt(startIndex)
+                val type = item.javaClass.hashCode()
+                if (typePositions.containsKey(type)) {
+                    typePositions.delete(type)
+                }
+                items += item
+            }
 			notifyItemRangeRemoved(getToHeaderSize() + startIndex, removeCount)
 		}
 		return items
@@ -175,11 +183,11 @@ class CoAdapter(
 	fun removeAllItems() {
 		notifyItemRangeRemoved(getToHeaderSize(), getItemSize())
 		dataItems.forEach {
-			val type = it.javaClass.hashCode()
-			if (typeArray.containsKey(type)) {
-				typeArray.remove(type)
-			}
-		}
+            val type = it.javaClass.hashCode()
+            if (typePositions.containsKey(type)) {
+                typePositions.delete(type)
+            }
+        }
 		this.dataItems.clear()
 	}
 	
@@ -411,9 +419,7 @@ class CoAdapter(
 		val itemPosition = getRealItemPosition(position)
 		val dataItem = dataItems[itemPosition]
 		val type = dataItem.javaClass.hashCode()
-		if (!typeArray.containsKey(type)) {
-			typeArray[type] = dataItem
-		}
+        typePositions.put(type, itemPosition)
 		return type
 	}
 	
@@ -456,32 +462,35 @@ class CoAdapter(
 	 * 创建ViewHolder
 	 */
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoViewHolder {
-		if (viewType == TOP_VIEW_ITEM) {
-			return CoViewHolder(topView!!)
-		}
-		if (viewType == BOTTOM_VIEW_ITEM) {
-			return CoViewHolder(bottomView!!)
-		}
-		if (headers.containsKey(viewType)) {
-			val view = headers[viewType]
-			return CoViewHolder(view)
-		}
-		if (footers.containsKey(viewType)) {
-			val view = footers[viewType]
-			return CoViewHolder(view)
-		}
-		val dataItem = typeArray[viewType]
-		var view = dataItem.getItemView(LayoutInflater.from(parent.context), parent)
-		val layoutRes = dataItem.getItemLayoutRes()
-		if (view != null && layoutRes != -1) {
-			throw IllegalStateException("${dataItem.javaClass.name}: getItemView与getItemLayout只能重写一个")
-		}
-		if (view == null) {
-			if (layoutRes == -1) throw RuntimeException("dataItem: ${dataItem.javaClass.name}: 必须重写getItemView或者getItemLayoutRes方法中的一个")
-			view = inflater.inflate(layoutRes, parent, false)
-		}
-		return createViewHolderInternal(dataItem.javaClass, view!!)
-	}
+        if (viewType == TOP_VIEW_ITEM) {
+            return CoViewHolder(topView!!)
+        }
+        if (viewType == BOTTOM_VIEW_ITEM) {
+            return CoViewHolder(bottomView!!)
+        }
+        if (headers.containsKey(viewType)) {
+            val view = headers[viewType]
+            return CoViewHolder(view)
+        }
+        if (footers.containsKey(viewType)) {
+            val view = footers[viewType]
+            return CoViewHolder(view)
+        }
+        val position = typePositions[viewType]
+        val dataItem = dataItems[position]
+        val viewHolder = dataItem.onCreateViewHolder(LayoutInflater.from(parent.context), parent)
+        if (viewHolder != null) return viewHolder
+        var view = dataItem.getItemView(LayoutInflater.from(parent.context), parent)
+        val layoutRes = dataItem.getItemLayoutRes()
+        if (view != null && layoutRes != -1) {
+            throw IllegalStateException("${dataItem.javaClass.name}: getItemView与getItemLayout只能重写一个")
+        }
+        if (view == null) {
+            if (layoutRes == -1) throw RuntimeException("dataItem: ${dataItem.javaClass.name}: 必须重写getItemView或者getItemLayoutRes方法中的一个")
+            view = inflater.inflate(layoutRes, parent, false)
+        }
+        return createViewHolderInternal(dataItem.javaClass, view!!)
+    }
 	
 	/**
 	 * 创建ViewHolder

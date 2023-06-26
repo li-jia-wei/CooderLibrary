@@ -1,5 +1,7 @@
 package com.cooder.cooder.library.restful
 
+import java.io.Serializable
+
 /**
  * 项目：CooderProject
  *
@@ -10,11 +12,22 @@ package com.cooder.cooder.library.restful
  * 介绍：LiveData的返回结果封装
  */
 data class CoResult<T>(
-	val data: T?,
-	val msg: String? = null
-) {
-	
-	fun isSuccessful(): Boolean {
-		return data != null
-	}
+    val data: T?,
+    val msg: String?
+) : Serializable {
+
+    fun isSuccessful(): Boolean {
+        return data != null
+    }
+
+    companion object {
+
+        fun <T> success(data: T?, msg: String? = null): CoResult<T> {
+            return CoResult(data, msg)
+        }
+
+        fun <T> failure(msg: String?): CoResult<T> {
+            return CoResult(null, msg)
+        }
+    }
 }

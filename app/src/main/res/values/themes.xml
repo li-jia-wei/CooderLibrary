@@ -1,12 +1,13 @@
 <resources>
-	<!-- Base application theme. -->
-	<style name="Theme.CooderLibrary" parent="Theme.MaterialComponents.Light.NoActionBar">
-		<!-- Primary brand color. -->
-		<item name="colorPrimary">@color/primary</item>
-		<item name="colorPrimaryVariant">@color/primary_variant</item>
-		<item name="colorOnPrimary">@color/white</item>
-		<!-- Status bar color. -->
-		<item name="android:statusBarColor">@color/status_bar_color</item>
-		<!-- Customize your theme here. -->
-	</style>
+    <!-- Base application theme. -->
+    <style name="Theme.CooderLibrary" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primary_variant</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/status_bar_color</item>
+        <!-- Customize your theme here. -->
+        <item name="navigationStyle">@style/CoNavigationBarStyle</item>
+    </style>
 </resources>

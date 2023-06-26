@@ -24,6 +24,10 @@
 - 所有注解：POST, GET, Headers, Filed, Path, DomainUrl
 - 具体使用方法：请查看CooderProject项目中的实现
 
+#### 动画组件 com.cooder.cooder.library.anim
+
+- 基于数字的动画
+
 #### 扩展工具 com.cooder.cooder.library.util
 
 - 常用扩展工具
@@ -54,11 +58,23 @@
 
 - 支持自定义左侧选项卡样式
 
-#### 导航栏组件 com.cooder.cooder.ui.tab
+#### 标签栏组件 com.cooder.cooder.ui.tab
 
-- 支持顶部导航栏组件
-- 支持顶部导航栏组件
-- 可自定义导航选项卡样式
+- 支持顶部标签栏组件
+- 支持顶部标签栏组件
+- 可自定义标签选项卡样式
+
+#### 导航栏组件 com.cooder.cooder.ui.navigation
+
+- 支持添加左侧文字/图标按钮
+- 支持添加右侧文字/图标按钮
+- 支持设置主/副标题
+- 支持自定义样式
+
+#### 扩展视图 com.cooder.cooder.ui.view
+
+- 可设置字体图标的IconFontTextView
+- 可设置字体图标的IconFontButton
 
 <br/><br/>
 

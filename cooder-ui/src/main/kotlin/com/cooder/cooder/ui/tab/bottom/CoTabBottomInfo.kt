@@ -13,7 +13,7 @@ import com.cooder.cooder.ui.tab.common.CoTabInfo
  *
  * 创建：2022/9/27 19:45
  *
- * 介绍：底部导航信息
+ * 介绍：底部标签信息
  */
 class CoTabBottomInfo<Color : Comparable<Color>> : CoTabInfo<Color> {
 	

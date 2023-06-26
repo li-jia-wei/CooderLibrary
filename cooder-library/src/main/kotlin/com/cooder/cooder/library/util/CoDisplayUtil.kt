@@ -66,8 +66,9 @@ object CoDisplayUtil {
 	fun getStatusBarHeight(activity: Activity): Int {
 		val insets = activity.window.decorView.rootWindowInsets
 		return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
-			insets?.systemWindowInsetTop ?: 0
-		} else {
+            @Suppress("DEPRECATION")
+            insets?.systemWindowInsetTop ?: 0
+        } else {
 			insets?.getInsets(WindowInsets.Type.statusBars())?.top ?: 0
 		}
 	}

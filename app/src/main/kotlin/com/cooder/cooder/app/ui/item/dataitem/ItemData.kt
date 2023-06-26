@@ -11,6 +11,4 @@ import android.content.Context
  *
  * 介绍：OneItemData
  */
-class ItemData(val context: Context, val name: String) {
-
-}
+class ItemData(val context: Context, val name: String)

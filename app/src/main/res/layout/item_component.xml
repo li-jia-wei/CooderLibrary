@@ -7,5 +7,5 @@
     android:gravity="center"
     android:orientation="vertical"
     android:textColor="@color/white"
-    android:textSize="20sp"
+    android:textSize="@dimen/sp_18"
     android:textStyle="bold" />

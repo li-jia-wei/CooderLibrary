@@ -24,7 +24,7 @@ import com.cooder.cooder.ui.tab.common.CoTab
  *
  * 创建：2022/9/27 19:58
  *
- * 介绍：底部导航组件
+ * 介绍：底部标签组件
  */
 class CoTabBottom @JvmOverloads constructor(
 	context: Context,

@@ -1,30 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<!-- CoBanner -->
-	<declare-styleable name="CoBanner">
-		<attr name="autoPlay" format="boolean" />
-		<attr name="loop" format="boolean" />
-		<attr name="intervalTime" format="integer|reference" />
-		<attr name="scrollDuration" format="integer|reference" />
-		<attr name="indicator" format="enum">
-			<enum name="circle_small" value="0" />
-			<enum name="circle_medium" value="1" />
-			<enum name="circle_large" value="2" />
-			<enum name="line" value="10" />
-			<enum name="number" value="20" />
-		</attr>
-		<attr name="closeIndicator" format="boolean" />
-	</declare-styleable>
-	
-	<!-- CoSlider -->
-	<declare-styleable name="CoSliderView">
-		<attr name="menuWidth" format="dimension" />
-		<attr name="menuHeight" format="dimension" />
-		<attr name="menuTextSize" format="dimension" />
-		<attr name="menuTextColor" format="reference|color" />
-		<attr name="menuSelectTextSize" format="dimension" />
-		<attr name="menuIndicator" format="reference" />
-		<attr name="menuBackground" format="reference|color" />
-		<attr name="menuSelectBackground" format="reference|color" />
-	</declare-styleable>
+
+    <attr name="typeface" format="string" />
+    <attr name="navigationStyle" format="reference" />
+
+    <!-- IconFontTextView -->
+    <declare-styleable name="IconFontTextView">
+        <attr name="typeface" />
+    </declare-styleable>
+
+    <!-- IconFontButton -->
+    <declare-styleable name="IconFontButton">
+        <attr name="typeface" />
+    </declare-styleable>
+
+    <!-- CoBanner -->
+    <declare-styleable name="CoBanner">
+        <attr name="autoPlay" format="boolean" />
+        <attr name="loop" format="boolean" />
+        <attr name="intervalTime" format="integer|reference" />
+        <attr name="scrollDuration" format="integer|reference" />
+        <attr name="indicator" format="enum">
+            <enum name="circle_small" value="0" />
+            <enum name="circle_medium" value="1" />
+            <enum name="circle_large" value="2" />
+            <enum name="line" value="10" />
+            <enum name="number" value="20" />
+        </attr>
+        <attr name="closeIndicator" format="boolean" />
+    </declare-styleable>
+
+    <!-- CoSlider -->
+    <declare-styleable name="CoSliderView">
+        <attr name="menuWidth" format="dimension" />
+        <attr name="menuHeight" format="dimension" />
+        <attr name="menuTextSize" format="dimension" />
+        <attr name="menuTextColor" format="reference|color" />
+        <attr name="menuSelectTextSize" format="dimension" />
+        <attr name="menuIndicator" format="reference" />
+        <attr name="menuBackground" format="reference|color" />
+        <attr name="menuSelectBackground" format="reference|color" />
+    </declare-styleable>
+
+    <!-- CoNavigationBar -->
+    <declare-styleable name="CoNavigationBar">
+        <attr name="navIcon" format="string" />
+        <attr name="btnTextSize" format="dimension" />
+        <attr name="btnTextColor" format="color" />
+        <attr name="titleText" format="string" />
+        <attr name="titleTextSize" format="dimension" />
+        <attr name="titleTextSizeWithSub" format="dimension" />
+        <attr name="titleTextColor" format="color" />
+        <attr name="subTitleText" format="string" />
+        <attr name="subTitleTextSize" format="dimension" />
+        <attr name="subTitleTextColor" format="color" />
+        <attr name="elementPadding" format="dimension" />
+    </declare-styleable>
+
 </resources>

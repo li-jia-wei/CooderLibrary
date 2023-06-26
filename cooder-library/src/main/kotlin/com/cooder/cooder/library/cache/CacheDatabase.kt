@@ -16,22 +16,23 @@ import com.cooder.cooder.library.util.AppGlobals
  */
 @Database(entities = [Cache::class], version = 1)
 abstract class CacheDatabase : RoomDatabase() {
-	
-	companion object {
-		
-		private var database: CacheDatabase
-		
-		init {
-			val context = AppGlobals.getContext()
-			database = Room.databaseBuilder(context, CacheDatabase::class.java, "cooder_cache.db")
-				.allowMainThreadQueries()
-				.build()
-		}
-		
-		fun get(): CacheDatabase {
-			return database
-		}
-	}
-	
-	abstract val cacheDao: CacheDao
+
+    companion object {
+
+        private var database: CacheDatabase
+        private const val ROOM_DATABASE_NAME = ""
+
+        init {
+            val context = AppGlobals.getContext()
+            database = Room.databaseBuilder(context, CacheDatabase::class.java, "cooder_cache.db")
+                .allowMainThreadQueries()
+                .build()
+        }
+
+        fun get(): CacheDatabase {
+            return database
+        }
+    }
+
+    abstract val cacheDao: CacheDao
 }
