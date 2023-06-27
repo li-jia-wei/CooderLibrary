@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical"
-    tools:context="com.cooder.cooder.app.com.cooder.library.app.ui.test.TestActivity">
-
-    <com.google.android.material.chip.Chip
-        style="@style/Widget.MaterialComponents.Chip.Entry"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ation-Chip"
-        android:textColor="@color/white"
-        app:chipBackgroundColor="@color/primary_variant"
-        app:chipCornerRadius="@dimen/dp_10"
-        app:chipIconTint="@color/white"
-		app:closeIconVisible="false"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:gravity="center"
+	android:orientation="vertical"
+	tools:context=".ui.test.TestActivity">
+	
+	<com.google.android.material.chip.Chip
+		style="@style/Widget.MaterialComponents.Chip.Entry"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="Ation-Chip"
+		android:textColor="@color/white"
+		app:chipBackgroundColor="@color/primary_variant"
+		app:chipCornerRadius="@dimen/dp_10"
+		app:chipIconTint="@color/white"
 		app:chipStrokeColor="@color/primary"
-		app:chipStrokeWidth="@dimen/dp_2" />
+		app:chipStrokeWidth="@dimen/dp_2"
+		app:closeIconVisible="false" />
 
 </LinearLayout>

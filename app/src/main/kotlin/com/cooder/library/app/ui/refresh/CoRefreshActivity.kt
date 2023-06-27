@@ -6,10 +6,10 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.cooder.cooder.app.databinding.ActivityCoRefreshBinding
-import com.cooder.cooder.library.util.expends.setStatusBar
-import com.cooder.cooder.ui.refresh.CoRefresh
-import com.cooder.cooder.ui.refresh.overview.CoTextOverView
+import com.cooder.library.app.databinding.ActivityCoRefreshBinding
+import com.cooder.library.library.util.expends.setStatusBar
+import com.cooder.library.ui.refresh.CoRefresh
+import com.cooder.library.ui.refresh.overview.CoTextOverView
 
 /**
  * 项目：CooderLibrary

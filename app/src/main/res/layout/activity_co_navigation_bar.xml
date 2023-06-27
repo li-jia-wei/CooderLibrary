@@ -1,104 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.cooder.library.app.ui.navigation.CoNavigationBarActivity">
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <com.cooder.cooder.ui.navigation.CoNavigationBar
-                android:id="@+id/navigation_bar_1"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_48"
-                android:layout_marginBottom="10dp"
-                app:titleText="主标题" />
-
-            <com.cooder.cooder.ui.navigation.CoNavigationBar
-                android:id="@+id/navigation_bar_2"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_48"
-                android:layout_marginBottom="10dp"
-                app:titleText="主标题" />
-
-            <com.cooder.cooder.ui.navigation.CoNavigationBar
-                android:id="@+id/navigation_bar_3"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_48"
-                android:layout_marginBottom="10dp"
-                app:subTitleText="副标题"
-                app:titleText="主标题" />
-
-            <com.cooder.cooder.ui.navigation.CoNavigationBar
-                android:id="@+id/navigation_bar_4"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_48"
-                android:layout_marginBottom="10dp"
-                app:subTitleText="副标题"
-                app:titleText="主标题" />
-
-            <com.cooder.cooder.ui.navigation.CoNavigationBar
-                android:id="@+id/navigation_bar_5"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_48"
-                android:layout_marginBottom="10dp"
-                app:titleText="主标题" />
-
-            <com.cooder.cooder.ui.navigation.CoNavigationBar
-                android:id="@+id/navigation_bar_6"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_48"
-                android:layout_marginBottom="10dp"
-                app:subTitleText="副标题"
-                app:titleText="主标题" />
-
-            <com.cooder.cooder.ui.navigation.CoNavigationBar
-                android:id="@+id/navigation_bar_7"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_48"
-                android:layout_marginBottom="10dp"
-                app:subTitleText="副标题"
-                app:titleText="主标题" />
-
-            <com.cooder.cooder.ui.navigation.CoNavigationBar
-                android:id="@+id/navigation_bar_8"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_48"
-                android:layout_marginBottom="10dp"
-                app:titleText="超长超长超长超长超长超长超长超长的标题" />
-
-            <com.cooder.cooder.ui.navigation.CoNavigationBar
-                android:id="@+id/navigation_bar_9"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_48"
-                android:layout_marginBottom="10dp"
-                app:titleText="超长超长超长超长超长超长超长超长的标题" />
-
-            <com.cooder.cooder.ui.navigation.CoNavigationBar
-                android:id="@+id/navigation_bar_10"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_48"
-                android:layout_marginBottom="10dp"
-                app:titleText="主标题" />
-
-            <com.cooder.cooder.ui.navigation.CoNavigationBar
-                android:id="@+id/navigation_bar_11"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_48"
-                android:layout_marginBottom="10dp"
-                app:titleText="主标题" />
-
-        </LinearLayout>
-
-    </ScrollView>
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+	tools:context=".ui.navigation.CoNavigationBarActivity">
+	
+	<ScrollView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+		
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+			
+			<com.cooder.library.ui.navigation.CoNavigationBar
+				android:id="@+id/navigation_bar_1"
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/dp_48"
+				android:layout_marginBottom="10dp"
+				app:titleText="主标题" />
+			
+			<com.cooder.library.ui.navigation.CoNavigationBar
+				android:id="@+id/navigation_bar_2"
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/dp_48"
+				android:layout_marginBottom="10dp"
+				app:titleText="主标题" />
+			
+			<com.cooder.library.ui.navigation.CoNavigationBar
+				android:id="@+id/navigation_bar_3"
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/dp_48"
+				android:layout_marginBottom="10dp"
+				app:subTitleText="副标题"
+				app:titleText="主标题" />
+			
+			<com.cooder.library.ui.navigation.CoNavigationBar
+				android:id="@+id/navigation_bar_4"
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/dp_48"
+				android:layout_marginBottom="10dp"
+				app:subTitleText="副标题"
+				app:titleText="主标题" />
+			
+			<com.cooder.library.ui.navigation.CoNavigationBar
+				android:id="@+id/navigation_bar_5"
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/dp_48"
+				android:layout_marginBottom="10dp"
+				app:titleText="主标题" />
+			
+			<com.cooder.library.ui.navigation.CoNavigationBar
+				android:id="@+id/navigation_bar_6"
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/dp_48"
+				android:layout_marginBottom="10dp"
+				app:subTitleText="副标题"
+				app:titleText="主标题" />
+			
+			<com.cooder.library.ui.navigation.CoNavigationBar
+				android:id="@+id/navigation_bar_7"
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/dp_48"
+				android:layout_marginBottom="10dp"
+				app:subTitleText="副标题"
+				app:titleText="主标题" />
+			
+			<com.cooder.library.ui.navigation.CoNavigationBar
+				android:id="@+id/navigation_bar_8"
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/dp_48"
+				android:layout_marginBottom="10dp"
+				app:titleText="超长超长超长超长超长超长超长超长的标题" />
+			
+			<com.cooder.library.ui.navigation.CoNavigationBar
+				android:id="@+id/navigation_bar_9"
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/dp_48"
+				android:layout_marginBottom="10dp"
+				app:titleText="超长超长超长超长超长超长超长超长的标题" />
+			
+			<com.cooder.library.ui.navigation.CoNavigationBar
+				android:id="@+id/navigation_bar_10"
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/dp_48"
+				android:layout_marginBottom="10dp"
+				app:titleText="主标题" />
+			
+			<com.cooder.library.ui.navigation.CoNavigationBar
+				android:id="@+id/navigation_bar_11"
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/dp_48"
+				android:layout_marginBottom="10dp"
+				app:titleText="主标题" />
+		
+		</LinearLayout>
+	
+	</ScrollView>
 
 </LinearLayout>

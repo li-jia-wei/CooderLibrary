@@ -3,8 +3,8 @@ package com.cooder.library.app.ui.slider
 import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.cooder.cooder.app.databinding.ActivityCoSliderBinding
-import com.cooder.cooder.library.util.expends.setStatusBar
+import com.cooder.library.app.databinding.ActivityCoSliderBinding
+import com.cooder.library.library.util.expends.setStatusBar
 
 /**
  * 项目：CooderLibrary

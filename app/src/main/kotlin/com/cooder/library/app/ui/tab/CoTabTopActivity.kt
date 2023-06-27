@@ -5,11 +5,11 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.cooder.cooder.app.R
-import com.cooder.cooder.app.databinding.ActivityCoTabTopBinding
-import com.cooder.cooder.library.util.expends.setStatusBar
-import com.cooder.cooder.ui.tab.common.CoTabLayout
-import com.cooder.cooder.ui.tab.top.CoTabTopInfo
+import com.cooder.library.app.R
+import com.cooder.library.app.databinding.ActivityCoTabTopBinding
+import com.cooder.library.library.util.expends.setStatusBar
+import com.cooder.library.ui.tab.common.CoTabLayout
+import com.cooder.library.ui.tab.top.CoTabTopInfo
 
 /**
  * 项目：CooderLibrary

@@ -2,8 +2,8 @@ package com.cooder.library.app.ui.test
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.cooder.cooder.app.databinding.ActivityTestBinding
-import com.cooder.cooder.library.util.expends.immersiveStatusBar
+import com.cooder.library.app.databinding.ActivityTestBinding
+import com.cooder.library.library.util.expends.immersiveStatusBar
 
 /**
  * 项目：CooderLibrary

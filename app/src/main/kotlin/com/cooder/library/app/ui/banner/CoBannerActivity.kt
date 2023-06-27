@@ -6,16 +6,16 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import com.bumptech.glide.Glide
-import com.cooder.cooder.app.R
-import com.cooder.cooder.app.databinding.ActivityCoBannerBinding
-import com.cooder.cooder.library.util.expends.hintStatusBar
-import com.cooder.cooder.ui.banner.CoBanner
-import com.cooder.cooder.ui.banner.core.CoBannerAdapter
-import com.cooder.cooder.ui.banner.core.CoBannerMo
-import com.cooder.cooder.ui.banner.core.IBindAdapter
-import com.cooder.cooder.ui.banner.indicator.CircleIndicator
-import com.cooder.cooder.ui.banner.indicator.LineIndicator
-import com.cooder.cooder.ui.banner.indicator.NumberIndicator
+import com.cooder.library.app.R
+import com.cooder.library.app.databinding.ActivityCoBannerBinding
+import com.cooder.library.library.util.expends.hintStatusBar
+import com.cooder.library.ui.banner.CoBanner
+import com.cooder.library.ui.banner.core.CoBannerAdapter
+import com.cooder.library.ui.banner.core.CoBannerMo
+import com.cooder.library.ui.banner.core.IBindAdapter
+import com.cooder.library.ui.banner.indicator.CircleIndicator
+import com.cooder.library.ui.banner.indicator.LineIndicator
+import com.cooder.library.ui.banner.indicator.NumberIndicator
 
 /**
  * 项目：CooderLibrary

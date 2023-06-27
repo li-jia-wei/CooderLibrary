@@ -1,39 +1,39 @@
 plugins {
-    alias libs.plugins.com.android.application
-    alias libs.plugins.org.jetbrains.kotlin.android
+	alias libs.plugins.com.android.application
+	alias libs.plugins.org.jetbrains.kotlin.android
 }
 
 android {
-    compileSdk 33
-    namespace 'com.cooder.cooder.app'
-
-    defaultConfig {
-        applicationId "com.cooder.library.app"
-        minSdk 26
-        targetSdk 33
-        versionCode APP_VERSION_CODE as int
-        versionName APP_VERSION_NAME
-    
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
-    }
-    kotlinOptions {
-        jvmTarget = '17'
-    }
-    buildToolsVersion = '33.0.2'
-
-    viewBinding {
-        enable true
-    }
+	compileSdk 33
+	namespace 'com.cooder.library.app'
+	
+	defaultConfig {
+		applicationId "com.cooder.library.app"
+		minSdk 26
+		targetSdk 33
+		versionCode APP_VERSION_CODE as int
+		versionName APP_VERSION_NAME
+		
+		testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+	}
+	buildTypes {
+		release {
+			minifyEnabled false
+			proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+		}
+	}
+	compileOptions {
+		sourceCompatibility JavaVersion.VERSION_17
+		targetCompatibility JavaVersion.VERSION_17
+	}
+	kotlinOptions {
+		jvmTarget = '17'
+	}
+	buildToolsVersion = '33.0.2'
+	
+	viewBinding {
+		enable true
+	}
 }
 
 dependencies {
@@ -49,8 +49,8 @@ dependencies {
 	testImplementation libs.junit
 	androidTestImplementation libs.androidx.test.ext.junit
 	androidTestImplementation libs.espresso.core
-
-    // Glide
+	
+	// Glide
 	implementation libs.glide
 	
 	// 协程

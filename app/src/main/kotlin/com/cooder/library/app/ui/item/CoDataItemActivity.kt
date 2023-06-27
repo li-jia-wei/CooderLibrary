@@ -8,12 +8,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import com.cooder.cooder.app.R
-import com.cooder.cooder.app.databinding.ActivityCoDataItemBinding
-import com.cooder.cooder.library.util.expends.setStatusBar
-import com.cooder.cooder.ui.item.CoAdapter
+import com.cooder.library.app.R
+import com.cooder.library.app.databinding.ActivityCoDataItemBinding
 import com.cooder.library.app.ui.item.dataitem.DataItem
 import com.cooder.library.app.ui.item.dataitem.ItemData
+import com.cooder.library.library.util.expends.setStatusBar
+import com.cooder.library.ui.item.CoAdapter
 
 /**
  * 项目：CooderLibrary

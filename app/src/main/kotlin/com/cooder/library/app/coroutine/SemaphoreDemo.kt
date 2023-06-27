@@ -1,6 +1,6 @@
 package com.cooder.library.app.coroutine
 
-import com.cooder.cooder.library.log.CoLog
+import com.cooder.library.library.log.CoLog
 import java.util.concurrent.Executors
 import java.util.concurrent.Semaphore
 

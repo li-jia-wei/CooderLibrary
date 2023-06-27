@@ -3,7 +3,7 @@ package com.cooder.library.app
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.cooder.cooder.ui.tab.common.CoTabInfo
+import com.cooder.library.ui.tab.common.CoTabInfo
 
 /**
  * 项目：CooderProject

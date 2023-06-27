@@ -1,10 +1,10 @@
 package com.cooder.library.app.application
 
 import android.app.Application
-import com.cooder.cooder.library.log.CoLogConfig
-import com.cooder.cooder.library.log.CoLogManager
-import com.cooder.cooder.library.log.printer.CoConsolePrinter
-import com.cooder.cooder.library.log.printer.CoFilePrinter
+import com.cooder.library.library.log.CoLogConfig
+import com.cooder.library.library.log.CoLogManager
+import com.cooder.library.library.log.printer.CoConsolePrinter
+import com.cooder.library.library.log.printer.CoFilePrinter
 
 /**
  * 项目：CooderLibrary

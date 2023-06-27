@@ -3,12 +3,12 @@ package com.cooder.library.app.ui.tab
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.cooder.cooder.app.R
-import com.cooder.cooder.app.databinding.ActivityCoTabBottomBinding
-import com.cooder.cooder.library.util.expends.hintStatusBar
-import com.cooder.cooder.ui.tab.bottom.CoTabBottomInfo
-import com.cooder.cooder.ui.tab.common.CoTabLayout
 import com.cooder.library.app.CoTabViewAdapter
+import com.cooder.library.app.R
+import com.cooder.library.app.databinding.ActivityCoTabBottomBinding
+import com.cooder.library.library.util.expends.hintStatusBar
+import com.cooder.library.ui.tab.bottom.CoTabBottomInfo
+import com.cooder.library.ui.tab.common.CoTabLayout
 
 /**
  * 项目：CooderLibrary
@@ -33,7 +33,7 @@ class CoTabBottomActivity : AppCompatActivity() {
 	
 	private fun initTabBottom() {
 		binding.tabBottomLayout.setTabAlpha(0.9F)
-		val defaultColor = ContextCompat.getColor(this, com.cooder.cooder.app.R.color.tab_default)
+		val defaultColor = ContextCompat.getColor(this, com.cooder.library.app.R.color.tab_default)
 		val tintColor = ContextCompat.getColor(this, R.color.tab_tint)
 		
 		val bottomInfoList = mutableListOf<CoTabBottomInfo<*>>()

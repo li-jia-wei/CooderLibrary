@@ -2,8 +2,8 @@ package com.cooder.library.app.ui.databus
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.cooder.cooder.app.databinding.ActivityCoDataBusBinding
-import com.cooder.cooder.library.util.CoDataBus
+import com.cooder.library.app.databinding.ActivityCoDataBusBinding
+import com.cooder.library.library.util.CoDataBus
 
 class CoDataBusActivity : AppCompatActivity() {
 	

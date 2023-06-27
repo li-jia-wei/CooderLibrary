@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import com.cooder.cooder.app.R
+import com.cooder.library.app.R
 import com.cooder.library.app.ui.log.CoLogActivity
 
 /**

@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.cooder.cooder.app.R
-import com.cooder.cooder.app.databinding.ActivityCoCacheBinding
-import com.cooder.cooder.library.cache.CoStorage
+import com.cooder.library.app.R
+import com.cooder.library.app.databinding.ActivityCoCacheBinding
+import com.cooder.library.library.cache.CoStorage
 import java.io.Serializable
 
 /**

@@ -3,10 +3,10 @@ package com.cooder.library.app.ui.item.dataitem
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.view.setMargins
-import com.cooder.cooder.app.R
-import com.cooder.cooder.library.util.expends.dpInt
-import com.cooder.cooder.ui.item.CoDataItem
-import com.cooder.cooder.ui.item.CoViewHolder
+import com.cooder.library.app.R
+import com.cooder.library.library.util.expends.dpInt
+import com.cooder.library.ui.item.CoDataItem
+import com.cooder.library.ui.item.CoViewHolder
 
 /**
  * 项目：CooderLibrary

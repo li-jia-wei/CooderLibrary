@@ -2,13 +2,13 @@ package com.cooder.library.app.ui.log
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.cooder.cooder.app.databinding.ActivityCoLogBinding
-import com.cooder.cooder.library.log.CoLog
-import com.cooder.cooder.library.log.CoLogConfig
-import com.cooder.cooder.library.log.CoLogManager
-import com.cooder.cooder.library.log.CoLogType
-import com.cooder.cooder.library.log.printer.CoViewPrinter
-import com.cooder.cooder.library.util.expends.immersiveStatusBar
+import com.cooder.library.app.databinding.ActivityCoLogBinding
+import com.cooder.library.library.log.CoLog
+import com.cooder.library.library.log.CoLogConfig
+import com.cooder.library.library.log.CoLogManager
+import com.cooder.library.library.log.CoLogType
+import com.cooder.library.library.log.printer.CoViewPrinter
+import com.cooder.library.library.util.expends.immersiveStatusBar
 
 /**
  * 项目：CooderLibrary
