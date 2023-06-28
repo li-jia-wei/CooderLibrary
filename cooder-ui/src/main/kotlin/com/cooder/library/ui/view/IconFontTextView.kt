@@ -23,7 +23,7 @@ class IconFontTextView @JvmOverloads constructor(
 ) : AppCompatTextView(context, attrs, defStyleAttr) {
 	
 	private companion object {
-		private const val TYPEFACE_DEFAULT = "font/iconfont_default.ttf"
+		private const val TYPEFACE_DEFAULT = "iconfont/alibaba.ttf"
 	}
 	
 	init {

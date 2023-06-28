@@ -75,11 +75,11 @@ class CoNavigationBarActivity : AppCompatActivity() {
 			Toast.makeText(this, "菜单2", Toast.LENGTH_SHORT).show()
 		}
 		
-		val menu111 = binding.navigationBar11.addRightIconButton(RUi.string.ic_export_services, android.R.color.holo_blue_light)
+		val menu111 = binding.navigationBar11.addRightIconButton(RUi.string.ic_global_fill, android.R.color.holo_blue_light)
 		menu111.setOnClickListener {
 			Toast.makeText(this, "外部服务", Toast.LENGTH_SHORT).show()
 		}
-		val menu112 = binding.navigationBar11.addRightIconButton(RUi.string.ic_integral)
+		val menu112 = binding.navigationBar11.addRightIconButton(RUi.string.ic_layers_fill)
 		menu112.setOnClickListener {
 			Toast.makeText(this, "分层", Toast.LENGTH_SHORT).show()
 		}

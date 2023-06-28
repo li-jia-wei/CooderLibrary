@@ -6,7 +6,7 @@ import androidx.core.content.ContextCompat
 import com.cooder.library.app.CoTabViewAdapter
 import com.cooder.library.app.R
 import com.cooder.library.app.databinding.ActivityCoTabBottomBinding
-import com.cooder.library.library.util.expends.hintStatusBar
+import com.cooder.library.library.util.expends.hideStatusBar
 import com.cooder.library.ui.tab.bottom.CoTabBottomInfo
 import com.cooder.library.ui.tab.common.CoTabLayout
 
@@ -26,7 +26,7 @@ class CoTabBottomActivity : AppCompatActivity() {
 		super.onCreate(savedInstanceState)
 		binding = ActivityCoTabBottomBinding.inflate(layoutInflater)
 		setContentView(binding.root)
-		hintStatusBar()
+		hideStatusBar()
 		
 		initTabBottom()
 	}
@@ -39,7 +39,7 @@ class CoTabBottomActivity : AppCompatActivity() {
 		val bottomInfoList = mutableListOf<CoTabBottomInfo<*>>()
 		val homeInfo = CoTabBottomInfo(
 			"首页",
-			"font/alibaba_iconfont.ttf",
+			"iconfont/alibaba.ttf",
 			getString(R.string.ic_home_home),
 			getString(R.string.ic_home_home_fill),
 			defaultColor,
@@ -50,7 +50,7 @@ class CoTabBottomActivity : AppCompatActivity() {
 		
 		val userAccountInfo = CoTabBottomInfo(
 			"我的",
-			"font/alibaba_iconfont.ttf",
+			"iconfont/alibaba.ttf",
 			getString(R.string.ic_user_account),
 			getString(R.string.ic_user_account_fill),
 			defaultColor,

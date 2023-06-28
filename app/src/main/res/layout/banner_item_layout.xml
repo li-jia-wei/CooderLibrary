@@ -18,6 +18,6 @@
 		android:layout_marginTop="5dp"
 		android:text="http://10.0.2.2:8080/FileServer/img/1.png"
 		android:textColor="@color/white"
-		android:textSize="11sp" />
+		android:textSize="@dimen/sp_11" />
 
 </FrameLayout>

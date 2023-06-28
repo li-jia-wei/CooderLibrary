@@ -3,7 +3,6 @@ package com.cooder.library.app.ui.test
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.cooder.library.app.databinding.ActivityTestBinding
-import com.cooder.library.library.util.expends.immersiveStatusBar
 
 /**
  * 项目：CooderLibrary
@@ -22,6 +21,5 @@ class TestActivity : AppCompatActivity() {
 		super.onCreate(savedInstanceState)
 		binding = ActivityTestBinding.inflate(layoutInflater)
 		setContentView(binding.root)
-		immersiveStatusBar(false)
 	}
 }

@@ -35,16 +35,16 @@ fun Activity.immersiveStatusBar(darkContent: Boolean) {
 	Impl26.immersiveStatusBar(this, darkContent)
 }
 
-fun Activity.hintStatusBar() {
+fun Activity.hideStatusBar() {
 	if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-		Impl28.hintStatusBar(this)
+		Impl28.hideStatusBar(this)
 	} else {
-		Impl26.hintStatusBar(this)
+		Impl26.hideStatusBar(this)
 	}
 }
 
-fun Activity.hintNavigationBar() {
-	Impl26.hintNavigationBar(this)
+fun Activity.hideNavigationBar() {
+	Impl26.hideNavigationBar(this)
 }
 
 fun Activity.showNavigationBar() {
@@ -86,7 +86,7 @@ private object Impl26 {
 		WindowCompat.setDecorFitsSystemWindows(window, false)
 	}
 	
-	fun hintStatusBar(activity: Activity) {
+	fun hideStatusBar(activity: Activity) {
 		val window = activity.window
 		previousNavigationBarColors[activity] = window.navigationBarColor
 		window.navigationBarColor = Color.TRANSPARENT
@@ -96,7 +96,7 @@ private object Impl26 {
 		WindowCompat.setDecorFitsSystemWindows(window, false)
 	}
 	
-	fun hintNavigationBar(activity: Activity) {
+	fun hideNavigationBar(activity: Activity) {
 		val window = activity.window
 		previousNavigationBarColors[activity] = window.navigationBarColor
 		window.navigationBarColor = Color.TRANSPARENT
@@ -113,7 +113,7 @@ private object Impl26 {
 @RequiresApi(Build.VERSION_CODES.P)
 private object Impl28 {
 	
-	fun hintStatusBar(activity: Activity) {
+	fun hideStatusBar(activity: Activity) {
 		val window = activity.window
 		previousNavigationBarColors[activity] = window.navigationBarColor
 		window.navigationBarColor = Color.TRANSPARENT

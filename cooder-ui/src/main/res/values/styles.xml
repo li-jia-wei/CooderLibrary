@@ -2,7 +2,7 @@
 <resources>
 	
 	<style name="CoNavigationBarStyle">
-		<item name="navIcon">@string/ic_arrow_left</item>
+		<item name="navIcon">@string/ic_left</item>
 		<item name="btnTextSize">@dimen/sp_16</item>
 		<item name="btnTextColor">@color/nav_btn_text_color</item>
 		<item name="titleTextSize">@dimen/sp_18</item>
@@ -13,5 +13,9 @@
 		<item name="elementPadding">@dimen/dp_8</item>
 		<item name="underlineEnabled">true</item>
 		<item name="underlineHeight">@dimen/dp_3</item>
+	</style>
+	
+	<style name="CoSearchViewStyle">
+	
 	</style>
 </resources>

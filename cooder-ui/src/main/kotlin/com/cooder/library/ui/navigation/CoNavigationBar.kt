@@ -11,12 +11,10 @@ import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
-import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
+import androidx.appcompat.widget.AppCompatButton
 import com.cooder.library.library.util.expends.dpInt
-import com.cooder.library.library.util.expends.spInt
-import com.cooder.library.ui.R
 import com.cooder.library.ui.view.IconFontButton
 import com.cooder.library.ui.view.IconFontTextView
 
@@ -35,7 +33,7 @@ class CoNavigationBar @JvmOverloads constructor(
 	defStyleAttr: Int = 0
 ) : RelativeLayout(context, attrs, defStyleAttr) {
 	
-	private val navAttrs = parseNavAttrs(attrs, defStyleAttr)
+	private val navAttrs = AttrsParse.parseNavAttrs(context, attrs, defStyleAttr)
 	
 	// 左右按钮
 	private val leftViewList = mutableListOf<View>()
@@ -65,13 +63,11 @@ class CoNavigationBar @JvmOverloads constructor(
 		}
 	}
 	
-	private companion object {
-		private const val BTN_TEXT_SIZE = 16
-		private const val TITLE_TEXT_SIZE = 18
-		private const val TITLE_TEXT_SIZE_WITH_SUB = 16
-		private const val SUB_TITLE_TEXT_SIZE = 11
-		private const val ELEMENT_PADDING = 8
-		private const val UNDERLINE_HEIGHT = 3
+	fun setTopPadding(topPadding: Int) {
+		val params = layoutParams
+		params.height = params.height + topPadding.dpInt
+		this.layoutParams = params
+		this.setPadding(0, topPadding.dpInt, 0, 0)
 	}
 	
 	fun setNavigationListener(listener: OnClickListener) {
@@ -273,7 +269,8 @@ class CoNavigationBar @JvmOverloads constructor(
 				it.orientation = LinearLayout.VERTICAL
 				it.gravity = Gravity.CENTER
 				val params = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT)
-				params.addRule(CENTER_IN_PARENT)
+				params.addRule(CENTER_HORIZONTAL)
+				params.addRule(ALIGN_PARENT_BOTTOM)
 				addView(it, params)
 			}
 		}
@@ -284,7 +281,7 @@ class CoNavigationBar @JvmOverloads constructor(
 	}
 	
 	private fun generateTextButton(isIcon: Boolean, colorResId: Int): Button {
-		val button = if (isIcon) IconFontButton(context) else Button(context)
+		val button = if (isIcon) IconFontButton(context) else AppCompatButton(context)
 		button.setBackgroundResource(0)
 		button.minWidth = 0
 		button.minimumWidth = 0
@@ -330,64 +327,4 @@ class CoNavigationBar @JvmOverloads constructor(
 		val rightUseSpace = getRightUseSpace()
 		return measuredWidth - Math.max(leftUseSpace, rightUseSpace) * 2
 	}
-	
-	/**
-	 * 解析参数
-	 */
-	private fun parseNavAttrs(attrs: AttributeSet?, defStyleAttr: Int): NavAttrs {
-		val value = TypedValue()
-		context.theme.resolveAttribute(R.attr.navigationStyle, value, true)
-		val defStyleRes = if (value.resourceId != 0) value.resourceId else R.style.CoNavigationBarStyle
-		val array = context.obtainStyledAttributes(attrs, R.styleable.CoNavigationBar, defStyleAttr, defStyleRes)
-		
-		val navIcon = array.getString(R.styleable.CoNavigationBar_navIcon) ?: context.getString(R.string.nav_icon)
-		
-		val btnTextSize = array.getDimensionPixelOffset(R.styleable.CoNavigationBar_btnTextSize, BTN_TEXT_SIZE.dpInt).toFloat()
-		val btnTextColor = array.getColor(R.styleable.CoNavigationBar_btnTextColor, context.getColor(R.color.nav_btn_text_color))
-		
-		val titleText = array.getString(R.styleable.CoNavigationBar_titleText)
-		val titleTextSize = array.getDimensionPixelOffset(R.styleable.CoNavigationBar_titleTextSize, TITLE_TEXT_SIZE.spInt).toFloat()
-		val titleTextSizeWithSub = array.getDimensionPixelOffset(R.styleable.CoNavigationBar_titleTextSizeWithSub, TITLE_TEXT_SIZE_WITH_SUB.spInt).toFloat()
-		val titleTextColor = array.getColor(R.styleable.CoNavigationBar_titleTextColor, context.getColor(R.color.nav_title_text_color))
-		
-		val subTitleText = array.getString(R.styleable.CoNavigationBar_subTitleText)
-		val subTitleTextSize = array.getDimensionPixelOffset(R.styleable.CoNavigationBar_subTitleTextSize, SUB_TITLE_TEXT_SIZE.dpInt).toFloat()
-		val subTitleTextColor = array.getColor(R.styleable.CoNavigationBar_subTitleTextColor, context.getColor(R.color.nav_sub_title_text_color))
-		
-		val elementPadding = array.getDimensionPixelOffset(R.styleable.CoNavigationBar_elementPadding, ELEMENT_PADDING.dpInt)
-		val underlineEnabled = array.getBoolean(R.styleable.CoNavigationBar_underlineEnabled, true)
-		val underlineHeight = array.getDimensionPixelOffset(R.styleable.CoNavigationBar_underlineHeight, UNDERLINE_HEIGHT.dpInt).toFloat()
-		array.recycle()
-		return NavAttrs(
-			navIcon,
-			btnTextSize,
-			btnTextColor,
-			titleText,
-			titleTextSize,
-			titleTextSizeWithSub,
-			titleTextColor,
-			subTitleText,
-			subTitleTextSize,
-			subTitleTextColor,
-			elementPadding,
-			underlineEnabled,
-			underlineHeight
-		)
-	}
-	
-	data class NavAttrs(
-		val navIcon: String?,
-		val btnTextSize: Float,
-		@ColorInt val btnTextColor: Int,
-		val titleText: String?,
-		val titleTextSize: Float,
-		val titleTextSizeWithSub: Float,
-		@ColorInt val titleTextColor: Int,
-		val subTitleText: String?,
-		val subTitleTextSize: Float,
-		@ColorInt val subTitleTextColor: Int,
-		val elementPadding: Int,
-		val underlineEnabled: Boolean,
-		val underlineHeight: Float
-	)
 }

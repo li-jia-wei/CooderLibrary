@@ -16,6 +16,7 @@ import com.cooder.library.app.ui.item.CoDataItemActivity
 import com.cooder.library.app.ui.log.CoLogActivity
 import com.cooder.library.app.ui.navigation.CoNavigationBarActivity
 import com.cooder.library.app.ui.refresh.CoRefreshActivity
+import com.cooder.library.app.ui.search.CoSearchViewActivity
 import com.cooder.library.app.ui.slider.CoSliderActivity
 import com.cooder.library.app.ui.tab.CoTabBottomActivity
 import com.cooder.library.app.ui.tab.CoTabTopActivity
@@ -49,7 +50,8 @@ class MainActivity : AppCompatActivity() {
 		CoSliderActivity::class to "CoSlider",
 		CoDataBusActivity::class to "CoDataBus",
 		CoCacheActivity::class to "CoCache",
-		CoNavigationBarActivity::class to "CoNavigationBar"
+		CoNavigationBarActivity::class to "CoNavigationBar",
+		CoSearchViewActivity::class to "CoSearchView"
 	)
 	
 	override fun onCreate(savedInstanceState: Bundle?) {

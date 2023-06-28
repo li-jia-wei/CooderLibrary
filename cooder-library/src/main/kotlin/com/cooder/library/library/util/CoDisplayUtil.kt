@@ -1,8 +1,6 @@
 package com.cooder.library.library.util
 
-import android.app.Activity
-import android.os.Build
-import android.view.WindowInsets
+import android.annotation.SuppressLint
 
 /**
  * 项目：CooderLibrary
@@ -48,9 +46,10 @@ object CoDisplayUtil {
 	@JvmOverloads
 	fun getDisplayWidth(unit: Unit = Unit.DP): Int {
 		val context = AppGlobals.getBaseContext()
+		val width = context.resources.displayMetrics.widthPixels
 		return when (unit) {
-			Unit.DP -> px2dp(context.resources.displayMetrics.widthPixels)
-			Unit.PX -> context.resources.displayMetrics.widthPixels
+			Unit.DP -> px2dp(width)
+			Unit.PX -> width
 		}
 	}
 	
@@ -58,19 +57,42 @@ object CoDisplayUtil {
 	@JvmOverloads
 	fun getDisplayHeight(unit: Unit = Unit.DP): Int {
 		val context = AppGlobals.getBaseContext()
+		val height = context.resources.displayMetrics.heightPixels
 		return when (unit) {
-			Unit.DP -> px2dp(context.resources.displayMetrics.heightPixels)
-			Unit.PX -> context.resources.displayMetrics.heightPixels
+			Unit.DP -> px2dp(height)
+			Unit.PX -> height
 		}
 	}
 	
-	fun getStatusBarHeight(activity: Activity): Int {
-		val insets = activity.window.decorView.rootWindowInsets
-		return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
-			@Suppress("DEPRECATION")
-			insets?.systemWindowInsetTop ?: 0
-		} else {
-			insets?.getInsets(WindowInsets.Type.statusBars())?.top ?: 0
+	/**
+	 * 获取状态栏高度，单位：px
+	 */
+	@SuppressLint("DiscouragedApi", "InternalInsetResource")
+	@JvmStatic
+	@JvmOverloads
+	fun getStatusBarsHeight(unit: Unit = Unit.DP): Int {
+		val resources = AppGlobals.getBaseResources()
+		val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
+		val height = if (resourceId > 0) resources.getDimensionPixelSize(resourceId) else 0
+		return when (unit) {
+			Unit.DP -> px2dp(height)
+			Unit.PX -> height
+		}
+	}
+	
+	/**
+	 * 获取底部导航栏宽度：单位：px
+	 */
+	@SuppressLint("DiscouragedApi", "InternalInsetResource")
+	@JvmStatic
+	@JvmOverloads
+	fun getNavigationBarsHeight(unit: Unit = Unit.DP): Int {
+		val resources = AppGlobals.getBaseResources()
+		val resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android")
+		val height = if (resourceId > 0) resources.getDimensionPixelSize(resourceId) else 0
+		return when (unit) {
+			Unit.DP -> px2dp(height)
+			Unit.PX -> height
 		}
 	}
 }

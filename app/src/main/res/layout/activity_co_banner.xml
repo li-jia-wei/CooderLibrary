@@ -56,7 +56,7 @@
 				android:layout_marginTop="15dp"
 				android:minHeight="48dp"
 				android:text="是否自动播放"
-				android:textSize="18sp"
+				android:textSize="@dimen/sp_18"
 				tools:ignore="UseSwitchCompatOrMaterialXml" />
 			
 			<LinearLayout
@@ -69,7 +69,7 @@
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:text="设置每次切换的延迟"
-					android:textSize="18sp" />
+					android:textSize="@dimen/sp_18" />
 				
 				<EditText
 					android:id="@+id/et_interval_time"

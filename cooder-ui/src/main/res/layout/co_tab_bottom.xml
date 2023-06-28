@@ -20,7 +20,7 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:textColor="@color/tab_bottom_icon"
-		android:textSize="23sp"
+		android:textSize="@dimen/sp_26"
 		android:textStyle="bold"
 		android:visibility="gone" />
 	
@@ -30,6 +30,6 @@
 		android:layout_height="wrap_content"
 		android:includeFontPadding="false"
 		android:textColor="@color/tab_bottom_name"
-		android:textSize="11sp" />
+		android:textSize="@dimen/sp_10" />
 
 </LinearLayout>

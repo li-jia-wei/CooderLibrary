@@ -15,6 +15,8 @@ import com.cooder.library.ui.R
  * 创建：2023/6/25 10:25
  *
  * 介绍：IconFont按钮组件
+ *
+ * [阿里巴巴图标库默认图标](http://cooder.top:8080/iconfont/alibaba/index.html)
  */
 class IconFontButton @JvmOverloads constructor(
 	context: Context,
@@ -23,7 +25,7 @@ class IconFontButton @JvmOverloads constructor(
 ) : AppCompatButton(context, attrs, defStyleAttr) {
 	
 	private companion object {
-		private const val TYPEFACE_DEFAULT = "font/iconfont_default.ttf"
+		private const val TYPEFACE_DEFAULT = "iconfont/alibaba.ttf"
 	}
 	
 	init {

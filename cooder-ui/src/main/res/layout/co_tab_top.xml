@@ -4,13 +4,13 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:orientation="vertical"
-	android:paddingHorizontal="8dp"
-	android:paddingTop="8dp">
+	android:paddingHorizontal="@dimen/dp_8"
+	android:paddingTop="@dimen/dp_8">
 	
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
-		android:layout_marginHorizontal="4dp"
+		android:layout_marginHorizontal="@dimen/dp_4"
 		android:layout_weight="1"
 		android:gravity="center"
 		android:orientation="vertical">
@@ -28,7 +28,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textColor="@color/tab_bottom_icon"
-			android:textSize="23sp"
+			android:textSize="@dimen/sp_24"
 			android:textStyle="bold"
 			android:visibility="gone" />
 		
@@ -38,15 +38,15 @@
 			android:layout_height="wrap_content"
 			android:includeFontPadding="false"
 			android:textColor="@color/tab_bottom_name"
-			android:textSize="18sp" />
+			android:textSize="@dimen/sp_18" />
 	
 	</LinearLayout>
 	
 	<View
 		android:id="@+id/indicator"
 		android:layout_width="match_parent"
-		android:layout_height="2dp"
-		android:layout_marginTop="6dp"
+		android:layout_height="@dimen/dp_2"
+		android:layout_marginTop="@dimen/dp_6"
 		android:background="@drawable/shape_tab_top_indicator" />
 
 </LinearLayout>

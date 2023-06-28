@@ -58,5 +58,53 @@
 		<attr name="underlineEnabled" format="boolean" />
 		<attr name="underlineHeight" format="dimension" />
 	</declare-styleable>
+	
+	<!-- CoSearchView -->
+	<!--	<declare-styleable name="CoSearchView">-->
+	<!--		<attr name="searchBackground" format="reference|color" />-->
+	<!--		<attr name="searchTextSize" format="dimension" />-->
+	<!--		<attr name="searchTextColor" format="dimension" />-->
+	<!--		-->
+	<!--		<attr name="navIcon" format="reference|string" />-->
+	<!--		<attr name="navText" format="string" />-->
+	<!--		<attr name="navSize" format="dimension" />-->
+	<!--		<attr name="navColor" format="color" />-->
+	<!--		<attr name="navPadding" format="dimension" />-->
+	<!--		<attr name="navEnabled" format="boolean" />-->
+	<!--		-->
+	<!--		<attr name="hintIcon" format="reference|string" />-->
+	<!--		<attr name="hintIconSize" format="dimension" />-->
+	<!--		<attr name="hintIconPadding" format="dimension" />-->
+	<!--		<attr name="hintIconEnabled" format="boolean" />-->
+	<!--		<attr name="hintText" format="string" />-->
+	<!--		<attr name="hintTextSize" format="string" />-->
+	<!--		<attr name="hintTextColor" format="string" />-->
+	<!--		<attr name="hintGravity" format="enum">-->
+	<!--			<enum name="center" value="0" />-->
+	<!--			<enum name="left" value="1" />-->
+	<!--		</attr>-->
+	<!--		-->
+	<!--		<attr name="clearIcon" format="reference|string" />-->
+	<!--		<attr name="clearText" format="string" />-->
+	<!--		<attr name="clearSize" format="dimension" />-->
+	<!--		<attr name="clearPadding" format="dimension" />-->
+	<!--		<attr name="clearEnabled" format="boolean" />-->
+	<!--		-->
+	<!--		<attr name="confirmIcon" format="reference|string" />-->
+	<!--		<attr name="confirmText" format="string" />-->
+	<!--		<attr name="confirmSize" format="string" />-->
+	<!--		<attr name="confirmColor" format="color" />-->
+	<!--		<attr name="confirmPadding" format="dimension" />-->
+	<!--		<attr name="confirmEnabled" format="boolean" />-->
+	<!--		-->
+	<!--		<attr name="keywordTextSize" format="dimension" />-->
+	<!--		<attr name="keywordTextColor" format="color" />-->
+	<!--		<attr name="keywordBackground" format="reference|color" />-->
+	<!--		<attr name="keywordIcon" format="reference|string" />-->
+	<!--		<attr name="keywordIconSize" format="dimension" />-->
+	<!--		<attr name="keywordMaxLength" format="integer" />-->
+	<!--		<attr name="keywordPadding" format="dimension" />-->
+	<!--		<attr name="keywordEnabled" format="boolean" />-->
+	<!--	</declare-styleable>-->
 
 </resources>

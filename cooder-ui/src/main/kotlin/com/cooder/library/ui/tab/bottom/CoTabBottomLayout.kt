@@ -13,6 +13,7 @@ import androidx.annotation.FloatRange
 import androidx.annotation.Px
 import androidx.core.view.iterator
 import androidx.recyclerview.widget.RecyclerView
+import com.cooder.library.library.log.CoLog
 import com.cooder.library.library.util.CoDisplayUtil
 import com.cooder.library.library.util.CoViewUtil
 import com.cooder.library.library.util.expends.dp
@@ -46,6 +47,7 @@ class CoTabBottomLayout @JvmOverloads constructor(
 	private var tabBottomHeight = DEFAULT_TAB_BOTTOM_HEIGHT
 	private var bottomLineHeight = DEFAULT_BOTTOM_LINE_HEIGHT
 	private var bottomLineColor = DEFAULT_BOTTOM_LINE_COLOR
+	private var bottomPadding = DEFAULT_BOTTOM_PADDING
 	
 	private var enableSliding = false
 	private var params = SlidingPageParams(-1F, -1F, -1F, -1F, -1F, DISTANCE_MEDIUM)
@@ -54,9 +56,10 @@ class CoTabBottomLayout @JvmOverloads constructor(
 		private const val TAG_TAB_BOTTOM = "TAG_TAB_BOTTOM"
 		
 		const val DEFAULT_BOTTOM_ALPHA = 1F
-		const val DEFAULT_TAB_BOTTOM_HEIGHT = 52F
+		const val DEFAULT_TAB_BOTTOM_HEIGHT = 54F
 		const val DEFAULT_BOTTOM_LINE_HEIGHT = 0.8F
 		const val DEFAULT_BOTTOM_LINE_COLOR = "#DFE0E1"
+		const val DEFAULT_BOTTOM_PADDING = 0
 		
 		private val DISTANCE_SHORT = 30.dp
 		private val DISTANCE_MEDIUM = 60.dp
@@ -94,7 +97,7 @@ class CoTabBottomLayout @JvmOverloads constructor(
 	 * 设置底部Tab的高度
 	 */
 	fun setTabHeight(tabHeight: Float) {
-		this.tabBottomHeight = tabHeight
+		this.tabBottomHeight = this.bottomPadding + tabHeight
 	}
 	
 	/**
@@ -109,6 +112,16 @@ class CoTabBottomLayout @JvmOverloads constructor(
 	 */
 	fun setBottomLineColor(color: String) {
 		this.bottomLineColor = color
+	}
+	
+	/**
+	 * 设置底部边距
+	 */
+	fun setBottomPadding(bottomPadding: Int) {
+		if (bottomPadding > 0 && this.bottomPadding == 0) {
+			this.bottomPadding = bottomPadding
+			this.tabBottomHeight += bottomPadding
+		}
 	}
 	
 	/**
@@ -168,6 +181,8 @@ class CoTabBottomLayout @JvmOverloads constructor(
 		
 		val tabBottomLayout = FrameLayout(context)
 		tabBottomLayout.tag = TAG_TAB_BOTTOM
+		CoLog.i(bottomPadding.dpInt)
+		tabBottomLayout.setPadding(0, 0, 0, bottomPadding)
 		val width = CoDisplayUtil.getDisplayWidth(CoDisplayUtil.Unit.PX) / infoList.size
 		val height = tabBottomHeight.dpInt
 		for ((i, info) in infoList.withIndex()) {
