@@ -8,7 +8,7 @@ import androidx.core.widget.addTextChangedListener
 import com.bumptech.glide.Glide
 import com.cooder.library.app.R
 import com.cooder.library.app.databinding.ActivityCoBannerBinding
-import com.cooder.library.library.util.expends.hintStatusBar
+import com.cooder.library.library.util.expends.hideStatusBar
 import com.cooder.library.ui.banner.CoBanner
 import com.cooder.library.ui.banner.core.CoBannerAdapter
 import com.cooder.library.ui.banner.core.CoBannerMo
@@ -46,7 +46,7 @@ class CoBannerActivity : AppCompatActivity() {
 		super.onCreate(savedInstanceState)
 		binding = ActivityCoBannerBinding.inflate(layoutInflater)
 		setContentView(binding.root)
-		hintStatusBar()
+		hideStatusBar()
 		
 		banners += binding.bannerCircle
 		banners += binding.bannerNumber

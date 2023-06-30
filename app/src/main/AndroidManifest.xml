@@ -17,11 +17,10 @@
 		android:usesCleartextTraffic="true"
 		tools:targetApi="31">
 		<activity
-			android:name=".ui.search.CoSearchViewActivity"
-			android:exported="false" />
-		<activity
 			android:name=".ui.MainActivity"
-			android:exported="true">
+			android:exported="true"
+			android:screenOrientation="portrait"
+			tools:ignore="LockedOrientationActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				
@@ -30,37 +29,64 @@
 		</activity>
 		<activity
 			android:name=".ui.test.TestActivity"
-			android:exported="false" />
+			android:exported="false"
+			android:screenOrientation="portrait"
+			tools:ignore="LockedOrientationActivity" />
 		<activity
 			android:name=".ui.log.CoLogActivity"
-			android:exported="false" />
+			android:exported="false"
+			android:screenOrientation="portrait"
+			tools:ignore="LockedOrientationActivity" />
 		<activity
 			android:name=".ui.tab.CoTabBottomActivity"
-			android:exported="false" />
+			android:exported="false"
+			android:screenOrientation="portrait"
+			tools:ignore="LockedOrientationActivity" />
 		<activity
 			android:name=".ui.tab.CoTabTopActivity"
-			android:exported="false" />
+			android:exported="false"
+			android:screenOrientation="portrait"
+			tools:ignore="LockedOrientationActivity" />
 		<activity
 			android:name=".ui.refresh.CoRefreshActivity"
-			android:exported="false" />
+			android:exported="false"
+			android:screenOrientation="portrait"
+			tools:ignore="LockedOrientationActivity" />
 		<activity
 			android:name=".ui.banner.CoBannerActivity"
-			android:exported="false" />
+			android:exported="false"
+			android:screenOrientation="portrait"
+			tools:ignore="LockedOrientationActivity" />
 		<activity
 			android:name=".ui.item.CoDataItemActivity"
-			android:exported="false" />
+			android:exported="false"
+			android:screenOrientation="portrait"
+			tools:ignore="LockedOrientationActivity" />
 		<activity
 			android:name=".ui.slider.CoSliderActivity"
-			android:exported="false" />
+			android:exported="false"
+			android:screenOrientation="portrait"
+			tools:ignore="LockedOrientationActivity" />
 		<activity
 			android:name=".ui.databus.CoDataBusActivity"
-			android:exported="false" />
+			android:exported="false"
+			android:screenOrientation="portrait"
+			tools:ignore="LockedOrientationActivity" />
 		<activity
 			android:name=".ui.cache.CoCacheActivity"
-			android:exported="false" />
+			android:exported="false"
+			android:screenOrientation="portrait"
+			tools:ignore="LockedOrientationActivity" />
 		<activity
 			android:name=".ui.navigation.CoNavigationBarActivity"
-			android:exported="false" />
+			android:exported="false"
+			android:screenOrientation="portrait"
+			tools:ignore="LockedOrientationActivity" />
+		<activity
+			android:name=".ui.search.CoSearchViewActivity"
+			android:exported="false"
+			android:screenOrientation="portrait"
+			tools:ignore="LockedOrientationActivity" />
 	</application>
 
 </manifest>

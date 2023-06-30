@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.cooder.library.library.util.expends.dpInt
+import com.cooder.library.library.util.expends.spInt
 import com.cooder.library.ui.R
 import com.cooder.library.ui.item.CoViewHolder
 
@@ -220,8 +221,8 @@ class CoSliderView @JvmOverloads constructor(
 		val array = context.obtainStyledAttributes(attrs, R.styleable.CoSliderView)
 		val width: Int = array.getDimensionPixelOffset(R.styleable.CoSliderView_menuWidth, MENU_WIDTH.dpInt)
 		val height: Int = array.getDimensionPixelOffset(R.styleable.CoSliderView_menuHeight, MENU_HEIGHT.dpInt)
-		val textSize: Int = array.getDimensionPixelSize(R.styleable.CoSliderView_menuTextSize, TEXT_SIZE.dpInt)
-		val selectTextSize: Int = array.getDimensionPixelSize(R.styleable.CoSliderView_menuSelectTextSize, SELECT_TEXT_SIZE.dpInt)
+		val textSize: Int = array.getDimensionPixelOffset(R.styleable.CoSliderView_menuTextSize, TEXT_SIZE.spInt)
+		val selectTextSize: Int = array.getDimensionPixelOffset(R.styleable.CoSliderView_menuSelectTextSize, SELECT_TEXT_SIZE.spInt)
 		val textColor: ColorStateList = array.getColorStateList(R.styleable.CoSliderView_menuTextColor) ?: generateColorStateList()
 		val indicator: Drawable? =
 			array.getDrawable(R.styleable.CoSliderView_menuIndicator) ?: ContextCompat.getDrawable(context, R.drawable.shape_slider_indicator)

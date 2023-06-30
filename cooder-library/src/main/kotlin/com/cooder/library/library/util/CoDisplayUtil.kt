@@ -73,7 +73,7 @@ object CoDisplayUtil {
 	fun getStatusBarsHeight(unit: Unit = Unit.DP): Int {
 		val resources = AppGlobals.getBaseResources()
 		val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
-		val height = if (resourceId > 0) resources.getDimensionPixelSize(resourceId) else 0
+		val height = if (resourceId > 0) resources.getDimensionPixelOffset(resourceId) else 0
 		return when (unit) {
 			Unit.DP -> px2dp(height)
 			Unit.PX -> height
@@ -89,7 +89,7 @@ object CoDisplayUtil {
 	fun getNavigationBarsHeight(unit: Unit = Unit.DP): Int {
 		val resources = AppGlobals.getBaseResources()
 		val resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android")
-		val height = if (resourceId > 0) resources.getDimensionPixelSize(resourceId) else 0
+		val height = if (resourceId > 0) resources.getDimensionPixelOffset(resourceId) else 0
 		return when (unit) {
 			Unit.DP -> px2dp(height)
 			Unit.PX -> height

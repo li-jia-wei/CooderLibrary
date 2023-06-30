@@ -13,7 +13,6 @@ import androidx.annotation.FloatRange
 import androidx.annotation.Px
 import androidx.core.view.iterator
 import androidx.recyclerview.widget.RecyclerView
-import com.cooder.library.library.log.CoLog
 import com.cooder.library.library.util.CoDisplayUtil
 import com.cooder.library.library.util.CoViewUtil
 import com.cooder.library.library.util.expends.dp
@@ -181,7 +180,6 @@ class CoTabBottomLayout @JvmOverloads constructor(
 		
 		val tabBottomLayout = FrameLayout(context)
 		tabBottomLayout.tag = TAG_TAB_BOTTOM
-		CoLog.i(bottomPadding.dpInt)
 		tabBottomLayout.setPadding(0, 0, 0, bottomPadding)
 		val width = CoDisplayUtil.getDisplayWidth(CoDisplayUtil.Unit.PX) / infoList.size
 		val height = tabBottomHeight.dpInt

@@ -15,11 +15,11 @@ class CoNavigationBarActivity : AppCompatActivity() {
 		binding = ActivityCoNavigationBarBinding.inflate(layoutInflater)
 		setContentView(binding.root)
 		
-		binding.navigationBar2.setNavigationListener {
+		binding.navigationBar2.setOnClickNavListener {
 			Toast.makeText(this, "返回按钮", Toast.LENGTH_SHORT).show()
 		}
 		
-		binding.navigationBar4.setNavigationListener {
+		binding.navigationBar4.setOnClickNavListener {
 			Toast.makeText(this, "返回按钮", Toast.LENGTH_SHORT).show()
 		}
 		
@@ -41,11 +41,11 @@ class CoNavigationBarActivity : AppCompatActivity() {
 		menu71.setOnClickListener {
 			Toast.makeText(this, "分类图标", Toast.LENGTH_SHORT).show()
 		}
-		binding.navigationBar7.setNavigationListener {
+		binding.navigationBar7.setOnClickNavListener {
 			Toast.makeText(this, "返回按钮", Toast.LENGTH_SHORT).show()
 		}
 		
-		binding.navigationBar8.setNavigationListener {
+		binding.navigationBar8.setOnClickNavListener {
 			Toast.makeText(this, "返回按钮", Toast.LENGTH_SHORT).show()
 		}
 		
@@ -54,7 +54,7 @@ class CoNavigationBarActivity : AppCompatActivity() {
 			Toast.makeText(this, "分类图标", Toast.LENGTH_SHORT).show()
 		}
 		
-		binding.navigationBar9.setNavigationListener {
+		binding.navigationBar9.setOnClickNavListener {
 			Toast.makeText(this, "返回按钮", Toast.LENGTH_SHORT).show()
 		}
 		val menu91 = binding.navigationBar9.addRightTextButton("菜单1")

@@ -46,12 +46,10 @@ class LineIndicator @JvmOverloads constructor(
 			}
 			val rectParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT)
 			rectParams.weight = 1F
-			if (it == 0) {
-				rectParams.setMargins(0, 0, 2.dpInt, 0)
-			} else if (it == count - 1) {
-				rectParams.setMargins(2.dpInt, 0, 0, 0)
-			} else {
-				rectParams.setMargins(2.dpInt, 0, 2.dpInt, 0)
+			when (it) {
+				0 -> rectParams.setMargins(0, 0, 2.dpInt, 0)
+				count - 1 -> rectParams.setMargins(2.dpInt, 0, 0, 0)
+				else -> rectParams.setMargins(2.dpInt, 0, 2.dpInt, 0)
 			}
 			groupView.addView(rect, rectParams)
 		}

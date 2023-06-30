@@ -8,6 +8,7 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
@@ -33,7 +34,12 @@ class CoNavigationBar @JvmOverloads constructor(
 	defStyleAttr: Int = 0
 ) : RelativeLayout(context, attrs, defStyleAttr) {
 	
-	private val navAttrs = AttrsParse.parseNavAttrs(context, attrs, defStyleAttr)
+	private val navAttr: AttrsParse.NavAttr
+	private val btnAttr: AttrsParse.BtnAttr
+	private val titleAttr: AttrsParse.TitleAttr
+	private val subTitleAttr: AttrsParse.SubTitleAttr
+	private val elementAttr: AttrsParse.ElementAttr
+	private val underlineAttr: AttrsParse.UnderlineAttr
 	
 	// 左右按钮
 	private val leftViewList = mutableListOf<View>()
@@ -48,16 +54,29 @@ class CoNavigationBar @JvmOverloads constructor(
 	private var subTitleView: IconFontTextView? = null
 	private var titleContainer: LinearLayout? = null
 	
+	private companion object {
+		private const val DEFAULT_HEIGHT = 48
+	}
+	
 	init {
-		if (!navAttrs.titleText.isNullOrBlank()) {
-			setTitle(navAttrs.titleText)
+		val attr = AttrsParse.parseNavAttrs(context, attrs, defStyleAttr)
+		navAttr = attr.navAttr
+		btnAttr = attr.btnAttr
+		titleAttr = attr.titleAttr
+		subTitleAttr = attr.subTitleAttr
+		elementAttr = attr.elementAttr
+		underlineAttr = attr.underlineAttr
+		layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DEFAULT_HEIGHT.dpInt)
+		
+		if (!titleAttr.text.isNullOrBlank()) {
+			setTitle(titleAttr.text)
 		}
-		if (!navAttrs.subTitleText.isNullOrBlank()) {
-			setSubTitle(navAttrs.subTitleText)
+		if (!subTitleAttr.text.isNullOrBlank()) {
+			setSubTitle(subTitleAttr.text)
 		}
 		setBackgroundColor(Color.WHITE)
-		if (navAttrs.underlineEnabled) {
-			this.translationZ = navAttrs.underlineHeight
+		if (underlineAttr.enabled) {
+			this.translationZ = underlineAttr.height
 		} else {
 			this.translationZ = 0F
 		}
@@ -70,9 +89,9 @@ class CoNavigationBar @JvmOverloads constructor(
 		this.setPadding(0, topPadding.dpInt, 0, 0)
 	}
 	
-	fun setNavigationListener(listener: OnClickListener) {
-		if (navButton == null && !navAttrs.navIcon.isNullOrBlank()) {
-			navButton = addLeftIconButton(navAttrs.navIcon)
+	fun setOnClickNavListener(listener: OnClickListener) {
+		if (navButton == null && !navAttr.icon.isNullOrBlank()) {
+			navButton = addLeftIconButton(navAttr.icon)
 		}
 		navButton?.setOnClickListener(listener)
 	}
@@ -113,9 +132,17 @@ class CoNavigationBar @JvmOverloads constructor(
 		val button = generateTextButton(isIcon, colorResId)
 		button.text = text
 		if (leftViewList.isEmpty()) {
-			button.setPadding(navAttrs.elementPadding * 2, 0, navAttrs.elementPadding, 0)
+			if (isIcon) {
+				button.setPadding(elementAttr.padding * 2, 0, elementAttr.padding, 0)
+			} else {
+				button.setPadding(elementAttr.padding * 3, 0, (elementAttr.padding * 1.5).toInt(), 0)
+			}
 		} else {
-			button.setPadding(navAttrs.elementPadding, 0, navAttrs.elementPadding, 0)
+			if (isIcon) {
+				button.setPadding(elementAttr.padding * 2, 0, elementAttr.padding, 0)
+			} else {
+				button.setPadding((elementAttr.padding * 1.5).toInt(), 0, (elementAttr.padding * 1.5).toInt(), 0)
+			}
 		}
 		val params = generateTextButtonLayoutParams()
 		addLeftView(button, params)
@@ -174,9 +201,17 @@ class CoNavigationBar @JvmOverloads constructor(
 		val button = generateTextButton(isIcon, colorResId)
 		button.text = text
 		if (rightViewList.isEmpty()) {
-			button.setPadding(navAttrs.elementPadding, 0, navAttrs.elementPadding * 2, 0)
+			if (isIcon) {
+				button.setPadding(elementAttr.padding, 0, elementAttr.padding * 2, 0)
+			} else {
+				button.setPadding((elementAttr.padding * 1.5).toInt(), 0, elementAttr.padding * 3, 0)
+			}
 		} else {
-			button.setPadding(navAttrs.elementPadding, 0, navAttrs.elementPadding, 0)
+			if (isIcon) {
+				button.setPadding(elementAttr.padding, 0, elementAttr.padding, 0)
+			} else {
+				button.setPadding((elementAttr.padding * 1.5).toInt(), 0, (elementAttr.padding * 1.5).toInt(), 0)
+			}
 		}
 		val params = generateTextButtonLayoutParams()
 		addRightView(button, params)
@@ -228,7 +263,7 @@ class CoNavigationBar @JvmOverloads constructor(
 				it.gravity = Gravity.CENTER
 				it.isSingleLine = true
 				it.ellipsize = TextUtils.TruncateAt.END
-				it.setTextColor(navAttrs.titleTextColor)
+				it.setTextColor(titleAttr.textColor)
 				ensureTitleContainer()
 				updateTitleViewStyle()
 				titleContainer!!.addView(it, 0)
@@ -239,10 +274,10 @@ class CoNavigationBar @JvmOverloads constructor(
 	private fun updateTitleViewStyle() {
 		if (titleView != null) {
 			if (subTitleView == null || subTitleView!!.visibility == View.GONE) {
-				titleView!!.setTextSize(TypedValue.COMPLEX_UNIT_PX, navAttrs.titleTextSize)
+				titleView!!.setTextSize(TypedValue.COMPLEX_UNIT_PX, titleAttr.textSize)
 				titleView!!.typeface = Typeface.DEFAULT_BOLD
 			} else {
-				titleView!!.setTextSize(TypedValue.COMPLEX_UNIT_PX, navAttrs.titleTextSizeWithSub)
+				titleView!!.setTextSize(TypedValue.COMPLEX_UNIT_PX, titleAttr.textSizeWithSub)
 				titleView!!.typeface = Typeface.DEFAULT
 			}
 		}
@@ -255,7 +290,7 @@ class CoNavigationBar @JvmOverloads constructor(
 				it.gravity = Gravity.CENTER
 				it.isSingleLine = true
 				it.ellipsize = TextUtils.TruncateAt.END
-				it.setTextColor(navAttrs.titleTextColor)
+				it.setTextColor(titleAttr.textColor)
 				ensureTitleContainer()
 				titleContainer!!.addView(it)
 			}
@@ -287,8 +322,8 @@ class CoNavigationBar @JvmOverloads constructor(
 		button.minimumWidth = 0
 		button.minHeight = 0
 		button.minHeight = 0
-		button.setTextSize(TypedValue.COMPLEX_UNIT_PX, if (isIcon) navAttrs.btnTextSize * 2 else navAttrs.btnTextSize)
-		button.setTextColor(if (colorResId == -1) navAttrs.btnTextColor else context.getColor(colorResId))
+		button.setTextSize(TypedValue.COMPLEX_UNIT_PX, if (isIcon) btnAttr.textSize * 2 else btnAttr.textSize)
+		button.setTextColor(if (colorResId == -1) btnAttr.textColor else context.getColor(colorResId))
 		button.gravity = Gravity.CENTER
 		button.id = View.generateViewId()
 		return button
@@ -306,6 +341,12 @@ class CoNavigationBar @JvmOverloads constructor(
 		}
 	}
 	
+	private fun calcRemainingSpace(): Int {
+		val leftUseSpace = getLeftUseSpace()
+		val rightUseSpace = getRightUseSpace()
+		return measuredWidth - Math.max(leftUseSpace, rightUseSpace) * 2
+	}
+	
 	private fun getLeftUseSpace(): Int {
 		var leftUseSpace = paddingLeft
 		leftViewList.forEach {
@@ -320,11 +361,5 @@ class CoNavigationBar @JvmOverloads constructor(
 			rightUseSpace += it.measuredWidth
 		}
 		return rightUseSpace
-	}
-	
-	private fun calcRemainingSpace(): Int {
-		val leftUseSpace = getLeftUseSpace()
-		val rightUseSpace = getRightUseSpace()
-		return measuredWidth - Math.max(leftUseSpace, rightUseSpace) * 2
 	}
 }

@@ -3,19 +3,68 @@
 	
 	<style name="CoNavigationBarStyle">
 		<item name="navIcon">@string/ic_left</item>
+		<item name="navColor">@color/nav_color</item>
+		
 		<item name="btnTextSize">@dimen/sp_16</item>
 		<item name="btnTextColor">@color/nav_btn_text_color</item>
+		
 		<item name="titleTextSize">@dimen/sp_18</item>
 		<item name="titleTextSizeWithSub">@dimen/sp_16</item>
 		<item name="titleTextColor">@color/nav_title_text_color</item>
+		
 		<item name="subTitleTextSize">@dimen/sp_11</item>
 		<item name="subTitleTextColor">@color/nav_sub_title_text_color</item>
+		
 		<item name="elementPadding">@dimen/dp_8</item>
-		<item name="underlineEnabled">true</item>
+		
 		<item name="underlineHeight">@dimen/dp_3</item>
+		<item name="underlineEnabled">true</item>
 	</style>
 	
 	<style name="CoSearchViewStyle">
-	
+		<item name="searchBackground">@drawable/shape_search</item>
+		<item name="searchHorizontal">@dimen/dp_8</item>
+		<item name="searchVertical">@dimen/dp_10</item>
+		<item name="searchMaxLength">200</item>
+		
+		<item name="textSize">@dimen/sp_16</item>
+		<item name="textColor">@color/search_text_color</item>
+		
+		<item name="navIcon">@string/ic_left</item>
+		<item name="navIconSize">@dimen/sp_16</item>
+		<item name="navColor">@color/search_nav_color</item>
+		<item name="navPadding">@dimen/dp_8</item>
+		<item name="navEnabled">true</item>
+		
+		<item name="hintIcon">@string/ic_search</item>
+		<item name="hintIconSize">@dimen/sp_16</item>
+		<item name="hintIconEnabled">true</item>
+		<item name="hintText">@string/search_hint_text</item>
+		<item name="hintTextSize">@dimen/sp_16</item>
+		<item name="hintPadding">@dimen/dp_8</item>
+		<item name="hintColor">@color/search_hint_color</item>
+		<item name="hintGravity">center</item>
+		
+		<item name="clearIcon">@string/ic_close</item>
+		<item name="clearSize">@dimen/sp_11</item>
+		<item name="clearColor">@color/search_clear_color</item>
+		<item name="clearPadding">@dimen/dp_8</item>
+		<item name="clearEnabled">true</item>
+		
+		<item name="confirmText">@string/search_confirm_text</item>
+		<item name="confirmSize">@dimen/sp_16</item>
+		<item name="confirmColor">@color/search_confirm_color</item>
+		<item name="confirmPadding">@dimen/dp_8</item>
+		<item name="confirmEnabled">true</item>
+		
+		<item name="keywordTextSize">@dimen/sp_13</item>
+		<item name="keywordTextColor">@color/white</item>
+		<item name="keywordBackground">@drawable/shape_search_keyword</item>
+		<item name="keywordIcon">@string/ic_error</item>
+		<item name="keywordIconSize">@dimen/sp_13</item>
+		<item name="keywordMaxWidth">@dimen/dp_160</item>
+		<item name="keywordPadding">@dimen/dp_4</item>
+		<item name="keywordEllipsize">middle</item>
+		<item name="keywordEnabled">true</item>
 	</style>
 </resources>
