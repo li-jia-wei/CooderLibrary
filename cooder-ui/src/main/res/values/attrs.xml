@@ -67,15 +67,17 @@
 		<attr name="searchBackground" format="reference" />
 		<attr name="searchHorizontal" format="dimension" />
 		<attr name="searchVertical" format="dimension" />
-		<attr name="searchMaxLength" format="integer" />
+		<attr name="searchChangeInterval" format="integer" />
 		
 		<attr name="textSize" format="dimension" />
 		<attr name="textColor" format="color" />
+		<attr name="textMaxLength" format="integer" />
 		
 		<attr name="navIcon" />
 		<attr name="navIconSize" format="dimension" />
 		<attr name="navColor" format="color" />
 		<attr name="navPadding" format="dimension" />
+		<attr name="navTypeface" format="string" />
 		<attr name="navEnabled" format="boolean" />
 		
 		<attr name="hintIcon" format="string" />
@@ -101,6 +103,7 @@
 		<attr name="confirmSize" format="dimension" />
 		<attr name="confirmColor" format="color" />
 		<attr name="confirmPadding" format="dimension" />
+		<attr name="confirmTypeface" format="string" />
 		<attr name="confirmEnabled" format="boolean" />
 		
 		<attr name="keywordTextSize" format="dimension" />

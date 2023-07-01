@@ -25,10 +25,11 @@
 		<item name="searchBackground">@drawable/shape_search</item>
 		<item name="searchHorizontal">@dimen/dp_8</item>
 		<item name="searchVertical">@dimen/dp_10</item>
-		<item name="searchMaxLength">200</item>
+		<item name="searchChangeInterval">300</item>
 		
 		<item name="textSize">@dimen/sp_16</item>
 		<item name="textColor">@color/search_text_color</item>
+		<item name="textMaxLength">200</item>
 		
 		<item name="navIcon">@string/ic_left</item>
 		<item name="navIconSize">@dimen/sp_16</item>

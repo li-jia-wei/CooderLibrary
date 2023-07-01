@@ -8,6 +8,6 @@
 	<string name="refresh_lottie_wavy_over">@string/ic_up</string>            <!-- 向上的箭头 -->
 	<string name="refresh_lottie_wavy_refresh">@string/ic_reduce</string>        <!-- 水平线 -->
 	
-	<string name="search_hint_text">请输入你想要搜索的内容</string>
+	<string name="search_hint_text">搜索</string>
 	<string name="search_confirm_text">搜索</string>
 </resources>

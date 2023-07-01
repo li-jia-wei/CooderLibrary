@@ -1,6 +1,7 @@
 package com.cooder.library.app.ui.search
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.cooder.library.app.databinding.ActivityCoSearchBinding
 import com.cooder.library.library.log.CoLog
@@ -18,15 +19,16 @@ class CoSearchViewActivity : AppCompatActivity() {
 		binding = ActivityCoSearchBinding.inflate(layoutInflater)
 		setContentView(binding.root)
 		
-		binding.searchView.setNavListener {
+		binding.searchView.setNavListener(true) {
 			finish()
 		}
-		
+		binding.searchView.setHistorySearchContent(LAST)
 		binding.searchView.setSearchListener {
 			LAST = it
-			CoLog.i("搜索内容：$it")
+			Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
 		}
-		
-		binding.searchView.setHistorySearch(LAST)
+		binding.searchView.setEditTextChangeListener {
+			CoLog.i("SearchChange: $it")
+		}
 	}
 }

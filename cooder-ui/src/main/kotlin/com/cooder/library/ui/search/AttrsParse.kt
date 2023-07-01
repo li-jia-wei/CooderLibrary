@@ -24,9 +24,10 @@ internal object AttrsParse {
 	private val SEARCH_BACKGROUND = R.drawable.shape_search
 	private const val SEARCH_HORIZONTAL = 8
 	private const val SEARCH_VERTICAL = 8
-	private const val SEARCH_MAX_LENGTH = 200
+	private const val SEARCH_CHANGE_INTERVAL = 300
 	private const val TEXT_SIZE = 16
 	private val TEXT_COLOR = R.color.search_text_color
+	private const val TEXT_MAX_LENGTH = 200
 	private val NAV_ICON = R.string.ic_left
 	private const val NAV_ICON_SIZE = 16
 	private val NAV_COLOR = R.color.search_nav_color
@@ -68,19 +69,21 @@ internal object AttrsParse {
 		val searchBackground = array.getResourceId(R.styleable.CoSearchView_searchBackground, SEARCH_BACKGROUND)
 		val searchHorizontal = array.getDimensionPixelOffset(R.styleable.CoSearchView_searchHorizontal, SEARCH_HORIZONTAL.dpInt)
 		val searchVertical = array.getDimensionPixelOffset(R.styleable.CoSearchView_searchVertical, SEARCH_VERTICAL)
-		val searchMaxLength = array.getInt(R.styleable.CoSearchView_searchMaxLength, SEARCH_MAX_LENGTH)
-		val searchAttr = SearchAttr(searchBackground, searchHorizontal, searchVertical, searchMaxLength)
+		val searchChangeInterval = array.getInt(R.styleable.CoSearchView_searchChangeInterval, SEARCH_CHANGE_INTERVAL)
+		val searchAttr = SearchAttr(searchBackground, searchHorizontal, searchVertical, searchChangeInterval.toLong())
 		
 		val textSize = array.getDimensionPixelOffset(R.styleable.CoSearchView_textSize, TEXT_SIZE.spInt)
 		val textColor = array.getColor(R.styleable.CoSearchView_textColor, context.getColor(TEXT_COLOR))
-		val textAttr = TextAttr(textSize, textColor)
+		val textMaxLength = array.getInt(R.styleable.CoSearchView_textMaxLength, TEXT_MAX_LENGTH)
+		val textAttr = TextAttr(textSize, textColor, textMaxLength)
 		
 		val navIcon = array.getString(R.styleable.CoSearchView_navIcon) ?: context.getString(NAV_ICON)
 		val navIconSize = array.getDimensionPixelOffset(R.styleable.CoSearchView_navIconSize, NAV_ICON_SIZE.spInt)
 		val navColor = array.getColor(R.styleable.CoSearchView_navColor, context.getColor(NAV_COLOR))
 		val navPadding = array.getDimensionPixelOffset(R.styleable.CoSearchView_navPadding, NAV_PADDING.dpInt)
+		val navTypeface = array.getString(R.styleable.CoSearchView_navTypeface)
 		val navEnabled = array.getBoolean(R.styleable.CoSearchView_navEnabled, NAV_ENABLED)
-		val navAttr = NavAttr(navIcon, navIconSize, navColor, navPadding, navEnabled)
+		val navAttr = NavAttr(navIcon, navIconSize, navColor, navPadding, navTypeface, navEnabled)
 		
 		val hintIcon = array.getString(R.styleable.CoSearchView_hintIcon) ?: context.getString(HINT_ICON)
 		val hintIconSize = array.getDimensionPixelOffset(R.styleable.CoSearchView_hintIconSize, HINT_ICON_SIZE.spInt)
@@ -104,8 +107,9 @@ internal object AttrsParse {
 		val confirmSize = array.getDimensionPixelOffset(R.styleable.CoSearchView_confirmSize, CONFIRM_SIZE.spInt)
 		val confirmColor = array.getColor(R.styleable.CoSearchView_confirmColor, context.getColor(CONFIRM_COLOR))
 		val confirmPadding = array.getDimensionPixelOffset(R.styleable.CoSearchView_confirmPadding, CONFIRM_PADDING.dpInt)
+		val confirmTypeface = array.getString(R.styleable.CoSearchView_navTypeface)
 		val confirmEnabled = array.getBoolean(R.styleable.CoSearchView_confirmEnabled, CONFIRM_ENABLED)
-		val confirmAttr = ConfirmAttr(confirmIcon, confirmText, confirmSize, confirmColor, confirmPadding, confirmEnabled)
+		val confirmAttr = ConfirmAttr(confirmIcon, confirmText, confirmSize, confirmColor, confirmPadding, confirmTypeface, confirmEnabled)
 		
 		val keywordTextSize = array.getDimensionPixelOffset(R.styleable.CoSearchView_keywordTextSize, KEYWORD_TEXT_SIZE.spInt)
 		val keywordTextColor = array.getColor(R.styleable.CoSearchView_keywordTextColor, context.getColor(KEYWORD_TEXT_COLOR))
@@ -140,12 +144,13 @@ internal object AttrsParse {
 		@DrawableRes val background: Int,
 		@Px val horizontal: Int,
 		@Px val vertical: Int,
-		val maxLength: Int
+		val changeInterval: Long
 	)
 	
 	data class TextAttr(
 		@Px val size: Int,
-		@ColorInt val color: Int
+		@ColorInt val color: Int,
+		val maxLength: Int
 	)
 	
 	data class NavAttr(
@@ -153,6 +158,7 @@ internal object AttrsParse {
 		@Px val iconSize: Int,
 		@ColorInt val color: Int,
 		@Px val padding: Int,
+		val typeface: String?,
 		val enabled: Boolean
 	)
 	
@@ -181,6 +187,7 @@ internal object AttrsParse {
 		@Px val size: Int,
 		@ColorInt val color: Int,
 		@Px val padding: Int,
+		val typeface: String?,
 		val enabled: Boolean
 	)
 	

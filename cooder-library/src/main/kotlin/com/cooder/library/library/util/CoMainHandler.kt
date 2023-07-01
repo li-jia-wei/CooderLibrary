@@ -29,4 +29,8 @@ object CoMainHandler {
 		val msg = Message.obtain(handler, runnable)
 		handler.sendMessageAtFrontOfQueue(msg)
 	}
+	
+	fun remove(runnable: Runnable) {
+		handler.removeCallbacks(runnable)
+	}
 }
