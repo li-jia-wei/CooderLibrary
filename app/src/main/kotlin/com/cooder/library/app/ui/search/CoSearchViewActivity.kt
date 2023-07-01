@@ -19,7 +19,7 @@ class CoSearchViewActivity : AppCompatActivity() {
 		binding = ActivityCoSearchBinding.inflate(layoutInflater)
 		setContentView(binding.root)
 		
-		binding.searchView.setNavListener(true) {
+		binding.searchView.setNavListener {
 			finish()
 		}
 		binding.searchView.setHistorySearchContent(LAST)

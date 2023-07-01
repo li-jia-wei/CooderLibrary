@@ -59,11 +59,11 @@ class CoSearchView @JvmOverloads constructor(
 	private var keywordContainer: LinearLayout? = null
 	private var keywordView: TextView? = null
 	
-	private val statusViews = mutableMapOf<View, Status>()
+	private val statusViews = mutableMapOf<View, Array<Status>>()
 	private var currentStatus = HINT
 	
 	private val changeRunnable = Runnable {
-		val content = formatSearchContent(formatSearchContent(editText.text.toString()))
+		val content = getSearchContent()
 		if (content != lastChangeContent) {
 			lastChangeContent = content
 			editTextChangeListener?.invoke(content)
@@ -190,7 +190,9 @@ class CoSearchView @JvmOverloads constructor(
 			this.gravity = if (hintAttr.gravity == 0) Gravity.CENTER else Gravity.CENTER_VERTICAL or Gravity.LEFT
 			this.setOnClickListener {
 				updateStatus(INPUT)
-				clearView?.visibility = if (lastSearchContent.isEmpty()) View.GONE else View.VISIBLE
+				val content = getSearchContent()
+				clearView?.visibility = if (lastSearchContent.isEmpty() && content.isEmpty()) View.GONE else View.VISIBLE
+				editText.setSelection(editText.length())
 			}
 			this.orientation = HORIZONTAL
 			val params = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT)
@@ -216,7 +218,7 @@ class CoSearchView @JvmOverloads constructor(
 				this.setPadding(hintAttr.padding, 0, 0, 0)
 				val params = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
 				searchContainer.addView(this, params)
-				statusViews[this] = HINT
+				statusViews[this] = arrayOf(HINT, INPUT)
 			}
 		}
 		val hintTextView = TextView(context)
@@ -227,7 +229,7 @@ class CoSearchView @JvmOverloads constructor(
 			this.setPadding(hintAttr.padding, 0, hintAttr.padding, 0)
 			val params = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
 			searchContainer.addView(this, params)
-			statusViews[this] = HINT
+			statusViews[this] = arrayOf(HINT)
 		}
 	}
 	
@@ -259,7 +261,7 @@ class CoSearchView @JvmOverloads constructor(
 			val params = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT)
 			params.weight = 1F
 			searchContainer.addView(this, params)
-			statusViews[this] = INPUT
+			statusViews[this] = arrayOf(INPUT)
 		}
 	}
 	
@@ -277,7 +279,7 @@ class CoSearchView @JvmOverloads constructor(
 				}
 				val params = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
 				searchContainer.addView(this, params)
-				statusViews[this] = INPUT
+				statusViews[this] = arrayOf(INPUT)
 			}
 		}
 	}
@@ -298,7 +300,7 @@ class CoSearchView @JvmOverloads constructor(
 				params.leftMargin = (keywordAttr.padding * 1.5).toInt()
 				params.rightMargin = (keywordAttr.padding * 1.5).toInt()
 				searchContainer.addView(this, params)
-				statusViews[this] = KEYWORD
+				statusViews[this] = arrayOf(KEYWORD)
 			}
 			
 			keywordView = TextView(context)
@@ -336,7 +338,7 @@ class CoSearchView @JvmOverloads constructor(
 	}
 	
 	private fun searchCallback() {
-		val content = formatSearchContent(editText.text.toString())
+		val content = getSearchContent()
 		if ((content.isEmpty() && lastSearchContent.isEmpty()) || currentStatus != INPUT) {
 			return
 		}
@@ -367,8 +369,8 @@ class CoSearchView @JvmOverloads constructor(
 			realStatus = INPUT
 		}
 		if (realStatus != currentStatus) {
-			statusViews.forEach { view, s ->
-				view.visibility = if (realStatus == s) View.VISIBLE else View.GONE
+			statusViews.forEach { view, statuses ->
+				view.visibility = if (realStatus in statuses) View.VISIBLE else View.GONE
 			}
 			if (realStatus == INPUT) {
 				editText.requestFocus()
@@ -385,7 +387,8 @@ class CoSearchView @JvmOverloads constructor(
 	/**
 	 * 格式化
 	 */
-	private fun formatSearchContent(content: String): String {
+	private fun getSearchContent(): String {
+		val content = editText.text.toString()
 		if (content.isNotBlank()) {
 			return content.trim().replace("\\s+".toRegex(), " ")
 		}
