@@ -22,7 +22,7 @@ object CoMainHandler {
 	}
 	
 	fun postDelay(delayMillis: Long, runnable: Runnable) {
-		handler.postDelayed(runnable, delayMillis)
+		handler.postDelayed(runnable, if (delayMillis > 0) delayMillis else 0)
 	}
 	
 	fun sendMessageAtFrontOfQueue(runnable: Runnable) {

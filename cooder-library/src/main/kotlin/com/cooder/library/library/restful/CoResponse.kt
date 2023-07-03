@@ -120,7 +120,8 @@ open class CoResponse<T> : Serializable {
 	/**
 	 * 判断是否成功
 	 */
-	fun isSuccessful(): Boolean {
-		return code == SUCCESS || code == CACHE_SUCCESS
+	@JvmOverloads
+	fun isSuccessful(hasData: Boolean = true): Boolean {
+		return (code == SUCCESS || code == CACHE_SUCCESS) && (!hasData || data != null)
 	}
 }

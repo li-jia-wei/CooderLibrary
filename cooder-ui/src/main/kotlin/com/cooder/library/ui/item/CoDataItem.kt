@@ -17,7 +17,7 @@ import androidx.annotation.LayoutRes
  */
 abstract class CoDataItem<DATA, VM : CoViewHolder> {
 	
-	protected var coAdapter: CoAdapter? = null
+	private var adapter: CoAdapter? = null
 	
 	/**
 	 * 绑定数据
@@ -43,21 +43,21 @@ abstract class CoDataItem<DATA, VM : CoViewHolder> {
 	 * 设置Adapter
 	 */
 	fun setAdapter(adapter: CoAdapter) {
-		this.coAdapter = adapter
+		this.adapter = adapter
 	}
 	
 	/**
 	 * 刷新Item
 	 */
 	fun refreshItem() {
-		coAdapter?.refreshItem(this) ?: throw RuntimeException("adapter == null, 请先执行setAdapter方法")
+		adapter?.refreshItem(this) ?: throw RuntimeException("adapter == null, 请先执行setAdapter方法")
 	}
 	
 	/**
 	 * 从列表上移除
 	 */
 	fun removeItem() {
-		coAdapter?.removeItem(this) ?: throw RuntimeException("adapter == null, 请先执行setAdapter方法")
+		adapter?.removeItem(this) ?: throw RuntimeException("adapter == null, 请先执行setAdapter方法")
 	}
 	
 	/**
@@ -82,7 +82,7 @@ abstract class CoDataItem<DATA, VM : CoViewHolder> {
 	
 	}
 	
-	open fun onCreateViewHolder(inflater: LayoutInflater, parent: ViewGroup): VM? {
+	open fun getViewHolder(inflater: LayoutInflater, parent: ViewGroup): VM? {
 		return null
 	}
 }

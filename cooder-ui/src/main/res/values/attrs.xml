@@ -68,6 +68,7 @@
 		<attr name="searchHorizontal" format="dimension" />
 		<attr name="searchVertical" format="dimension" />
 		<attr name="searchChangeInterval" format="integer" />
+		<attr name="searchEnabled" format="boolean" />
 		
 		<attr name="textSize" format="dimension" />
 		<attr name="textColor" format="color" />

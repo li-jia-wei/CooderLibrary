@@ -24,7 +24,8 @@ internal object AttrsParse {
 	private val SEARCH_BACKGROUND = R.drawable.shape_search
 	private const val SEARCH_HORIZONTAL = 8
 	private const val SEARCH_VERTICAL = 8
-	private const val SEARCH_CHANGE_INTERVAL = 300
+	private const val SEARCH_CHANGE_INTERVAL = 200
+	private const val SEARCH_ENABLED = true
 	private const val TEXT_SIZE = 16
 	private val TEXT_COLOR = R.color.search_text_color
 	private const val TEXT_MAX_LENGTH = 200
@@ -69,8 +70,9 @@ internal object AttrsParse {
 		val searchBackground = array.getResourceId(R.styleable.CoSearchView_searchBackground, SEARCH_BACKGROUND)
 		val searchHorizontal = array.getDimensionPixelOffset(R.styleable.CoSearchView_searchHorizontal, SEARCH_HORIZONTAL.dpInt)
 		val searchVertical = array.getDimensionPixelOffset(R.styleable.CoSearchView_searchVertical, SEARCH_VERTICAL)
-		val searchChangeInterval = array.getInt(R.styleable.CoSearchView_searchChangeInterval, SEARCH_CHANGE_INTERVAL)
-		val searchAttr = SearchAttr(searchBackground, searchHorizontal, searchVertical, searchChangeInterval.toLong())
+		val searchChangeInterval = array.getInt(R.styleable.CoSearchView_searchChangeInterval, SEARCH_CHANGE_INTERVAL).toLong()
+		val searchEnabled = array.getBoolean(R.styleable.CoSearchView_searchEnabled, SEARCH_ENABLED)
+		val searchAttr = SearchAttr(searchBackground, searchHorizontal, searchVertical, searchChangeInterval, searchEnabled)
 		
 		val textSize = array.getDimensionPixelOffset(R.styleable.CoSearchView_textSize, TEXT_SIZE.spInt)
 		val textColor = array.getColor(R.styleable.CoSearchView_textColor, context.getColor(TEXT_COLOR))
@@ -144,7 +146,8 @@ internal object AttrsParse {
 		@DrawableRes val background: Int,
 		@Px val horizontal: Int,
 		@Px val vertical: Int,
-		val changeInterval: Long
+		val changeInterval: Long,
+		val enabled: Boolean
 	)
 	
 	data class TextAttr(

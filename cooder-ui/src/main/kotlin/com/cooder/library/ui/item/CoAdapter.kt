@@ -34,7 +34,6 @@ class CoAdapter(
 	private val inflater = LayoutInflater.from(context)
 	private val dataItems = mutableListOf<CoDataItem<*, *>>()
 	
-	//	private val typeArray = SparseArray<CoDataItem<*, *>>()
 	private val typePositions = SparseIntArray()
 	private var recyclerViewRef: WeakReference<RecyclerView>? = null
 	
@@ -59,6 +58,7 @@ class CoAdapter(
 	 */
 	@JvmOverloads
 	fun addItem(dataItem: CoDataItem<*, *>, notify: Boolean = true, index: Int = -1) {
+		dataItem.setAdapter(this)
 		val isSetIndex = index >= 0 && index <= getItemSize()
 		if (isSetIndex) {
 			this.dataItems.add(index, dataItem)
@@ -72,7 +72,6 @@ class CoAdapter(
 				notifyItemInserted(getToItemSize() - 1)
 			}
 		}
-		dataItem.setAdapter(this)
 	}
 	
 	/**
@@ -83,6 +82,9 @@ class CoAdapter(
 	 */
 	@JvmOverloads
 	fun addItems(dataItems: Collection<CoDataItem<*, *>>, notify: Boolean = true, startIndex: Int = -1) {
+		dataItems.forEach {
+			it.setAdapter(this)
+		}
 		val isSetStartIndex = startIndex >= 0 && startIndex <= getItemSize()
 		if (isSetStartIndex) {
 			this.dataItems.addAll(startIndex, dataItems)
@@ -96,17 +98,14 @@ class CoAdapter(
 				notifyItemRangeInserted(getToItemSize() - dataItems.size, dataItems.size)
 			}
 		}
-		dataItems.forEach {
-			it.setAdapter(this)
-		}
 	}
 	
 	/**
 	 * 删除Item
 	 * @param dataItem DataItem
 	 */
-	fun removeItem(dataItem: CoDataItem<*, *>?) {
-		val type = dataItem!!.javaClass.hashCode()
+	fun removeItem(dataItem: CoDataItem<*, *>) {
+		val type = dataItem.javaClass.hashCode()
 		if (typePositions.containsKey(type)) {
 			typePositions.delete(type)
 		}
@@ -115,24 +114,15 @@ class CoAdapter(
 			this.dataItems.removeAt(index)
 			notifyItemRemoved(getToHeaderSize() + index)
 		}
-		dataItem.setAdapter(this)
 	}
 	
 	/**
 	 * 删除多个Item
 	 * @param dataItems 多个DataItem
 	 */
-	fun removeItems(dataItems: Collection<CoDataItem<*, *>?>?) {
-		dataItems?.forEach {
-			val type = it!!.javaClass.hashCode()
-			if (typePositions.containsKey(type)) {
-				typePositions.delete(type)
-			}
-			val index = this.dataItems.indexOf(it)
-			if (index >= 0) {
-				this.dataItems.removeAt(index)
-				notifyItemRemoved(getToHeaderSize() + index)
-			}
+	fun removeItems(dataItems: Collection<CoDataItem<*, *>>) {
+		dataItems.forEach {
+			removeItem(it)
 		}
 	}
 	
@@ -478,18 +468,18 @@ class CoAdapter(
 		}
 		val position = typePositions[viewType]
 		val dataItem = dataItems[position]
-		val viewHolder = dataItem.onCreateViewHolder(LayoutInflater.from(parent.context), parent)
+		val viewHolder = dataItem.getViewHolder(LayoutInflater.from(parent.context), parent)
 		if (viewHolder != null) return viewHolder
-		var view = dataItem.getItemView(LayoutInflater.from(parent.context), parent)
 		val layoutRes = dataItem.getItemLayoutRes()
-		if (view != null && layoutRes != -1) {
-			throw IllegalStateException("${dataItem.javaClass.name}: getItemView与getItemLayout只能重写一个")
+		if (layoutRes != -1) {
+			val view = inflater.inflate(layoutRes, parent, false)
+			return createViewHolderInternal(dataItem.javaClass, view)
 		}
-		if (view == null) {
-			if (layoutRes == -1) throw RuntimeException("dataItem: ${dataItem.javaClass.name}: 必须重写getItemView或者getItemLayoutRes方法中的一个")
-			view = inflater.inflate(layoutRes, parent, false)
+		val view = dataItem.getItemView(LayoutInflater.from(parent.context), parent)
+		if (view != null) {
+			return createViewHolderInternal(dataItem.javaClass, view)
 		}
-		return createViewHolderInternal(dataItem.javaClass, view!!)
+		throw IllegalStateException("请重写 CoDataItem类中的 getViewHolder 或 getItemLayoutRes 或 getItemView 中的一个方法来创建布局")
 	}
 	
 	/**

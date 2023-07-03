@@ -84,7 +84,7 @@ class CoNavigationBar @JvmOverloads constructor(
 	
 	fun setTopPadding(topPadding: Int) {
 		val params = layoutParams
-		params.height = params.height + topPadding.dpInt
+		params.height += topPadding.dpInt
 		this.layoutParams = params
 		this.setPadding(0, topPadding.dpInt, 0, 0)
 	}

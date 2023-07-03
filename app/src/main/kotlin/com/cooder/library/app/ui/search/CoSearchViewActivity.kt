@@ -10,25 +10,25 @@ class CoSearchViewActivity : AppCompatActivity() {
 	
 	private lateinit var binding: ActivityCoSearchBinding
 	
-	private companion object {
-		private var LAST = ""
-	}
-	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		binding = ActivityCoSearchBinding.inflate(layoutInflater)
 		setContentView(binding.root)
 		
+		initSearchView()
+	}
+	
+	
+	private fun initSearchView() {
 		binding.searchView.setNavListener {
 			finish()
 		}
-		binding.searchView.setHistorySearchContent(LAST)
 		binding.searchView.setSearchListener {
-			LAST = it
 			Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
 		}
-		binding.searchView.setEditTextChangeListener {
+		binding.searchView.setSearchContentChangeListener {
 			CoLog.i("SearchChange: $it")
 		}
+		binding.searchView.closeHint()
 	}
 }

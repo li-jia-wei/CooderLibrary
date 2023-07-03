@@ -1,12 +1,7 @@
 package com.cooder.library.library.restful
 
-import com.cooder.library.library.restful.annotation.CacheStrategy
-import com.cooder.library.library.restful.annotation.DomainUrl
-import com.cooder.library.library.restful.annotation.Filed
-import com.cooder.library.library.restful.annotation.GET
-import com.cooder.library.library.restful.annotation.Headers
-import com.cooder.library.library.restful.annotation.POST
-import com.cooder.library.library.restful.annotation.Path
+import com.cooder.library.library.log.CoLog
+import com.cooder.library.library.restful.annotation.*
 import java.lang.reflect.Method
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
@@ -214,12 +209,8 @@ class MethodParser(
 			val field = value.javaClass.getField("TYPE")
 			val clazz = field[null] as Class<*>
 			return clazz.isPrimitive
-		} catch (e: IllegalAccessException) {
-			e.printStackTrace()
-		} catch (e: IllegalArgumentException) {
-			e.printStackTrace()
-		} catch (e: NoSuchFieldException) {
-			e.printStackTrace()
+		} catch (e: Exception) {
+			CoLog.e(e.message)
 		}
 		return false
 	}

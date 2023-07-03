@@ -2,10 +2,7 @@ package com.cooder.library.library.restful
 
 import com.cooder.library.library.cache.CoStorage
 import com.cooder.library.library.executor.CoExecutor
-import com.cooder.library.library.restful.annotation.CacheStrategy.Type.CACHE_NET_CACHE
-import com.cooder.library.library.restful.annotation.CacheStrategy.Type.CACHE_ONLY
-import com.cooder.library.library.restful.annotation.CacheStrategy.Type.CACHE_ONLY_NET_CACHE
-import com.cooder.library.library.restful.annotation.CacheStrategy.Type.NET_CACHE
+import com.cooder.library.library.restful.annotation.CacheStrategy.Type.*
 import com.cooder.library.library.util.CoMainHandler
 
 /**
@@ -65,6 +62,7 @@ class Scheduler(
 						if (cacheResponse.data != null) {
 							cacheSuccess = true
 							CoMainHandler.sendMessageAtFrontOfQueue {
+								cacheResponse.isSuccessful()
 								callback.onSuccess(cacheResponse)
 							}
 						}

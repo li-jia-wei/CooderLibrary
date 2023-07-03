@@ -16,8 +16,14 @@ data class CoResult<T>(
 	val msg: String?
 ) : Serializable {
 	
-	fun isSuccessful(): Boolean {
-		return data != null
+	fun hasData(): Boolean {
+		if (data == null) {
+			return false
+		}
+		if (data is Collection<*>) {
+			return data.isNotEmpty()
+		}
+		return true
 	}
 	
 	companion object {

@@ -14,9 +14,11 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.graphics.toColorInt
 import androidx.core.view.setPadding
 import androidx.core.widget.addTextChangedListener
 import com.cooder.library.library.util.CoMainHandler
+import com.cooder.library.library.util.expends.dpInt
 import com.cooder.library.ui.search.CoSearchView.Status.*
 import com.cooder.library.ui.view.IconFontButton
 import com.cooder.library.ui.view.IconFontTextView
@@ -31,9 +33,7 @@ import com.cooder.library.ui.view.IconFontTextView
  * 介绍：搜索框组件
  */
 class CoSearchView @JvmOverloads constructor(
-	context: Context,
-	attrs: AttributeSet? = null,
-	defStyleAttr: Int = 0
+	context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 	
 	private val attr = AttrsParse.parseAttrs(context, attrs, defStyleAttr)
@@ -47,12 +47,14 @@ class CoSearchView @JvmOverloads constructor(
 	
 	private var navListener: (() -> Unit)? = null
 	private var searchListener: ((content: String) -> Unit)? = null
-	private var editTextChangeListener: ((content: String) -> Unit)? = null
+	private var searchContentChangeListener: ((content: String) -> Unit)? = null
+	private var statusChangeListener: ((lastStatus: Status, currentStatus: Status) -> Unit)? = null
 	
-	private var navForce: Boolean = false
+	private var canBackToHint: Boolean = false
 	private var lastSearchContent = ""
 	private var lastChangeContent = ""
 	
+	private var confirmView: IconFontButton? = null
 	private lateinit var searchContainer: LinearLayout
 	private lateinit var editText: EditText
 	private var clearView: IconFontButton? = null
@@ -66,14 +68,16 @@ class CoSearchView @JvmOverloads constructor(
 		val content = getSearchContent()
 		if (content != lastChangeContent) {
 			lastChangeContent = content
-			editTextChangeListener?.invoke(content)
+			searchContentChangeListener?.invoke(content)
 		}
 	}
 	
-	private enum class Status {
-		HINT,
-		INPUT,
-		KEYWORD
+	private companion object {
+		private val CONFIRM_NOT_CLICKABLE_COLOR = "#999999".toColorInt()
+	}
+	
+	enum class Status {
+		HINT, INPUT, KEYWORD
 	}
 	
 	init {
@@ -88,12 +92,12 @@ class CoSearchView @JvmOverloads constructor(
 	
 	/**
 	 * 设置点击左侧导航按钮事件
-	 * 当状态不是HINT的时候会先切换为HINT，之后再次点击才会执行自定义的方法，除非将force设置为true
+	 * @param canBackToHint 先返回到提示状态，再执行navListener事件
 	 */
 	@JvmOverloads
-	fun setNavListener(force: Boolean = false, listener: () -> Unit) {
+	fun setNavListener(canBackToHint: Boolean = false, listener: () -> Unit) {
 		this.navListener = listener
-		this.navForce = force
+		this.canBackToHint = canBackToHint
 	}
 	
 	/**
@@ -106,8 +110,15 @@ class CoSearchView @JvmOverloads constructor(
 	/**
 	 * 输入框文本修改事件，默认300ms的延迟，如果快速输入，只会在最后一个超过300ms的时候执行
 	 */
-	fun setEditTextChangeListener(listener: (content: String) -> Unit) {
-		this.editTextChangeListener = listener
+	fun setSearchContentChangeListener(listener: (content: String) -> Unit) {
+		this.searchContentChangeListener = listener
+	}
+	
+	/**
+	 * 设置状态切换事件
+	 */
+	fun setStatusChangeListener(listener: (lastStatus: Status, currentStatus: Status) -> Unit) {
+		this.statusChangeListener = listener
 	}
 	
 	/**
@@ -118,12 +129,23 @@ class CoSearchView @JvmOverloads constructor(
 	}
 	
 	/**
+	 * 设置顶部内边距
+	 */
+	fun setTopPadding(topPadding: Int) {
+		val params = layoutParams
+		params.height += topPadding.dpInt
+		this.layoutParams = params
+		this.setPadding(0, topPadding.dpInt, 0, 0)
+	}
+	
+	/**
 	 * 设置上一次搜索内容
 	 */
 	fun setHistorySearchContent(content: String) {
 		if (content.isNotEmpty()) {
 			this.lastSearchContent = content
 			editText.hint = content
+			confirmView?.setTextColor(confirmAttr.color)
 		}
 	}
 	
@@ -131,7 +153,7 @@ class CoSearchView @JvmOverloads constructor(
 	 * 初始化左侧导航栏
 	 */
 	private fun initNav() {
-		if (navAttr.enabled) {
+		if (navAttr.enabled && searchAttr.enabled) {
 			val navView = IconFontButton(context)
 			navView.apply {
 				this.gravity = Gravity.CENTER
@@ -141,7 +163,7 @@ class CoSearchView @JvmOverloads constructor(
 				this.text = navAttr.icon
 				navAttr.typeface?.also { this.setTypeface(it) }
 				this.setOnClickListener {
-					if (navForce || currentStatus == HINT) {
+					if (!canBackToHint || currentStatus == HINT) {
 						navListener?.invoke()
 					} else {
 						updateStatus(HINT)
@@ -157,11 +179,11 @@ class CoSearchView @JvmOverloads constructor(
 	 * 初始化确认框
 	 */
 	private fun initConfirm() {
-		if (confirmAttr.enabled) {
-			val confirmView = IconFontButton(context)
-			confirmView.apply {
+		if (confirmAttr.enabled && searchAttr.enabled) {
+			confirmView = IconFontButton(context)
+			confirmView!!.apply {
 				this.gravity = Gravity.CENTER
-				this.setTextColor(confirmAttr.color)
+				this.setTextColor(CONFIRM_NOT_CLICKABLE_COLOR)
 				if (confirmAttr.icon != null) {
 					this.text = confirmAttr.icon
 					this.setTextSize(TypedValue.COMPLEX_UNIT_PX, confirmAttr.size * 2F)
@@ -188,18 +210,20 @@ class CoSearchView @JvmOverloads constructor(
 		searchContainer.apply {
 			this.setBackgroundResource(searchAttr.background)
 			this.gravity = if (hintAttr.gravity == 0) Gravity.CENTER else Gravity.CENTER_VERTICAL or Gravity.LEFT
-			this.setOnClickListener {
-				updateStatus(INPUT)
-				val content = getSearchContent()
-				clearView?.visibility = if (lastSearchContent.isEmpty() && content.isEmpty()) View.GONE else View.VISIBLE
-				editText.setSelection(editText.length())
+			if (searchAttr.enabled) {
+				this.setOnClickListener {
+					updateStatus(INPUT)
+					val content = getSearchContent()
+					clearView?.visibility = if (lastSearchContent.isEmpty() && content.isEmpty()) View.GONE else View.VISIBLE
+					editText.setSelection(editText.length())
+				}
 			}
 			this.orientation = HORIZONTAL
 			val params = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT)
 			params.topMargin = searchAttr.vertical
 			params.bottomMargin = searchAttr.vertical
-			if (!navAttr.enabled) params.leftMargin = searchAttr.horizontal
-			if (!confirmAttr.enabled) params.rightMargin = searchAttr.horizontal
+			if (!navAttr.enabled || !searchAttr.enabled) params.leftMargin = searchAttr.horizontal
+			if (!confirmAttr.enabled || !searchAttr.enabled) params.rightMargin = searchAttr.horizontal
 			params.weight = 1F
 			this@CoSearchView.addView(this, params)
 		}
@@ -209,7 +233,7 @@ class CoSearchView @JvmOverloads constructor(
 	 * 初始化提示框
 	 */
 	private fun initHint() {
-		if (hintAttr.iconEnabled) {
+		if (hintAttr.iconEnabled || searchAttr.enabled) {
 			val hintIconView = IconFontTextView(context)
 			hintIconView.apply {
 				this.setTextSize(TypedValue.COMPLEX_UNIT_PX, hintAttr.iconSize * 1.4F)
@@ -234,39 +258,43 @@ class CoSearchView @JvmOverloads constructor(
 	}
 	
 	private fun initEditText() {
-		editText = EditText(context)
-		editText.apply {
-			this.setBackgroundColor(Color.TRANSPARENT)
-			this.setTextColor(textAttr.color)
-			this.setTextSize(TypedValue.COMPLEX_UNIT_PX, textAttr.size.toFloat())
-			this.setPadding(hintAttr.padding, 0, hintAttr.padding, 0)
-			this.isSingleLine = true
-			this.hint = hintAttr.text
-			this.filters = arrayOf(InputFilter.LengthFilter(textAttr.maxLength))
-			this.inputType = InputType.TYPE_CLASS_TEXT
-			this.imeOptions = EditorInfo.IME_ACTION_SEARCH
-			this.setOnEditorActionListener { _, actionId, _ ->
-				if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-					searchCallback()
-					true
-				} else false
+		if (searchAttr.enabled) {
+			editText = EditText(context)
+			editText.apply {
+				this.setBackgroundColor(Color.TRANSPARENT)
+				this.setTextColor(textAttr.color)
+				this.setTextSize(TypedValue.COMPLEX_UNIT_PX, textAttr.size.toFloat())
+				this.setPadding(hintAttr.padding, 0, hintAttr.padding, 0)
+				this.isSingleLine = true
+				this.hint = hintAttr.text
+				this.filters = arrayOf(InputFilter.LengthFilter(textAttr.maxLength))
+				this.inputType = InputType.TYPE_CLASS_TEXT
+				this.imeOptions = EditorInfo.IME_ACTION_SEARCH
+				this.setOnEditorActionListener { _, actionId, _ ->
+					if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+						searchCallback()
+						true
+					} else false
+				}
+				this.visibility = View.GONE
+				this.addTextChangedListener {
+					if (it == null) return@addTextChangedListener
+					val content = getSearchContent()
+					confirmView?.setTextColor(if (content.isEmpty() && lastSearchContent.isEmpty()) CONFIRM_NOT_CLICKABLE_COLOR else confirmAttr.color)
+					clearView?.visibility = if (currentStatus == INPUT && it.isNotEmpty()) View.VISIBLE else View.GONE
+					CoMainHandler.remove(changeRunnable)
+					CoMainHandler.postDelay(searchAttr.changeInterval, changeRunnable)
+				}
+				val params = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT)
+				params.weight = 1F
+				searchContainer.addView(this, params)
+				statusViews[this] = arrayOf(INPUT)
 			}
-			this.visibility = View.GONE
-			this.addTextChangedListener {
-				if (it == null) return@addTextChangedListener
-				clearView?.visibility = if (currentStatus == INPUT && it.isNotEmpty()) View.VISIBLE else View.GONE
-				CoMainHandler.remove(changeRunnable)
-				CoMainHandler.postDelay(searchAttr.changeInterval, changeRunnable)
-			}
-			val params = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT)
-			params.weight = 1F
-			searchContainer.addView(this, params)
-			statusViews[this] = arrayOf(INPUT)
 		}
 	}
 	
 	private fun initClear() {
-		if (clearAttr.enabled) {
+		if (clearAttr.enabled && searchAttr.enabled) {
 			clearView = IconFontButton(context)
 			clearView!!.apply {
 				this.text = clearAttr.icon
@@ -279,13 +307,12 @@ class CoSearchView @JvmOverloads constructor(
 				}
 				val params = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
 				searchContainer.addView(this, params)
-				statusViews[this] = arrayOf(INPUT)
 			}
 		}
 	}
 	
 	private fun initKeyword() {
-		if (keywordAttr.enabled) {
+		if (keywordAttr.enabled && searchAttr.enabled) {
 			keywordContainer = LinearLayout(context)
 			keywordContainer!!.apply {
 				this.gravity = Gravity.CENTER
@@ -342,13 +369,13 @@ class CoSearchView @JvmOverloads constructor(
 		if ((content.isEmpty() && lastSearchContent.isEmpty()) || currentStatus != INPUT) {
 			return
 		}
-		editText.clearFocus()
 		hideSoftKeyboard()
 		if (content.isEmpty()) {
 			editText.setText(lastSearchContent)
 		} else {
 			lastSearchContent = content
 		}
+		clearView?.visibility = View.GONE
 		updateStatus(KEYWORD)
 		keywordView?.text = lastSearchContent
 		searchListener?.invoke(lastSearchContent)
@@ -373,13 +400,13 @@ class CoSearchView @JvmOverloads constructor(
 				view.visibility = if (realStatus in statuses) View.VISIBLE else View.GONE
 			}
 			if (realStatus == INPUT) {
-				editText.requestFocus()
 				showSoftKeyboard()
 			} else if (status == KEYWORD) {
 				if (lastSearchContent.isEmpty()) {
 					keywordContainer?.visibility = View.GONE
 				}
 			}
+			statusChangeListener?.invoke(currentStatus, realStatus)
 			currentStatus = realStatus
 		}
 	}
@@ -399,6 +426,7 @@ class CoSearchView @JvmOverloads constructor(
 	 * 隐藏软键盘
 	 */
 	private fun hideSoftKeyboard() {
+		editText.clearFocus()
 		val manager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 		manager.hideSoftInputFromWindow(editText.windowToken, 0)
 	}
@@ -407,7 +435,8 @@ class CoSearchView @JvmOverloads constructor(
 	 * 显示软键盘
 	 */
 	private fun showSoftKeyboard() {
+		editText.requestFocus()
 		val manager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-		manager.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT)
+		manager.showSoftInput(editText, InputMethodManager.HIDE_NOT_ALWAYS)
 	}
 }

@@ -79,12 +79,16 @@ open class CoRequest {
 	fun getCompleteUrl(): String {
 		check(domainUrl != null) { "domainUrl == null" }
 		check(relativeUrl != null) { "relativeUrl == null" }
-		if (!relativeUrl!!.startsWith("/")) {
-			if (!domainUrl!!.endsWith("/")) domainUrl += "/"
+		// 表示从域名往后写
+		if (relativeUrl!!.startsWith("//")) {
+			val realDomain = DomainUtil.getRealDomainUrl(domainUrl!!)
+			return realDomain + relativeUrl!!.removePrefix("//")
+		}
+		if (relativeUrl!!.startsWith("/")) {
+			if (domainUrl!!.endsWith("/")) domainUrl = domainUrl!!.removeSuffix("/")
 			return domainUrl + relativeUrl
 		}
-		val realDomain = DomainUtil.getRealDomainUrl(domainUrl!!)
-		return realDomain + relativeUrl
+		throw IllegalStateException("There is a problem with the format of \"$relativeUrl\"")
 	}
 	
 	fun addHeader(name: String, value: String) {

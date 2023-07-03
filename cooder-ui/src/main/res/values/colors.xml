@@ -33,20 +33,20 @@
 	
 	<!-- CoSearchView -->
 	<color name="search_text_color">@color/black</color>
-	<color name="search_hint_color">@color/gray</color>
+	<color name="search_hint_color">@color/rgb_9fa</color>
 	<color name="search_nav_color">@color/gray</color>
 	<color name="search_clear_color">@color/gray</color>
-	<color name="search_confirm_color">@color/darker_gray</color>
-	<color name="search_keyword_color">#888888</color>
+	<color name="search_confirm_color">#086CD9</color>
+	<color name="search_keyword_color">#999999</color>
 	
 	<!-- 颜色argb -->
 	<color name="rgb_999">#999999</color>
-	<color name="rgb_f1">#f1f1f1</color>
+	<color name="rgb_f1f">#f1f1f1</color>
 	<color name="rgb_000">#000000</color>
 	<color name="rgb_565">#565A5A</color>
-	<color name="rgb_d1d2">#D1D2D3</color>
-	<color name="rgb_C1B">#C1BEBE</color>
-	<color name="rgb_white">#ffffff</color>
+	<color name="rgb_d1d">#D1D2D3</color>
+	<color name="rgb_c1b">#C1BEBE</color>
+	<color name="rgb_fff">#ffffff</color>
 	<color name="rgb_298">#2983E5</color>
 	<color name="rgb_646">#646868</color>
 	<color name="rgb_dd2">#DD2F24</color>
@@ -59,11 +59,11 @@
 	<color name="rgb_666">#666666</color>
 	<color name="rgb_333">#333333</color>
 	<color name="rgb_656">#656667</color>
-	<color name="rgb_background">#f3f4f5</color>
+	<color name="rgb_f3f">#f3f4f5</color>
 	<color name="rgb_eae">#EAEEEF</color>
-	<color name="rgb_80eee">#80eeeeee</color>
+	<color name="rgb_80e">#80eeeeee</color>
 	<color name="rgb_e75">#E75B00</color>
-	<color name="rgb_faf">#FAF4ED</color>
+	<color name="rgb_faf4">#FAF4ED</color>
 	<color name="rgb_f8e">#F8E6E6</color>
 	<color name="rgb_c61">#C61B00</color>
 	<color name="rgb_d9f">#D9F8CE</color>
