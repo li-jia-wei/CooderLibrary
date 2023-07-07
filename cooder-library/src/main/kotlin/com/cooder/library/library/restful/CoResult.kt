@@ -17,12 +17,8 @@ data class CoResult<T>(
 ) : Serializable {
 	
 	fun hasData(): Boolean {
-		if (data == null) {
-			return false
-		}
-		if (data is Collection<*>) {
-			return data.isNotEmpty()
-		}
+		if (data == null) return false
+		if (data is Collection<*>) return data.isNotEmpty()
 		return true
 	}
 	

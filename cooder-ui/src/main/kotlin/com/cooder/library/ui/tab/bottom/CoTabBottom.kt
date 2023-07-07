@@ -10,7 +10,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.ColorInt
-import androidx.core.content.ContextCompat
 import com.cooder.library.ui.R
 import com.cooder.library.ui.tab.bottom.CoTabBottomInfo.TabType.BITMAP
 import com.cooder.library.ui.tab.bottom.CoTabBottomInfo.TabType.ICON
@@ -134,12 +133,12 @@ class CoTabBottom @JvmOverloads constructor(
 					}
 					if (selected) {
 						tabIconView.setText(tabInfo.selectedIconId)
-						val tintColor = ContextCompat.getColor(context, tabInfo.tintColorId)
+						val tintColor = context.getColor(tabInfo.tintColorId)
 						tabNameView.setTextColor(tintColor)
 						tabIconView.setTextColor(tintColor)
 					} else {
 						tabIconView.setText(tabInfo.defaultIconId)
-						val defaultColor = ContextCompat.getColor(context, tabInfo.defaultColorId)
+						val defaultColor = context.getColor(tabInfo.defaultColorId)
 						tabNameView.setTextColor(defaultColor)
 						tabIconView.setTextColor(defaultColor)
 					}

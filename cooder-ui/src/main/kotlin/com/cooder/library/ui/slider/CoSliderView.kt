@@ -13,7 +13,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.LayoutRes
-import androidx.core.content.ContextCompat
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -225,7 +225,7 @@ class CoSliderView @JvmOverloads constructor(
 		val selectTextSize: Int = array.getDimensionPixelOffset(R.styleable.CoSliderView_menuSelectTextSize, SELECT_TEXT_SIZE.spInt)
 		val textColor: ColorStateList = array.getColorStateList(R.styleable.CoSliderView_menuTextColor) ?: generateColorStateList()
 		val indicator: Drawable? =
-			array.getDrawable(R.styleable.CoSliderView_menuIndicator) ?: ContextCompat.getDrawable(context, R.drawable.shape_slider_indicator)
+			array.getDrawable(R.styleable.CoSliderView_menuIndicator) ?: AppCompatResources.getDrawable(context, R.drawable.shape_slider_indicator)
 		val background: Drawable = array.getDrawable(R.styleable.CoSliderView_menuBackground) ?: ColorDrawable(BG_COLOR_NORMAL)
 		val selectBackground: Drawable = array.getDrawable(R.styleable.CoSliderView_menuSelectBackground) ?: ColorDrawable(BG_COLOR_SELECT)
 		array.recycle()

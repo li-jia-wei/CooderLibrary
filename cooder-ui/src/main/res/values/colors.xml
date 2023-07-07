@@ -37,7 +37,7 @@
 	<color name="search_nav_color">@color/gray</color>
 	<color name="search_clear_color">@color/gray</color>
 	<color name="search_confirm_color">#086CD9</color>
-	<color name="search_keyword_color">#999999</color>
+	<color name="search_key_word_color">#999999</color>
 	
 	<!-- 颜色argb -->
 	<color name="rgb_999">#999999</color>

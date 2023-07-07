@@ -22,15 +22,15 @@ abstract class CacheDatabase : RoomDatabase() {
 		private var database: CacheDatabase
 		private const val ROOM_DATABASE_NAME = "cooder_cache.db"
 		
+		fun get(): CacheDatabase {
+			return database
+		}
+		
 		init {
 			val context = AppGlobals.getBaseContext()
 			database = Room.databaseBuilder(context, CacheDatabase::class.java, ROOM_DATABASE_NAME)
 				.allowMainThreadQueries()
 				.build()
-		}
-		
-		fun get(): CacheDatabase {
-			return database
 		}
 	}
 	

@@ -19,7 +19,9 @@ import androidx.core.view.setPadding
 import androidx.core.widget.addTextChangedListener
 import com.cooder.library.library.util.CoMainHandler
 import com.cooder.library.library.util.expends.dpInt
-import com.cooder.library.ui.search.CoSearchView.Status.*
+import com.cooder.library.ui.search.CoSearchView.Status.HINT
+import com.cooder.library.ui.search.CoSearchView.Status.INPUT
+import com.cooder.library.ui.search.CoSearchView.Status.KEYWORD
 import com.cooder.library.ui.view.IconFontButton
 import com.cooder.library.ui.view.IconFontTextView
 
@@ -43,12 +45,11 @@ class CoSearchView @JvmOverloads constructor(
 	private val hintAttr = attr.hintAttr
 	private val clearAttr = attr.clearAttr
 	private val confirmAttr = attr.confirmAttr
-	private val keywordAttr = attr.keywordAttr
+	private val keyWordAttr = attr.keyWordAttr
 	
 	private var navListener: (() -> Unit)? = null
-	private var searchListener: ((content: String) -> Unit)? = null
-	private var searchContentChangeListener: ((content: String) -> Unit)? = null
-	private var statusChangeListener: ((lastStatus: Status, currentStatus: Status) -> Unit)? = null
+	private var searchListener: ((keyWord: String) -> Unit)? = null
+	private var searchContentChangeListener: ((keyWord: String) -> Unit)? = null
 	
 	private var canBackToHint: Boolean = false
 	private var lastSearchContent = ""
@@ -58,14 +59,15 @@ class CoSearchView @JvmOverloads constructor(
 	private lateinit var searchContainer: LinearLayout
 	private lateinit var editText: EditText
 	private var clearView: IconFontButton? = null
-	private var keywordContainer: LinearLayout? = null
-	private var keywordView: TextView? = null
+	private var keyWordContainer: LinearLayout? = null
+	private var keyWordView: TextView? = null
+	private var keyWordCloseView: IconFontButton? = null
 	
 	private val statusViews = mutableMapOf<View, Array<Status>>()
 	private var currentStatus = HINT
 	
 	private val changeRunnable = Runnable {
-		val content = getSearchContent()
+		val content = this.getKeyWord()
 		if (content != lastChangeContent) {
 			lastChangeContent = content
 			searchContentChangeListener?.invoke(content)
@@ -103,22 +105,15 @@ class CoSearchView @JvmOverloads constructor(
 	/**
 	 * 设置搜索的内容监听事件
 	 */
-	fun setSearchListener(callback: (content: String) -> Unit) {
+	fun setSearchListener(callback: (keyWord: String) -> Unit) {
 		this.searchListener = callback
 	}
 	
 	/**
 	 * 输入框文本修改事件，默认300ms的延迟，如果快速输入，只会在最后一个超过300ms的时候执行
 	 */
-	fun setSearchContentChangeListener(listener: (content: String) -> Unit) {
+	fun setSearchContentChangeListener(listener: (keyWord: String) -> Unit) {
 		this.searchContentChangeListener = listener
-	}
-	
-	/**
-	 * 设置状态切换事件
-	 */
-	fun setStatusChangeListener(listener: (lastStatus: Status, currentStatus: Status) -> Unit) {
-		this.statusChangeListener = listener
 	}
 	
 	/**
@@ -141,12 +136,33 @@ class CoSearchView @JvmOverloads constructor(
 	/**
 	 * 设置上一次搜索内容
 	 */
-	fun setHistorySearchContent(content: String) {
-		if (content.isNotEmpty()) {
-			this.lastSearchContent = content
-			editText.hint = content
+	fun setHistorySearchContent(keyWord: String) {
+		if (keyWord.isNotEmpty()) {
+			this.lastSearchContent = keyWord
+			editText.hint = keyWord
 			confirmView?.setTextColor(confirmAttr.color)
 		}
+	}
+	
+	/**
+	 * 设置关键字
+	 */
+	fun setKeyWord(keyWord: String) {
+		hideSoftKeyboard()
+		lastSearchContent = keyWord
+		lastChangeContent = keyWord
+		editText.setText(keyWord)
+		editText.hint = keyWord
+		keyWordView?.text = keyWord
+		clearView?.visibility = View.GONE
+		updateStatus(KEYWORD)
+	}
+	
+	/**
+	 * 设置关键字是否能被点击
+	 */
+	fun setKeyWordCloseClickable(clickable: Boolean) {
+		keyWordCloseView?.isClickable = clickable
 	}
 	
 	/**
@@ -213,9 +229,11 @@ class CoSearchView @JvmOverloads constructor(
 			if (searchAttr.enabled) {
 				this.setOnClickListener {
 					updateStatus(INPUT)
-					val content = getSearchContent()
+					val content = this@CoSearchView.getKeyWord()
 					clearView?.visibility = if (lastSearchContent.isEmpty() && content.isEmpty()) View.GONE else View.VISIBLE
+					editText.setText(lastSearchContent)
 					editText.setSelection(editText.length())
+					searchContentChangeListener?.invoke(content)
 				}
 			}
 			this.orientation = HORIZONTAL
@@ -242,7 +260,7 @@ class CoSearchView @JvmOverloads constructor(
 				this.setPadding(hintAttr.padding, 0, 0, 0)
 				val params = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
 				searchContainer.addView(this, params)
-				statusViews[this] = arrayOf(HINT, INPUT)
+				statusViews[this] = arrayOf(HINT, INPUT, KEYWORD)
 			}
 		}
 		val hintTextView = TextView(context)
@@ -279,11 +297,15 @@ class CoSearchView @JvmOverloads constructor(
 				this.visibility = View.GONE
 				this.addTextChangedListener {
 					if (it == null) return@addTextChangedListener
-					val content = getSearchContent()
+					val content = this@CoSearchView.getKeyWord()
 					confirmView?.setTextColor(if (content.isEmpty() && lastSearchContent.isEmpty()) CONFIRM_NOT_CLICKABLE_COLOR else confirmAttr.color)
 					clearView?.visibility = if (currentStatus == INPUT && it.isNotEmpty()) View.VISIBLE else View.GONE
 					CoMainHandler.remove(changeRunnable)
-					CoMainHandler.postDelay(searchAttr.changeInterval, changeRunnable)
+					if (it.isEmpty()) {
+						CoMainHandler.post(changeRunnable)
+					} else {
+						CoMainHandler.postDelay(searchAttr.changeInterval, changeRunnable)
+					}
 				}
 				val params = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT)
 				params.weight = 1F
@@ -312,11 +334,11 @@ class CoSearchView @JvmOverloads constructor(
 	}
 	
 	private fun initKeyword() {
-		if (keywordAttr.enabled && searchAttr.enabled) {
-			keywordContainer = LinearLayout(context)
-			keywordContainer!!.apply {
+		if (keyWordAttr.enabled && searchAttr.enabled) {
+			keyWordContainer = LinearLayout(context)
+			keyWordContainer!!.apply {
 				this.gravity = Gravity.CENTER
-				this.setBackgroundResource(keywordAttr.background)
+				this.setBackgroundResource(keyWordAttr.background)
 				this.visibility = View.GONE
 				this.setOnClickListener {
 					editText.setText(lastSearchContent)
@@ -324,34 +346,34 @@ class CoSearchView @JvmOverloads constructor(
 					updateStatus(INPUT)
 				}
 				val params = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
-				params.leftMargin = (keywordAttr.padding * 1.5).toInt()
-				params.rightMargin = (keywordAttr.padding * 1.5).toInt()
+				params.leftMargin = (keyWordAttr.padding * 1.5).toInt()
+				params.rightMargin = (keyWordAttr.padding * 1.5).toInt()
 				searchContainer.addView(this, params)
 				statusViews[this] = arrayOf(KEYWORD)
 			}
 			
-			keywordView = TextView(context)
-			keywordView!!.apply {
-				this.setTextSize(TypedValue.COMPLEX_UNIT_PX, keywordAttr.textSize.toFloat())
-				this.setTextColor(keywordAttr.textColor)
+			keyWordView = TextView(context)
+			keyWordView!!.apply {
+				this.setTextSize(TypedValue.COMPLEX_UNIT_PX, keyWordAttr.textSize.toFloat())
+				this.setTextColor(keyWordAttr.textColor)
 				this.isSingleLine = true
-				this.maxWidth = keywordAttr.maxWidth
-				this.ellipsize = when (keywordAttr.ellipsize) {
+				this.maxWidth = keyWordAttr.maxWidth
+				this.ellipsize = when (keyWordAttr.ellipsize) {
 					0 -> TextUtils.TruncateAt.START
 					1 -> TextUtils.TruncateAt.MIDDLE
 					else -> TextUtils.TruncateAt.END
 				}
-				this.setPadding((keywordAttr.padding * 1.5).toInt(), 0, 0, 0)
+				this.setPadding((keyWordAttr.padding * 1.5).toInt(), 0, 0, 0)
 				val params = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
-				keywordContainer!!.addView(this, params)
+				keyWordContainer!!.addView(this, params)
 			}
 			
-			val closeView = IconFontButton(context)
-			closeView.apply {
-				this.setTextSize(TypedValue.COMPLEX_UNIT_PX, keywordAttr.iconSize * 1.4F)
-				this.setTextColor(keywordAttr.textColor)
-				this.text = keywordAttr.icon
-				this.setPadding(keywordAttr.padding)
+			keyWordCloseView = IconFontButton(context)
+			keyWordCloseView!!.apply {
+				this.setTextSize(TypedValue.COMPLEX_UNIT_PX, keyWordAttr.iconSize * 1.4F)
+				this.setTextColor(keyWordAttr.textColor)
+				this.text = keyWordAttr.icon
+				this.setPadding(keyWordAttr.padding)
 				this.setOnClickListener {
 					editText.setText("")
 					updateStatus(INPUT)
@@ -359,27 +381,26 @@ class CoSearchView @JvmOverloads constructor(
 					clearView?.visibility = View.GONE
 				}
 				val params = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
-				keywordContainer!!.addView(this, params)
+				keyWordContainer!!.addView(this, params)
 			}
 		}
 	}
 	
 	private fun searchCallback() {
-		val content = getSearchContent()
-		if ((content.isEmpty() && lastSearchContent.isEmpty()) || currentStatus != INPUT) {
+		val keyWord = this.getKeyWord()
+		if ((keyWord.isEmpty() && lastSearchContent.isEmpty()) || currentStatus != INPUT) {
 			return
 		}
 		hideSoftKeyboard()
-		if (content.isEmpty()) {
-			editText.setText(lastSearchContent)
-		} else {
-			lastSearchContent = content
+		if (keyWord.isNotEmpty()) {
+			lastSearchContent = keyWord
+			lastChangeContent = keyWord
 		}
-		clearView?.visibility = View.GONE
-		updateStatus(KEYWORD)
-		keywordView?.text = lastSearchContent
-		searchListener?.invoke(lastSearchContent)
+		keyWordView?.text = lastSearchContent
 		editText.hint = lastSearchContent
+		updateStatus(KEYWORD)
+		clearView?.visibility = View.GONE
+		searchListener?.invoke(lastSearchContent)
 	}
 	
 	/**
@@ -392,21 +413,20 @@ class CoSearchView @JvmOverloads constructor(
 			searchContainer.gravity = Gravity.CENTER_VERTICAL or Gravity.LEFT
 		}
 		var realStatus = status
-		if (status == KEYWORD && !keywordAttr.enabled) {
+		if (status == KEYWORD && !keyWordAttr.enabled) {
 			realStatus = INPUT
 		}
 		if (realStatus != currentStatus) {
-			statusViews.forEach { view, statuses ->
+			statusViews.forEach { (view, statuses) ->
 				view.visibility = if (realStatus in statuses) View.VISIBLE else View.GONE
 			}
 			if (realStatus == INPUT) {
 				showSoftKeyboard()
 			} else if (status == KEYWORD) {
 				if (lastSearchContent.isEmpty()) {
-					keywordContainer?.visibility = View.GONE
+					keyWordContainer?.visibility = View.GONE
 				}
 			}
-			statusChangeListener?.invoke(currentStatus, realStatus)
 			currentStatus = realStatus
 		}
 	}
@@ -414,7 +434,7 @@ class CoSearchView @JvmOverloads constructor(
 	/**
 	 * 格式化
 	 */
-	private fun getSearchContent(): String {
+	private fun getKeyWord(): String {
 		val content = editText.text.toString()
 		if (content.isNotBlank()) {
 			return content.trim().replace("\\s+".toRegex(), " ")

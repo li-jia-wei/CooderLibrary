@@ -21,8 +21,8 @@ interface CacheDao {
 	@Insert(entity = Cache::class, onConflict = OnConflictStrategy.REPLACE)
 	fun saveCache(cache: Cache): Long
 	
-	@Query(value = "select * from tb_cache where `cache_key` = :key")
-	fun getCache(key: String): Cache?
+	@Query(value = "select * from tb_cache where `type` = :type and `key` = :key")
+	fun getCache(type: String, key: String): Cache?
 	
 	@Delete(entity = Cache::class)
 	fun deleteCache(cache: Cache)

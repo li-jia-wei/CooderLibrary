@@ -106,7 +106,7 @@ open class CoRequest {
 		val url = getCompleteUrl()
 		val cacheKey = StringBuilder()
 		// net::http://xxx.xxx.xxx.xxx/xxx/xxx?xxx=xxx&xxx=xxx
-		cacheKey.append("net::").append(url)
+		cacheKey.append(url)
 		if (parameters!!.isNotEmpty()) {
 			if (url.contains('?')) {
 				if (!(url.endsWith('&') || url.endsWith('?'))) {

@@ -23,7 +23,7 @@
 	
 	<style name="CoSearchViewStyle">
 		<item name="searchBackground">@drawable/shape_search</item>
-		<item name="searchHorizontal">@dimen/dp_8</item>
+		<item name="searchHorizontal">@dimen/dp_14</item>
 		<item name="searchVertical">@dimen/dp_10</item>
 		<item name="searchChangeInterval">200</item>
 		<item name="searchEnabled">true</item>
@@ -51,7 +51,7 @@
 		<item name="clearSize">@dimen/sp_11</item>
 		<item name="clearColor">@color/search_clear_color</item>
 		<item name="clearPadding">@dimen/dp_8</item>
-		<item name="clearEnabled">true</item>
+		<item name="clearEnabled">true</item>i
 		
 		<item name="confirmText">@string/search_confirm_text</item>
 		<item name="confirmSize">@dimen/sp_16</item>
@@ -59,14 +59,14 @@
 		<item name="confirmPadding">@dimen/dp_8</item>
 		<item name="confirmEnabled">true</item>
 		
-		<item name="keywordTextSize">@dimen/sp_13</item>
-		<item name="keywordTextColor">@color/white</item>
-		<item name="keywordBackground">@drawable/shape_search_keyword</item>
-		<item name="keywordIcon">@string/ic_error</item>
-		<item name="keywordIconSize">@dimen/sp_13</item>
-		<item name="keywordMaxWidth">@dimen/dp_160</item>
-		<item name="keywordPadding">@dimen/dp_4</item>
-		<item name="keywordEllipsize">middle</item>
-		<item name="keywordEnabled">true</item>
+		<item name="keyWordTextSize">@dimen/sp_13</item>
+		<item name="keyWordTextColor">@color/white</item>
+		<item name="keyWordBackground">@drawable/shape_search_key_word</item>
+		<item name="keyWordIcon">@string/ic_error</item>
+		<item name="keyWordIconSize">@dimen/sp_13</item>
+		<item name="keyWordMaxWidth">@dimen/dp_160</item>
+		<item name="keyWordPadding">@dimen/dp_4</item>
+		<item name="keyWordEllipsize">middle</item>
+		<item name="keyWordEnabled">true</item>
 	</style>
 </resources>

@@ -22,7 +22,7 @@ import com.cooder.library.ui.R
 internal object AttrsParse {
 	
 	private val SEARCH_BACKGROUND = R.drawable.shape_search
-	private const val SEARCH_HORIZONTAL = 8
+	private const val SEARCH_HORIZONTAL = 14
 	private const val SEARCH_VERTICAL = 8
 	private const val SEARCH_CHANGE_INTERVAL = 200
 	private const val SEARCH_ENABLED = true
@@ -50,17 +50,17 @@ internal object AttrsParse {
 	private val CONFIRM_TEXT = R.string.search_confirm_text
 	private const val CONFIRM_SIZE = 16
 	private val CONFIRM_COLOR = R.color.search_confirm_color
-	private const val CONFIRM_PADDING = 8
+	private const val CONFIRM_PADDING = 10
 	private const val CONFIRM_ENABLED = true
-	private const val KEYWORD_TEXT_SIZE = 13
-	private val KEYWORD_TEXT_COLOR = R.color.white
-	private val KEYWORD_BACKGROUND = R.drawable.shape_search_keyword
-	private val KEYWORD_ICON = R.string.ic_error
-	private const val KEYWORD_ICON_SIZE = 13
-	private const val KEYWORD_MAX_WIDTH = 160
-	private const val KEYWORD_PADDING = 4
-	private const val KEYWORD_ELLIPSIZE = 1
-	private const val KEYWORD_ENABLED = true
+	private const val KEY_WORD_TEXT_SIZE = 13
+	private val KEY_WORD_TEXT_COLOR = R.color.white
+	private val KEY_WORD_BACKGROUND = R.drawable.shape_search_key_word
+	private val KEY_WORD_ICON = R.string.ic_error
+	private const val KEY_WORD_ICON_SIZE = 13
+	private const val KEY_WORD_MAX_WIDTH = 160
+	private const val KEY_WORD_PADDING = 4
+	private const val KEY_WORD_ELLIPSIZE = 1
+	private const val KEY_WORD_ENABLED = true
 	
 	fun parseAttrs(context: Context, attrs: AttributeSet?, defStyleAttr: Int): Attr {
 		val value = TypedValue()
@@ -113,23 +113,22 @@ internal object AttrsParse {
 		val confirmEnabled = array.getBoolean(R.styleable.CoSearchView_confirmEnabled, CONFIRM_ENABLED)
 		val confirmAttr = ConfirmAttr(confirmIcon, confirmText, confirmSize, confirmColor, confirmPadding, confirmTypeface, confirmEnabled)
 		
-		val keywordTextSize = array.getDimensionPixelOffset(R.styleable.CoSearchView_keywordTextSize, KEYWORD_TEXT_SIZE.spInt)
-		val keywordTextColor = array.getColor(R.styleable.CoSearchView_keywordTextColor, context.getColor(KEYWORD_TEXT_COLOR))
-		val keywordBackground = array.getResourceId(R.styleable.CoSearchView_keywordBackground, KEYWORD_BACKGROUND)
-		val keywordIcon = array.getString(R.styleable.CoSearchView_keywordIcon) ?: context.getString(KEYWORD_ICON)
-		val keywordIconSize = array.getDimensionPixelOffset(R.styleable.CoSearchView_keywordIconSize, KEYWORD_ICON_SIZE.spInt)
-		val keywordMaxWidth = array.getDimensionPixelOffset(R.styleable.CoSearchView_keywordMaxWidth, KEYWORD_MAX_WIDTH.dpInt)
-		val keywordPadding = array.getDimensionPixelOffset(R.styleable.CoSearchView_keywordPadding, KEYWORD_PADDING.dpInt)
-		val keywordEllipsize = array.getInt(R.styleable.CoSearchView_keywordEllipsize, KEYWORD_ELLIPSIZE)
-		val keywordEnabled = array.getBoolean(R.styleable.CoSearchView_keywordEnabled, KEYWORD_ENABLED)
-		val keywordAttr =
-			KeywordAttr(
-				keywordTextSize, keywordTextColor, keywordBackground, keywordIcon,
-				keywordIconSize, keywordMaxWidth, keywordPadding, keywordEllipsize, keywordEnabled
-			)
+		val keyWordTextSize = array.getDimensionPixelOffset(R.styleable.CoSearchView_keyWordTextSize, KEY_WORD_TEXT_SIZE.spInt)
+		val keyWordTextColor = array.getColor(R.styleable.CoSearchView_keyWordTextColor, context.getColor(KEY_WORD_TEXT_COLOR))
+		val keyWordBackground = array.getResourceId(R.styleable.CoSearchView_keyWordBackground, KEY_WORD_BACKGROUND)
+		val keyWordIcon = array.getString(R.styleable.CoSearchView_keyWordIcon) ?: context.getString(KEY_WORD_ICON)
+		val keyWordIconSize = array.getDimensionPixelOffset(R.styleable.CoSearchView_keyWordIconSize, KEY_WORD_ICON_SIZE.spInt)
+		val keyWordMaxWidth = array.getDimensionPixelOffset(R.styleable.CoSearchView_keyWordMaxWidth, KEY_WORD_MAX_WIDTH.dpInt)
+		val keyWordPadding = array.getDimensionPixelOffset(R.styleable.CoSearchView_keyWordPadding, KEY_WORD_PADDING.dpInt)
+		val keyWordEllipsize = array.getInt(R.styleable.CoSearchView_keyWordEllipsize, KEY_WORD_ELLIPSIZE)
+		val keyWordEnabled = array.getBoolean(R.styleable.CoSearchView_keyWordEnabled, KEY_WORD_ENABLED)
+		val keyWordAttr = KeyWordAttr(
+			keyWordTextSize, keyWordTextColor, keyWordBackground, keyWordIcon,
+			keyWordIconSize, keyWordMaxWidth, keyWordPadding, keyWordEllipsize, keyWordEnabled
+		)
 		
 		array.recycle()
-		return Attr(searchAttr, textAttr, navAttr, hintAttr, clearAttr, confirmAttr, keywordAttr)
+		return Attr(searchAttr, textAttr, navAttr, hintAttr, clearAttr, confirmAttr, keyWordAttr)
 	}
 	
 	data class Attr(
@@ -139,7 +138,7 @@ internal object AttrsParse {
 		val hintAttr: HintAttr,
 		val clearAttr: ClearAttr,
 		val confirmAttr: ConfirmAttr,
-		val keywordAttr: KeywordAttr
+		val keyWordAttr: KeyWordAttr
 	)
 	
 	data class SearchAttr(
@@ -194,7 +193,7 @@ internal object AttrsParse {
 		val enabled: Boolean
 	)
 	
-	data class KeywordAttr(
+	data class KeyWordAttr(
 		@Px val textSize: Int,
 		@ColorInt val textColor: Int,
 		@DrawableRes val background: Int,

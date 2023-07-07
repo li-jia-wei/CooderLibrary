@@ -107,19 +107,19 @@
 		<attr name="confirmTypeface" format="string" />
 		<attr name="confirmEnabled" format="boolean" />
 		
-		<attr name="keywordTextSize" format="dimension" />
-		<attr name="keywordTextColor" format="color" />
-		<attr name="keywordBackground" format="reference" />
-		<attr name="keywordIcon" format="string" />
-		<attr name="keywordIconSize" format="dimension" />
-		<attr name="keywordMaxWidth" format="dimension" />
-		<attr name="keywordPadding" format="dimension" />
-		<attr name="keywordEllipsize" format="enum">
+		<attr name="keyWordTextSize" format="dimension" />
+		<attr name="keyWordTextColor" format="color" />
+		<attr name="keyWordBackground" format="reference" />
+		<attr name="keyWordIcon" format="string" />
+		<attr name="keyWordIconSize" format="dimension" />
+		<attr name="keyWordMaxWidth" format="dimension" />
+		<attr name="keyWordPadding" format="dimension" />
+		<attr name="keyWordEllipsize" format="enum">
 			<enum name="start" value="0" />
 			<enum name="middle" value="1" />
 			<enum name="end" value="2" />
 		</attr>
-		<attr name="keywordEnabled" format="boolean" />
+		<attr name="keyWordEnabled" format="boolean" />
 	</declare-styleable>
 
 </resources>

@@ -12,7 +12,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.ColorInt
-import androidx.core.content.ContextCompat
 import com.cooder.library.ui.R
 import com.cooder.library.ui.tab.common.CoTab
 import com.cooder.library.ui.tab.top.CoTabTopInfo.TabType.BITMAP
@@ -180,12 +179,12 @@ class CoTabTop @JvmOverloads constructor(
 							val typeface = Typeface.createFromAsset(context.assets, tabInfo.iconFont)
 							tabIconView.typeface = typeface
 						}
-						indicator.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, tabInfo.tintColorId))
+						indicator.backgroundTintList = ColorStateList.valueOf(context.getColor(tabInfo.tintColorId))
 					}
 					if (selected) {
 						indicator.visibility = VISIBLE
 						tabIconView.setText(tabInfo.selectedIconId)
-						val tintColor = ContextCompat.getColor(context, tabInfo.tintColorId)
+						val tintColor = context.getColor(tabInfo.tintColorId)
 						if (tabNameView.visibility == VISIBLE) {
 							tabNameView.setTextColor(tintColor)
 						}
@@ -196,7 +195,7 @@ class CoTabTop @JvmOverloads constructor(
 					} else {
 						indicator.visibility = GONE
 						tabIconView.setText(tabInfo.defaultIconId)
-						val defaultColor = ContextCompat.getColor(context, tabInfo.defaultColorId)
+						val defaultColor = context.getColor(tabInfo.defaultColorId)
 						if (tabNameView.visibility == VISIBLE) {
 							tabNameView.setTextColor(defaultColor)
 						}
