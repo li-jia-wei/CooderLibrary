@@ -1,9 +1,7 @@
 [versions]
 
-com-android-application = "8.0.2"
-com-android-library = "8.0.2"
-org-jetbrains-kotlin-android = "1.8.22"
-org-jetbrains-kotlin-jvm = "1.8.22"
+android-gradle-plugin = "8.0.2"
+kotlin = "1.8.22"
 ksp = "1.8.22-1.0.11"
 
 core-kts = "1.10.1"
@@ -40,11 +38,12 @@ room-compiler = { group = "androidx.room", name = "room-compiler", version.ref =
 
 [plugins]
 
-com-android-application = { id = "com.android.application", version.ref = "com-android-application" }
-com-android-library = { id = "com.android.library", version.ref = "com-android-library" }
+com-android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
+com-android-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }
 
-org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "org-jetbrains-kotlin-android" }
-org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }
+org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 
 

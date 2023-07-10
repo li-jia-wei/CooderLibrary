@@ -2,16 +2,16 @@ plugins {
 	alias libs.plugins.com.android.library
 	alias libs.plugins.org.jetbrains.kotlin.android
 	alias libs.plugins.ksp
-	id "kotlin-kapt"
+	alias libs.plugins.kapt
 }
 
 android {
-	compileSdk 33
+	compileSdk APP_COMPILE_SDK as int
 	namespace 'com.cooder.library.library'
 	
 	defaultConfig {
-		minSdk 26
-		targetSdk 33
+		minSdk APP_MIN_SDK as int
+		targetSdk APP_TARGET_SDK as int
 		
 		testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 		consumerProguardFiles "consumer-rules.pro"
@@ -29,13 +29,11 @@ android {
 	kotlinOptions {
 		jvmTarget = '17'
 	}
-	buildToolsVersion = '33.0.2'
+	buildToolsVersion = APP_BUILD_TOOLS_VERSION
 	
-	viewBinding {
-		enable true
-	}
-	dataBinding {
-		enable true
+	buildFeatures {
+		viewBinding true
+		dataBinding true
 	}
 }
 
