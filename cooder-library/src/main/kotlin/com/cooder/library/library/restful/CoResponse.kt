@@ -115,7 +115,7 @@ open class CoResponse<T> : Serializable {
 	/**
 	 * 错误信息
 	 */
-	var message: String? = null
+	var message: String = ""
 	
 	/**
 	 * 判断是否成功

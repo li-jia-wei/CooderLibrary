@@ -3,9 +3,12 @@
 	
 	<attr name="navigationStyle" format="reference" />
 	<attr name="searchStyle" format="reference" />
+	<attr name="amountStyle" format="reference" />
 	
 	<attr name="typeface" format="string" />
 	<attr name="navIcon" format="string" />
+	<attr name="btnTextSize" format="dimension" />
+	<attr name="btnTextColor" format="color" />
 	
 	<declare-styleable name="IconFontTextView">
 		<attr name="typeface" />
@@ -45,8 +48,8 @@
 		<attr name="navIcon" />
 		<attr name="navColor" />
 		
-		<attr name="btnTextSize" format="dimension" />
-		<attr name="btnTextColor" format="color" />
+		<attr name="btnTextSize" />
+		<attr name="btnTextColor" />
 		
 		<attr name="titleText" format="string" />
 		<attr name="titleTextSize" format="dimension" />
@@ -120,6 +123,23 @@
 			<enum name="end" value="2" />
 		</attr>
 		<attr name="keyWordEnabled" format="boolean" />
+	</declare-styleable>
+	
+	<declare-styleable name="CoAmountView">
+		<attr name="btnTextSize" />
+		<attr name="btnTextColor" />
+		<attr name="btnSize" format="dimension" />
+		<attr name="btnBackground" format="color|reference" />
+		
+		<attr name="amountTextSize" format="dimension" />
+		<attr name="amountTextColor" format="color" />
+		<attr name="amountSize" format="dimension" />
+		<attr name="amountBackground" format="color|reference" />
+		<attr name="amountMargin" format="dimension" />
+		
+		<attr name="value" format="integer" />
+		<attr name="minValue" format="integer" />
+		<attr name="maxValue" format="integer" />
 	</declare-styleable>
 
 </resources>

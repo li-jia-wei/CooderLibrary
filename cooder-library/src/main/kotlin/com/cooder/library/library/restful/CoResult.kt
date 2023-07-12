@@ -11,25 +11,25 @@ import java.io.Serializable
  *
  * 介绍：LiveData的返回结果封装
  */
-data class CoResult<T>(
-	val data: T?,
-	val msg: String?
-) : Serializable {
+sealed class CoResult<T> {
 	
-	fun hasData(): Boolean {
-		if (data == null) return false
-		if (data is Collection<*>) return data.isNotEmpty()
-		return true
+	/**
+	 * 成功数据模型
+	 */
+	data class Success<T>(val data: T) : CoResult<T>(), Serializable {
+		
+		companion object {
+			const val serialVersionUID = 1L
+		}
 	}
 	
-	companion object {
+	/**
+	 * 失败数据模型
+	 */
+	data class Failure<T>(val msg: String, val code: Int = -1) : CoResult<T>(), Serializable {
 		
-		fun <T> success(data: T?, msg: String? = null): CoResult<T> {
-			return CoResult(data, msg)
-		}
-		
-		fun <T> failure(msg: String?): CoResult<T> {
-			return CoResult(null, msg)
+		companion object {
+			const val serialVersionUID = 1L
 		}
 	}
 }

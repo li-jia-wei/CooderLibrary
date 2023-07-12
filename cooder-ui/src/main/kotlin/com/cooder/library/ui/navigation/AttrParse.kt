@@ -16,9 +16,9 @@ import com.cooder.library.ui.R
  *
  * 创建：2023/6/28 00:22
  *
- * 介绍：AttrsParse
+ * 介绍：CoNavigationBar - AttrParse
  */
-internal object AttrsParse {
+internal object AttrParse {
 	
 	private val NAV_ICON = R.string.ic_left
 	private val NAV_COLOR = R.color.nav_color
@@ -36,7 +36,7 @@ internal object AttrsParse {
 	/**
 	 * 解析参数
 	 */
-	fun parseNavAttrs(context: Context, attrs: AttributeSet?, defStyleAttr: Int): Attr {
+	fun parseAttrs(context: Context, attrs: AttributeSet?, defStyleAttr: Int): Attr {
 		val value = TypedValue()
 		context.theme.resolveAttribute(R.attr.navigationStyle, value, true)
 		val defStyleRes = if (value.resourceId != 0) value.resourceId else R.style.CoNavigationBarStyle
@@ -81,32 +81,36 @@ internal object AttrsParse {
 		val underlineAttr: UnderlineAttr
 	)
 	
-	data class NavAttr(val icon: String?, @ColorInt val color: Int)
+	data class NavAttr(
+		val icon: String?,
+		@ColorInt val color: Int
+	)
 	
-	data class BtnAttr(@Px val textSize: Float, @ColorInt val textColor: Int)
+	data class BtnAttr(
+		@Px val textSize: Float,
+		@ColorInt val textColor: Int
+	)
 	
-	data class TitleAttr(val text: String?, @Px val textSize: Float, @Px val textSizeWithSub: Float, @ColorInt val textColor: Int)
+	data class TitleAttr(
+		val text: String?,
+		@Px val textSize: Float,
+		@Px val textSizeWithSub: Float,
+		@ColorInt val textColor: Int
+	)
 	
-	data class SubTitleAttr(val text: String?, @Px val textSize: Float, @ColorInt val textColor: Int)
+	data class SubTitleAttr(
+		val text: String?,
+		@Px val textSize: Float,
+		@ColorInt val textColor: Int
+	)
 	
-	data class ElementAttr(@Px val padding: Int)
+	@JvmInline
+	value class ElementAttr(
+		@Px val padding: Int
+	)
 	
-	data class UnderlineAttr(@Px val height: Float, val enabled: Boolean)
-	
-	class NavAttrs(
-		val navIcon: String?,
-		val navColor: Int,
-		val btnTextSize: Float,
-		@ColorInt val btnTextColor: Int,
-		val titleText: String?,
-		val titleTextSize: Float,
-		val titleTextSizeWithSub: Float,
-		@ColorInt val titleTextColor: Int,
-		val subTitleText: String?,
-		val subTitleTextSize: Float,
-		@ColorInt val subTitleTextColor: Int,
-		val elementPadding: Int,
-		val underlineEnabled: Boolean,
-		val underlineHeight: Float
+	data class UnderlineAttr(
+		@Px val height: Float,
+		val enabled: Boolean
 	)
 }

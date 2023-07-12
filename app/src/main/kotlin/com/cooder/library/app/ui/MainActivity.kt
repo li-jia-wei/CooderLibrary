@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.cooder.library.app.R
 import com.cooder.library.app.databinding.ActivityMainBinding
+import com.cooder.library.app.ui.amount.CoAmountViewActivity
 import com.cooder.library.app.ui.banner.CoBannerActivity
 import com.cooder.library.app.ui.cache.CoCacheActivity
 import com.cooder.library.app.ui.databus.CoDataBusActivity
@@ -51,7 +52,8 @@ class MainActivity : AppCompatActivity() {
 		CoDataBusActivity::class to "CoDataBus",
 		CoCacheActivity::class to "CoCache",
 		CoNavigationBarActivity::class to "CoNavigationBar",
-		CoSearchViewActivity::class to "CoSearchView"
+		CoSearchViewActivity::class to "CoSearchView",
+		CoAmountViewActivity::class to "CoAmountView"
 	)
 	
 	override fun onCreate(savedInstanceState: Bundle?) {

@@ -32,19 +32,19 @@ class CoCacheActivity : AppCompatActivity() {
 			val name: String = binding.name.text.toString()
 			val age: Int = binding.age.text.toString().toInt()
 			val student = Student(name, age)
-			CoStorage.saveCache("student", student)
+			CoStorage.saveCache("test", "student", student)
 			Toast.makeText(this, "保存成功", Toast.LENGTH_SHORT).show()
 		}
 		
 		val remove: Button = findViewById(R.id.remove)
 		remove.setOnClickListener {
-			CoStorage.deleteCache("student")
+			CoStorage.deleteCache("test", "student")
 			Toast.makeText(this, "删除成功", Toast.LENGTH_SHORT).show()
 		}
 		
 		val query: Button = findViewById(R.id.query)
 		query.setOnClickListener {
-			val student = CoStorage.getCache<Student>("student")
+			val student = CoStorage.getCache<Student>("test", "student")
 			Toast.makeText(this, student.toString(), Toast.LENGTH_SHORT).show()
 		}
 	}

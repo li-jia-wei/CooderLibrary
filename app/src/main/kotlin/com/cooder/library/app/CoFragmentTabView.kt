@@ -84,7 +84,7 @@ class CoFragmentTabView @JvmOverloads constructor(
 	/**
 	 * 获取当前Fragment
 	 */
-	fun getCurrentFragment(position: Int): Fragment? {
+	fun getCurrentFragment(): Fragment? {
 		if (adapter == null) {
 			throw IllegalStateException("Please call the setAdapter method first")
 		}

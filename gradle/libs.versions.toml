@@ -1,5 +1,12 @@
 [versions]
 
+compileSdk = "33"
+targetSdk = "33"
+minSdk = "26"
+versionCode = "51"
+versionName = "3.3.0"
+buildToolsVersion = "34.0.0"
+
 android-gradle-plugin = "8.0.2"
 kotlin = "1.8.22"
 ksp = "1.8.22-1.0.11"
@@ -18,7 +25,6 @@ lifecycle-runtime-ktx = "2.6.1"
 room-runtime = "2.5.2"
 room-compiler = "2.5.2"
 
-
 [libraries]
 
 core-kts = { group = "androidx.core", name = "core-ktx", version.ref = "core-kts" }
@@ -35,7 +41,6 @@ lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtim
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room-runtime" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room-compiler" }
 
-
 [plugins]
 
 com-android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
@@ -45,6 +50,3 @@ org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.re
 org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-
-
-[bundles]

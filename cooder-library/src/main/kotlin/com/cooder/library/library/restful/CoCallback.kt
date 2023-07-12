@@ -1,6 +1,8 @@
 package com.cooder.library.library.restful
 
+import android.widget.Toast
 import com.cooder.library.library.log.CoLog
+import com.cooder.library.library.util.AppGlobals
 
 /**
  * 项目：CooderLibrary
@@ -17,5 +19,6 @@ interface CoCallback<T> {
 	
 	fun onFailed(throwable: Throwable) {
 		CoLog.e(throwable.message)
+		Toast.makeText(AppGlobals.getBaseContext(), throwable.message, Toast.LENGTH_SHORT).show()
 	}
 }

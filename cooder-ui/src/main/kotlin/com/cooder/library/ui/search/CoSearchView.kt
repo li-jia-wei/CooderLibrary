@@ -38,7 +38,7 @@ class CoSearchView @JvmOverloads constructor(
 	context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 	
-	private val attr = AttrsParse.parseAttrs(context, attrs, defStyleAttr)
+	private val attr = AttrParse.parseAttr(context, attrs, defStyleAttr)
 	private val searchAttr = attr.searchAttr
 	private val textAttr = attr.textAttr
 	private val navAttr = attr.navAttr

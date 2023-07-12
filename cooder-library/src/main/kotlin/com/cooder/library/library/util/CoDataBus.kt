@@ -96,15 +96,15 @@ object CoDataBus {
 		
 		private var mLastVersion = stickyLiveData.mVersion
 		
-		override fun onChanged(t: T) {
+		override fun onChanged(value: T) {
 			if (mLastVersion >= stickyLiveData.mVersion) {
 				if (sticky && stickyLiveData.mStickyData != null) {
-					observer.onChanged(stickyLiveData.mStickyData)
+					observer.onChanged(stickyLiveData.mStickyData!!)
 				}
 				return
 			}
 			mLastVersion = stickyLiveData.mVersion
-			observer.onChanged(t)
+			observer.onChanged(value)
 		}
 	}
 }

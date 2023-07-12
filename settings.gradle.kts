@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 pluginManagement {
 	repositories {
 		gradlePluginPortal()
@@ -12,7 +14,7 @@ dependencyResolutionManagement {
 		mavenCentral()
 	}
 }
+
 rootProject.name = "CooderLibrary"
-include ':app'
-include ':cooder-library'
-include ':cooder-ui'
+include(":app")
+include(":cooder-ui", ":cooder-library")

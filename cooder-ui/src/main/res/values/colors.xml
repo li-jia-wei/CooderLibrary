@@ -39,6 +39,10 @@
 	<color name="search_confirm_color">#086CD9</color>
 	<color name="search_key_word_color">#999999</color>
 	
+	<!-- CoAmountView -->
+	<color name="amount_btn_color">@color/gray</color>
+	<color name="amount_btn_bg">#eeeeee</color>
+	
 	<!-- 颜色argb -->
 	<color name="rgb_999">#999999</color>
 	<color name="rgb_f1f">#f1f1f1</color>

@@ -34,12 +34,14 @@ class CoNavigationBar @JvmOverloads constructor(
 	defStyleAttr: Int = 0
 ) : RelativeLayout(context, attrs, defStyleAttr) {
 	
-	private val navAttr: AttrsParse.NavAttr
-	private val btnAttr: AttrsParse.BtnAttr
-	private val titleAttr: AttrsParse.TitleAttr
-	private val subTitleAttr: AttrsParse.SubTitleAttr
-	private val elementAttr: AttrsParse.ElementAttr
-	private val underlineAttr: AttrsParse.UnderlineAttr
+	private val attr = AttrParse.parseAttrs(context, attrs, defStyleAttr)
+	
+	private val navAttr = attr.navAttr
+	private val btnAttr = attr.btnAttr
+	private val titleAttr = attr.titleAttr
+	private val subTitleAttr = attr.subTitleAttr
+	private val elementAttr = attr.elementAttr
+	private val underlineAttr = attr.underlineAttr
 	
 	// 左右按钮
 	private val leftViewList = mutableListOf<View>()
@@ -59,13 +61,6 @@ class CoNavigationBar @JvmOverloads constructor(
 	}
 	
 	init {
-		val attr = AttrsParse.parseNavAttrs(context, attrs, defStyleAttr)
-		navAttr = attr.navAttr
-		btnAttr = attr.btnAttr
-		titleAttr = attr.titleAttr
-		subTitleAttr = attr.subTitleAttr
-		elementAttr = attr.elementAttr
-		underlineAttr = attr.underlineAttr
 		layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DEFAULT_HEIGHT.dpInt)
 		
 		if (!titleAttr.text.isNullOrBlank()) {

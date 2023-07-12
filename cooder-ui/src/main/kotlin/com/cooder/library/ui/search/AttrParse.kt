@@ -17,9 +17,9 @@ import com.cooder.library.ui.R
  *
  * 创建：2023/6/28 00:58
  *
- * 介绍：AttrParse
+ * 介绍：CoSearchView - AttrParse
  */
-internal object AttrsParse {
+internal object AttrParse {
 	
 	private val SEARCH_BACKGROUND = R.drawable.shape_search
 	private const val SEARCH_HORIZONTAL = 14
@@ -62,7 +62,7 @@ internal object AttrsParse {
 	private const val KEY_WORD_ELLIPSIZE = 1
 	private const val KEY_WORD_ENABLED = true
 	
-	fun parseAttrs(context: Context, attrs: AttributeSet?, defStyleAttr: Int): Attr {
+	fun parseAttr(context: Context, attrs: AttributeSet?, defStyleAttr: Int): Attr {
 		val value = TypedValue()
 		context.theme.resolveAttribute(R.attr.searchStyle, value, true)
 		val defStyleRes = if (value.resourceId != 0) value.resourceId else R.style.CoSearchViewStyle

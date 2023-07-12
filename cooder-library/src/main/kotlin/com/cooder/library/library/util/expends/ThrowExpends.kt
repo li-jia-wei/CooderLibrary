@@ -5,13 +5,10 @@ package com.cooder.library.library.util.expends
 /**
  * 检查是否被重写
  */
-fun checkOverrideMethod(target: Class<*>, name: String, vararg parameterTypes: Class<*>) {
-	val method = try {
-		target.getDeclaredMethod(name, *parameterTypes)
+inline fun <reified T : Any> T.isOverrideMethod(methodName: String, vararg paramTypes: Class<*>): Boolean {
+	return try {
+		this::class.java.getDeclaredMethod(methodName, *paramTypes)
 	} catch (_: Exception) {
 		null
-	}
-	if (method != null) {
-		throw IllegalStateException("${target.simpleName} 重写了父类的 $name 方法")
-	}
+	} != null
 }
