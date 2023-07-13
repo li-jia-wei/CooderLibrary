@@ -2,6 +2,7 @@ package com.cooder.library.library.log.printer
 
 import android.content.Context
 import com.cooder.library.library.log.CoLogConfig
+import com.cooder.library.library.log.CoLogLevel
 import java.io.File
 import java.io.FileOutputStream
 import java.util.concurrent.Executors
@@ -23,12 +24,12 @@ class CoFilePrinter(
 		internal val executor = Executors.newCachedThreadPool()
 	}
 	
-	override fun print(config: CoLogConfig, level: Int, tag: String, printString: String) {
+	override fun print(config: CoLogConfig, level: CoLogLevel, tag: String, msg: String) {
 		executor.execute {
-			val logMo = CoLogMo(System.currentTimeMillis(), level, tag, printString)
+			val logMo = CoLogMo(System.currentTimeMillis(), level, tag, msg)
 			val logPath = "${context.filesDir.absolutePath}/log"
 			createLogDir(logPath)
-			val logFilename = "$logPath/${logMo.getDate()}.log"
+			val logFilename = "$logPath/${logMo.getFilename()}"
 			writeLog(logFilename, "$logMo")
 		}
 	}

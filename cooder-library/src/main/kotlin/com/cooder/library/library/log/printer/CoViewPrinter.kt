@@ -10,7 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cooder.library.library.R
 import com.cooder.library.library.log.CoLogConfig
-import com.cooder.library.library.log.CoLogType
+import com.cooder.library.library.log.CoLogLevel
+import com.cooder.library.library.util.CoMainHandler
 
 /**
  * 项目：CooderLibrary
@@ -46,9 +47,11 @@ class CoViewPrinter(
 		return viewProvider
 	}
 	
-	override fun print(config: CoLogConfig, level: Int, tag: String, printString: String) {
-		adapter.addItem(CoLogMo(System.currentTimeMillis(), level, tag, printString))
-		recyclerView.smoothScrollToPosition(adapter.itemCount - 1)
+	override fun print(config: CoLogConfig, level: CoLogLevel, tag: String, msg: String) {
+		CoMainHandler.post {
+			adapter.addItem(CoLogMo(System.currentTimeMillis(), level, tag, msg))
+			recyclerView.smoothScrollToPosition(adapter.itemCount - 1)
+		}
 	}
 	
 	private class LogAdapter(
@@ -82,15 +85,14 @@ class CoViewPrinter(
 			return logMos.size
 		}
 		
-		private fun getHighlightColor(@CoLogType.Type level: Int): Long {
+		private fun getHighlightColor(level: CoLogLevel): Long {
 			return when (level) {
-				CoLogType.V -> 0xFF4AFF71
-				CoLogType.D -> 0xFF74FF66
-				CoLogType.I -> 0xFFD6FF62
-				CoLogType.W -> 0xFFFFE794
-				CoLogType.E -> 0xFFFF9391
-				CoLogType.A -> 0xFFFF6B68
-				else -> 0xFFFFFFFF
+				CoLogLevel.VERBOSE -> 0xFF4AFF71
+				CoLogLevel.DEBUG -> 0xFF74FF66
+				CoLogLevel.INFO -> 0xFFD6FF62
+				CoLogLevel.WARN -> 0xFFFFE794
+				CoLogLevel.ERROR -> 0xFFFF9391
+				CoLogLevel.ASSERT -> 0xFFFF6B68
 			}
 		}
 	}

@@ -18,7 +18,7 @@ object CoLog {
 	 */
 	@JvmStatic
 	fun <T> v(vararg contents: T?) {
-		log(CoLogType.V, *contents)
+		log(CoLogLevel.VERBOSE, *contents)
 	}
 	
 	/**
@@ -26,7 +26,7 @@ object CoLog {
 	 */
 	@JvmStatic
 	fun <T> vt(tag: String, vararg contents: T?) {
-		log(CoLogType.V, tag, *contents)
+		log(CoLogLevel.VERBOSE, tag, *contents)
 	}
 	
 	/**
@@ -34,7 +34,7 @@ object CoLog {
 	 */
 	@JvmStatic
 	fun <T> d(vararg contents: T?) {
-		log(CoLogType.D, *contents)
+		log(CoLogLevel.DEBUG, *contents)
 	}
 	
 	/**
@@ -42,7 +42,7 @@ object CoLog {
 	 */
 	@JvmStatic
 	fun <T> dt(tag: String, vararg contents: T?) {
-		log(CoLogType.D, tag, *contents)
+		log(CoLogLevel.DEBUG, tag, *contents)
 	}
 	
 	/**
@@ -50,7 +50,7 @@ object CoLog {
 	 */
 	@JvmStatic
 	fun <T> i(vararg contents: T?) {
-		log(CoLogType.I, *contents)
+		log(CoLogLevel.INFO, *contents)
 	}
 	
 	/**
@@ -58,7 +58,7 @@ object CoLog {
 	 */
 	@JvmStatic
 	fun <T> it(tag: String, vararg contents: T?) {
-		log(CoLogType.I, tag, *contents)
+		log(CoLogLevel.INFO, tag, *contents)
 	}
 	
 	/**
@@ -66,7 +66,7 @@ object CoLog {
 	 */
 	@JvmStatic
 	fun <T> w(vararg contents: T?) {
-		log(CoLogType.W, *contents)
+		log(CoLogLevel.WARN, *contents)
 	}
 	
 	/**
@@ -74,7 +74,7 @@ object CoLog {
 	 */
 	@JvmStatic
 	fun <T> wt(tag: String, vararg contents: T?) {
-		log(CoLogType.W, tag, *contents)
+		log(CoLogLevel.WARN, tag, *contents)
 	}
 	
 	/**
@@ -82,7 +82,7 @@ object CoLog {
 	 */
 	@JvmStatic
 	fun <T> e(vararg contents: T?) {
-		log(CoLogType.E, *contents)
+		log(CoLogLevel.ERROR, *contents)
 	}
 	
 	/**
@@ -90,7 +90,7 @@ object CoLog {
 	 */
 	@JvmStatic
 	fun <T> et(tag: String, vararg contents: T?) {
-		log(CoLogType.E, tag, *contents)
+		log(CoLogLevel.ERROR, tag, *contents)
 	}
 	
 	/**
@@ -98,7 +98,7 @@ object CoLog {
 	 */
 	@JvmStatic
 	fun <T> a(vararg contents: T?) {
-		log(CoLogType.A, *contents)
+		log(CoLogLevel.ASSERT, *contents)
 	}
 	
 	/**
@@ -106,16 +106,16 @@ object CoLog {
 	 */
 	@JvmStatic
 	fun <T> at(tag: String, vararg contents: T?) {
-		log(CoLogType.A, tag, *contents)
+		log(CoLogLevel.ASSERT, tag, *contents)
 	}
 	
-	private fun <T> log(@CoLogType.Type type: Int, vararg contents: T?) {
+	private fun <T> log(type: CoLogLevel, vararg contents: T?) {
 		if (CoLogManager.isInit()) {
 			log(type, CoLogManager.getInstance().config.globalTag(), *contents)
 		}
 	}
 	
-	private fun <T> log(@CoLogType.Type type: Int, tag: String, vararg contents: T?) {
+	private fun <T> log(type: CoLogLevel, tag: String, vararg contents: T?) {
 		if (CoLogManager.isInit()) {
 			log(CoLogManager.getInstance().config, type, tag, *contents)
 		}
@@ -128,7 +128,7 @@ object CoLog {
 	 * @param tag TAG
 	 * @param contents 打印的信息
 	 */
-	fun <T> log(config: CoLogConfig, @CoLogType.Type type: Int, tag: String, vararg contents: T?) {
+	fun <T> log(config: CoLogConfig, type: CoLogLevel, tag: String, vararg contents: T?) {
 		if (!config.enable()) return
 		val sb = StringBuilder()
 		if (config.includeThread()) {

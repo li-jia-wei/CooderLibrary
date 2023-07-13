@@ -2,6 +2,7 @@ package com.cooder.library.app.ui
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -22,6 +23,7 @@ import com.cooder.library.app.ui.slider.CoSliderActivity
 import com.cooder.library.app.ui.tab.CoTabBottomActivity
 import com.cooder.library.app.ui.tab.CoTabTopActivity
 import com.cooder.library.app.ui.test.TestActivity
+import com.cooder.library.library.util.expends.setNavigationBarColor
 import com.cooder.library.ui.item.CoAdapter
 import com.cooder.library.ui.item.CoDataItem
 import com.cooder.library.ui.item.CoViewHolder
@@ -41,25 +43,26 @@ class MainActivity : AppCompatActivity() {
 	private lateinit var binding: ActivityMainBinding
 	
 	private val components: List<Pair<KClass<out AppCompatActivity>, String>> = listOf(
-		TestActivity::class to "Test",
-		CoLogActivity::class to "CoLog",
-		CoTabBottomActivity::class to "CoTabBottom",
-		CoTabTopActivity::class to "CoTabTop",
-		CoRefreshActivity::class to "CoRefresh",
-		CoBannerActivity::class to "CoBanner",
-		CoDataItemActivity::class to "CoDataItem",
-		CoSliderActivity::class to "CoSlider",
-		CoDataBusActivity::class to "CoDataBus",
-		CoCacheActivity::class to "CoCache",
-		CoNavigationBarActivity::class to "CoNavigationBar",
-		CoSearchViewActivity::class to "CoSearchView",
-		CoAmountViewActivity::class to "CoAmountView"
+		TestActivity::class to "测试",
+		CoLogActivity::class to "日志组件",
+		CoTabBottomActivity::class to "底部导航栏组件",
+		CoTabTopActivity::class to "顶部标签组件",
+		CoRefreshActivity::class to "刷新组件",
+		CoBannerActivity::class to "轮播图组件",
+		CoDataItemActivity::class to "列表组件",
+		CoSliderActivity::class to "左侧分类组件",
+		CoDataBusActivity::class to "消息总线",
+		CoCacheActivity::class to "缓存组件",
+		CoNavigationBarActivity::class to "导航栏组件",
+		CoSearchViewActivity::class to "搜索栏组件",
+		CoAmountViewActivity::class to "计数器组件"
 	)
 	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		binding = ActivityMainBinding.inflate(layoutInflater)
 		setContentView(binding.root)
+		setNavigationBarColor(Color.TRANSPARENT)
 		
 		binding.recyclerView.layoutManager = GridLayoutManager(this, 2)
 		val adapter = CoAdapter(this)

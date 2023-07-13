@@ -5,8 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.cooder.library.app.databinding.ActivityCoLogBinding
 import com.cooder.library.library.log.CoLog
 import com.cooder.library.library.log.CoLogConfig
+import com.cooder.library.library.log.CoLogLevel
 import com.cooder.library.library.log.CoLogManager
-import com.cooder.library.library.log.CoLogType
 import com.cooder.library.library.log.printer.CoViewPrinter
 import com.cooder.library.library.util.expends.immersiveStatusBar
 
@@ -49,7 +49,7 @@ class CoLogActivity : AppCompatActivity() {
 				override fun stackTrackDepth(): Int {
 					return 20
 				}
-			}, CoLogType.I, "Cooder2", "Hello World!")
+			}, CoLogLevel.INFO, "Cooder2", "Hello World!")
 		}
 	}
 }

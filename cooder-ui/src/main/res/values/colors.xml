@@ -25,6 +25,12 @@
 	<color name="lottie_wary_dot6">#2E53EB</color>
 	<color name="lottie_wary_dot7">#712DD1</color>
 	
+	<!-- CoSliderView -->
+	<color name="slider_menu_text_normal">#666666</color>
+	<color name="slider_menu_text_selected">@color/primary</color>
+	<color name="slider_menu_bg_normal">#F7F8F9</color>
+	<color name="slider_menu_bg_selected">@color/white</color>
+	
 	<!-- CoNavigationBar -->
 	<color name="nav_title_text_color">@color/black</color>
 	<color name="nav_color">@color/gray</color>

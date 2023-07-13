@@ -33,7 +33,7 @@ class CoViewPrinterProvider(
 		private const val ALPHA_FLOATING_VIEW = 1F
 		private const val ALPHA_LOG_VIEW = 1F
 		
-		private const val LOG_VIEW_HEIGHT = 250F
+		private const val LOG_VIEW_HEIGHT = 400F
 		private const val FLOATING_MARGIN_BOTTOM = 20
 	}
 	

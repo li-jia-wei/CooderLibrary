@@ -6,7 +6,6 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.graphics.toColorInt
 import com.cooder.library.library.util.expends.dpInt
 import com.cooder.library.library.util.expends.spInt
 import com.cooder.library.ui.R
@@ -26,10 +25,10 @@ internal object AttrParse {
 	private const val HEIGHT = 45
 	private const val TEXT_SIZE = 14
 	private const val SELECT_TEXT_SIZE = 16
-	private val TEXT_COLOR_NORMAL = "#666666".toColorInt()
-	private val TEXT_COLOR_SELECT = "#DD3127".toColorInt()
-	private val BG_COLOR_NORMAL = "#F7F8F9".toColorInt()
-	private val BG_COLOR_SELECT = "#FFFFFF".toColorInt()
+	private val TEXT_COLOR_NORMAL = R.color.slider_menu_text_normal
+	private val TEXT_COLOR_SELECTED = R.color.slider_menu_text_selected
+	private val BG_COLOR_NORMAL = R.color.slider_menu_bg_normal
+	private val BG_COLOR_SELECTED = R.color.slider_menu_bg_selected
 	private val INDICATOR = R.drawable.shape_slider_indicator
 	
 	fun parseAttr(context: Context, attrs: AttributeSet?): Attr {
@@ -38,10 +37,10 @@ internal object AttrParse {
 		val height: Int = array.getDimensionPixelOffset(R.styleable.CoSliderView_menuHeight, HEIGHT.dpInt)
 		val textSize: Int = array.getDimensionPixelOffset(R.styleable.CoSliderView_menuTextSize, TEXT_SIZE.spInt)
 		val selectTextSize: Int = array.getDimensionPixelOffset(R.styleable.CoSliderView_menuSelectTextSize, SELECT_TEXT_SIZE.spInt)
-		val textColor: ColorStateList = array.getColorStateList(R.styleable.CoSliderView_menuTextColor) ?: generateTextColor()
+		val textColor: ColorStateList = array.getColorStateList(R.styleable.CoSliderView_menuTextColor) ?: generateTextColor(context)
 		val indicator: Drawable? = array.getDrawable(R.styleable.CoSliderView_menuIndicator) ?: AppCompatResources.getDrawable(context, INDICATOR)
-		val background: Drawable = array.getDrawable(R.styleable.CoSliderView_menuBackground) ?: ColorDrawable(BG_COLOR_NORMAL)
-		val selectBackground: Drawable = array.getDrawable(R.styleable.CoSliderView_menuSelectBackground) ?: ColorDrawable(BG_COLOR_SELECT)
+		val background: Drawable = array.getDrawable(R.styleable.CoSliderView_menuBackground) ?: ColorDrawable(context.getColor(BG_COLOR_NORMAL))
+		val selectBackground: Drawable = array.getDrawable(R.styleable.CoSliderView_menuSelectBackground) ?: ColorDrawable(context.getColor(BG_COLOR_SELECTED))
 		array.recycle()
 		return Attr(width, height, textSize, selectTextSize, textColor, indicator, background, selectBackground)
 	}
@@ -57,9 +56,9 @@ internal object AttrParse {
 		val selectBackground: Drawable
 	)
 	
-	private fun generateTextColor(): ColorStateList {
+	private fun generateTextColor(context: Context): ColorStateList {
 		val states = arrayOf(intArrayOf(android.R.attr.state_selected), intArrayOf())
-		val colors = intArrayOf(TEXT_COLOR_SELECT, TEXT_COLOR_NORMAL)
+		val colors = intArrayOf(context.getColor(TEXT_COLOR_SELECTED), context.getColor(TEXT_COLOR_NORMAL))
 		return ColorStateList(states, colors)
 	}
 }

@@ -1,6 +1,12 @@
 package com.cooder.library.library.log.printer
 
-import com.cooder.library.library.log.CoLogType
+import com.cooder.library.library.log.CoLogLevel
+import com.cooder.library.library.log.CoLogLevel.ASSERT
+import com.cooder.library.library.log.CoLogLevel.DEBUG
+import com.cooder.library.library.log.CoLogLevel.ERROR
+import com.cooder.library.library.log.CoLogLevel.INFO
+import com.cooder.library.library.log.CoLogLevel.VERBOSE
+import com.cooder.library.library.log.CoLogLevel.WARN
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -15,37 +21,33 @@ import java.util.Locale
  */
 internal data class CoLogMo(
 	private val timeMillis: Long,
-	@CoLogType.Type val level: Int,
+	val level: CoLogLevel,
 	private val tag: String,
 	val log: String,
 ) {
 	
-	companion object {
-		private val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA)
-		private val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.CHINA)
-	}
-	
-	fun getDate(): String {
-		return dateFormat.format(timeMillis)
+	fun getFilename(): String {
+		val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.CHINA)
+		return "${sdf.format(timeMillis)}.log"
 	}
 	
 	private fun getFlattened(): String {
 		return "${format(timeMillis)} ${getLevel(level)}/$tag:"
 	}
 	
-	private fun getLevel(@CoLogType.Type level: Int): String {
+	private fun getLevel(level: CoLogLevel): String {
 		return when (level) {
-			CoLogType.V -> "V"
-			CoLogType.D -> "D"
-			CoLogType.I -> "I"
-			CoLogType.W -> "W"
-			CoLogType.E -> "E"
-			CoLogType.A -> "A"
-			else -> "?"
+			VERBOSE -> "V"
+			DEBUG -> "D"
+			INFO -> "I"
+			WARN -> "W"
+			ERROR -> "E"
+			ASSERT -> "A"
 		}
 	}
 	
 	private fun format(timeMillis: Long): String {
+		val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA)
 		return sdf.format(timeMillis)
 	}
 	

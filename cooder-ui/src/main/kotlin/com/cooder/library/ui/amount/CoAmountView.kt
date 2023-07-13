@@ -8,7 +8,6 @@ import android.view.Gravity
 import android.view.MotionEvent
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.cooder.library.library.log.CoLog
 import com.cooder.library.library.util.CoMainHandler
 import com.cooder.library.ui.R
 import com.cooder.library.ui.view.IconFontButton
@@ -56,7 +55,6 @@ class CoAmountView @JvmOverloads constructor(
 			timer!!.schedule(object : TimerTask() {
 				override fun run() {
 					CoMainHandler.post {
-						CoLog.i("+")
 						increase()
 					}
 				}
@@ -75,7 +73,6 @@ class CoAmountView @JvmOverloads constructor(
 			timer!!.schedule(object : TimerTask() {
 				override fun run() {
 					CoMainHandler.post {
-						CoLog.i("-")
 						decrease()
 					}
 				}
@@ -105,7 +102,7 @@ class CoAmountView @JvmOverloads constructor(
 		amountView = generateAmountView()
 		amountView.text = amount.toString()
 		
-		increaseBtn.setOnTouchListener { v, event ->
+		increaseBtn.setOnTouchListener { _, event ->
 			when (event.action) {
 				MotionEvent.ACTION_DOWN -> {
 					CoMainHandler.postDelay(800, increaseLongPressedRunnable)

@@ -1,7 +1,7 @@
 package com.cooder.library.library.log.printer
 
 import com.cooder.library.library.log.CoLogConfig
-import com.cooder.library.library.log.CoLogType
+import com.cooder.library.library.log.CoLogLevel
 
 /**
  * 项目：CooderLibrary
@@ -17,5 +17,5 @@ interface CoLogPrinter {
 	/**
 	 * 打印
 	 */
-	fun print(config: CoLogConfig, @CoLogType.Type level: Int, tag: String, printString: String)
+	fun print(config: CoLogConfig, level: CoLogLevel, tag: String, msg: String)
 }
