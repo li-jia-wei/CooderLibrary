@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.cooder.library.app.R
 import com.cooder.library.app.databinding.ActivityCoCacheBinding
 import com.cooder.library.library.cache.CoStorage
+import com.cooder.library.library.cache.CoStorageType
 import java.io.Serializable
 
 /**
@@ -32,19 +33,19 @@ class CoCacheActivity : AppCompatActivity() {
 			val name: String = binding.name.text.toString()
 			val age: Int = binding.age.text.toString().toInt()
 			val student = Student(name, age)
-			CoStorage.saveCache("test", "student", student)
+			CoStorage.saveCache(CoStorageType.RECORD, "student", student)
 			Toast.makeText(this, "保存成功", Toast.LENGTH_SHORT).show()
 		}
 		
 		val remove: Button = findViewById(R.id.remove)
 		remove.setOnClickListener {
-			CoStorage.deleteCache("test", "student")
+			CoStorage.deleteCache(CoStorageType.CONFIG, "student")
 			Toast.makeText(this, "删除成功", Toast.LENGTH_SHORT).show()
 		}
 		
 		val query: Button = findViewById(R.id.query)
 		query.setOnClickListener {
-			val student = CoStorage.getCache<Student>("test", "student")
+			val student = CoStorage.getCache<Student>(CoStorageType.RECORD, "student")
 			Toast.makeText(this, student.toString(), Toast.LENGTH_SHORT).show()
 		}
 	}
@@ -53,9 +54,5 @@ class CoCacheActivity : AppCompatActivity() {
 		companion object {
 			const val serialVersionUID = 1L
 		}
-	}
-	
-	fun <T> T?.toString(): String {
-		return "null"
 	}
 }

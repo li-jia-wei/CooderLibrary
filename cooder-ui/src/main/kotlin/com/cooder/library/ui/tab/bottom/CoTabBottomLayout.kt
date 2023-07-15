@@ -9,6 +9,7 @@ import android.widget.AbsListView
 import android.widget.FrameLayout
 import android.widget.HorizontalScrollView
 import android.widget.ScrollView
+import androidx.annotation.ColorInt
 import androidx.annotation.FloatRange
 import androidx.annotation.Px
 import androidx.core.view.iterator
@@ -43,6 +44,7 @@ class CoTabBottomLayout @JvmOverloads constructor(
 	private val infoList = mutableListOf<CoTabBottomInfo<*>>()
 	
 	private var bottomAlpha = DEFAULT_BOTTOM_ALPHA
+	private var bottomColor = DEFAULT_BOTTOM_COLOR
 	private var tabBottomHeight = DEFAULT_TAB_BOTTOM_HEIGHT
 	private var bottomLineHeight = DEFAULT_BOTTOM_LINE_HEIGHT
 	private var bottomLineColor = DEFAULT_BOTTOM_LINE_COLOR
@@ -55,6 +57,7 @@ class CoTabBottomLayout @JvmOverloads constructor(
 		private const val TAG_TAB_BOTTOM = "TAG_TAB_BOTTOM"
 		
 		const val DEFAULT_BOTTOM_ALPHA = 1F
+		const val DEFAULT_BOTTOM_COLOR = Color.WHITE
 		const val DEFAULT_TAB_BOTTOM_HEIGHT = 54F
 		const val DEFAULT_BOTTOM_LINE_HEIGHT = 0.8F
 		const val DEFAULT_BOTTOM_LINE_COLOR = "#DFE0E1"
@@ -88,35 +91,39 @@ class CoTabBottomLayout @JvmOverloads constructor(
 		}
 	}
 	
-	fun setTabAlpha(@FloatRange(from = 0.0, to = 1.0) alpha: Float) {
+	fun setTabBottomAlpha(@FloatRange(from = 0.0, to = 1.0) alpha: Float) {
 		this.bottomAlpha = alpha
+	}
+	
+	fun setTabBottomColor(@ColorInt color: Int) {
+		this.bottomColor = color
 	}
 	
 	/**
 	 * 设置底部Tab的高度
 	 */
-	fun setTabHeight(tabHeight: Float) {
+	fun setTabBottomHeight(tabHeight: Float) {
 		this.tabBottomHeight = this.bottomPadding + tabHeight
 	}
 	
 	/**
 	 * 设置底部Tab线的粗细
 	 */
-	fun setBottomLineHeight(lineHeight: Float) {
+	fun setTabBottomLineHeight(lineHeight: Float) {
 		this.bottomLineHeight = lineHeight
 	}
 	
 	/**
 	 * 设置底部Tab线的颜色
 	 */
-	fun setBottomLineColor(color: String) {
+	fun setTabBottomLineColor(color: String) {
 		this.bottomLineColor = color
 	}
 	
 	/**
 	 * 设置底部边距
 	 */
-	fun setBottomPadding(bottomPadding: Int) {
+	fun setTabBottomPadding(bottomPadding: Int) {
 		if (bottomPadding > 0 && this.bottomPadding == 0) {
 			this.bottomPadding = bottomPadding
 			this.tabBottomHeight += bottomPadding
@@ -134,7 +141,7 @@ class CoTabBottomLayout @JvmOverloads constructor(
 	/**
 	 * 获取底部高度
 	 */
-	fun getTabBottomLayoutHeight(): Float {
+	fun getTabBottomHeight(): Float {
 		return tabBottomHeight
 	}
 	
@@ -196,7 +203,7 @@ class CoTabBottomLayout @JvmOverloads constructor(
 				onSelected(info)
 			}
 		}
-		addBottomLine()
+		addTabBottomLine()
 		val tabBottomParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
 		tabBottomParams.gravity = Gravity.BOTTOM
 		addView(tabBottomLayout, tabBottomParams)
@@ -239,7 +246,7 @@ class CoTabBottomLayout @JvmOverloads constructor(
 	 */
 	private fun addBackground() {
 		val view = View(context)
-		view.setBackgroundColor(Color.WHITE)
+		view.setBackgroundColor(bottomColor)
 		view.alpha = bottomAlpha
 		val params = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, tabBottomHeight.dpInt)
 		params.gravity = Gravity.BOTTOM
@@ -249,7 +256,7 @@ class CoTabBottomLayout @JvmOverloads constructor(
 	/**
 	 * 设置底部导航栏的横线
 	 */
-	private fun addBottomLine() {
+	private fun addTabBottomLine() {
 		val bottomLine = View(context)
 		bottomLine.setBackgroundColor(Color.parseColor(bottomLineColor))
 		val bottomLineParams = LayoutParams(LayoutParams.MATCH_PARENT, bottomLineHeight.dpInt)
@@ -261,7 +268,7 @@ class CoTabBottomLayout @JvmOverloads constructor(
 	/**
 	 * 修复内容区域的底部Padding
 	 */
-	fun fixContentView() {
+	private fun fixContentView() {
 		val rootView = getChildAt(0) as ViewGroup
 		var targetView: ViewGroup? = CoViewUtil.findViewByType(rootView, RecyclerView::class.java)
 		if (targetView == null) {

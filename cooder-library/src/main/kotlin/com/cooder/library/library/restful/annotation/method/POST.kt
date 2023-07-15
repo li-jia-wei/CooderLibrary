@@ -1,4 +1,4 @@
-package com.cooder.library.library.restful.annotation
+package com.cooder.library.library.restful.annotation.method
 
 /**
  * 项目：CooderLibrary
@@ -13,4 +13,4 @@ package com.cooder.library.library.restful.annotation
  */
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
-annotation class POST(val url: String, val formPost: Boolean = true)
+annotation class POST(val url: String, val bodyType: BodyType = BodyType.FORM_DATA)

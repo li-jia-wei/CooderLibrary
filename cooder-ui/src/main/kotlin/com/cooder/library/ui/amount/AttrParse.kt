@@ -26,6 +26,7 @@ internal object AttrParse {
 	private val BTN_TEXT_COLOR = R.color.amount_btn_color
 	private const val BTN_SIZE = 28
 	private val BTN_BACKGROUND = R.color.amount_btn_bg
+	private val BTN_BOUNDARY_BACKGROUND = R.color.amount_btn_boundary_bg
 	private const val AMOUNT_TEXT_SIZE = 18
 	private val AMOUNT_TEXT_COLOR = R.color.black
 	private const val AMOUNT_SIZE = 28
@@ -44,7 +45,8 @@ internal object AttrParse {
 		val btnTextColor = array.getColor(R.styleable.CoAmountView_btnTextColor, context.getColor(BTN_TEXT_COLOR))
 		val btnSize = array.getDimensionPixelOffset(R.styleable.CoAmountView_btnSize, BTN_SIZE.dpInt)
 		val btnBackground = array.getDrawable(R.styleable.CoAmountView_btnBackground) ?: ColorDrawable(context.getColor(BTN_BACKGROUND))
-		val btnAttr = BtnAttr(btnTextSize, btnTextColor, btnSize, btnBackground)
+		val btnBoundaryBackground = array.getDrawable(R.styleable.CoAmountView_btnBoundaryBackground) ?: ColorDrawable(context.getColor(BTN_BOUNDARY_BACKGROUND))
+		val btnAttr = BtnAttr(btnTextSize, btnTextColor, btnSize, btnBackground, btnBoundaryBackground)
 		
 		val amountTextSize = array.getDimensionPixelOffset(R.styleable.CoAmountView_amountTextSize, AMOUNT_TEXT_SIZE.spInt)
 		val amountTextColor = array.getColor(R.styleable.CoAmountView_amountTextColor, context.getColor(AMOUNT_TEXT_COLOR))
@@ -72,7 +74,8 @@ internal object AttrParse {
 		@Px val textSize: Int,
 		@ColorInt val textColor: Int,
 		@Px val size: Int,
-		val background: Drawable
+		val background: Drawable,
+		val boundaryBackground: Drawable
 	)
 	
 	data class AmountAttr(

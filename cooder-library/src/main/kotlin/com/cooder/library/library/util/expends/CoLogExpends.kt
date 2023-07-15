@@ -15,7 +15,7 @@ import com.cooder.library.library.log.CoLogLevel.WARN
  * 日志打印
  */
 @JvmOverloads
-fun <T> T.log(level: CoLogLevel = INFO) {
+fun <T> T.log(level: CoLogLevel = INFO): T {
 	when (level) {
 		VERBOSE -> CoLog.v(this)
 		DEBUG -> CoLog.d(this)
@@ -24,4 +24,5 @@ fun <T> T.log(level: CoLogLevel = INFO) {
 		ERROR -> CoLog.e(this)
 		ASSERT -> CoLog.a(this)
 	}
+	return this
 }

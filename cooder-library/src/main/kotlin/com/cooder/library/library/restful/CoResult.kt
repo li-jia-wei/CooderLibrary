@@ -26,7 +26,7 @@ sealed class CoResult<T> {
 	/**
 	 * 失败数据模型
 	 */
-	data class Failure<T>(val msg: String, val code: Int = -1) : CoResult<T>(), Serializable {
+	data class Failure<T>(val msg: String, val code: Int) : CoResult<T>(), Serializable {
 		
 		companion object {
 			const val serialVersionUID = 1L

@@ -32,8 +32,8 @@ class CoTabBottomActivity : AppCompatActivity() {
 	}
 	
 	private fun initTabBottom() {
-		binding.tabBottomLayout.setTabAlpha(0.9F)
-		val defaultColor = ContextCompat.getColor(this, com.cooder.library.app.R.color.tab_default)
+		binding.tabBottomLayout.setTabBottomAlpha(0.9F)
+		val defaultColor = ContextCompat.getColor(this, R.color.tab_default)
 		val tintColor = ContextCompat.getColor(this, R.color.tab_tint)
 		
 		val bottomInfoList = mutableListOf<CoTabBottomInfo<*>>()

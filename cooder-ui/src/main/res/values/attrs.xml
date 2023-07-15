@@ -130,6 +130,7 @@
 		<attr name="btnTextColor" />
 		<attr name="btnSize" format="dimension" />
 		<attr name="btnBackground" format="color|reference" />
+		<attr name="btnBoundaryBackground" format="color|reference" />
 		
 		<attr name="amountTextSize" format="dimension" />
 		<attr name="amountTextColor" format="color" />

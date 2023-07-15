@@ -1,6 +1,7 @@
 package com.cooder.library.library.restful
 
 import com.cooder.library.library.cache.CoStorage
+import com.cooder.library.library.cache.CoStorageType
 import com.cooder.library.library.executor.CoExecutor
 import com.cooder.library.library.restful.annotation.CacheStrategy.Type.CACHE_NET_CACHE
 import com.cooder.library.library.restful.annotation.CacheStrategy.Type.CACHE_ONLY
@@ -21,10 +22,6 @@ class Scheduler(
 	private val callFactory: CoCall.Factory,
 	private val interceptors: List<CoInterceptor>
 ) {
-	
-	private companion object {
-		const val CACHE_TYPE = "net"
-	}
 	
 	/**
 	 * 代理创建Call，实现拦截器的派发
@@ -102,7 +99,7 @@ class Scheduler(
 		
 		private fun getCache(request: CoRequest): CoResponse<T> {
 			val cacheKey = request.getCacheKey()
-			val cache = CoStorage.getCache<T>(CACHE_TYPE, cacheKey)
+			val cache = CoStorage.getCache<T>(CoStorageType.NET, cacheKey)
 			val cacheResponse = CoResponse<T>()
 			cacheResponse.data = cache
 			cacheResponse.code = CoResponse.CACHE_SUCCESS
@@ -115,7 +112,7 @@ class Scheduler(
 				NET_CACHE, CACHE_NET_CACHE, CACHE_ONLY_NET_CACHE -> {
 					if (response.data != null) {
 						CoExecutor.execute {
-							CoStorage.saveCache(CACHE_TYPE, request.getCacheKey(), response.data)
+							CoStorage.saveCache(CoStorageType.NET, request.getCacheKey(), response.data)
 						}
 					}
 				}

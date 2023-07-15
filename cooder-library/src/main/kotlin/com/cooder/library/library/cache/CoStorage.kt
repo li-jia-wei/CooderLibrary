@@ -18,9 +18,10 @@ object CoStorage {
 	
 	private val cacheDao: CacheDao by lazy(LazyThreadSafetyMode.SYNCHRONIZED) { CacheDatabase.get().cacheDao }
 	
-	fun <T> saveCache(type: String, key: String, body: T) {
+	@JvmStatic
+	fun <T> saveCache(type: CoStorageType, key: String, body: T) {
 		val cache = Cache()
-		cache.type = type
+		cache.type = type.type
 		cache.key = key
 		cache.data = toByteArray(body)
 		this.cacheDao.saveCache(cache)
@@ -28,15 +29,16 @@ object CoStorage {
 	
 	@JvmOverloads
 	@JvmStatic
-	fun <T> getCache(type: String, key: String, defValue: T? = null): T? {
-		val cache = this.cacheDao.getCache(type, key)
+	fun <T> getCache(type: CoStorageType, key: String, defValue: T? = null): T? {
+		val cache = this.cacheDao.getCache(type.type, key)
 		return if (cache?.data != null) {
 			toObject(cache.data!!)
 		} else defValue
 	}
 	
-	fun deleteCache(type: String, key: String) {
-		val cache = this.cacheDao.getCache(type, key) ?: return
+	@JvmStatic
+	fun deleteCache(type: CoStorageType, key: String) {
+		val cache = this.cacheDao.getCache(type.type, key) ?: return
 		this.cacheDao.deleteCache(cache)
 	}
 	

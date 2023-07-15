@@ -1,7 +1,16 @@
 package com.cooder.library.library.restful
 
 import com.cooder.library.library.log.CoLog
-import com.cooder.library.library.restful.annotation.*
+import com.cooder.library.library.restful.annotation.CacheStrategy
+import com.cooder.library.library.restful.annotation.DomainUrl
+import com.cooder.library.library.restful.annotation.Filed
+import com.cooder.library.library.restful.annotation.Headers
+import com.cooder.library.library.restful.annotation.Path
+import com.cooder.library.library.restful.annotation.method.BodyType
+import com.cooder.library.library.restful.annotation.method.DELETE
+import com.cooder.library.library.restful.annotation.method.GET
+import com.cooder.library.library.restful.annotation.method.POST
+import com.cooder.library.library.restful.annotation.method.PUT
 import java.lang.reflect.Method
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
@@ -44,13 +53,12 @@ class MethodParser(
 	/**
 	 * 请求方式
 	 */
-	@CoRequest.METHOD
-	private var httpMethod: Int = CoRequest.METHOD.NONE
+	private var httpMethod: CoRequest.Method = CoRequest.Method.NONE
 	
 	/**
-	 * 当请求方式为POST时，是否是表单提交
+	 * 请求的数据方式，默认：form-data
 	 */
-	private var formPost = true
+	private var bodyType = BodyType.FORM_DATA
 	
 	private var headers = mutableMapOf<String, String>()
 	
@@ -81,7 +89,7 @@ class MethodParser(
 		request.returnType = returnType
 		request.headers = headers
 		request.httpMethod = httpMethod
-		request.formPost = formPost
+		request.bodyType = bodyType
 		request.cacheStrategy = cacheStrategy
 		return request
 	}
@@ -114,15 +122,30 @@ class MethodParser(
 					checkRepeatedSettingHttpMethod(method.name)
 					requireUrlNotNullOrBlank(it.url, GET::class, method.name)
 					rawRelativeUrl = it.url
-					httpMethod = CoRequest.METHOD.GET
+					httpMethod = CoRequest.Method.GET
 				}
 				
 				is POST -> {
 					checkRepeatedSettingHttpMethod(method.name)
 					requireUrlNotNullOrBlank(it.url, POST::class, method.name)
 					rawRelativeUrl = it.url
-					formPost = it.formPost
-					httpMethod = CoRequest.METHOD.POST
+					bodyType = it.bodyType
+					httpMethod = CoRequest.Method.POST
+				}
+				
+				is PUT -> {
+					checkRepeatedSettingHttpMethod(method.name)
+					requireUrlNotNullOrBlank(it.url, PUT::class, method.name)
+					rawRelativeUrl = it.url
+					bodyType = it.bodyType
+					httpMethod = CoRequest.Method.PUT
+				}
+				
+				is DELETE -> {
+					checkRepeatedSettingHttpMethod(method.name)
+					requireUrlNotNullOrBlank(it.url, PUT::class, method.name)
+					rawRelativeUrl = it.url
+					httpMethod = CoRequest.Method.DELETE
 				}
 				
 				is CacheStrategy -> {
@@ -130,7 +153,7 @@ class MethodParser(
 				}
 				
 				else -> {
-					throw IllegalStateException("Cannot handle method annotation : ${it.javaClass}")
+					CoLog.w("CoRestful不支持的注解: ${it.javaClass.simpleName}")
 				}
 			}
 		}
@@ -152,7 +175,7 @@ class MethodParser(
 		}
 		parameters.clear()
 		args.indices.forEach {
-			val annotations = parameterAnnotations[it]
+			val annotations = parameterAnnotations[it]!!
 			require(annotations.isNotEmpty()) {
 				"The parameter has at least one annotation, index = $it"
 			}
@@ -238,7 +261,7 @@ class MethodParser(
 	 * 检查有没有重复指定GET或者POST
 	 */
 	private fun checkRepeatedSettingHttpMethod(methodName: String) {
-		check(httpMethod == CoRequest.METHOD.NONE) {
+		check(httpMethod == CoRequest.Method.NONE) {
 			"The method $methodName already set up httpMethod, cannot be repeated settings it."
 		}
 	}
@@ -256,7 +279,7 @@ class MethodParser(
 	 * 检查设置必须要设置的注解有没有设置
 	 */
 	private fun requireMustSettingAnnotations(methodName: String) {
-		require(httpMethod == CoRequest.METHOD.GET || httpMethod == CoRequest.METHOD.POST) {
+		require(httpMethod != CoRequest.Method.NONE) {
 			"The method $methodName must have a request mode, such as @GET or @POST."
 		}
 	}

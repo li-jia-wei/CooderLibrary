@@ -75,6 +75,7 @@
 		<item name="btnTextColor">@color/amount_btn_color</item>
 		<item name="btnSize">@dimen/dp_28</item>
 		<item name="btnBackground">@color/amount_btn_bg</item>
+		<item name="btnBoundaryBackground">@color/amount_btn_boundary_bg</item>
 		
 		<item name="amountTextSize">@dimen/sp_18</item>
 		<item name="amountTextColor">@color/black</item>

@@ -47,7 +47,8 @@
 	
 	<!-- CoAmountView -->
 	<color name="amount_btn_color">@color/gray</color>
-	<color name="amount_btn_bg">#eeeeee</color>
+	<color name="amount_btn_bg">#E8E8E8</color>
+	<color name="amount_btn_boundary_bg">#F4F4F4</color>
 	
 	<!-- 颜色argb -->
 	<color name="rgb_999">#999999</color>

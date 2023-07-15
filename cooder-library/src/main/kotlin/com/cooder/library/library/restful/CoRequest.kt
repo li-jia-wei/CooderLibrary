@@ -1,7 +1,7 @@
 package com.cooder.library.library.restful
 
-import androidx.annotation.IntDef
 import com.cooder.library.library.restful.annotation.CacheStrategy
+import com.cooder.library.library.restful.annotation.method.BodyType
 import com.cooder.library.library.util.DomainUtil
 import java.io.UnsupportedEncodingException
 import java.lang.reflect.Type
@@ -21,8 +21,7 @@ open class CoRequest {
 	/**
 	 * http方法
 	 */
-	@METHOD
-	var httpMethod: Int = METHOD.NONE
+	var httpMethod: Method = Method.NONE
 	
 	/**
 	 * 请求头
@@ -50,9 +49,9 @@ open class CoRequest {
 	var returnType: Type? = null
 	
 	/**
-	 * POST请求时，是否为表单提交，默认: true
+	 * POST和PUT请求时，设置body类型
 	 */
-	var formPost = true
+	var bodyType = BodyType.FORM_DATA
 	
 	/**
 	 * 缓存策略类型
@@ -64,13 +63,12 @@ open class CoRequest {
 	 */
 	private var cacheStrategyKey: String = ""
 	
-	@IntDef(METHOD.NONE, METHOD.GET, METHOD.POST)
-	annotation class METHOD {
-		companion object {
-			const val NONE = -1
-			const val GET = 0
-			const val POST = 1
-		}
+	enum class Method {
+		NONE,
+		GET,
+		POST,
+		PUT,
+		DELETE
 	}
 	
 	/**
@@ -105,7 +103,6 @@ open class CoRequest {
 		}
 		val url = getCompleteUrl()
 		val cacheKey = StringBuilder()
-		// net::http://xxx.xxx.xxx.xxx/xxx/xxx?xxx=xxx&xxx=xxx
 		cacheKey.append(url)
 		if (parameters!!.isNotEmpty()) {
 			if (url.contains('?')) {
@@ -130,6 +127,6 @@ open class CoRequest {
 	}
 	
 	override fun toString(): String {
-		return "CoRequest(httpMethod=$httpMethod, headers=$headers, parameters=$parameters, domainUrl=$domainUrl, relativeUrl=$relativeUrl, returnType=$returnType, formPost=$formPost, cacheStrategy=$cacheStrategy, cacheStrategyKey='$cacheStrategyKey')"
+		return "CoRequest(httpMethod=$httpMethod, headers=$headers, parameters=$parameters, domainUrl=$domainUrl, relativeUrl=$relativeUrl, returnType=$returnType, formPost=$bodyType, cacheStrategy=$cacheStrategy, cacheStrategyKey='$cacheStrategyKey')"
 	}
 }

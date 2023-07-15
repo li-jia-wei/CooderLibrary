@@ -1,5 +1,6 @@
 package com.cooder.library.library.restful
 
+import com.cooder.library.library.restful.annotation.Api
 import java.lang.reflect.Method
 import java.lang.reflect.Proxy
 
@@ -30,6 +31,9 @@ open class CoRestful(
 		ignoreInterceptors: List<Class<out CoInterceptor>>?,
 		extraInterceptor: List<Class<out CoInterceptor>>?
 	): T {
+		if (!service.isInterface) throw IllegalStateException("${service.simpleName} 不是一个接口")
+		if (!service.isAnnotationPresent(Api::class.java)) throw IllegalStateException("${service.simpleName} 不是一个Restful的Api，请标记 @Api")
+		
 		@Suppress("UNCHECKED_CAST")
 		return Proxy.newProxyInstance(service.classLoader, arrayOf<Class<*>>(service)) { _: Any, method: Method, args: Array<Any>? ->
 			var methodParser = methodService[method]

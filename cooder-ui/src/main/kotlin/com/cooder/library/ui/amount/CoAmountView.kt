@@ -38,7 +38,14 @@ class CoAmountView @JvmOverloads constructor(
 	private lateinit var decreaseBtn: IconFontButton
 	private lateinit var amountView: TextView
 	
-	private var amount = valueAttr.value
+	private var amount = let {
+		if (valueAttr.value > valueAttr.maxValue)
+			valueAttr.maxValue
+		else if (valueAttr.value < valueAttr.minValue)
+			valueAttr.minValue
+		else valueAttr.value
+	}
+	
 	private var amountChangeListener: ((amount: Int) -> Unit)? = null
 	
 	private var isLongPressed = false
@@ -87,6 +94,16 @@ class CoAmountView @JvmOverloads constructor(
 		initView()
 	}
 	
+	/**
+	 * 获取数量
+	 */
+	fun getAmount(): Int {
+		return amount
+	}
+	
+	/**
+	 * 设置数量改变监听器
+	 */
 	fun setAmountChangeListener(amountChangeListener: (amount: Int) -> Unit) {
 		this.amountChangeListener = amountChangeListener
 	}
@@ -95,9 +112,15 @@ class CoAmountView @JvmOverloads constructor(
 	private fun initView() {
 		increaseBtn = generateBtn()
 		increaseBtn.setText(R.string.ic_add)
+		if (valueAttr.value == valueAttr.maxValue) {
+			increaseBtn.background = btnAttr.boundaryBackground
+		}
 		
 		decreaseBtn = generateBtn()
 		decreaseBtn.setText(R.string.ic_reduce)
+		if (valueAttr.value == valueAttr.minValue) {
+			decreaseBtn.background = btnAttr.boundaryBackground
+		}
 		
 		amountView = generateAmountView()
 		amountView.text = amount.toString()
@@ -121,7 +144,7 @@ class CoAmountView @JvmOverloads constructor(
 			}
 		}
 		
-		decreaseBtn.setOnTouchListener { v, event ->
+		decreaseBtn.setOnTouchListener { _, event ->
 			when (event.action) {
 				MotionEvent.ACTION_DOWN -> {
 					CoMainHandler.postDelay(800, decreaseLongPressedRunnable)
@@ -146,30 +169,34 @@ class CoAmountView @JvmOverloads constructor(
 	}
 	
 	/**
-	 * 减1
+	 * 加1
 	 */
 	private fun increase() {
 		if (amount < valueAttr.maxValue) {
 			amount++
 			amountView.text = amount.toString()
 			this.amountChangeListener?.invoke(amount)
+			decreaseBtn.background = btnAttr.background
 		}
 		if (amount == valueAttr.maxValue) {
 			timer?.cancel()
+			increaseBtn.background = btnAttr.boundaryBackground
 		}
 	}
 	
 	/**
-	 * 加1
+	 * 减1
 	 */
 	private fun decrease() {
 		if (amount > valueAttr.minValue) {
 			amount--
 			amountView.text = amount.toString()
 			this.amountChangeListener?.invoke(amount)
+			increaseBtn.background = btnAttr.background
 		}
 		if (amount == valueAttr.minValue) {
 			timer?.cancel()
+			decreaseBtn.background = btnAttr.boundaryBackground
 		}
 	}
 	
