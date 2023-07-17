@@ -27,6 +27,7 @@ internal object AttrParse {
 	private const val TITLE_TEXT_SIZE = 18
 	private const val TITLE_TEXT_SIZE_WITH_SUB = 16
 	private val TITLE_TEXT_COLOR = R.color.nav_title_text_color
+	private const val TITLE_STYLE = 1
 	private const val SUB_TITLE_TEXT_SIZE = 11
 	private val SUB_TITLE_TEXT_COLOR = R.color.nav_sub_title_text_color
 	private const val ELEMENT_PADDING = 8
@@ -54,7 +55,8 @@ internal object AttrParse {
 		val titleTextSize = array.getDimensionPixelOffset(R.styleable.CoNavigationBar_titleTextSize, TITLE_TEXT_SIZE.spInt).toFloat()
 		val titleTextSizeWithSub = array.getDimensionPixelOffset(R.styleable.CoNavigationBar_titleTextSizeWithSub, TITLE_TEXT_SIZE_WITH_SUB.spInt).toFloat()
 		val titleTextColor = array.getColor(R.styleable.CoNavigationBar_titleTextColor, context.getColor(TITLE_TEXT_COLOR))
-		val titleAttr = TitleAttr(titleText, titleTextSize, titleTextSizeWithSub, titleTextColor)
+		val titleStyle = array.getInt(R.styleable.CoNavigationBar_titleStyle, TITLE_STYLE)
+		val titleAttr = TitleAttr(titleText, titleTextSize, titleTextSizeWithSub, titleTextColor, titleStyle)
 		
 		val subTitleText = array.getString(R.styleable.CoNavigationBar_subTitleText)
 		val subTitleTextSize = array.getDimensionPixelOffset(R.styleable.CoNavigationBar_subTitleTextSize, SUB_TITLE_TEXT_SIZE.spInt).toFloat()
@@ -95,7 +97,8 @@ internal object AttrParse {
 		val text: String?,
 		@Px val textSize: Float,
 		@Px val textSizeWithSub: Float,
-		@ColorInt val textColor: Int
+		@ColorInt val textColor: Int,
+		val style: Int
 	)
 	
 	data class SubTitleAttr(

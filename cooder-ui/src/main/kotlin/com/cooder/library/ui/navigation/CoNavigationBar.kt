@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
+import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.AppCompatButton
@@ -58,6 +59,9 @@ class CoNavigationBar @JvmOverloads constructor(
 	
 	private companion object {
 		private const val DEFAULT_HEIGHT = 48
+		
+		private const val TITLE_STYLE_NORMAL = 0
+		private const val TITLE_STYLE_BOLD = 1
 	}
 	
 	init {
@@ -86,7 +90,7 @@ class CoNavigationBar @JvmOverloads constructor(
 	
 	fun setOnClickNavListener(listener: OnClickListener) {
 		if (navButton == null && !navAttr.icon.isNullOrBlank()) {
-			navButton = addLeftIconButton(navAttr.icon)
+			navButton = addLeftIconButton(navAttr.icon, navAttr.color)
 		}
 		navButton?.setOnClickListener(listener)
 	}
@@ -95,36 +99,36 @@ class CoNavigationBar @JvmOverloads constructor(
 	 * 添加左侧图标按钮
 	 */
 	fun addLeftIconButton(@StringRes iconTextResId: Int, @ColorRes colorResId: Int = -1): IconFontButton {
-		return addLeftButton(context.getString(iconTextResId), colorResId, true) as IconFontButton
+		return addLeftButton(context.getString(iconTextResId), if (colorResId != -1) context.getColor(colorResId) else -1, true) as IconFontButton
 	}
 	
 	/**
 	 * 添加左侧图标按钮
 	 */
-	fun addLeftIconButton(text: String, @ColorRes colorResId: Int = -1): IconFontButton {
-		return addLeftButton(text, colorResId, true) as IconFontButton
+	fun addLeftIconButton(text: String, @ColorInt color: Int = -1): IconFontButton {
+		return addLeftButton(text, color, true) as IconFontButton
 	}
 	
 	/**
 	 * 添加左侧文本按钮
 	 */
 	fun addLeftTextButton(@StringRes textResId: Int, @ColorRes colorResId: Int = -1): Button {
-		return addLeftButton(context.getString(textResId), colorResId, false)
+		return addLeftButton(context.getString(textResId), if (colorResId != -1) context.getColor(colorResId) else -1, false)
 	}
 	
 	/**
 	 * 添加左侧文本按钮
 	 */
 	@JvmOverloads
-	fun addLeftTextButton(text: String, @ColorRes colorResId: Int = -1): Button {
-		return addLeftButton(text, colorResId, false)
+	fun addLeftTextButton(text: String, @ColorInt color: Int = -1): Button {
+		return addLeftButton(text, color, false)
 	}
 	
 	/**
 	 * 添加左侧按钮
 	 */
-	private fun addLeftButton(text: String, colorResId: Int, isIcon: Boolean): Button {
-		val button = generateTextButton(isIcon, colorResId)
+	private fun addLeftButton(text: String, @ColorInt color: Int, isIcon: Boolean): Button {
+		val button = generateTextButton(isIcon, color)
 		button.text = text
 		if (leftViewList.isEmpty()) {
 			if (isIcon) {
@@ -162,15 +166,15 @@ class CoNavigationBar @JvmOverloads constructor(
 	 */
 	@JvmOverloads
 	fun addRightTextButton(@StringRes textResId: Int, @ColorRes colorResId: Int = -1): Button {
-		return addRightButton(context.getString(textResId), colorResId, false)
+		return addRightButton(context.getString(textResId), if (colorResId != -1) context.getColor(colorResId) else -1, false)
 	}
 	
 	/**
 	 * 添加右侧文本按钮
 	 */
 	@JvmOverloads
-	fun addRightTextButton(text: String, @ColorRes colorResId: Int = -1): Button {
-		return addRightButton(text, colorResId, false)
+	fun addRightTextButton(text: String, @ColorInt color: Int = -1): Button {
+		return addRightButton(text, color, false)
 	}
 	
 	/**
@@ -178,22 +182,22 @@ class CoNavigationBar @JvmOverloads constructor(
 	 */
 	@JvmOverloads
 	fun addRightIconButton(@StringRes iconTextResId: Int, @ColorRes colorResId: Int = -1): IconFontButton {
-		return addRightButton(context.getString(iconTextResId), colorResId, true) as IconFontButton
+		return addRightButton(context.getString(iconTextResId), if (colorResId != -1) context.getColor(colorResId) else -1, true) as IconFontButton
 	}
 	
 	/**
 	 * 添加右侧图标按钮
 	 */
 	@JvmOverloads
-	fun addRightIconButton(iconText: String, @ColorRes colorResId: Int = -1): IconFontButton {
-		return addRightButton(iconText, colorResId, true) as IconFontButton
+	fun addRightIconButton(iconText: String, @ColorInt color: Int = -1): IconFontButton {
+		return addRightButton(iconText, color, true) as IconFontButton
 	}
 	
 	/**
 	 * 添加右侧按钮
 	 */
-	private fun addRightButton(text: String, colorResId: Int, isIcon: Boolean): Button {
-		val button = generateTextButton(isIcon, colorResId)
+	private fun addRightButton(text: String, @ColorInt color: Int, isIcon: Boolean): Button {
+		val button = generateTextButton(isIcon, color)
 		button.text = text
 		if (rightViewList.isEmpty()) {
 			if (isIcon) {
@@ -270,7 +274,11 @@ class CoNavigationBar @JvmOverloads constructor(
 		if (titleView != null) {
 			if (subTitleView == null || subTitleView!!.visibility == View.GONE) {
 				titleView!!.setTextSize(TypedValue.COMPLEX_UNIT_PX, titleAttr.textSize)
-				titleView!!.typeface = Typeface.DEFAULT_BOLD
+				if (titleAttr.style == TITLE_STYLE_NORMAL) {
+					titleView!!.typeface = Typeface.DEFAULT
+				} else if (titleAttr.style == TITLE_STYLE_BOLD) {
+					titleView!!.typeface = Typeface.DEFAULT_BOLD
+				}
 			} else {
 				titleView!!.setTextSize(TypedValue.COMPLEX_UNIT_PX, titleAttr.textSizeWithSub)
 				titleView!!.typeface = Typeface.DEFAULT
@@ -310,15 +318,15 @@ class CoNavigationBar @JvmOverloads constructor(
 		return LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT)
 	}
 	
-	private fun generateTextButton(isIcon: Boolean, colorResId: Int): Button {
+	private fun generateTextButton(isIcon: Boolean, @ColorInt color: Int): Button {
 		val button = if (isIcon) IconFontButton(context) else AppCompatButton(context)
 		button.setBackgroundResource(0)
 		button.minWidth = 0
 		button.minimumWidth = 0
 		button.minHeight = 0
 		button.minHeight = 0
-		button.setTextSize(TypedValue.COMPLEX_UNIT_PX, if (isIcon) btnAttr.textSize * 2 else btnAttr.textSize)
-		button.setTextColor(if (colorResId == -1) btnAttr.textColor else context.getColor(colorResId))
+		button.setTextSize(TypedValue.COMPLEX_UNIT_PX, if (isIcon) btnAttr.textSize * 2F else btnAttr.textSize)
+		button.setTextColor(if (color == -1) btnAttr.textColor else color)
 		button.gravity = Gravity.CENTER
 		button.id = View.generateViewId()
 		return button

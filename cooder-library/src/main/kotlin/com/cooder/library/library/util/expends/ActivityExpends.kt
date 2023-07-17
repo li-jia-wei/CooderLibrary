@@ -102,6 +102,7 @@ private object Impl26 {
 		window.navigationBarColor = Color.TRANSPARENT
 		val controller = WindowCompat.getInsetsController(window, window.decorView)
 		controller.hide(WindowInsetsCompat.Type.navigationBars())
+		WindowCompat.setDecorFitsSystemWindows(window, false)
 	}
 	
 	fun showNavigationBar(activity: Activity) {
