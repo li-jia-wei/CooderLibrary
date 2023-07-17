@@ -25,7 +25,7 @@ object CoExecutor {
 	
 	private const val TAG = "CoExecutor"
 	
-	private val cooderExecutor: ThreadPoolExecutor
+	private val threadPoolExecutor: ThreadPoolExecutor
 	
 	private val lock = ReentrantLock()
 	private val pauseCondition = lock.newCondition()
@@ -41,7 +41,7 @@ object CoExecutor {
 		val cpuCount = Runtime.getRuntime().availableProcessors()
 		val corePoolSize = cpuCount + 1
 		val maxPoolSize = cpuCount * 2 + 1
-		val blockingQueue: PriorityBlockingQueue<out Runnable> = PriorityBlockingQueue()
+		val blockingQueue = PriorityBlockingQueue<Runnable>()
 		val keepAliveTime = 30L
 		val unit = TimeUnit.SECONDS
 		val seq = AtomicLong()
@@ -50,7 +50,7 @@ object CoExecutor {
 			thread.name = "cooder-executor-${seq.getAndIncrement()}"
 			return@ThreadFactory thread
 		}
-		cooderExecutor = object : ThreadPoolExecutor(
+		threadPoolExecutor = object : ThreadPoolExecutor(
 			corePoolSize,
 			maxPoolSize,
 			keepAliveTime,
@@ -81,7 +81,7 @@ object CoExecutor {
 	@JvmStatic
 	@JvmOverloads
 	fun execute(@IntRange(from = 0, to = 10) priority: Int = 0, runnable: Runnable) {
-		this.cooderExecutor.execute(PriorityRunnable(priority, runnable))
+		this.threadPoolExecutor.execute(PriorityRunnable(priority, runnable))
 	}
 	
 	/**
@@ -90,7 +90,7 @@ object CoExecutor {
 	@JvmStatic
 	@JvmOverloads
 	fun <T> execute(@IntRange(from = 0, to = 10) priority: Int = 0, callable: Callable<T>) {
-		this.cooderExecutor.execute(PriorityRunnable(priority, callable))
+		this.threadPoolExecutor.execute(PriorityRunnable(priority, callable))
 	}
 	
 	abstract class Callable<T> : Runnable {

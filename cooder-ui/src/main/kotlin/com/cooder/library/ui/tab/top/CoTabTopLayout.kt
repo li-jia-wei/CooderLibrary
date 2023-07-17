@@ -80,11 +80,12 @@ class CoTabTopLayout @JvmOverloads constructor(
 			if (iterator.next() is CoTabTop) iterator.remove()
 		}
 		infoList.forEach { info ->
-			val tab = CoTabTop(context)
-			tabSelectedChangeListeners += tab
-			tab.setTabInfo(info)
-			rootLayout.addView(tab)
-			tab.setOnClickListener {
+			val tabView = CoTabTop(context)
+			tabSelectedChangeListeners += tabView
+			tabView.setTabInfo(info)
+			val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT)
+			rootLayout.addView(tabView, params)
+			tabView.setOnClickListener {
 				onSelected(info)
 			}
 		}
@@ -99,7 +100,7 @@ class CoTabTopLayout @JvmOverloads constructor(
 		if (rootView == null) {
 			rootView = LinearLayout(context)
 			rootView.orientation = LinearLayout.HORIZONTAL
-			val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+			val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
 			addView(rootView, params)
 		} else if (clear) {
 			rootView.removeAllViews()

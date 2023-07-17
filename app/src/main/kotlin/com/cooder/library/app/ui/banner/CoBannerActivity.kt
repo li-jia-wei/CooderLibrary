@@ -89,7 +89,7 @@ class CoBannerActivity : AppCompatActivity() {
 			setIntervalTime(2000)
 			setLoop(true)
 			setScrollDuration(500)
-			setBannerData(R.layout.banner_item_layout, models)
+			setBannerData(R.layout.layout_banner_item, models)
 			setBindAdapter(object : IBindAdapter {
 				override fun onBind(viewHolder: CoBannerAdapter.CoBannerViewHolder, mo: CoBannerMo, position: Int) {
 					val image: ImageView = viewHolder.findViewById(R.id.iv_image)
@@ -115,7 +115,7 @@ class CoBannerActivity : AppCompatActivity() {
 			setIntervalTime(2000)
 			setLoop(true)
 			setScrollDuration(500)
-			setBannerData(R.layout.banner_item_layout, models)
+			setBannerData(R.layout.layout_banner_item, models)
 			setBindAdapter(object : IBindAdapter {
 				override fun onBind(viewHolder: CoBannerAdapter.CoBannerViewHolder, mo: CoBannerMo, position: Int) {
 					val image: ImageView = viewHolder.findViewById(R.id.iv_image)
@@ -140,7 +140,7 @@ class CoBannerActivity : AppCompatActivity() {
 			setIntervalTime(2000)
 			setLoop(true)
 			setScrollDuration(500)
-			setBannerData(R.layout.banner_item_layout, models)
+			setBannerData(R.layout.layout_banner_item, models)
 			setBindAdapter(object : IBindAdapter {
 				override fun onBind(viewHolder: CoBannerAdapter.CoBannerViewHolder, mo: CoBannerMo, position: Int) {
 					val image: ImageView = viewHolder.findViewById(R.id.iv_image)
@@ -159,7 +159,7 @@ class CoBannerActivity : AppCompatActivity() {
 			models += model
 		}
 		banners[3].apply {
-			setBannerData(R.layout.banner_item_layout, models)
+			setBannerData(R.layout.layout_banner_item, models)
 			setBindAdapter(object : IBindAdapter {
 				override fun onBind(viewHolder: CoBannerAdapter.CoBannerViewHolder, mo: CoBannerMo, position: Int) {
 					val image: ImageView = viewHolder.findViewById(R.id.iv_image)

@@ -22,7 +22,7 @@ open class DataItem(
 ) : CoDataItem<ItemData, CoViewHolder>() {
 	
 	override fun getItemLayoutRes(): Int {
-		return R.layout.data_item
+		return R.layout.item_data
 	}
 	
 	override fun onBindData(holder: CoViewHolder, position: Int) {

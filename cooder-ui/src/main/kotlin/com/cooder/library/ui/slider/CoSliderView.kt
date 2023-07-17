@@ -38,8 +38,8 @@ class CoSliderView @JvmOverloads constructor(
 	val contentView = RecyclerView(context)
 	
 	private companion object {
-		private val MENU_LAYOUT_RES_ID = R.layout.co_slider_menu
-		private val CONTENT_LAYOUT_RES_ID = R.layout.co_slider_content
+		private val MENU_LAYOUT_RES_ID = R.layout.item_slider_menu
+		private val CONTENT_LAYOUT_RES_ID = R.layout.item_slider_content
 	}
 	
 	init {

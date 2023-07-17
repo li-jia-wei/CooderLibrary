@@ -70,7 +70,7 @@ class CoViewPrinter(
 		}
 		
 		override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LogViewHolder {
-			val view = inflater.inflate(R.layout.log_item, parent, false)
+			val view = inflater.inflate(R.layout.item_log, parent, false)
 			return LogViewHolder(view)
 		}
 		

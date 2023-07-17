@@ -49,7 +49,7 @@ class CoDataItemActivity : AppCompatActivity() {
 	}
 	
 	private fun createView(text: String): View {
-		val view = LayoutInflater.from(this).inflate(R.layout.data_item, window.decorView as ViewGroup, false)
+		val view = LayoutInflater.from(this).inflate(R.layout.item_data, window.decorView as ViewGroup, false)
 		val textView: TextView = view.findViewById(R.id.tv)
 		textView.text = text
 		return view

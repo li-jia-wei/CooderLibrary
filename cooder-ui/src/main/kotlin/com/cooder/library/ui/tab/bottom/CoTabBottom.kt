@@ -37,7 +37,7 @@ class CoTabBottom @JvmOverloads constructor(
 	private val tabNameView: TextView
 	
 	init {
-		LayoutInflater.from(context).inflate(R.layout.co_tab_bottom, this)
+		LayoutInflater.from(context).inflate(R.layout.item_tab_bottom, this, true)
 		tabImageView = findViewById(R.id.iv_image)
 		tabIconView = findViewById(R.id.tv_icon)
 		tabNameView = findViewById(R.id.tv_name)

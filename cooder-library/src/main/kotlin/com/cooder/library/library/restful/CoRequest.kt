@@ -112,7 +112,7 @@ open class CoRequest {
 			} else {
 				cacheKey.append('?')
 			}
-			parameters!!.forEach { key: String, value: String ->
+			parameters!!.forEach { (key: String, value: String) ->
 				try {
 					val encodeValue = URLEncoder.encode(value, "UTF-8")
 					cacheKey.append(key).append('=').append(encodeValue).append('&')

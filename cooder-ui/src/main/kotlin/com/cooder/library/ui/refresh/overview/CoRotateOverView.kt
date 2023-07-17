@@ -26,7 +26,7 @@ class CoRotateOverView @JvmOverloads constructor(
 	private lateinit var rotateView: ImageView
 	
 	override fun init() {
-		LayoutInflater.from(context).inflate(R.layout.co_refresh_overview_text, this, true)
+		LayoutInflater.from(context).inflate(R.layout.layout_refresh_overview_text, this, true)
 		rotateView = findViewById(R.id.iv_rotate)
 	}
 	

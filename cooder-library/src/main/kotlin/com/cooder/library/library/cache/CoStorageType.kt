@@ -10,7 +10,23 @@ package com.cooder.library.library.cache
  * 介绍：CacheType
  */
 enum class CoStorageType(val type: String) {
+	/**
+	 * 网络请求
+	 */
 	NET("net"),
+	
+	/**
+	 * 数据量较小
+	 */
 	RECORD("record"),
-	CONFIG("config")
+	
+	/**
+	 * 配置
+	 */
+	CONFIG("config"),
+	
+	/**
+	 * 数据量较大
+	 */
+	DATA("data")
 }

@@ -54,7 +54,7 @@ class CoTextOverView @JvmOverloads constructor(
 	}
 	
 	override fun init() {
-		LayoutInflater.from(context).inflate(R.layout.co_refresh_overview_text, this, true)
+		LayoutInflater.from(context).inflate(R.layout.layout_refresh_overview_text, this, true)
 		hintView = findViewById(R.id.tv_hint)
 		rotateView = findViewById(R.id.iv_rotate)
 	}

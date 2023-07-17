@@ -55,7 +55,7 @@ class CoBannerDelegate(
 		if (!isCallBannerData) {
 			isCallBannerData = true
 			bannerMos = models
-			init(R.layout.co_banner_item_image)
+			init(R.layout.item_banner_image)
 		}
 	}
 	

@@ -41,7 +41,7 @@ class CoTabTop @JvmOverloads constructor(
 	private val indicator: View
 	
 	init {
-		LayoutInflater.from(context).inflate(R.layout.co_tab_top, this)
+		LayoutInflater.from(context).inflate(R.layout.item_tab_top, this, true)
 		this.tabImageView = findViewById(R.id.iv_image)
 		this.tabIconView = findViewById(R.id.tv_icon)
 		this.tabNameView = findViewById(R.id.tv_name)
