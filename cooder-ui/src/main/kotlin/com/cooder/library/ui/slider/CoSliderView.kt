@@ -95,7 +95,7 @@ class CoSliderView @JvmOverloads constructor(
 		fun onItemClick(holder: CoViewHolder, position: Int)
 	}
 	
-	inner class MenuAdapter(
+	private inner class MenuAdapter(
 		@LayoutRes private val layoutRes: Int,
 		private val count: Int,
 		private val callback: BindCallback
@@ -161,7 +161,7 @@ class CoSliderView @JvmOverloads constructor(
 		}
 	}
 	
-	inner class ContentAdapter(
+	private inner class ContentAdapter(
 		@LayoutRes private val layoutRes: Int
 	) : RecyclerView.Adapter<CoViewHolder>() {
 		

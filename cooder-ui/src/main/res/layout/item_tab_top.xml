@@ -37,7 +37,7 @@
 			android:layout_height="wrap_content"
 			android:includeFontPadding="false"
 			android:textColor="@color/tab_bottom_name"
-			android:textSize="@dimen/sp_15" />
+			android:textSize="@dimen/sp_16" />
 	
 	</LinearLayout>
 	

@@ -1,6 +1,6 @@
-@file:JvmName("CoLogExpends")
+@file:JvmName("LogExpends")
 
-package com.cooder.library.library.log.expends
+package com.cooder.library.library.util.expends
 
 import com.cooder.library.library.log.CoLog
 import com.cooder.library.library.log.CoLogLevel

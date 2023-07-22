@@ -1,6 +1,8 @@
 package com.cooder.library.library.util
 
 import android.annotation.SuppressLint
+import android.util.TypedValue
+import androidx.annotation.IntDef
 
 /**
  * 项目：CooderLibrary
@@ -37,30 +39,33 @@ object CoDisplayUtil {
 		return (px / context.resources.displayMetrics.density).toInt()
 	}
 	
-	enum class Unit {
-		DP,
-		PX
-	}
+	@IntDef(
+		TypedValue.COMPLEX_UNIT_PX,
+		TypedValue.COMPLEX_UNIT_DIP
+	)
+	annotation class UnitDef
 	
 	@JvmStatic
 	@JvmOverloads
-	fun getDisplayWidth(unit: Unit = Unit.DP): Int {
+	fun getDisplayWidth(@UnitDef unit: Int = TypedValue.COMPLEX_UNIT_PX): Int {
 		val context = AppGlobals.getBaseContext()
 		val width = context.resources.displayMetrics.widthPixels
 		return when (unit) {
-			Unit.DP -> px2dp(width)
-			Unit.PX -> width
+			TypedValue.COMPLEX_UNIT_PX -> width
+			TypedValue.COMPLEX_UNIT_DIP -> px2dp(width)
+			else -> throw IllegalStateException("不支持的类型: $unit")
 		}
 	}
 	
 	@JvmStatic
 	@JvmOverloads
-	fun getDisplayHeight(unit: Unit = Unit.DP): Int {
+	fun getDisplayHeight(@UnitDef unit: Int = TypedValue.COMPLEX_UNIT_PX): Int {
 		val context = AppGlobals.getBaseContext()
 		val height = context.resources.displayMetrics.heightPixels
 		return when (unit) {
-			Unit.DP -> px2dp(height)
-			Unit.PX -> height
+			TypedValue.COMPLEX_UNIT_PX -> height
+			TypedValue.COMPLEX_UNIT_DIP -> px2dp(height)
+			else -> throw IllegalStateException("不支持的类型: $unit")
 		}
 	}
 	
@@ -70,13 +75,14 @@ object CoDisplayUtil {
 	@SuppressLint("DiscouragedApi", "InternalInsetResource")
 	@JvmStatic
 	@JvmOverloads
-	fun getStatusBarsHeight(unit: Unit = Unit.DP): Int {
+	fun getStatusBarsHeight(@UnitDef unit: Int = TypedValue.COMPLEX_UNIT_PX): Int {
 		val resources = AppGlobals.getBaseResources()
 		val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
 		val height = if (resourceId > 0) resources.getDimensionPixelOffset(resourceId) else 0
 		return when (unit) {
-			Unit.DP -> px2dp(height)
-			Unit.PX -> height
+			TypedValue.COMPLEX_UNIT_PX -> height
+			TypedValue.COMPLEX_UNIT_DIP -> px2dp(height)
+			else -> throw IllegalStateException("不支持的类型: $unit")
 		}
 	}
 	
@@ -86,13 +92,14 @@ object CoDisplayUtil {
 	@SuppressLint("DiscouragedApi", "InternalInsetResource")
 	@JvmStatic
 	@JvmOverloads
-	fun getNavigationBarsHeight(unit: Unit = Unit.DP): Int {
+	fun getNavigationBarsHeight(@UnitDef unit: Int = TypedValue.COMPLEX_UNIT_PX): Int {
 		val resources = AppGlobals.getBaseResources()
 		val resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android")
 		val height = if (resourceId > 0) resources.getDimensionPixelOffset(resourceId) else 0
 		return when (unit) {
-			Unit.DP -> px2dp(height)
-			Unit.PX -> height
+			TypedValue.COMPLEX_UNIT_PX -> height
+			TypedValue.COMPLEX_UNIT_DIP -> px2dp(height)
+			else -> throw IllegalStateException("不支持的类型: $unit")
 		}
 	}
 }

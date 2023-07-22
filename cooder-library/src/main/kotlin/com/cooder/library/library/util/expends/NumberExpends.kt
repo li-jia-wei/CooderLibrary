@@ -1,4 +1,4 @@
-@file:JvmName("NumberExpends")
+@file:JvmName("NumberUtil")
 
 package com.cooder.library.library.util.expends
 

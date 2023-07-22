@@ -14,7 +14,7 @@
 	<color name="yellow">#F9DB13</color>
 	<color name="green">#52C41A</color>
 	<color name="blue">#486DF3</color>
-	<color name="line">#EEEEEE</color>
+	<color name="line">#EFEFEF</color>
 	
 	<!-- CoTabBottomView -->
 	<color name="tab_bottom_icon">#666666</color>

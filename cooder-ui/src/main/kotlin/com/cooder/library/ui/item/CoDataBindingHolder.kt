@@ -11,6 +11,6 @@ import androidx.databinding.ViewDataBinding
  *
  * 介绍：CoDataBindingHolder
  */
-class CoDataBindingHolder<VDB : ViewDataBinding>(
+class CoDataBindingHolder<out VDB : ViewDataBinding>(
 	val binding: VDB
 ) : CoViewHolder(binding.root)

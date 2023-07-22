@@ -188,7 +188,7 @@ class CoTabBottomLayout @JvmOverloads constructor(
 		val tabBottomLayout = FrameLayout(context)
 		tabBottomLayout.tag = TAG_TAB_BOTTOM
 		tabBottomLayout.setPadding(0, 0, 0, bottomPadding)
-		val width = CoDisplayUtil.getDisplayWidth(CoDisplayUtil.Unit.PX) / infoList.size
+		val width = CoDisplayUtil.getDisplayWidth() / infoList.size
 		val height = tabBottomHeight.dpInt
 		for ((i, info) in infoList.withIndex()) {
 			// tips: 为何不用LinearLayout，当动态改变child大小后Gravity.BOTTOM会失效

@@ -1,7 +1,6 @@
 package com.cooder.library.ui.navigation
 
 import android.content.Context
-import android.graphics.Color
 import android.graphics.Typeface
 import android.text.TextUtils
 import android.util.AttributeSet
@@ -73,7 +72,6 @@ class CoNavigationBar @JvmOverloads constructor(
 		if (!subTitleAttr.text.isNullOrBlank()) {
 			setSubTitle(subTitleAttr.text)
 		}
-		setBackgroundColor(Color.WHITE)
 		if (underlineAttr.enabled) {
 			this.translationZ = underlineAttr.height
 		} else {
@@ -83,9 +81,9 @@ class CoNavigationBar @JvmOverloads constructor(
 	
 	fun setTopPadding(topPadding: Int) {
 		val params = layoutParams
-		params.height += topPadding.dpInt
+		params.height += topPadding
 		this.layoutParams = params
-		this.setPadding(0, topPadding.dpInt, 0, 0)
+		this.setPadding(0, topPadding, 0, 0)
 	}
 	
 	fun setOnClickNavListener(listener: OnClickListener) {

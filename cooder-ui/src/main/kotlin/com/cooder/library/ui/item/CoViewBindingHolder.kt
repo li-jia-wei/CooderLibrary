@@ -11,6 +11,6 @@ import androidx.viewbinding.ViewBinding
  *
  * 介绍：CoViewBindingHolder
  */
-class CoViewBindingHolder<VB : ViewBinding>(
+class CoViewBindingHolder<out VB : ViewBinding>(
 	val binding: VB
 ) : CoViewHolder(binding.root)

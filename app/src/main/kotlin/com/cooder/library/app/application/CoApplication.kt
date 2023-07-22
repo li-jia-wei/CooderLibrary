@@ -32,7 +32,7 @@ class CoApplication : Application() {
 			}
 			
 			override fun globalTag(): String {
-				return "CooderLibraryTag"
+				return "CooderLibraryDebugTag"
 			}
 		}, CoConsolePrinter(), CoFilePrinter(this))
 	}

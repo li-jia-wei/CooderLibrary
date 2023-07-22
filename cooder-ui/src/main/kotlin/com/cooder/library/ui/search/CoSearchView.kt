@@ -10,7 +10,6 @@ import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -18,7 +17,8 @@ import androidx.core.graphics.toColorInt
 import androidx.core.view.setPadding
 import androidx.core.widget.addTextChangedListener
 import com.cooder.library.library.util.CoMainHandler
-import com.cooder.library.library.util.expends.dpInt
+import com.cooder.library.library.util.expends.hideSoftKeyboard
+import com.cooder.library.library.util.expends.showSoftKeyboard
 import com.cooder.library.ui.search.CoSearchView.Status.HINT
 import com.cooder.library.ui.search.CoSearchView.Status.INPUT
 import com.cooder.library.ui.search.CoSearchView.Status.KEYWORD
@@ -128,9 +128,9 @@ class CoSearchView @JvmOverloads constructor(
 	 */
 	fun setTopPadding(topPadding: Int) {
 		val params = layoutParams
-		params.height += topPadding.dpInt
+		params.height += topPadding
 		this.layoutParams = params
-		this.setPadding(0, topPadding.dpInt, 0, 0)
+		this.setPadding(0, topPadding, 0, 0)
 	}
 	
 	/**
@@ -180,6 +180,8 @@ class CoSearchView @JvmOverloads constructor(
 				navAttr.typeface?.also { this.setTypeface(it) }
 				this.setOnClickListener {
 					if (!canBackToHint || currentStatus == HINT) {
+						editText.clearFocus()
+						hideSoftKeyboard()
 						navListener?.invoke()
 					} else {
 						updateStatus(HINT)
@@ -421,7 +423,7 @@ class CoSearchView @JvmOverloads constructor(
 				view.visibility = if (realStatus in statuses) View.VISIBLE else View.GONE
 			}
 			if (realStatus == INPUT) {
-				showSoftKeyboard()
+				showSoftKeyboard(editText)
 			} else if (status == KEYWORD) {
 				if (lastSearchContent.isEmpty()) {
 					keyWordContainer?.visibility = View.GONE
@@ -440,23 +442,5 @@ class CoSearchView @JvmOverloads constructor(
 			return content.trim().replace("\\s+".toRegex(), " ")
 		}
 		return ""
-	}
-	
-	/**
-	 * 隐藏软键盘
-	 */
-	private fun hideSoftKeyboard() {
-		editText.clearFocus()
-		val manager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-		manager.hideSoftInputFromWindow(editText.windowToken, 0)
-	}
-	
-	/**
-	 * 显示软键盘
-	 */
-	private fun showSoftKeyboard() {
-		editText.requestFocus()
-		val manager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-		manager.showSoftInput(editText, InputMethodManager.HIDE_NOT_ALWAYS)
 	}
 }

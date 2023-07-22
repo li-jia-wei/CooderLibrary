@@ -170,7 +170,7 @@ class CoRefreshLayout @JvmOverloads constructor(
 				child.layout(0, childTop, right, childTop + child.measuredHeight)
 			}
 			var other: View
-			for (i in 2 until childCount) {
+			for (i in 2 ..< childCount) {
 				other = getChildAt(i)
 				other.layout(0, top, right, bottom)
 			}

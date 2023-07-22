@@ -103,8 +103,9 @@ class CoAdapter(
 	/**
 	 * 删除Item
 	 * @param dataItem DataItem
+	 * @return 删除的位置
 	 */
-	fun removeItem(dataItem: CoDataItem<*, *>) {
+	fun removeItem(dataItem: CoDataItem<*, *>): Int {
 		val type = dataItem.javaClass.hashCode()
 		if (typePositions.containsKey(type)) {
 			typePositions.delete(type)
@@ -114,16 +115,20 @@ class CoAdapter(
 			this.dataItems.removeAt(index)
 			notifyItemRemoved(getToHeaderSize() + index)
 		}
+		return index
 	}
 	
 	/**
 	 * 删除多个Item
 	 * @param dataItems 多个DataItem
+	 * @return 删除的Item的所有位置
 	 */
-	fun removeItems(dataItems: Collection<CoDataItem<*, *>>) {
+	fun removeItems(dataItems: Collection<CoDataItem<*, *>>): List<Int> {
+		val allIndex = mutableListOf<Int>()
 		dataItems.forEach {
-			removeItem(it)
+			allIndex += removeItem(it)
 		}
+		return allIndex
 	}
 	
 	/**
@@ -150,7 +155,7 @@ class CoAdapter(
 	 * @param itemCount DataItem的数量
 	 * @return 获取被删除的多个DataItem
 	 */
-	fun removeItemsAt(startIndex: Int, itemCount: Int): Collection<CoDataItem<*, *>> {
+	fun removeItemsAt(startIndex: Int, itemCount: Int): List<CoDataItem<*, *>> {
 		val items = mutableListOf<CoDataItem<*, *>>()
 		if (startIndex >= 0 && startIndex < getItemSize()) {
 			val removeCount = min(getItemSize() - startIndex, itemCount)
@@ -184,32 +189,39 @@ class CoAdapter(
 	/**
 	 * 刷新DataItem
 	 * @param dataItem DataItem
+	 * @return 刷新的Item的位置
 	 */
-	fun refreshItem(dataItem: CoDataItem<*, *>) {
+	fun refreshItem(dataItem: CoDataItem<*, *>): Int {
 		val index = dataItems.indexOf(dataItem)
 		if (index >= 0 && index < getItemSize()) {
 			notifyItemChanged(getToHeaderSize() + index)
 		}
+		return index
 	}
 	
 	/**
 	 * 刷新多个Item
 	 * @param dataItems 多个DataItem
+	 * @return 刷新的所有的Item的位置
 	 */
-	fun refreshItems(dataItems: Collection<CoDataItem<*, *>>) {
+	fun refreshItems(dataItems: Collection<CoDataItem<*, *>>): List<Int> {
+		val allIndex = mutableListOf<Int>()
 		for (dataItem in dataItems) {
-			refreshItem(dataItem)
+			allIndex += refreshItem(dataItem)
 		}
+		return allIndex
 	}
 	
 	/**
 	 * 通过索引刷新DataItem
 	 * @param index 在DataItem中的位置
 	 */
-	fun refreshItemAt(index: Int) {
+	fun refreshItemAt(index: Int): CoDataItem<*, *>? {
 		if (index >= 0 && index < getItemSize()) {
 			notifyItemChanged(getToHeaderSize() + index)
+			return dataItems[index]
 		}
+		return null
 	}
 	
 	/**
@@ -217,9 +229,14 @@ class CoAdapter(
 	 * @param startIndex 在DataItem中的开始位置
 	 * @param itemCount DataItem的数量
 	 */
-	fun refreshItemsAt(startIndex: Int, itemCount: Int) {
+	fun refreshItemsAt(startIndex: Int, itemCount: Int): List<CoDataItem<*, *>> {
 		val refreshCount = min(getItemSize() - startIndex, itemCount)
 		notifyItemRangeChanged(getToHeaderSize() + startIndex, refreshCount)
+		val items = mutableListOf<CoDataItem<*, *>>()
+		repeat(refreshCount) {
+			items += dataItems[it + startIndex]
+		}
+		return items
 	}
 	
 	/**
@@ -227,6 +244,20 @@ class CoAdapter(
 	 */
 	fun refreshAllItems() {
 		notifyItemRangeChanged(getToHeaderSize(), getItemSize())
+	}
+	
+	/**
+	 * 替换Item
+	 * @param oldItem 旧的Item
+	 * @param newItem 新的Item
+	 * @return 被替换的位置
+	 */
+	fun replaceItem(oldItem: CoDataItem<*, *>, newItem: CoDataItem<*, *>): Int {
+		val replaceIndex = removeItem(oldItem)
+		if (replaceIndex >= 0) {
+			addItem(newItem, index = replaceIndex)
+		}
+		return replaceIndex
 	}
 	
 	/**
@@ -245,8 +276,8 @@ class CoAdapter(
 	 * @param views 多个HeaderView
 	 */
 	fun addHeaderViews(views: Collection<View>) {
-		for (view in views) {
-			addHeaderView(view)
+		views.forEach {
+			addHeaderView(it)
 		}
 	}
 	
@@ -267,8 +298,8 @@ class CoAdapter(
 	 * @param views 多个HeaderView
 	 */
 	fun removeHeaderViews(views: Collection<View>) {
-		for (view in views) {
-			removeHeaderView(view)
+		views.forEach {
+			removeHeaderView(it)
 		}
 	}
 	
@@ -296,8 +327,8 @@ class CoAdapter(
 	 * @param views 多个FooterView
 	 */
 	fun addFooterViews(views: Collection<View>) {
-		for (view in views) {
-			addFooterView(view)
+		views.forEach {
+			addFooterView(it)
 		}
 	}
 	
@@ -318,8 +349,8 @@ class CoAdapter(
 	 * @param views 多个FooterView
 	 */
 	fun removeFooterViews(views: Collection<View>) {
-		for (view in views) {
-			removeFooterView(view)
+		views.forEach {
+			removeFooterView(it)
 		}
 	}
 	
@@ -389,6 +420,40 @@ class CoAdapter(
 	}
 	
 	/**
+	 * 获取指定Item
+	 * @param 位置
+	 */
+	fun getItemAt(position: Int): CoDataItem<*, *>? {
+		if (dataItems.isEmpty()) return null
+		return if (dataItems.size > position) {
+			dataItems[position]
+		} else {
+			dataItems.last()
+		}
+	}
+	
+	/**
+	 * 获取第一个Item
+	 */
+	fun getFirstItem(): CoDataItem<*, *>? {
+		return if (dataItems.isNotEmpty()) dataItems.first() else null
+	}
+	
+	/**
+	 * 获取最后一个Item
+	 */
+	fun getLastItem(): CoDataItem<*, *>? {
+		return if (dataItems.isNotEmpty()) dataItems.last() else null
+	}
+	
+	/**
+	 * 获取指定Item的位置
+	 */
+	fun getItemPosition(item: CoDataItem<*, *>): Int {
+		return dataItems.indexOf(item)
+	}
+	
+	/**
 	 * 获取ItemView类型
 	 */
 	override fun getItemViewType(position: Int): Int {
@@ -417,35 +482,35 @@ class CoAdapter(
 	 * 判断是否是Header
 	 */
 	private fun isHeaderPosition(position: Int): Boolean {
-		return position in (getTopSize() until getToHeaderSize())
+		return position in (getTopSize() ..< getToHeaderSize())
 	}
 	
 	/**
 	 * 判断是否是Footer
 	 */
 	private fun isFooterPosition(position: Int): Boolean {
-		return position in (getToItemSize() until getToFooterSize())
+		return position in (getToItemSize() ..< getToFooterSize())
 	}
 	
 	/**
 	 * 判断是否是TopView
 	 */
 	private fun isTopViewPosition(position: Int): Boolean {
-		return position in (0 until getTopSize())
+		return position in (0 ..< getTopSize())
 	}
 	
 	/**
 	 * 判断是否是BottomView
 	 */
 	private fun isBottomViewPosition(position: Int): Boolean {
-		return position in (getToFooterSize() until itemCount)
+		return position in (getToFooterSize() ..< itemCount)
 	}
 	
 	/**
 	 * 判断是否不是Item的索引
 	 */
 	private fun isNotItemPosition(position: Int): Boolean {
-		return position !in (getToHeaderSize() until getToItemSize())
+		return position !in (getToHeaderSize() ..< getToItemSize())
 	}
 	
 	/**
@@ -557,7 +622,7 @@ class CoAdapter(
 	/**
 	 * 获取AttachRecyclerView
 	 */
-	fun getAttachRecyclerView(): RecyclerView? {
+	private fun getAttachRecyclerView(): RecyclerView? {
 		return recyclerViewRef?.get()
 	}
 	
@@ -689,10 +754,17 @@ class CoAdapter(
 	}
 	
 	/**
-	 * 判断ItemCount是否为0
+	 * 判断列表是否为空
 	 */
 	fun isEmpty(): Boolean {
 		return itemCount == 0
+	}
+	
+	/**
+	 * 判断列表是否不为空
+	 */
+	fun isNotEmpty(): Boolean {
+		return itemCount != 0
 	}
 	
 	/**
@@ -703,5 +775,14 @@ class CoAdapter(
 		val anim = recyclerView?.itemAnimator as SimpleItemAnimator?
 		anim?.supportsChangeAnimations = false
 		recyclerView?.itemAnimator = null
+	}
+	
+	/**
+	 * 防止页面在初始化的时候刷新
+	 */
+	private fun post(execute: Boolean = true, runnable: () -> Unit) {
+		if (execute) {
+			getAttachRecyclerView()?.post(runnable)
+		}
 	}
 }

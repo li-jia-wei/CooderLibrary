@@ -5,6 +5,12 @@
 	android:layout_height="match_parent"
 	android:gravity="center"
 	tools:context=".ui.test.TestActivity">
-
+	
+	<ImageView
+		android:id="@+id/image"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/dp_390"
+		android:layout_marginHorizontal="@dimen/dp_20"
+		android:scaleType="centerCrop" />
 
 </LinearLayout>
