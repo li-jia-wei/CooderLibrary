@@ -3,8 +3,8 @@
 compileSdk = "33"
 targetSdk = "33"
 minSdk = "26"
-versionCode = "56"
-versionName = "3.5.0"
+versionCode = "57"
+versionName = "3.5.1"
 buildToolsVersion = "34.0.0"
 
 agp = "8.1.0-rc01"
