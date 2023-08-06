@@ -17,4 +17,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "CooderLibrary"
 include(":app")
-include(":cooder-ui", ":cooder-library")
+include(":cooder-ui")
+include(":cooder-library")

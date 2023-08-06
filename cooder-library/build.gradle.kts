@@ -39,12 +39,6 @@ android {
 	}
 }
 
-kapt {
-	arguments {
-		arg("AROUTER_MODULE_NAME", project.name)
-	}
-}
-
 ksp {
 	arg("room.schemaLocation", "$projectDir/build/schema/room")
 }

@@ -45,8 +45,8 @@ android {
 
 dependencies {
 	
-	implementation(project(":cooder-library"))
 	implementation(project(":cooder-ui"))
+	implementation(project(":cooder-library"))
 	
 	implementation(libs.core.kts)
 	implementation(libs.appcompat)

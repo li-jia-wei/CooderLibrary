@@ -3,11 +3,11 @@
 compileSdk = "33"
 targetSdk = "33"
 minSdk = "26"
-versionCode = "57"
-versionName = "3.5.1"
+versionCode = "58"
+versionName = "3.5.2"
 buildToolsVersion = "34.0.0"
 
-agp = "8.1.0-rc01"
+agp = "8.1.0"
 kotlin = "1.9.0"
 ksp = "1.9.0-1.0.11"
 
