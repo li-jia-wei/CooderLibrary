@@ -1,8 +1,8 @@
 package com.cooder.library.library.log.printer
 
 import android.content.Context
-import com.cooder.library.library.log.CoLogConfig
 import com.cooder.library.library.log.CoLogLevel
+import com.cooder.library.library.log.config.CoLogConfig
 import java.io.File
 import java.io.FileOutputStream
 import java.util.concurrent.Executors
@@ -16,11 +16,25 @@ import java.util.concurrent.Executors
  *
  * 介绍：日志文件打印
  */
-class CoFilePrinter(
+class CoFilePrinter private constructor(
 	private val context: Context
 ) : CoLogPrinter {
 	
 	companion object {
+		
+		private var instance: CoLogPrinter? = null
+		
+		fun getInstance(context: Context): CoLogPrinter {
+			return instance ?: let {
+				synchronized(CoConsolePrinter::class.java) {
+					instance ?: let {
+						instance = CoFilePrinter(context)
+						instance!!
+					}
+				}
+			}
+		}
+		
 		internal val executor = Executors.newCachedThreadPool()
 	}
 	

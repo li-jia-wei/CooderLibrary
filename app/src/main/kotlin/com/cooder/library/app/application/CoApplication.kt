@@ -1,10 +1,8 @@
 package com.cooder.library.app.application
 
 import android.app.Application
-import com.cooder.library.library.log.CoLogConfig
 import com.cooder.library.library.log.CoLogManager
-import com.cooder.library.library.log.printer.CoConsolePrinter
-import com.cooder.library.library.log.printer.CoFilePrinter
+import com.cooder.library.library.log.config.CoDebugConsoleLogConfig
 
 /**
  * 项目：CooderLibrary
@@ -26,14 +24,6 @@ class CoApplication : Application() {
 	 * 初始化日志系统
 	 */
 	private fun initCooderLogManager() {
-		CoLogManager.init(this, object : CoLogConfig() {
-			override fun enable(): Boolean {
-				return true
-			}
-			
-			override fun globalTag(): String {
-				return "CooderLibraryDebugTag"
-			}
-		}, CoConsolePrinter(), CoFilePrinter(this))
+		CoLogManager.init(this, CoDebugConsoleLogConfig("CooderLibraryDebug"))
 	}
 }

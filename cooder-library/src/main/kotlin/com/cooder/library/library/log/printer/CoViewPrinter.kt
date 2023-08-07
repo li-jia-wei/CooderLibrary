@@ -9,8 +9,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cooder.library.library.R
-import com.cooder.library.library.log.CoLogConfig
 import com.cooder.library.library.log.CoLogLevel
+import com.cooder.library.library.log.config.CoLogConfig
 import com.cooder.library.library.util.CoMainHandler
 
 /**
@@ -29,6 +29,21 @@ class CoViewPrinter(
 	private val recyclerView: RecyclerView
 	private var adapter: LogAdapter
 	private var viewProvider: CoViewPrinterProvider
+	
+	companion object {
+		private var instance: CoLogPrinter? = null
+		
+		fun getInstance(activity: Activity): CoLogPrinter {
+			return instance ?: let {
+				synchronized(CoConsolePrinter::class.java) {
+					instance ?: let {
+						instance = CoViewPrinter(activity)
+						instance!!
+					}
+				}
+			}
+		}
+	}
 	
 	init {
 		val rootView: FrameLayout = activity.findViewById(android.R.id.content)

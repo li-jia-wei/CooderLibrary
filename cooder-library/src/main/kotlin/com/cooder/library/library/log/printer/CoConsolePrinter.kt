@@ -1,9 +1,9 @@
 package com.cooder.library.library.log.printer
 
 import android.util.Log
-import com.cooder.library.library.log.CoLogConfig
-import com.cooder.library.library.log.CoLogConfig.Companion.LOG_MAX_LENGTH
 import com.cooder.library.library.log.CoLogLevel
+import com.cooder.library.library.log.config.CoLogConfig
+import com.cooder.library.library.log.config.CoLogConfig.Companion.LOG_MAX_LENGTH
 
 /**
  * 项目：CooderLibrary
@@ -14,9 +14,23 @@ import com.cooder.library.library.log.CoLogLevel
  *
  * 介绍：日志终端打印
  */
-class CoConsolePrinter : CoLogPrinter {
+class CoConsolePrinter private constructor() : CoLogPrinter {
 	
 	companion object {
+		
+		private var instance: CoLogPrinter? = null
+		
+		fun getInstance(): CoLogPrinter {
+			return instance ?: let {
+				synchronized(CoConsolePrinter::class.java) {
+					instance ?: let {
+						instance = CoConsolePrinter()
+						instance!!
+					}
+				}
+			}
+		}
+		
 		private val logs = mutableListOf<LogMo>()
 		
 		fun getLogs(): List<LogMo> {

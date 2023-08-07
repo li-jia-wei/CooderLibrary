@@ -4,9 +4,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.cooder.library.app.databinding.ActivityCoLogBinding
 import com.cooder.library.library.log.CoLog
-import com.cooder.library.library.log.CoLogConfig
 import com.cooder.library.library.log.CoLogLevel
 import com.cooder.library.library.log.CoLogManager
+import com.cooder.library.library.log.config.CoLogConfig
 import com.cooder.library.library.log.printer.CoViewPrinter
 import com.cooder.library.library.util.expends.immersiveStatusBar
 
@@ -36,20 +36,11 @@ class CoLogActivity : AppCompatActivity() {
 		binding.printLog.setOnClickListener {
 			CoLog.i("第一条", "第二条", "第三条", "第四条")
 			CoLog.e("这个是一条日志信息")
-			
 			CoLog.log(object : CoLogConfig() {
-				override fun includeThread(): Boolean {
-					return true
-				}
-				
-				override fun includeStackTrack(): Boolean {
-					return true
-				}
-				
-				override fun stackTrackDepth(): Int {
-					return 20
-				}
-			}, CoLogLevel.INFO, "Cooder2", "Hello World!")
+				override val enable: Boolean = true
+				override val includeStackTrack: Boolean = true
+				override val stackTrackDepth: Int = 20
+			}, CoLogLevel.INFO, "CustomCooder", "Hello World!")
 		}
 	}
 }

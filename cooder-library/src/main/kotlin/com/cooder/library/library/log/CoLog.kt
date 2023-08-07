@@ -1,5 +1,6 @@
 package com.cooder.library.library.log
 
+import com.cooder.library.library.log.config.CoLogConfig
 import com.cooder.library.library.log.util.CoStackTraceUtil
 
 /**
@@ -109,16 +110,17 @@ object CoLog {
 		log(CoLogLevel.ASSERT, tag, *contents)
 	}
 	
-	private fun <T> log(type: CoLogLevel, vararg contents: T?) {
-		if (CoLogManager.isInit()) {
-			log(type, CoLogManager.getInstance().config.globalTag(), *contents)
-		}
+	fun getTag(): String {
+		val manager = CoLogManager.getInstance()
+		return manager.config.globalTag
 	}
 	
-	private fun <T> log(type: CoLogLevel, tag: String, vararg contents: T?) {
-		if (CoLogManager.isInit()) {
-			log(CoLogManager.getInstance().config, type, tag, *contents)
-		}
+	fun <T> log(type: CoLogLevel, vararg contents: T?) {
+		log(type, CoLogManager.getInstance().config.globalTag, *contents)
+	}
+	
+	fun <T> log(type: CoLogLevel, tag: String, vararg contents: T?) {
+		log(CoLogManager.getInstance().config, type, tag, *contents)
 	}
 	
 	/**
@@ -129,20 +131,23 @@ object CoLog {
 	 * @param contents 打印的信息
 	 */
 	fun <T> log(config: CoLogConfig, type: CoLogLevel, tag: String, vararg contents: T?) {
-		if (!config.enable()) return
+		if (!config.enable) return
 		val sb = StringBuilder()
-		if (config.includeThread()) {
+		if (config.includeThread) {
 			val thread = CoLogConfig.CO_THREAD_FORMATTER.format(Thread.currentThread())
 			sb.append(thread)
 		}
-		if (config.includeStackTrack() && config.stackTrackDepth() > 0) {
-			val realStackTrace = CoStackTraceUtil.getCroppedRealStackTrack(Throwable().stackTrace, javaClass.`package`!!.name, config.stackTrackDepth())
+		if (config.includeStackTrack && config.stackTrackDepth > 0) {
+			val realStackTrace = CoStackTraceUtil.getCroppedRealStackTrack(Throwable().stackTrace, javaClass.`package`!!.name, config.stackTrackDepth)
 			val stackTrace = CoLogConfig.CO_STACK_TRACE_FORMATTER.format(realStackTrace)
 			sb.append(stackTrace)
 		}
 		val body = parseBody(contents, config)
 		sb.append(body)
-		val printers = if (config.printers() != null) config.printers()!!.toList() else CoLogManager.getInstance().getPrinters()
+		var printers = config.printers
+		if (printers.isNullOrEmpty()) {
+			printers = CoLogManager.getInstance().getPrinters()
+		}
 		if (printers.isEmpty()) return
 		printers.forEach {
 			it.print(config, type, tag, sb.toString())

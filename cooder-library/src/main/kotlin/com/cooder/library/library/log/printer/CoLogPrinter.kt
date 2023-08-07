@@ -1,7 +1,7 @@
 package com.cooder.library.library.log.printer
 
-import com.cooder.library.library.log.CoLogConfig
 import com.cooder.library.library.log.CoLogLevel
+import com.cooder.library.library.log.config.CoLogConfig
 
 /**
  * 项目：CooderLibrary

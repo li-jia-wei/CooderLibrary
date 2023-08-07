@@ -1,4 +1,4 @@
-package com.cooder.library.library.log
+package com.cooder.library.library.log.config
 
 import com.cooder.library.library.log.format.CoStackTraceFormatter
 import com.cooder.library.library.log.format.CoThreadFormatter
@@ -22,19 +22,12 @@ abstract class CoLogConfig {
 		const val LOG_MAX_LENGTH = 3000
 	}
 	
-	/**
-	 * 全局TAG
-	 */
-	open fun globalTag(): String {
-		return "CooderTag"
-	}
+	open val globalTag: String = "Cooder"
 	
 	/**
 	 * 是否开启日志打印
 	 */
-	open fun enable(): Boolean {
-		return false
-	}
+	open val enable: Boolean = false
 	
 	/**
 	 * 注入Json解析器
@@ -51,28 +44,20 @@ abstract class CoLogConfig {
 	/**
 	 * 是否包含线程信息
 	 */
-	open fun includeThread(): Boolean {
-		return false
-	}
+	open val includeThread: Boolean = false
 	
 	/**
 	 * 是否包含堆栈信息
 	 */
-	open fun includeStackTrack(): Boolean {
-		return false
-	}
+	open val includeStackTrack: Boolean = false
 	
 	/**
 	 * 堆栈信息的深度，如设置-1则不限制长度
 	 */
-	open fun stackTrackDepth(): Int {
-		return 5
-	}
+	open val stackTrackDepth: Int = 5
 	
 	/**
 	 * 注册打印器
 	 */
-	open fun printers(): Array<CoLogPrinter>? {
-		return null
-	}
+	open val printers: List<CoLogPrinter>? = null
 }

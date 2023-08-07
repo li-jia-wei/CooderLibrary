@@ -12,6 +12,6 @@ package com.cooder.library.library.log.format
 class CoThreadFormatter : CoLogFormatter<Thread> {
 	
 	override fun format(data: Thread): String {
-		return "Thread:${data.name} "
+		return "[${data.name}] "
 	}
 }
