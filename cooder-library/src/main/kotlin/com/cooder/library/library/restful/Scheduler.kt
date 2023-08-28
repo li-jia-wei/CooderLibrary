@@ -40,11 +40,7 @@ class Scheduler(
 	 * 生成额外的拦截器
 	 */
 	private fun generateExtraInterceptors(extraInterceptorsClass: List<Class<out CoInterceptor>>): List<CoInterceptor> {
-		val extraInterceptors = mutableListOf<CoInterceptor>()
-		extraInterceptorsClass.forEach {
-			extraInterceptors += it.newInstance()
-		}
-		return extraInterceptors
+		return extraInterceptorsClass.map { it.newInstance() }
 	}
 	
 	// Call代理

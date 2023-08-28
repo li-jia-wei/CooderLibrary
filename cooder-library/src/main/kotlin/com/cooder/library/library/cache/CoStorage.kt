@@ -29,11 +29,11 @@ object CoStorage {
 	
 	@JvmOverloads
 	@JvmStatic
-	fun <T> getCache(type: CoStorageType, key: String, defValue: T? = null): T? {
+	fun <T> getCache(type: CoStorageType, key: String, defBody: T? = null): T? {
 		val cache = this.cacheDao.getCache(type.type, key)
 		return if (cache?.data != null) {
 			toObject(cache.data!!)
-		} else defValue
+		} else defBody
 	}
 	
 	@JvmStatic

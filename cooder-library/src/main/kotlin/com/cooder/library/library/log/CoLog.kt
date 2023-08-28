@@ -115,22 +115,22 @@ object CoLog {
 		return manager.config.globalTag
 	}
 	
-	fun <T> log(type: CoLogLevel, vararg contents: T?) {
-		log(type, CoLogManager.getInstance().config.globalTag, *contents)
+	fun <T> log(level: CoLogLevel, vararg contents: T?) {
+		log(level, CoLogManager.getInstance().config.globalTag, *contents)
 	}
 	
-	fun <T> log(type: CoLogLevel, tag: String, vararg contents: T?) {
-		log(CoLogManager.getInstance().config, type, tag, *contents)
+	fun <T> log(level: CoLogLevel, tag: String, vararg contents: T?) {
+		log(CoLogManager.getInstance().config, level, tag, *contents)
 	}
 	
 	/**
 	 * 日志打印
 	 * @param config 自定义日志配置
-	 * @param type 日志级别
+	 * @param level 日志级别
 	 * @param tag TAG
 	 * @param contents 打印的信息
 	 */
-	fun <T> log(config: CoLogConfig, type: CoLogLevel, tag: String, vararg contents: T?) {
+	fun <T> log(config: CoLogConfig, level: CoLogLevel, tag: String, vararg contents: T?) {
 		if (!config.enable) return
 		val sb = StringBuilder()
 		if (config.includeThread) {
@@ -150,7 +150,7 @@ object CoLog {
 		}
 		if (printers.isEmpty()) return
 		printers.forEach {
-			it.print(config, type, tag, sb.toString())
+			it.print(config, level, tag, sb.toString())
 		}
 	}
 	

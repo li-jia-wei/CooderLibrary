@@ -124,11 +124,7 @@ class CoAdapter(
 	 * @return 删除的Item的所有位置
 	 */
 	fun removeItems(dataItems: Collection<CoDataItem<*, *>>): List<Int> {
-		val allIndex = mutableListOf<Int>()
-		dataItems.forEach {
-			allIndex += removeItem(it)
-		}
-		return allIndex
+		return dataItems.map { removeItem(it) }
 	}
 	
 	/**

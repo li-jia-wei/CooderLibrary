@@ -38,6 +38,14 @@ android {
 	}
 }
 
+kotlin {
+	sourceSets.all {
+		languageSettings {
+			languageVersion = "2.0"
+		}
+	}
+}
+
 dependencies {
 	implementation(project(":cooder-library"))
 	

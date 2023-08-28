@@ -51,7 +51,7 @@ class CoRefreshLayout @JvmOverloads constructor(
 	
 	private val gestureDetectorListener = object : SimpleOnGestureListener() {
 		
-		override fun onScroll(e1: MotionEvent, e2: MotionEvent, distanceX: Float, distanceY: Float): Boolean {
+		override fun onScroll(e1: MotionEvent?, e2: MotionEvent, distanceX: Float, distanceY: Float): Boolean {
 			if (abs(distanceX) > abs(distanceY) || refreshListener != null && !refreshListener!!.enableRefresh()) {
 				// 横向滑动或者刷新被禁止不处理滑动
 				return false

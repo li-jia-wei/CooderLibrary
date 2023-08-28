@@ -39,6 +39,14 @@ android {
 	}
 }
 
+kotlin {
+	sourceSets.all {
+		languageSettings {
+			languageVersion = "2.0"
+		}
+	}
+}
+
 ksp {
 	arg("room.schemaLocation", "$projectDir/build/schema/room")
 }
